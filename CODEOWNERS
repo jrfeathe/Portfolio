@@ -1,18 +1,18 @@
 # Default ownership
-*       @jack
+*       @jrfeathe
 
 # Applications
-/apps/site/**       @jack
+/apps/site/**       @jrfeathe
 
 # Shared packages
-/packages/ui/**     @jack
-/packages/config/** @jack
-/packages/cli/**    @jack
+/packages/ui/**     @jrfeathe
+/packages/config/** @jrfeathe
+/packages/cli/**    @jrfeathe
 
 # Infrastructure
-/infra/**           @jack
+/infra/**           @jrfeathe
 
 # Content and docs
-/content/**         @jack
-/README.md          @jack
-/WBS/**             @jack
+/content/**         @jrfeathe
+/README.md          @jrfeathe
+/WBS/**             @jrfeathe

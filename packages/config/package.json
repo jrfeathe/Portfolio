@@ -1,0 +1,17 @@
+{
+  "name": "@portfolio/config",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./eslint/base": "./eslint/base.cjs",
+    "./eslint/next": "./eslint/next.cjs",
+    "./prettier": "./prettier/index.cjs",
+    "./tailwind": "./tailwind/index.cjs",
+    "./tsconfig": "./tsconfig.json"
+  },
+  "files": ["eslint", "prettier", "tailwind", "tsconfig.json"],
+  "scripts": {
+    "build": "node -e \"console.log('no build step for @portfolio/config')\""
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "lib": ["ES2022", "DOM"],
+    "baseUrl": ".",
+    "paths": {
+      "@portfolio/ui": ["packages/ui/src/index"],
+      "@portfolio/ui/*": ["packages/ui/src/*"],
+      "@portfolio/config/*": ["packages/config/*"],
+      "@portfolio/cli": ["packages/cli/src/index"],
+      "@portfolio/cli/*": ["packages/cli/src/*"]
+    }
+  },
+  "include": []
+}

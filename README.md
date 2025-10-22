@@ -32,5 +32,6 @@ version manager) before installing dependencies to stay aligned with the repo.
   - Required status checks: `CI / ci/build`, `CI / ci/lint` (backed by pnpm build and lint workflows; add more as CI grows).
   - Require at least one approval and up-to-date branches before merge.
   - Block force pushes and deletions; optional: require signed commits.
-- GitHub automatically requests review based on `CODEOWNERS`, currently defaulting to @jack.
+- CI workflow runs on pushes and pull requests targeting `master` and `dev`.
+- GitHub automatically requests review based on `CODEOWNERS`, currently defaulting to @jrfeathe.
 - Use the PR template in `.github/pull_request_template.md` to link WBS tasks and document testing.

@@ -1,0 +1,18 @@
+# Default ownership
+*       @jack
+
+# Applications
+/apps/site/**       @jack
+
+# Shared packages
+/packages/ui/**     @jack
+/packages/config/** @jack
+/packages/cli/**    @jack
+
+# Infrastructure
+/infra/**           @jack
+
+# Content and docs
+/content/**         @jack
+/README.md          @jack
+/WBS/**             @jack

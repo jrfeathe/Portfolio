@@ -24,3 +24,13 @@ supporting packages.
 
 The default Node version is pinned in `.nvmrc`. Run `nvm use` (or your preferred
 version manager) before installing dependencies to stay aligned with the repo.
+
+## Branch protection & workflow expectations
+
+- All changes land via pull request; direct pushes to `master` are disabled.
+- Enable GitHub branch protection with:
+  - Required status checks: `CI / ci/build`, `CI / ci/lint` (backed by pnpm build and lint workflows; add more as CI grows).
+  - Require at least one approval and up-to-date branches before merge.
+  - Block force pushes and deletions; optional: require signed commits.
+- GitHub automatically requests review based on `CODEOWNERS`, currently defaulting to @jack.
+- Use the PR template in `.github/pull_request_template.md` to link WBS tasks and document testing.

@@ -1,7 +1,7 @@
 ID,Epic,Task,Description,Deliverables,Acceptance Criteria
 0,Program & Repo,Project charter & scope,"Define goals, success metrics ($1k bonus condition), non-goals, target audience (recruiters), and risk log.","CHARTER.md, SUCCESS_METRICS.md, RISK_LOG.md",Docs committed
 0.1,Program & Repo,Monorepo scaffolding,"Create monorepo with apps/site (Next.js), packages/ui, packages/config, packages/cli, and infra directory.","Repo with pnpm workspaces, tsconfig base, eslint/prettier configs",`pnpm i && pnpm -w build` succeeds
-0.2,Program & Repo,Branch protections & CODEOWNERS,Protect main with required checks, add CODEOWNERS, PR template
+0.2,Program & Repo,Branch protections & CODEOWNERS,Protect master with required checks, add CODEOWNERS, PR template
 0.3,Program & Repo,Issue templates & labels,"GitHub issue templates for Feature, Bug, Tech Debt; labels for WBS IDs.",.github/ISSUE_TEMPLATE/*.yml,New issues render forms
 1,Content & Positioning,One-line promise,Craft sharp positioning sentence for above-the-fold.,copy/positioning.md,<120 chars
 1.1,Content & Positioning,Proof chips mapping,Choose 3 measurable claims and how they are evidenced on-site (links/demos).,copy/proof_chips.md,Each claim maps to a live artifact

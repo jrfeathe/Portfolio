@@ -1,0 +1,48 @@
+name: Feature Request
+description: Propose new functionality aligned with a WBS deliverable.
+title: "[Feature] <concise summary>"
+labels:
+  - type:feature
+  - status:triage
+body:
+  - type:markdown
+    attributes:
+      value: |
+        Thanks for documenting a feature idea. Link it to the relevant WBS item to keep planning tight.
+  - type:input
+    id: wbs
+    attributes:
+      label: WBS ID
+      description: Reference the work breakdown structure entry this feature addresses (e.g. 2.1).
+      placeholder: 2.1
+    validations:
+      required: true
+  - type:textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What user or system problem are we solving?
+      placeholder: Hiring managers need a way to filter engineering notes by category…
+    validations:
+      required: true
+  - type:textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: Outline the approach, components touched, and any alternatives considered.
+    validations:
+      required: true
+  - type:textarea
+    id: scope
+    attributes:
+      label: Acceptance Criteria
+      description: Bullet the testable conditions that mark this feature complete.
+      placeholder: |
+        - Acceptance criteria listed here
+    validations:
+      required: true
+  - type:textarea
+    id: dependencies
+    attributes:
+      label: Dependencies & Notes
+      description: Link related issues, designs, or technical notes.

@@ -35,3 +35,10 @@ version manager) before installing dependencies to stay aligned with the repo.
 - CI workflow runs on pushes and pull requests targeting `master` and `dev`.
 - GitHub automatically requests review based on `CODEOWNERS`, currently defaulting to @jrfeathe.
 - Use the PR template in `.github/pull_request_template.md` to link WBS tasks and document testing.
+
+## Issue templates & labels
+
+- GitHub issue forms cover feature requests, bug reports, and tech debt work in `.github/ISSUE_TEMPLATE/`.
+- Each template requires a WBS ID so new issues stay aligned to the Essential WBS.
+- Sync repository labels (workflow + `WBS:*`) by running `GITHUB_TOKEN=<token> pnpm exec node scripts/sync-wbs-labels.mjs owner/repo`.
+- The sync script can be re-run any time the WBS changes; it upserts labels without removing custom ones.

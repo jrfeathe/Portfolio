@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📣 Project Charter & Scope
+    url: https://github.com/jrfeathe/Portfolio/blob/master/CHARTER.md
+    about: Review the charter for context before opening wide-scope issues.
+  - name: 📅 Work Breakdown Structure
+    url: https://github.com/jrfeathe/Portfolio/blob/master/WBS/Essential_WBS.csv
+    about: Confirm the WBS ID you reference aligns to the latest plan.

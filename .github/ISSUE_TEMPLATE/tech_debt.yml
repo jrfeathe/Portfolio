@@ -1,0 +1,45 @@
+name: Tech Debt
+description: Capture refactoring or maintenance work that preserves velocity.
+title: "[Tech Debt] <concise summary>"
+labels:
+  - type:tech-debt
+  - status:triage
+body:
+  - type:markdown
+    attributes:
+      value: |
+        Use this template when proposing structural improvements or cleanup tied to a WBS item.
+  - type:input
+    id: wbs
+    attributes:
+      label: WBS ID
+      description: Reference the WBS item supported or impacted (e.g. 2.0 for design system).
+      placeholder: 2.0
+    validations:
+      required: true
+  - type:textarea
+    id: context
+    attributes:
+      label: Context
+      description: What problem does this tech debt introduce today or in the near future?
+    validations:
+      required: true
+  - type:textarea
+    id: proposal
+    attributes:
+      label: Proposed Work
+      description: Outline the refactor or maintenance effort with expected scope.
+    validations:
+      required: true
+  - type:textarea
+    id: impact
+    attributes:
+      label: Impact & Acceptance
+      description: Define success criteria, measurable improvements, and potential risks.
+    validations:
+      required: true
+  - type:textarea
+    id: notes
+    attributes:
+      label: Notes & Links
+      description: Add PRs, log entries, or designs that provide context.

@@ -1,0 +1,57 @@
+name: Bug Report
+description: Track defects discovered in the portfolio experience.
+title: "[Bug] <concise summary>"
+labels:
+  - type:bug
+  - status:triage
+body:
+  - type:markdown
+    attributes:
+      value: |
+        Help us triage quickly by including repro details and links to failing automation when possible.
+  - type:input
+    id: wbs
+    attributes:
+      label: WBS ID
+      description: Reference the WBS item impacted (e.g. 3.2). Use 0.x for program-level defects.
+      placeholder: 3.2
+    validations:
+      required: true
+  - type:input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, device, branch, and build version where this occurred.
+      placeholder: Edge 125 on Windows 11, branch feature/i18n
+    validations:
+      required: true
+  - type:textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Provide numbered steps starting from a clean state.
+      placeholder: |
+        1. …
+        2. …
+        3. …
+    validations:
+      required: true
+  - type:textarea
+    id: expected
+    attributes:
+      label: Expected Result
+      description: What should happen?
+    validations:
+      required: true
+  - type:textarea
+    id: actual
+    attributes:
+      label: Actual Result
+      description: What happened instead? Include screenshots or logs if available.
+    validations:
+      required: true
+  - type:textarea
+    id: regression
+    attributes:
+      label: Regression Risk
+      description: When did this start occurring? Link to suspect PR or release if known.

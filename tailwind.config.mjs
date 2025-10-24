@@ -1,12 +1,17 @@
-const tokens = require("../../ui/tokens.json");
+import tokens from "./packages/ui/tokens.json" assert { type: "json" };
 
 const { colors, typography, spacing, radius, shadows } = tokens;
 const light = colors.light;
 const dark = colors.dark;
 const print = colors.print;
 
-module.exports = {
+export default {
   darkMode: "class",
+  content: [
+    "./apps/**/*.{js,ts,jsx,tsx,mdx}",
+    "./packages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./content/**/*.{md,mdx}"
+  ],
   theme: {
     extend: {
       colors: {
@@ -57,5 +62,6 @@ module.exports = {
       borderRadius: radius,
       boxShadow: shadows
     }
-  }
+  },
+  plugins: []
 };

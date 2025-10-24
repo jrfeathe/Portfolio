@@ -9,11 +9,11 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const VARIANT_STYLES: Record<ButtonVariant, string> = {
   primary:
-    "bg-emerald-500 text-neutral-950 hover:bg-emerald-400 focus-visible:outline-emerald-300",
+    "bg-accent text-accentOn hover:bg-accentHover focus-visible:outline-accentHover dark:bg-dark-accent dark:text-dark-accentOn dark:hover:bg-dark-accentHover dark:focus-visible:outline-dark-accentHover shadow-sm",
   secondary:
-    "bg-neutral-800 text-neutral-50 hover:bg-neutral-700 focus-visible:outline-neutral-500",
+    "bg-surface text-text hover:bg-surfaceMuted focus-visible:outline-border dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-surfaceMuted dark:focus-visible:outline-dark-border shadow-xs",
   ghost:
-    "bg-transparent text-neutral-100 hover:bg-neutral-900 focus-visible:outline-neutral-700"
+    "bg-transparent text-text hover:bg-surfaceMuted focus-visible:outline-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted dark:focus-visible:outline-dark-border"
 };
 
 export function Button({

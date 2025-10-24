@@ -7,5 +7,6 @@
 | 0.2 | Branch protections & CODEOWNERS | 2025-Oct-22     | Branch protection rules enabled; `CODEOWNERS` and PR template configured.                             |
 | 0.3 | Issue templates & labels | 2025-Oct-22     | Issue forms added for feature/bug/tech debt; WBS-aware label sync script documented.                  |
 | 1.0 | One-line promise | 2025-Oct-23     | Hero promise captured in `market-facing/positioning.md` with rationale aligned to recruiter outcomes. |
+| 2.0 | Typography & tokens | 2025-Oct-24     | Unified design tokens for light/dark/print themes wired into Tailwind config and UI usage.             |
 
 Update this log as additional WBS items reach completion.

@@ -8,7 +8,7 @@ export default function HomePage() {
       <h1 className="text-4xl font-semibold tracking-tight">
         Building a living portfolio experience.
       </h1>
-      <p className="max-w-xl text-base text-neutral-300">
+      <p className="max-w-xl text-base text-textMuted dark:text-dark-textMuted">
         This monorepo bundles the site, shared UI kit, CLI helpers, and
         infrastructure experiments into one workspace. Explore the packages
         directory to see what powers the project under the hood.

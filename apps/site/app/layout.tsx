@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Jack Smith · Portfolio",
+  title: "Jack F. Portfolio",
   description: "Personal engineering portfolio and live project playground."
 };
 

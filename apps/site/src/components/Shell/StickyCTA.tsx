@@ -17,6 +17,7 @@ export function StickyCTA({
   return (
     <aside
       className={clsx(
+        "shell-sticky-cta",
         "group flex flex-col gap-4 rounded-2xl border border-border bg-surface/95 p-6 shadow-lg backdrop-blur transition dark:border-dark-border dark:bg-dark-surface/95",
         "lg:sticky lg:top-24",
         className

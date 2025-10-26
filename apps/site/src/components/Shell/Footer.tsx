@@ -10,7 +10,7 @@ export function ShellFooter({ className }: ShellFooterProps) {
   return (
     <footer
       className={clsx(
-        "border-t border-border bg-surface py-10 text-sm text-textMuted dark:border-dark-border dark:bg-dark-surface dark:text-dark-textMuted",
+        "shell-footer border-t border-border bg-surface py-10 text-sm text-textMuted dark:border-dark-border dark:bg-dark-surface dark:text-dark-textMuted",
         className
       )}
     >

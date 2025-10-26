@@ -69,7 +69,7 @@ export function ShellLayout({
       </header>
       <div
         className={clsx(
-          "mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 px-4 pb-24 pt-10 lg:grid-cols-[220px_minmax(0,1fr)_260px]",
+          "shell-layout-grid mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 px-4 pb-24 pt-10 lg:grid-cols-[220px_minmax(0,1fr)_260px]",
           className
         )}
       >
@@ -108,7 +108,7 @@ export function ShellLayout({
           ))}
         </main>
 
-        <div className="space-y-6">
+        <div className="shell-sidebar space-y-6">
           {cta}
         </div>
       </div>

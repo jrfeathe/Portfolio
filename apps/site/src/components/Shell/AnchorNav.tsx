@@ -71,12 +71,13 @@ export function AnchorNav({
 
   return (
     <nav
-      aria-label="On-page navigation"
       className={clsx(
+        "shell-anchor-nav",
         "rounded-2xl border border-border bg-surface/80 p-3 shadow-sm backdrop-blur dark:border-dark-border dark:bg-dark-surface/80",
         orientation === "horizontal" && "flex",
         className
       )}
+      aria-label="On-page navigation"
     >
       <ol className={clsx("flex", orientationClasses)}>
         {items.map((item) => {

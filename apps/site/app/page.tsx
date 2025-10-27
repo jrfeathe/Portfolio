@@ -1,11 +1,11 @@
-"use client";
-
 import { Button } from "@portfolio/ui";
 
 import {
   ShellLayout,
   StickyCTA
 } from "../src/components/Shell";
+
+export const runtime = "edge";
 
 const sections = [
   {

@@ -11,9 +11,9 @@
     "types": [
       "node"
     ],
-    "allowJs": true,
     "noEmit": true,
-    "incremental": true
+    "incremental": true,
+    "allowJs": true
   },
   "include": [
     "next-env.d.ts",

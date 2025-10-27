@@ -34,8 +34,8 @@ Build the hero + proof chips and a live health tile on the home page. Code UI co
 **11.x — Skim Mode (11.0–11.1)**
 Add a `?skim` route state and a renderer that pulls exactly the fields from your matrix. Code router state + condensed UI.
 
-**12.x — Infra & Hosting (12.0–12.4)**
-Deploy (Vercel/Netlify), domain/DNS, and a Tor mirror with hardened VPS + headers/CSP parity. Mostly infra/config scripts with a little edge code.
+**12.x — Infra & Hosting (12.0–12.5)**
+Deploy (Vercel/Netlify), domain/DNS, and a Tor mirror with hardened VPS + headers/CSP parity. Finish by shipping a JS-free fallback so Tor Browser at “Safest” still shows essential content. Mostly infra/config scripts with a little edge code and progressive-enhancement polish.
 
 **13.x — Engineering Notes (13.0–13.1)**
 Notes index with filters/RSS and an MDX template that bakes in trade-offs. Code pages/templates; also write content later.

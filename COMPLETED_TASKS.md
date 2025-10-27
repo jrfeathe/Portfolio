@@ -15,5 +15,6 @@
 | 3.1 | Routing & i18n | 2025-Oct-27     | App router now served under `/[locale]`, static dictionaries provide EN/JA/ZH copy, middleware normalizes locale paths, and UI switcher toggles languages. |
 | 3.2 | MDX pipeline | 2025-Oct-27     | Notes parse via `compileMDX` with remark/rehype plugins, shared MDX components, TOC helpers, and `/[locale]/notes` index + detail routes wired. |
 | 3.3 | Mermaid/PlantUML support | 2025-Oct-27     | `<Diagram>` renders Mermaid locally, PlantUML diagrams proxy through `/api/plantuml` with sanitization, and MDX fences auto-map to the new components. |
+| 4.0 | GitHub Actions pipeline | 2025-Oct-27     | `.github/workflows/ci.yml` now drives typecheck → Jest → Playwright → Lighthouse with concurrency guard and artifact uploads. |
 
 Update this log as additional WBS items reach completion.

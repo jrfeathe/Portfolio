@@ -1,6 +1,8 @@
-import type { ComponentPropsWithoutRef } from "react";
+import { Children, isValidElement } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import type { MDXComponents } from "mdx/types";
 import clsx from "clsx";
+import { Diagram, type DiagramType } from "../Diagram";
 
 function createHeading(level: 2 | 3 | 4) {
   const Component = `h${level}` as const;
@@ -23,6 +25,21 @@ function createHeading(level: 2 | 3 | 4) {
   Heading.displayName = `Heading${level}`;
 
   return Heading;
+}
+
+function extractDiagramSource(children: ReactNode): string {
+  if (typeof children === "string") {
+    return children.trim();
+  }
+
+  if (Array.isArray(children)) {
+    return children
+      .map((child) => extractDiagramSource(child))
+      .join("")
+      .trim();
+  }
+
+  return "";
 }
 
 export const mdxComponents: MDXComponents = {
@@ -75,16 +92,41 @@ export const mdxComponents: MDXComponents = {
       {...props}
     />
   ),
-  pre: ({ className, ...props }) => (
-    <pre
-      className={clsx(
-        "overflow-x-auto rounded-lg border border-border bg-surface p-4 text-sm text-text shadow-inner",
-        "dark:border-dark-border dark:bg-dark-surface dark:text-dark-text",
-        className
-      )}
-      {...props}
-    />
-  ),
+  pre: ({ className, children, ...props }) => {
+    let language: DiagramType | null = null;
+    let diagramSource = "";
+
+    Children.forEach(children, (child) => {
+      if (isValidElement(child)) {
+        const childClassName = child.props?.className as string | undefined;
+        const match = childClassName?.match(/language-([\w-]+)/);
+        if (match) {
+          const candidate = match[1];
+          if (candidate === "mermaid" || candidate === "plantuml") {
+            language = candidate;
+            diagramSource = extractDiagramSource(child.props.children);
+          }
+        }
+      }
+    });
+
+    if (language && diagramSource) {
+      return <Diagram type={language} source={diagramSource} />;
+    }
+
+    return (
+      <pre
+        className={clsx(
+          "overflow-x-auto rounded-lg border border-border bg-surface p-4 text-sm text-text shadow-inner",
+          "dark:border-dark-border dark:bg-dark-surface dark:text-dark-text",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </pre>
+    );
+  },
   code: ({ className, ...props }) => (
     <code
       className={clsx(

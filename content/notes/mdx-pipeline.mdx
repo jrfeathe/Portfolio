@@ -48,6 +48,31 @@ export async function renderNote(source: string) {
 - Tables get responsive scroll wrappers so horizontal content stays readable.
 - Code blocks inherit code titles compiled by `remark-code-titles` for context.
 
+```mermaid title="Mermaid sample"
+graph TD
+  A[Author MDX] --> B{Pipeline}
+  B -->|remark| C[AST transforms]
+  B -->|rehype| D[HTML nodes]
+  D --> E[Diagram components]
+```
+
+```plantuml title="PlantUML sample"
+@startuml
+actor Recruiter
+participant Site
+participant Proxy
+participant PlantUML
+
+Recruiter -> Site: Request note
+Site -> Site: Render MDX
+Site -> Proxy: POST diagram payload
+Proxy -> PlantUML: Fetch SVG
+PlantUML --> Proxy: SVG response
+Proxy --> Site: Sanitized SVG
+Site --> Recruiter: Rendered diagram
+@enduml
+```
+
 ## Next enhancements
 
 - Surface `estimatedReadingTime` in the list view.

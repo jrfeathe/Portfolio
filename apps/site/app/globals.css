@@ -3,9 +3,21 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
+  color-scheme: light dark;
 }
 
 body {
   font-family: var(--font-sans, ui-sans-serif, system-ui);
+}
+
+@layer base {
+  @media print {
+    body {
+      @apply bg-print-background text-print-text;
+    }
+
+    a {
+      @apply text-print-accent;
+    }
+  }
 }

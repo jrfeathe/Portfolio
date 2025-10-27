@@ -9,5 +9,6 @@
     "noEmit": false,
     "module": "ESNext",
     "target": "ES2019"
-  }
+  },
+  "exclude": ["src/**/*.stories.tsx"]
 }

@@ -45,6 +45,17 @@ export type AppDictionary = {
       };
     };
   };
+  notes: {
+    index: {
+      title: string;
+      subtitle: string;
+      empty: string;
+    };
+    detail: {
+      backLabel: string;
+      tocLabel: string;
+    };
+  };
 };
 
 const en: AppDictionary = {
@@ -129,6 +140,18 @@ const en: AppDictionary = {
           "Introduce MDX pipeline for engineering notes and diagrams."
         ]
       }
+    }
+  },
+  notes: {
+    index: {
+      title: "Engineering notes",
+      subtitle:
+        "Long-form breakdowns of delivery choices, instrumentation tactics, and operating agreements behind the portfolio effort.",
+      empty: "Notes are on the way."
+    },
+    detail: {
+      backLabel: "Back to notes",
+      tocLabel: "On this page"
     }
   }
 };
@@ -216,6 +239,18 @@ const ja: AppDictionary = {
         ]
       }
     }
+  },
+  notes: {
+    index: {
+      title: "エンジニアリングノート",
+      subtitle:
+        "ポートフォリオ施策を支えるデリバリー判断、計測手法、オペレーションの約束事を詳しく解説します。",
+      empty: "ノートは近日公開予定です。"
+    },
+    detail: {
+      backLabel: "ノート一覧に戻る",
+      tocLabel: "このページの内容"
+    }
   }
 };
 
@@ -299,6 +334,18 @@ const zh: AppDictionary = {
           "為工程筆記與圖表導入 MDX 流程。"
         ]
       }
+    }
+  },
+  notes: {
+    index: {
+      title: "工程筆記",
+      subtitle:
+        "延伸說明本作品集背後的交付決策、監測手法，以及合作共識。",
+      empty: "筆記即將發布。"
+    },
+    detail: {
+      backLabel: "返回筆記",
+      tocLabel: "頁面導覽"
     }
   }
 };

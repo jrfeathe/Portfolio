@@ -39,3 +39,11 @@ export function getLocaleDirection(locale: Locale) {
 export function getLanguageSwitcherLabel(locale: Locale) {
   return languageSwitcherLabel[locale];
 }
+
+export function parseLocale(value: string | string[] | undefined | null): Locale | null {
+  if (Array.isArray(value)) {
+    return value.length ? (isLocale(value[0]) ? value[0] : null) : null;
+  }
+
+  return isLocale(value ?? undefined) ? (value as Locale) : null;
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
+import type { Route } from "next";
 import {
   useParams,
   usePathname,
@@ -48,7 +49,7 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
     segments[1] = nextLocale;
     const nextPath = segments.join("/") || "/";
     const search = searchParams.toString();
-    const nextUrl = search ? `${nextPath}?${search}` : nextPath;
+    const nextUrl = (search ? `${nextPath}?${search}` : nextPath) as Route;
 
     startTransition(() => {
       document.cookie = `${localeCookieName}=${nextLocale}; path=/`;

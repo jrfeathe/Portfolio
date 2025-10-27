@@ -12,5 +12,6 @@
 | 2.2 | Page shells | 2025-Oct-26     | Responsive shell layout, anchor navigation, breadcrumbs, sticky CTA, and footer integrated into `apps/site`. |
 | 2.3 | Print styles | 2025-Oct-26     | Dedicated print stylesheet ensures two-page recruiter skim export with anchor nav/sidebar stripped for clean output. |
 | 3.0 | Next.js + TS app init | 2025-Oct-26     | Edge runtime enabled on the home route, strict TS config applied, and client-only UI primitives annotated so `pnpm dev/build` succeed. |
+| 3.1 | Routing & i18n | 2025-Oct-27     | App router now served under `/[locale]`, static dictionaries provide EN/JA/ZH copy, middleware normalizes locale paths, and UI switcher toggles languages. |
 
 Update this log as additional WBS items reach completion.

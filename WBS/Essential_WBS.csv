@@ -40,6 +40,7 @@ ID,Epic,Task,Description,Deliverables,Acceptance Criteria
 12.2,Infra & Hosting,Tor Mirror VPS,"provision VPS, firewall (deny all but Tor), systemd hardening.",,
 12.3,Infra & Hosting,Tor HS Config,"v3 hidden service, HiddenServicePort, rotation policy; capture address in SECRETS.md.",,
 12.4,Infra & Hosting,Mirror Security,"replicate headers/CSP, disable trackers, document privacy posture.",,
+12.5,Infra & Hosting,NoScript fallback,"Ship a JS-free rendering path so Tor Browser at 'Safest' displays core content.","apps/site/src/app/(noscript)/*, public/noscript.html","Tor Browser Safest mode loads critical copy without enabling scripts."
 13,Engineering Notes,List & filters,"MDX list with tags, filters, search (client) and RSS.","/notes page, RSS.xml",Tag filter works
 13.1,Engineering Notes,Post template with Trade-offs,"MDX template with sections: Context, Options, Trade-offs, What I'd do differently.",content/templates/note.mdx,New posts scaffold via script
 14,Systems Gallery,ADR cards & detail pages,Gallery of patterns with ADR triad and diagrams.,apps/site/src/app/systems/*,At least 2 patterns live

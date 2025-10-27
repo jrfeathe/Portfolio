@@ -6,6 +6,7 @@ import { AnchorNav } from "./AnchorNav";
 import type { BreadcrumbItem } from "./Breadcrumbs";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { ShellFooter } from "./Footer";
+import { LanguageSwitcher } from "../LanguageSwitcher";
 
 export type ShellSection = {
   id: string;
@@ -45,11 +46,17 @@ export function ShellLayout({
 
   return (
     <div className="bg-background text-text dark:bg-dark-background dark:text-dark-text">
-      <header className="border-b border-border bg-surface pt-10 pb-8 dark:border-dark-border dark:bg-dark-surface">
+      <header className="border-b border-border bg-surface pb-8 pt-10 dark:border-dark-border dark:bg-dark-surface">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4">
-          {breadcrumbs.length ? (
-            <Breadcrumbs items={breadcrumbs} />
-          ) : null}
+          <div className="flex flex-wrap items-center gap-4">
+            {breadcrumbs.length ? (
+              <Breadcrumbs
+                items={breadcrumbs}
+                className="flex-1"
+              />
+            ) : null}
+            <LanguageSwitcher className="ml-auto" />
+          </div>
           <div className="space-y-3">
             <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
             {subtitle ? (

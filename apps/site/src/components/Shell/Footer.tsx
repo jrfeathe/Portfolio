@@ -43,7 +43,7 @@ export function ShellFooter({ className }: ShellFooterProps) {
         </div>
       </div>
       <div className="mx-auto mt-6 w-full max-w-6xl px-4 text-xs text-textMuted dark:text-dark-textMuted">
-        © {year} Jack Smith. Built with Next.js, pnpm, and an obsession with measurable impact.
+        © {year} Jack F. Built with Next.js, pnpm, and an obsession with measurable impact.
       </div>
     </footer>
   );

@@ -8,7 +8,7 @@
     "dev": "pnpm --filter @portfolio/site dev",
     "lint": "pnpm --filter @portfolio/site lint",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,cjs,mjs,json,md,css}\"",
-    "typecheck": "pnpm -r run typecheck --if-present"
+    "typecheck": "pnpm -r --if-present run typecheck"
   },
   "devDependencies": {
     "@portfolio/config": "workspace:*",

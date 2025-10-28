@@ -92,6 +92,7 @@ export function PlantUmlDiagram({
       className={className}
       dangerouslySetInnerHTML={{ __html: svg }}
       aria-label="PlantUML diagram"
+      role="img"
     />
   );
 }

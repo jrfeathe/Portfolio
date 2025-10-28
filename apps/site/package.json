@@ -10,7 +10,11 @@
     "typecheck": "tsc --noEmit",
     "lhci:collect": "node ../../scripts/lighthouse/collect.cjs",
     "lhci:summarize": "node ../../scripts/lighthouse/summarize.cjs",
-    "lhci:report": "node ../../scripts/lighthouse/report.cjs"
+    "lhci:report": "node ../../scripts/lighthouse/report.cjs",
+    "preplaywright:test": "node ../../scripts/playwright/pretest.cjs",
+    "playwright:test": "playwright test",
+    "preplaywright:test:headed": "node ../../scripts/playwright/pretest.cjs",
+    "playwright:test:headed": "playwright test --headed"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.6.2",

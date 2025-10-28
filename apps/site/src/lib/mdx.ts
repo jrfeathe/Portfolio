@@ -1,4 +1,5 @@
 import fs from "node:fs/promises";
+import fsSync from "node:fs";
 import path from "node:path";
 
 import type { JSX } from "react";
@@ -10,7 +11,22 @@ import remarkCodeTitles from "remark-code-titles";
 import remarkGfm from "remark-gfm";
 import { mdxComponents } from "../components/mdx";
 
-const NOTES_DIRECTORY = path.join(process.cwd(), "content/notes");
+function resolveNotesDirectory() {
+  const candidates = [
+    path.join(process.cwd(), "content/notes"),
+    path.join(process.cwd(), "..", "..", "content/notes")
+  ];
+
+  for (const directory of candidates) {
+    if (fsSync.existsSync(directory)) {
+      return directory;
+    }
+  }
+
+  return candidates[0];
+}
+
+const NOTES_DIRECTORY = resolveNotesDirectory();
 
 const SUPPORTED_EXTENSIONS = new Set([".mdx", ".md"]);
 
@@ -167,9 +183,34 @@ export async function getNote(slug: string): Promise<Note> {
             rehypeAutolinkHeadings,
             {
               properties: {
-                className: ["heading-anchor"]
+                className: ["heading-anchor"],
+                "aria-label": "Link to this section"
               },
-              behaviour: "append"
+              behaviour: "append",
+              content: [
+                {
+                  type: "element",
+                  tagName: "span",
+                  properties: {
+                    className: ["sr-only"]
+                  },
+                  children: [
+                    {
+                      type: "text",
+                      value: "Link to this section"
+                    }
+                  ]
+                },
+                {
+                  type: "element",
+                  tagName: "span",
+                  properties: {
+                    className: ["icon", "icon-link"],
+                    "aria-hidden": "true"
+                  },
+                  children: []
+                }
+              ]
             }
           ]
         ]

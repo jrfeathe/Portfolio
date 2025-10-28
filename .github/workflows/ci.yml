@@ -112,26 +112,9 @@ jobs:
       - name: Run Playwright tests
         env:
           PLAYWRIGHT_HTML_REPORT: playwright-report
+          PLAYWRIGHT_SKIP_BUILD: "1"
         run: |
-          pnpm --filter @portfolio/site start -- --hostname 127.0.0.1 --port 3000 &
-          SERVER_PID=$!
-          cleanup() {
-            kill $SERVER_PID || true
-          }
-          trap cleanup EXIT
-          READY=0
-          for attempt in {1..30}; do
-            if curl --fail --silent http://127.0.0.1:3000 >/dev/null; then
-              READY=1
-              break
-            fi
-            sleep 2
-          done
-          if [ "$READY" -ne 1 ]; then
-            echo "Site did not become ready in time." >&2
-            exit 1
-          fi
-          pnpm --filter @portfolio/site exec playwright test --reporter=list,blob
+          pnpm --filter @portfolio/site run playwright:test
 
       - name: Upload Playwright artifacts
         if: always()

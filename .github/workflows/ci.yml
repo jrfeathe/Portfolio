@@ -145,9 +145,14 @@ jobs:
           if-no-files-found: warn
 
   lighthouse:
-    name: ci/lighthouse
+    name: ci/lighthouse-preview
     runs-on: ubuntu-latest
     needs: e2e
+    env:
+      PREVIEW_URL: ${{ vars.LIGHTHOUSE_PREVIEW_URL || secrets.LIGHTHOUSE_PREVIEW_URL || '' }}
+    outputs:
+      badge_json: ${{ steps.badge.outputs.json }}
+      preview_url: ${{ steps.preview.outputs.url }}
 
     steps:
       - name: Checkout repository
@@ -168,35 +173,44 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build site
-        run: pnpm --filter @portfolio/site build
-
-      - name: Run Lighthouse CI
+      - name: Resolve preview URL
+        id: preview
         run: |
-          pnpm --filter @portfolio/site start -- --hostname 127.0.0.1 --port 3000 &
-          SERVER_PID=$!
-          cleanup() {
-            kill $SERVER_PID || true
-          }
-          trap cleanup EXIT
-          READY=0
-          for attempt in {1..30}; do
-            if curl --fail --silent http://127.0.0.1:3000 >/dev/null; then
-              READY=1
-              break
-            fi
-            sleep 2
-          done
-          if [ "$READY" -ne 1 ]; then
-            echo "Site did not become ready in time." >&2
+          url="${PREVIEW_URL:-}"
+          if [ -z "$url" ] && [ -n "${DEPLOYMENT_URL:-}" ]; then
+            url="$DEPLOYMENT_URL"
+          fi
+          if [ -z "$url" ] && [ -n "${VERCEL_PREVIEW_URL:-}" ]; then
+            url="$VERCEL_PREVIEW_URL"
+          fi
+          if [ -z "$url" ]; then
+            echo "::error::PREVIEW_URL, DEPLOYMENT_URL, or VERCEL_PREVIEW_URL must be provided for Lighthouse."
             exit 1
           fi
-          pnpm --filter @portfolio/site exec lhci autorun --collect.url=http://127.0.0.1:3000 --upload.target=filesystem --upload.outputDir=./apps/site/lhci
+          echo "Resolved preview URL: $url"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      - name: Run Lighthouse CI
+        env:
+          PREVIEW_URL: ${{ steps.preview.outputs.url }}
+        run: pnpm --filter @portfolio/site lhci:report
 
       - name: Upload Lighthouse artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-report
-          path: apps/site/lhci
-          if-no-files-found: warn
+          path: apps/site/.lhci
+          if-no-files-found: error
+
+      - name: Publish badge output
+        id: badge
+        if: always()
+        run: |
+          badge_path="apps/site/.lhci/badge.json"
+          if [ ! -f "$badge_path" ]; then
+            echo "::warning::No badge payload generated."
+            exit 0
+          fi
+          badge_json=$(tr -d '\n' < "$badge_path")
+          echo "json=$badge_json" >> "$GITHUB_OUTPUT"

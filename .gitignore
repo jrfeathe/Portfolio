@@ -26,3 +26,5 @@ apps/site/playwright-report/
 apps/site/blob-report/
 apps/site/test-results/
 *.tsbuildinfo
+/coverage/
+apps/site/coverage/

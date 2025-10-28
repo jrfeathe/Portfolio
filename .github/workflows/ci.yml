@@ -77,11 +77,11 @@ jobs:
       - name: Prepare coverage comment
         id: coverage-summary
         run: |
-          COMMENT=$(pnpm --filter @portfolio/site run coverage:report -- --markdown)
+          COMMENT=$(pnpm --filter @portfolio/site run --silent coverage:report -- --markdown)
           {
-            echo "body<<'EOF'"
+            echo 'body<<EOF'
             echo "$COMMENT"
-            echo "EOF"
+            echo 'EOF'
           } >> "$GITHUB_OUTPUT"
 
       - name: Post coverage comment

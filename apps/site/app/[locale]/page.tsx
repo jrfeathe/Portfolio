@@ -13,6 +13,7 @@ import {
 } from "../../src/components/Shell";
 
 export const runtime = "edge";
+export const dynamic = "force-dynamic";
 
 type PageParams = {
   params: {
@@ -20,7 +21,43 @@ type PageParams = {
   };
 };
 
-type PageProps = PageParams;
+type PageProps = PageParams & {
+  searchParams?: Record<string, string | string[] | undefined>;
+};
+
+function isTruthySkimValue(value: string) {
+  const normalized = value.trim().toLowerCase();
+  return (
+    normalized === "" ||
+    normalized === "1" ||
+    normalized === "true" ||
+    normalized === "yes"
+  );
+}
+
+function resolveSkimMode(
+  searchParams?: Record<string, string | string[] | undefined>
+) {
+  if (!searchParams) {
+    return false;
+  }
+
+  if (!Object.prototype.hasOwnProperty.call(searchParams, "skim")) {
+    return false;
+  }
+
+  const raw = searchParams.skim;
+
+  if (Array.isArray(raw)) {
+    return raw.some((entry) => typeof entry === "string" && isTruthySkimValue(entry));
+  }
+
+  if (typeof raw === "string") {
+    return isTruthySkimValue(raw);
+  }
+
+  return true;
+}
 
 function ensureLocale(value: string): Locale {
   if (!isLocale(value)) {
@@ -122,7 +159,7 @@ export function generateMetadata({ params }: PageParams): Metadata {
   };
 }
 
-export default function HomePage({ params }: PageProps) {
+export default function HomePage({ params, searchParams }: PageProps) {
   const locale = ensureLocale(params.locale);
   const dictionary = getDictionary(locale);
   const sections = buildSections(dictionary);
@@ -130,22 +167,25 @@ export default function HomePage({ params }: PageProps) {
   const {
     hero: { title, subtitle, cta }
   } = dictionary.home;
+  const skimModeEnabled = resolveSkimMode(searchParams);
 
   return (
-    <ShellLayout
-      title={title}
-      subtitle={subtitle}
-      breadcrumbs={breadcrumbs}
-      sections={sections}
-      cta={
-        <StickyCTA title={cta.title} description={cta.description}>
-          {cta.actions.map((action) => (
-            <Button key={action.label} variant={action.variant}>
-              {action.label}
-            </Button>
-          ))}
-        </StickyCTA>
-      }
-    />
+    <div data-skim-mode={skimModeEnabled ? "true" : "false"}>
+      <ShellLayout
+        title={title}
+        subtitle={subtitle}
+        breadcrumbs={breadcrumbs}
+        sections={sections}
+        cta={
+          <StickyCTA title={cta.title} description={cta.description}>
+            {cta.actions.map((action) => (
+              <Button key={action.label} variant={action.variant}>
+                {action.label}
+              </Button>
+            ))}
+          </StickyCTA>
+        }
+      />
+    </div>
   );
 }

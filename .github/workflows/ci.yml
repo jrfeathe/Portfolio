@@ -5,11 +5,27 @@ on:
     branches:
       - master
       - dev
+  pull_request:
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
-    name: ci/build
+  checks:
+    name: ci
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    env:
+      PREVIEW_URL: ${{ vars.LIGHTHOUSE_PREVIEW_URL || secrets.LIGHTHOUSE_PREVIEW_URL || '' }}
+    outputs:
+      badge_json: ${{ steps.badge.outputs.json }}
+      preview_url: ${{ steps.preview.outputs.url }}
 
     steps:
       - name: Checkout repository
@@ -24,36 +40,171 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
-          cache: "pnpm"
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build workspace
-        run: pnpm -w build
-
-  lint:
-    name: ci/lint
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+      - name: Cache Playwright browsers
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/cache@v4
         with:
-          version: 10.19.0
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Typecheck workspace
+        run: pnpm typecheck
+
+      - name: Run unit tests (coverage)
+        env:
+          CI: true
+        run: pnpm --filter @portfolio/site run test:coverage
+
+      - name: Enforce coverage thresholds
+        id: coverage-gate
+        continue-on-error: true
+        run: pnpm --filter @portfolio/site run coverage:check
+
+      - name: Prepare coverage comment
+        id: coverage-summary
+        run: |
+          COMMENT=$(pnpm --filter @portfolio/site run --silent coverage:report -- --markdown)
+          {
+            echo 'body<<EOF'
+            echo "$COMMENT"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Post coverage comment
+        if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && always() }}
+        uses: actions/github-script@v7
+        env:
+          COVERAGE_BODY: ${{ steps.coverage-summary.outputs.body }}
         with:
-          node-version-file: ".nvmrc"
-          cache: "pnpm"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const marker = '<!-- coverage-report -->';
+            const body = `${marker}\n\n### Coverage Report\n\n${process.env.COVERAGE_BODY}`;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+            const existing = comments.find((comment) => comment.body && comment.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body
+              });
+            }
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Fail on coverage regression
+        if: ${{ steps.coverage-gate.outcome == 'failure' }}
+        run: |
+          echo "Coverage thresholds were not met." >&2
+          exit 1
 
-      - name: Lint site
-        run: pnpm --filter @portfolio/site lint
+      - name: Upload unit test artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-tests
+          path: |
+            apps/site/coverage
+            apps/site/junit.xml
+          if-no-files-found: warn
+
+      - name: Install Playwright browsers
+        if: ${{ github.event_name == 'pull_request' }}
+        run: pnpm --filter @portfolio/site exec playwright install
+
+      - name: Restore Next.js build cache
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/cache@v4
+        with:
+          path: apps/site/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-
+
+      - name: Build site
+        if: ${{ github.event_name == 'pull_request' }}
+        run: pnpm --filter @portfolio/site build
+
+      - name: Run Playwright tests
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          PLAYWRIGHT_HTML_REPORT: playwright-report
+          PLAYWRIGHT_SKIP_BUILD: "1"
+        run: |
+          pnpm --filter @portfolio/site run playwright:test
+
+      - name: Upload Playwright artifacts
+        if: ${{ github.event_name == 'pull_request' && always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: |
+            apps/site/playwright-report
+            apps/site/blob-report
+            apps/site/test-results
+          if-no-files-found: warn
+
+      - name: Resolve preview URL
+        if: ${{ github.event_name == 'pull_request' }}
+        id: preview
+        run: |
+          url="${PREVIEW_URL:-}"
+          if [ -z "$url" ] && [ -n "${DEPLOYMENT_URL:-}" ]; then
+            url="$DEPLOYMENT_URL"
+          fi
+          if [ -z "$url" ] && [ -n "${VERCEL_PREVIEW_URL:-}" ]; then
+            url="$VERCEL_PREVIEW_URL"
+          fi
+          if [ -z "$url" ]; then
+            echo "::warning::Skipping Lighthouse: no preview URL provided."
+            echo "has_url=false" >> "$GITHUB_OUTPUT"
+            echo "url=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "Resolved preview URL: $url"
+          echo "has_url=true" >> "$GITHUB_OUTPUT"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      - name: Run Lighthouse CI
+        if: ${{ github.event_name == 'pull_request' && steps.preview.outputs.has_url == 'true' }}
+        env:
+          PREVIEW_URL: ${{ steps.preview.outputs.url }}
+        run: pnpm --filter @portfolio/site lhci:report
+
+      - name: Upload Lighthouse artifacts
+        if: ${{ github.event_name == 'pull_request' && steps.preview.outputs.has_url == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: apps/site/.lhci
+          if-no-files-found: warn
+
+      - name: Publish badge output
+        id: badge
+        if: ${{ github.event_name == 'pull_request' && steps.preview.outputs.has_url == 'true' }}
+        run: |
+          badge_path="apps/site/.lhci/badge.json"
+          if [ ! -f "$badge_path" ]; then
+            echo "::warning::No badge payload generated."
+            exit 0
+          fi
+          badge_json=$(tr -d '\n' < "$badge_path")
+          echo "json=$badge_json" >> "$GITHUB_OUTPUT"

@@ -15,5 +15,9 @@
 | 3.1 | Routing & i18n | 2025-Oct-27     | App router now served under `/[locale]`, static dictionaries provide EN/JA/ZH copy, middleware normalizes locale paths, and UI switcher toggles languages. |
 | 3.2 | MDX pipeline | 2025-Oct-27     | Notes parse via `compileMDX` with remark/rehype plugins, shared MDX components, TOC helpers, and `/[locale]/notes` index + detail routes wired. |
 | 3.3 | Mermaid/PlantUML support | 2025-Oct-27     | `<Diagram>` renders Mermaid locally, PlantUML diagrams proxy through `/api/plantuml` with sanitization, and MDX fences auto-map to the new components. |
+| 4.0 | GitHub Actions pipeline | 2025-Oct-27     | `.github/workflows/ci.yml` now drives typecheck → Jest → Playwright → Lighthouse with concurrency guard and artifact uploads. |
+| 4.1 | Lighthouse CI integration | 2025-Oct-28     | `.lighthouserc.json` + lighthouse scripts run preview LHCI, enforce ≥0.9 scores, upload JSON & badge outputs from CI. |
+| 4.2 | Playwright e2e tests | 2025-Oct-28     | `playwright.config.ts` + scenario specs cover skim toggle, notes rendering, PlantUML proxy; trade-off suite marked fixme until UI lands. |
+| 4.3 | Coverage & quality gates | 2025-Oct-28     | Jest now enforces ≥90% lines/functions/statements (80% branches) with a coverage gate script; CodeQL workflow scans TS during CI. |
 
 Update this log as additional WBS items reach completion.

@@ -75,6 +75,7 @@ export function MermaidDiagram({ source, className }: MermaidDiagramProps) {
       className={className}
       dangerouslySetInnerHTML={{ __html: svg }}
       aria-label="Mermaid diagram"
+      role="img"
     />
   );
 }

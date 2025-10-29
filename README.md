@@ -25,6 +25,27 @@ supporting packages.
 The default Node version is pinned in `.nvmrc`. Run `nvm use` (or your preferred
 version manager) before installing dependencies to stay aligned with the repo.
 
+## Observability
+
+Task 5.0 adds OpenTelemetry traces to the portfolio site across Node, edge, and
+browser runtimes. Configure an OTLP endpoint before running the app to emit
+spans:
+
+- `OTEL_EXPORTER_OTLP_ENDPOINT` – HTTPS endpoint for your collector (server/edge).
+- `NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT` – Public endpoint exposed to the browser.
+- `OTEL_EXPORTER_OTLP_HEADERS` / `NEXT_PUBLIC_OTEL_EXPORTER_OTLP_HEADERS` – Optional
+  `key=value` header pairs (comma-separated) for authentication.
+- `OTEL_SERVICE_NAME` – Optional override for the trace service name (defaults to `portfolio-site`).
+
+When the endpoint variables are unset, instrumentation remains dormant and no
+spans are generated.
+
+### Local environment template
+
+A `.env.example` file is provided at the repo root with the required variables.
+Copy it to `.env` or `.env.local`, fill in your Honeycomb API key and dataset,
+and load the env file before running local commands.
+
 ## Branch protection & workflow expectations
 
 - All changes land via pull request; direct pushes to `master` are disabled.

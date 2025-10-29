@@ -11,6 +11,7 @@ import {
   localeCookieName
 } from "../src/utils/i18n";
 import { getDictionary } from "../src/utils/dictionaries";
+import { OtelBootstrap } from "../src/components/telemetry/OtelBootstrap";
 
 const defaultDictionary = getDictionary(defaultLocale);
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang={locale} dir={getLocaleDirection(locale)}>
       <body className="min-h-screen bg-background font-sans text-text antialiased dark:bg-dark-background dark:text-dark-text">
+        <OtelBootstrap />
         {children}
       </body>
     </html>

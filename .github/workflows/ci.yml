@@ -17,6 +17,10 @@ jobs:
   checks:
     name: ci
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
     env:
       PREVIEW_URL: ${{ vars.LIGHTHOUSE_PREVIEW_URL || secrets.LIGHTHOUSE_PREVIEW_URL || '' }}
     outputs:

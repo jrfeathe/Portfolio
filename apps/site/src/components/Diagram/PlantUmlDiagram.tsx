@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type PlantUmlDiagramProps = {
   source: string;
@@ -18,6 +18,7 @@ export function PlantUmlDiagram({
   const [svg, setSvg] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [state, setState] = useState<DiagramState>("idle");
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -71,6 +72,27 @@ export function PlantUmlDiagram({
     };
   }, [format, source]);
 
+  useEffect(() => {
+    if (!svg) {
+      return;
+    }
+
+    const nonce = document?.body?.dataset?.cspNonce;
+    if (!nonce) {
+      return;
+    }
+
+    const root = containerRef.current;
+    if (!root) {
+      return;
+    }
+
+    const styles = root.querySelectorAll("style");
+    styles.forEach((style) => {
+      style.setAttribute("nonce", nonce);
+    });
+  }, [svg]);
+
   if (state === "error") {
     return (
       <div className="rounded-md border border-danger/30 bg-danger/5 p-4 text-sm text-danger">
@@ -89,6 +111,7 @@ export function PlantUmlDiagram({
 
   return (
     <div
+      ref={containerRef}
       className={className}
       dangerouslySetInnerHTML={{ __html: svg }}
       aria-label="PlantUML diagram"

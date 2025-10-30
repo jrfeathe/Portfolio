@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
 export type AnchorNavItem = {
@@ -24,6 +24,7 @@ export function AnchorNav({
   const [activeHref, setActiveHref] = useState<string>(
     items[0]?.href ?? ""
   );
+  const scrollRaf = useRef<number | null>(null);
 
   useEffect(() => {
     if (!items.length) return;
@@ -37,6 +38,31 @@ export function AnchorNav({
       .filter(Boolean) as HTMLElement[];
 
     if (!targets.length) return;
+
+    const updateActiveFromViewport = () => {
+      scrollRaf.current = null;
+      const viewportCenter = window.innerHeight / 2;
+      setActiveHref((previous) => {
+        let nextHref = previous;
+
+        for (const target of targets) {
+          const rect = target.getBoundingClientRect();
+          if (
+            rect.top <= viewportCenter &&
+            rect.bottom >= viewportCenter * 0.35
+          ) {
+            nextHref = `#${target.id}`;
+            break;
+          }
+          if (rect.top > viewportCenter) {
+            break;
+          }
+          nextHref = `#${target.id}`;
+        }
+
+        return nextHref;
+      });
+    };
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -57,7 +83,26 @@ export function AnchorNav({
 
     targets.forEach((target) => observer.observe(target));
 
-    return () => observer.disconnect();
+    const scheduleUpdate = () => {
+      if (scrollRaf.current !== null) {
+        cancelAnimationFrame(scrollRaf.current);
+      }
+      scrollRaf.current = requestAnimationFrame(updateActiveFromViewport);
+    };
+
+    scheduleUpdate();
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+
+    return () => {
+      observer.disconnect();
+      if (scrollRaf.current !== null) {
+        cancelAnimationFrame(scrollRaf.current);
+        scrollRaf.current = null;
+      }
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+    };
   }, [items]);
 
   if (!items.length) {

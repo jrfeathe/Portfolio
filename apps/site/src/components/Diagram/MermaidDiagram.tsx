@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import mermaid from "mermaid";
 
 type MermaidDiagramProps = {
@@ -15,6 +15,7 @@ export function MermaidDiagram({ source, className }: MermaidDiagramProps) {
   const [state, setState] = useState<RenderState>("idle");
   const [error, setError] = useState<string | null>(null);
   const renderId = useId().replace(/:/g, "-");
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -54,6 +55,27 @@ export function MermaidDiagram({ source, className }: MermaidDiagramProps) {
     };
   }, [source, renderId]);
 
+  useEffect(() => {
+    if (!svg) {
+      return;
+    }
+
+    const nonce = document?.body?.dataset?.cspNonce;
+    if (!nonce) {
+      return;
+    }
+
+    const root = containerRef.current;
+    if (!root) {
+      return;
+    }
+
+    const styles = root.querySelectorAll("style");
+    styles.forEach((style) => {
+      style.setAttribute("nonce", nonce);
+    });
+  }, [svg]);
+
   if (state === "error") {
     return (
       <div className="rounded-md border border-danger/30 bg-danger/5 p-4 text-sm text-danger">
@@ -72,6 +94,7 @@ export function MermaidDiagram({ source, className }: MermaidDiagramProps) {
 
   return (
     <div
+      ref={containerRef}
       className={className}
       dangerouslySetInnerHTML={{ __html: svg }}
       aria-label="Mermaid diagram"

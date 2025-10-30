@@ -10,6 +10,10 @@ import {
   registerEdgeInstrumentation,
   withEdgeSpan
 } from "./lib/otel/edge";
+import {
+  applySecurityHeaders,
+  generateNonce
+} from "./lib/security/headers";
 
 const PUBLIC_FILE = /\.(.*)$/;
 
@@ -26,10 +30,28 @@ export function middleware(request: NextRequest) {
 
     if (
       pathname.startsWith("/_next") ||
-      pathname.startsWith("/api") ||
       PUBLIC_FILE.test(pathname)
     ) {
       return NextResponse.next();
+    }
+
+    const nonce = generateNonce();
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set("x-nonce", nonce);
+    requestHeaders.set("x-nextjs-csp-nonce", nonce);
+    requestHeaders.set("x-csp-nonce", nonce);
+
+    if (pathname.startsWith("/api")) {
+      const apiResponse = NextResponse.next({
+        request: {
+          headers: requestHeaders
+        }
+      });
+      applySecurityHeaders(apiResponse.headers, { nonce, request });
+      apiResponse.headers.set("x-nonce", nonce);
+      apiResponse.headers.set("x-nextjs-csp-nonce", nonce);
+      apiResponse.headers.set("x-csp-nonce", nonce);
+      return apiResponse;
     }
 
     const localeInPath = getLocaleFromPath(pathname);
@@ -44,10 +66,18 @@ export function middleware(request: NextRequest) {
         path: "/",
         sameSite: "lax"
       });
+      applySecurityHeaders(response.headers, { nonce, request });
+      response.headers.set("x-nonce", nonce);
+      response.headers.set("x-nextjs-csp-nonce", nonce);
+      response.headers.set("x-csp-nonce", nonce);
       return response;
     }
 
-    const response = NextResponse.next();
+    const response = NextResponse.next({
+      request: {
+        headers: requestHeaders
+      }
+    });
     const existingLocale = request.cookies.get(localeCookieName)?.value;
 
     if (existingLocale !== localeInPath) {
@@ -57,10 +87,14 @@ export function middleware(request: NextRequest) {
       });
     }
 
+    applySecurityHeaders(response.headers, { nonce, request });
+    response.headers.set("x-nonce", nonce);
+    response.headers.set("x-nextjs-csp-nonce", nonce);
+    response.headers.set("x-csp-nonce", nonce);
     return response;
   });
 }
 
 export const config = {
-  matcher: ["/((?!_next|api|.*\\..*).*)"]
+  matcher: ["/((?!_next|.*\\..*).*)"]
 };

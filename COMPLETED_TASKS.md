@@ -21,5 +21,6 @@
 | 4.3 | Coverage & quality gates | 2025-Oct-28     | Jest now enforces ≥90% lines/functions/statements (80% branches) with a coverage gate script; CodeQL workflow scans TS during CI. |
 | 5.0 | OpenTelemetry wiring | 2025-Oct-29     | Node, edge, and fetch instrumentation now emit OTLP traces to Honeycomb when env vars are set; Honeycomb board tracks `portfolio-site` spans. |
 | 6.0 | Strict CSP & headers | 2025-Oct-30     | Edge middleware applies nonce-based CSP + security headers; layout/components propagate per-request nonces so production stays inline-safe. |
+| 6.1 | security.txt & GPG key | 2025-Oct-30     | `.well-known/security.txt` now lists disclosure contacts, preferred language, expiry, and the OpenPGP fingerprint; matching `pubkey.asc` serves the armored key. |
 
 Update this log as additional WBS items reach completion.

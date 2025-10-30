@@ -3,12 +3,7 @@ import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
 import { ZoneContextManager } from "@opentelemetry/context-zone-peer-dep";
 import { BatchSpanProcessor } from "@opentelemetry/sdk-trace-base";
 import { WebTracerProvider } from "@opentelemetry/sdk-trace-web";
-import {
-  buildResource,
-  attachSpanProcessor,
-  parseExporter,
-  withFetchedTrace
-} from "./common";
+import { buildResource, parseExporter, withFetchedTrace } from "./common";
 import { getOtelConfig } from "./config";
 
 const BROWSER_SYMBOL = Symbol.for("portfolio.otel.browser");
@@ -45,13 +40,11 @@ export function registerBrowserInstrumentation() {
   }
 
   const provider = new WebTracerProvider({
-    resource: buildResource(`${getOtelConfig().serviceName}-browser`)
+    resource: buildResource(`${getOtelConfig().serviceName}-browser`),
+    spanProcessors: [
+      new BatchSpanProcessor(new OTLPTraceExporter(exporter))
+    ]
   });
-
-  attachSpanProcessor(
-    provider,
-    new BatchSpanProcessor(new OTLPTraceExporter(exporter))
-  );
 
   provider.register({
     contextManager: new ZoneContextManager()

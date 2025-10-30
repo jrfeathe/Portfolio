@@ -12,7 +12,6 @@ import {
 } from "@opentelemetry/sdk-trace-base";
 import type { NextRequest } from "next/server";
 import {
-  attachSpanProcessor,
   buildResource,
   extractContextFromHeaders,
   getTracer,
@@ -49,13 +48,11 @@ export function registerEdgeInstrumentation() {
   }
 
   const provider = new BasicTracerProvider({
-    resource: buildResource(`${getOtelConfig().serviceName}-edge`)
+    resource: buildResource(`${getOtelConfig().serviceName}-edge`),
+    spanProcessors: [
+      new BatchSpanProcessor(new OTLPTraceExporter(exporter))
+    ]
   });
-
-  attachSpanProcessor(
-    provider,
-    new BatchSpanProcessor(new OTLPTraceExporter(exporter))
-  );
   trace.setGlobalTracerProvider(provider);
 
   patchEdgeFetch();

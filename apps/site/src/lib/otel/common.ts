@@ -8,7 +8,6 @@ import {
 } from "@opentelemetry/api";
 import { resourceFromAttributes } from "@opentelemetry/resources";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
-import type { SpanProcessor } from "@opentelemetry/sdk-trace-base";
 import type { ExporterOptions } from "./config";
 import { getEnvironment, getOtelConfig } from "./config";
 
@@ -65,11 +64,21 @@ export function withFetchedTrace(
     `${FETCH_SPAN_NAME} ${spanName}`,
     async (span) => {
       try {
-        const { request, contextCarrier } = createTracedRequest(
-          input,
+        const {
+          input: tracedInput,
+          init: tracedInit,
+          contextCarrier
+        } = createTracedRequest(
+          args,
           span
         );
-        const response = await context.with(contextCarrier, () => fetchImpl(request));
+
+        const response = await context.with(contextCarrier, () =>
+          fetchImpl(
+            tracedInput as Parameters<typeof fetch>[0],
+            tracedInit as Parameters<typeof fetch>[1]
+          )
+        );
 
         span.setAttribute("http.status_code", response.status);
         span.setAttribute("http.status_text", response.statusText);
@@ -107,36 +116,41 @@ function resolveFetchSpanName(input: FetchArgs[0]): string {
 }
 
 function createTracedRequest(
-  input: FetchArgs[0],
+  args: FetchArgs,
   span: Span
-): { request: Request; contextCarrier: Context } {
-  const baseRequest =
-    input instanceof Request ? input : new Request(input as RequestInfo);
+): {
+  input: FetchArgs[0];
+  init: FetchArgs[1];
+  contextCarrier: Context;
+} {
+  const [input, init] = args;
+  const headers = new Headers();
 
-  const headers = new Headers(baseRequest.headers);
+  if (init?.headers) {
+    new Headers(init.headers).forEach((value, key) => {
+      headers.set(key, value);
+    });
+  } else if (input instanceof Request) {
+    input.headers.forEach((value, key) => {
+      headers.set(key, value);
+    });
+  }
+
   const activeContext = trace.setSpan(context.active(), span);
   propagation.inject(activeContext, headers, textMapSetter);
 
-  const tracedRequest = new Request(baseRequest, { headers });
+  const nextInit: RequestInit = {
+    ...init,
+    headers
+  };
+
   return {
-    request: tracedRequest,
+    input,
+    init: nextInit as FetchArgs[1],
     contextCarrier: activeContext
   };
 }
 
 export function extractContextFromHeaders(headers: Headers): Context {
   return propagation.extract(context.active(), headers, textMapGetter);
-}
-
-export function attachSpanProcessor(
-  provider: unknown,
-  processor: SpanProcessor
-) {
-  const candidate = provider as {
-    addSpanProcessor?: (spanProcessor: SpanProcessor) => void;
-  };
-
-  if (typeof candidate.addSpanProcessor === "function") {
-    candidate.addSpanProcessor(processor);
-  }
 }

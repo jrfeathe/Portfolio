@@ -2,12 +2,7 @@ import { diag, trace } from "@opentelemetry/api";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
 import { BatchSpanProcessor } from "@opentelemetry/sdk-trace-base";
 import { NodeTracerProvider } from "@opentelemetry/sdk-trace-node";
-import {
-  attachSpanProcessor,
-  buildResource,
-  parseExporter,
-  withFetchedTrace
-} from "./common";
+import { buildResource, parseExporter, withFetchedTrace } from "./common";
 import { getOtelConfig } from "./config";
 
 const GLOBAL_KEY = Symbol.for("portfolio.otel.node");
@@ -37,13 +32,11 @@ export function registerNodeInstrumentation() {
   }
 
   const provider = new NodeTracerProvider({
-    resource: buildResource(`${getOtelConfig().serviceName}-node`)
+    resource: buildResource(`${getOtelConfig().serviceName}-node`),
+    spanProcessors: [
+      new BatchSpanProcessor(new OTLPTraceExporter(exporter))
+    ]
   });
-
-  attachSpanProcessor(
-    provider,
-    new BatchSpanProcessor(new OTLPTraceExporter(exporter))
-  );
 
   provider.register();
   patchGlobalFetch();

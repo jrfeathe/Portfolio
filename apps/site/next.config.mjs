@@ -4,7 +4,8 @@ const config = {
     dirs: ["app", "src"]
   },
   experimental: {
-    typedRoutes: true
+    typedRoutes: true,
+    instrumentationHook: true
   }
 };
 

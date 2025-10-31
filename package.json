@@ -7,6 +7,7 @@
     "build": "pnpm -r build",
     "dev": "pnpm --filter @portfolio/site dev",
     "lint": "pnpm --filter @portfolio/site lint",
+    "test": "pnpm --filter @portfolio/site run test:coverage",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,cjs,mjs,json,md,css}\"",
     "typecheck": "pnpm -r --if-present run typecheck"
   },

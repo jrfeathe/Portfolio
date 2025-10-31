@@ -60,6 +60,12 @@ some inline styles for its overlay tooling; the policy adds those automatically
 outside production. The defaults allow self-hosted assets, OTLP `https`/`wss`
 calls, and block framing or cross-domain embedding.
 
+## Dependency Policy
+
+Renovate manages npm updates for the pnpm workspace on a weekly cadence. Review
+dependency PRs after the Monday 02:00 UTC run, ensure CI stays green, and follow
+the documented triage SLAs and rollback steps in `docs/dependency-policy.md`.
+
 ## Branch protection & workflow expectations
 
 - All changes land via pull request; direct pushes to `master` are disabled.

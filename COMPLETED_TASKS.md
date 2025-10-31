@@ -22,5 +22,6 @@
 | 5.0 | OpenTelemetry wiring | 2025-Oct-29     | Node, edge, and fetch instrumentation now emit OTLP traces to Honeycomb when env vars are set; Honeycomb board tracks `portfolio-site` spans. |
 | 6.0 | Strict CSP & headers | 2025-Oct-30     | Edge middleware applies nonce-based CSP + security headers; layout/components propagate per-request nonces so production stays inline-safe. |
 | 6.1 | security.txt & GPG key | 2025-Oct-30     | `.well-known/security.txt` now lists disclosure contacts, preferred language, expiry, and the OpenPGP fingerprint; matching `pubkey.asc` serves the armored key. |
+| 6.2 | Dependency policy | 2025-Oct-31     | Renovate configured for pnpm workspace, CI enforces lint/build/test on update PRs, dependency triage doc added, and weekly review issue template established. |
 
 Update this log as additional WBS items reach completion.

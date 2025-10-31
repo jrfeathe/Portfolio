@@ -58,6 +58,12 @@ jobs:
       - name: Typecheck workspace
         run: pnpm typecheck
 
+      - name: Lint workspace
+        run: pnpm lint
+
+      - name: Build workspace
+        run: pnpm -w build
+
       - name: Run unit tests (coverage)
         env:
           CI: true

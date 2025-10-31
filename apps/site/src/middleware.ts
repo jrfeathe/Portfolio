@@ -22,9 +22,9 @@ function getLocaleFromPath(pathname: string) {
   return maybeLocale;
 }
 
-registerEdgeInstrumentation();
+export async function middleware(request: NextRequest) {
+  await registerEdgeInstrumentation();
 
-export function middleware(request: NextRequest) {
   return withEdgeSpan(request, "edge.middleware", () => {
     const { pathname } = request.nextUrl;
 

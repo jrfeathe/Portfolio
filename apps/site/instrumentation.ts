@@ -9,7 +9,7 @@ export async function register() {
     const { registerEdgeInstrumentation } = await import(
       "./src/lib/otel/edge"
     );
-    registerEdgeInstrumentation();
+    await registerEdgeInstrumentation();
     return;
   }
 

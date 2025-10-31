@@ -5,20 +5,12 @@ import {
   trace,
   type Span
 } from "@opentelemetry/api";
-import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
-import {
-  BatchSpanProcessor,
-  BasicTracerProvider
-} from "@opentelemetry/sdk-trace-base";
 import type { NextRequest } from "next/server";
 import {
-  buildResource,
   extractContextFromHeaders,
   getTracer,
-  parseExporter,
   withFetchedTrace
 } from "./common";
-import { getOtelConfig } from "./config";
 
 const EDGE_SYMBOL = Symbol.for("portfolio.otel.edge");
 const EDGE_FETCH_SYMBOL = Symbol.for("portfolio.otel.edge.fetch");
@@ -32,59 +24,50 @@ function getEdgeGlobal(): EdgeGlobal {
   return globalThis as EdgeGlobal;
 }
 
-export function registerEdgeInstrumentation() {
-  const globalEdge = getEdgeGlobal();
-
-  if (globalEdge[EDGE_SYMBOL]) {
-    return;
-  }
-
-  const exporter = parseExporter();
-
-  if (!exporter) {
-    diag.debug("[otel] No exporter configured; skipping edge instrumentation.");
-    globalEdge[EDGE_SYMBOL] = true;
-    return;
-  }
-
-  const provider = new BasicTracerProvider({
-    resource: buildResource(`${getOtelConfig().serviceName}-edge`),
-    spanProcessors: [
-      new BatchSpanProcessor(new OTLPTraceExporter(exporter))
-    ]
-  });
-  trace.setGlobalTracerProvider(provider);
-
-  patchEdgeFetch();
-
-  globalEdge[EDGE_SYMBOL] = true;
-}
-
 function patchEdgeFetch() {
   if (typeof fetch !== "function") {
     return;
   }
 
-  const globalEdge = getEdgeGlobal();
+  const edgeGlobal = getEdgeGlobal();
 
-  if (globalEdge[EDGE_FETCH_SYMBOL]) {
+  if (edgeGlobal[EDGE_FETCH_SYMBOL]) {
     return;
   }
 
   const nativeFetch = fetch.bind(globalThis);
 
   async function tracedFetch(...args: Parameters<typeof fetch>) {
-    if (!trace.getTracerProvider()) {
+    const provider = trace.getTracerProvider();
+    if (!provider) {
       return nativeFetch(...args);
     }
 
-    return withFetchedTrace("edge", args, nativeFetch);
+    return withFetchedTrace("browser", "edge", args, nativeFetch);
   }
 
   (globalThis as typeof globalThis & { fetch: typeof fetch }).fetch =
     tracedFetch;
 
-  globalEdge[EDGE_FETCH_SYMBOL] = true;
+  edgeGlobal[EDGE_FETCH_SYMBOL] = true;
+}
+
+export function registerEdgeInstrumentation(): Promise<void> {
+  const edgeGlobal = getEdgeGlobal();
+
+  if (edgeGlobal[EDGE_SYMBOL]) {
+    return Promise.resolve();
+  }
+
+  edgeGlobal[EDGE_SYMBOL] = true;
+
+  diag.debug(
+    "[otel] Edge telemetry exporter disabled: the OTLP HTTP client is unsupported in the Edge runtime. Spans will record locally but are not exported."
+  );
+
+  patchEdgeFetch();
+
+  return Promise.resolve();
 }
 
 export function withEdgeSpan<T>(
@@ -92,7 +75,7 @@ export function withEdgeSpan<T>(
   name: string,
   handler: (span: Span) => T | Promise<T>
 ): T | Promise<T> {
-  const tracer = getTracer("edge-request");
+  const tracer = getTracer("browser", "edge-request");
   const ctx = extractContextFromHeaders(request.headers);
 
   return context.with(ctx, () =>

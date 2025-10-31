@@ -27,9 +27,11 @@ version manager) before installing dependencies to stay aligned with the repo.
 
 ## Observability
 
-Task 5.0 adds OpenTelemetry traces to the portfolio site across Node, edge, and
-browser runtimes. Configure an OTLP endpoint before running the app to emit
-spans:
+Task 5.0 adds OpenTelemetry traces to the portfolio site across Node and browser
+runtimes. Edge middleware still creates spans for request flow, but Next.js
+currently blocks shipping the OTLP HTTP exporter in the Edge runtime, so those
+spans remain local-only. Configure an OTLP endpoint before running the app to
+emit spans from Node SSR and browser fetch instrumentation:
 
 - `OTEL_EXPORTER_OTLP_ENDPOINT` – HTTPS endpoint for your collector (server/edge).
 - `NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT` – Public endpoint exposed to the browser.

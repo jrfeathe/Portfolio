@@ -8,7 +8,7 @@ import {
 } from "@opentelemetry/api";
 import { resourceFromAttributes } from "@opentelemetry/resources";
 import { SemanticResourceAttributes } from "@opentelemetry/semantic-conventions";
-import type { ExporterOptions } from "./config";
+import type { ExporterOptions, ExporterScope } from "./config";
 import { getEnvironment, getOtelConfig } from "./config";
 
 type FetchArgs = Parameters<typeof fetch>;
@@ -41,22 +41,25 @@ export function buildResource(serviceName: string) {
   });
 }
 
-export function parseExporter(): ExporterOptions | null {
-  const { exporter } = getOtelConfig();
+export function parseExporter(
+  scope: ExporterScope = "server"
+): ExporterOptions | null {
+  const { exporter } = getOtelConfig(scope);
   return exporter;
 }
 
-export function getTracer(name: string) {
-  const { serviceName } = getOtelConfig();
+export function getTracer(scope: ExporterScope, name: string) {
+  const { serviceName } = getOtelConfig(scope);
   return trace.getTracer(`${serviceName}:${name}`);
 }
 
 export function withFetchedTrace(
+  scope: ExporterScope,
   tracerName: string,
   args: FetchArgs,
   fetchImpl: typeof fetch
 ) {
-  const tracer = getTracer(tracerName);
+  const tracer = getTracer(scope, tracerName);
   const [input] = args;
   const spanName = resolveFetchSpanName(input);
 

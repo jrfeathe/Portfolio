@@ -26,6 +26,8 @@ function parseHeaders(raw: string | undefined): ExporterHeaders | undefined {
     }, {});
 }
 
+export type ExporterScope = "server" | "browser";
+
 export type ExporterOptions = {
   url: string;
   headers?: ExporterHeaders;
@@ -36,26 +38,48 @@ export type OtelConfig = {
   exporter: ExporterOptions | null;
 };
 
-const OTEL_SERVICE_NAME =
+const SERVER_SERVICE_NAME =
   process.env.OTEL_SERVICE_NAME ??
   process.env.NEXT_PUBLIC_OTEL_SERVICE_NAME ??
   "portfolio-site";
 
-const EXPORTED_HEADERS =
-  process.env.OTEL_EXPORTER_OTLP_HEADERS ??
-  process.env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_HEADERS;
+const BROWSER_SERVICE_NAME =
+  process.env.NEXT_PUBLIC_SERVICE_NAME ??
+  process.env.NEXT_PUBLIC_OTEL_SERVICE_NAME ??
+  process.env.OTEL_SERVICE_NAME ??
+  "portfolio-site";
 
-const EXPORTED_ENDPOINT =
-  process.env.OTEL_EXPORTER_OTLP_ENDPOINT ??
-  process.env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT;
+const SERVER_HEADERS = process.env.OTEL_EXPORTER_OTLP_HEADERS;
+const SERVER_ENDPOINT = process.env.OTEL_EXPORTER_OTLP_ENDPOINT;
 
-export function getOtelConfig(): OtelConfig {
+const BROWSER_HEADERS =
+  process.env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_HEADERS ??
+  process.env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_HTTP_HEADERS;
+
+const BROWSER_ENDPOINT =
+  process.env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT ??
+  process.env.NEXT_PUBLIC_OTEL_TRACES_ENDPOINT ??
+  process.env.NEXT_PUBLIC_OTEL_EXPORTER_TRACES_ENDPOINT;
+
+export function getOtelConfig(scope: ExporterScope = "server"): OtelConfig {
+  if (scope === "browser") {
+    return {
+      serviceName: BROWSER_SERVICE_NAME,
+      exporter: BROWSER_ENDPOINT
+        ? {
+            url: BROWSER_ENDPOINT,
+            headers: parseHeaders(BROWSER_HEADERS)
+          }
+        : null
+    };
+  }
+
   return {
-    serviceName: OTEL_SERVICE_NAME,
-    exporter: EXPORTED_ENDPOINT
+    serviceName: SERVER_SERVICE_NAME,
+    exporter: SERVER_ENDPOINT
       ? {
-          url: EXPORTED_ENDPOINT,
-          headers: parseHeaders(EXPORTED_HEADERS)
+          url: SERVER_ENDPOINT,
+          headers: parseHeaders(SERVER_HEADERS)
         }
       : null
   };

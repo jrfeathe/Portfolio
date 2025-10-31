@@ -23,7 +23,7 @@ export function registerNodeInstrumentation() {
     return;
   }
 
-  const exporter = parseExporter();
+  const exporter = parseExporter("server");
 
   if (!exporter) {
     diag.debug("[otel] No exporter configured; skipping node instrumentation.");
@@ -32,7 +32,7 @@ export function registerNodeInstrumentation() {
   }
 
   const provider = new NodeTracerProvider({
-    resource: buildResource(`${getOtelConfig().serviceName}-node`),
+    resource: buildResource(`${getOtelConfig("server").serviceName}-node`),
     spanProcessors: [
       new BatchSpanProcessor(new OTLPTraceExporter(exporter))
     ]
@@ -61,7 +61,7 @@ function patchGlobalFetch() {
       return originalFetch(...args);
     }
 
-    return withFetchedTrace("node", args, originalFetch);
+    return withFetchedTrace("server", "node", args, originalFetch);
   }
 
   (globalThis as typeof globalThis & { fetch: typeof fetch }).fetch =

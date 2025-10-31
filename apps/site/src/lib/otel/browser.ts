@@ -29,7 +29,7 @@ export function registerBrowserInstrumentation() {
     return;
   }
 
-  const exporter = parseExporter();
+  const exporter = parseExporter("browser");
 
   if (!exporter) {
     diag.debug(
@@ -40,7 +40,7 @@ export function registerBrowserInstrumentation() {
   }
 
   const provider = new WebTracerProvider({
-    resource: buildResource(`${getOtelConfig().serviceName}-browser`),
+    resource: buildResource(`${getOtelConfig("browser").serviceName}-browser`),
     spanProcessors: [
       new BatchSpanProcessor(new OTLPTraceExporter(exporter))
     ]
@@ -65,7 +65,7 @@ function patchBrowserFetch() {
   const nativeFetch = window.fetch.bind(window);
 
   async function tracedFetch(...args: Parameters<typeof fetch>) {
-    return withFetchedTrace("browser", args, nativeFetch);
+    return withFetchedTrace("browser", "browser", args, nativeFetch);
   }
 
   window.fetch = tracedFetch;

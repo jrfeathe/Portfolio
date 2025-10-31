@@ -1,0 +1,41 @@
+name: Weekly Dependency Review
+description: Track the weekly Renovate review cycle and capture follow-ups.
+title: "[Dependencies] Week of <YYYY-MM-DD>"
+labels:
+  - dependencies
+  - status:triage
+  - WBS:6.2
+body:
+  - type:markdown
+    attributes:
+      value: |
+        Use this checklist during the Monday Renovate window. Close the issue once all dependency PRs for the week are merged or deferred with a linked ticket.
+  - type:input
+    id: owner
+    attributes:
+      label: Reviewer on duty
+      description: Who is responsible for this week’s dependency triage?
+      placeholder: @github-handle
+    validations:
+      required: true
+  - type:textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Mention any anomalies, manual fixes, or blocked upgrades that surfaced this cycle.
+  - type:checkboxes
+    id: checklist
+    attributes:
+      label: Weekly tasks
+      description: Confirm the standard Renovate review cadence.
+      options:
+        - label: Reviewed Renovate dashboard after Monday 02:00 UTC run.
+          required: true
+        - label: Confirmed CI ran `pnpm lint`, `pnpm -w build`, and `pnpm test` for all dependency PRs.
+          required: true
+        - label: Merged or documented deferrals for grouped runtime, testing, and linting updates.
+          required: true
+        - label: Triaged security-labelled PRs within 24h (reassign or escalate if blocked).
+          required: true
+        - label: Linked follow-up issues for any skipped or ignored updates.
+          required: true

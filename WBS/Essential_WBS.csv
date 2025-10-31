@@ -19,8 +19,6 @@ ID,Epic,Task,Description,Deliverables,Acceptance Criteria
 4.2,CI/CD,Playwright e2e tests,"Critical flows: skim mode, notes render, diagrams, trade-off explorer.",apps/site/tests/*.spec.ts,Headed + headless pass
 4.3,CI/CD,Coverage & quality gates,Jest + TS coverage thresholds, codeql security scan.,"jest.config, codeql.yml"
 5,Observability,OpenTelemetry wiring,Client and edge traces with OTEL SDK, traceparent propagation.,"otel config, exporter to OTLP/collector"
-5.1,Observability,Edge ping service,Cron function to ping site from multiple regions, store latencies in KV.,"/api/ping, edge function, KV schema"
-5.2,Observability,Health/SLO tile component,"Real-time tile showing uptime, latency, error rate from KV + logs.",<HealthTile/> component,Renders on home
 6,Security,Strict CSP & headers,CSP without unsafe-inline, nonce pipeline, Permissions-Policy
 6.1,Security,security.txt & GPG key,/.well-known/security.txt and contact, optional GPG pubkey.,"public/.well-known/security.txt, pubkey.asc"
 6.2,Security,Dependency policy,"Lockfile maintenance, renovate config, SCA alerts triage.",renovate.json,Weekly PRs open
@@ -35,12 +33,14 @@ ID,Epic,Task,Description,Deliverables,Acceptance Criteria
 10.1,Home & Hook,Health tile integration,Embed <HealthTile/> with live data.,apps/site/src/app/(home)/HealthPanel.tsx,Shows uptime/latency/error rate with fallback.
 11,Skim Mode,Query param toggle & layout,Implement ?skim route state to condense to 1 scroll.,apps/site/src/app/skim-mode.ts,Adding ?skim condenses page
 11.1,Skim Mode,Skim content renderer,Render fields from content matrix, add copy/download controls.,apps/site/src/components/SkimCard.tsx
-12,Infra & Hosting,Hosting & edge config,Deploy to Vercel/Netlify, edge functions for /ping, KV store.
-12.1,Infra & Hosting,Custom domain & DNS,Buy/point domain, set A/AAAA/CNAME, HTTPS.
-12.2,Infra & Hosting,Tor Mirror VPS,"provision VPS, firewall (deny all but Tor), systemd hardening.",,
-12.3,Infra & Hosting,Tor HS Config,"v3 hidden service, HiddenServicePort, rotation policy; capture address in SECRETS.md.",,
-12.4,Infra & Hosting,Mirror Security,"replicate headers/CSP, disable trackers, document privacy posture.",,
-12.5,Infra & Hosting,NoScript fallback,"Ship a JS-free rendering path so Tor Browser at 'Safest' displays core content.","apps/site/src/app/(noscript)/*, public/noscript.html","Tor Browser Safest mode loads critical copy without enabling scripts."
+12a,Infra & Hosting (Edge),Hosting & runtime config,Deploy to Vercel/Netlify, edge functions for /ping, KV store.
+12a.1,Infra & Hosting (Edge),Custom domain & DNS,Buy/point domain, set A/AAAA/CNAME, HTTPS.
+12a.2,Infra & Hosting (Edge),Edge ping service,Cron function to ping site from multiple regions, store latencies in KV.,"/api/ping, edge function, KV schema",Scheduler runs in prod/staging
+12a.3,Infra & Hosting (Edge),Health/SLO tile component,"Real-time tile showing uptime, latency, error rate from KV + logs.",<HealthTile/> component,Renders on home
+12b,Tor & Privacy Mirror,Tor Mirror VPS,"provision VPS, firewall (deny all but Tor), systemd hardening.",,
+12b.1,Tor & Privacy Mirror,Tor HS Config,"v3 hidden service, HiddenServicePort, rotation policy; capture address in SECRETS.md.",,
+12b.2,Tor & Privacy Mirror,Mirror Security,"replicate headers/CSP, disable trackers, document privacy posture.",,
+12b.3,Tor & Privacy Mirror,NoScript fallback,"Ship a JS-free rendering path so Tor Browser at 'Safest' displays core content.","apps/site/src/app/(noscript)/*, public/noscript.html","Tor Browser Safest mode loads critical copy without enabling scripts."
 13,Engineering Notes,List & filters,"MDX list with tags, filters, search (client) and RSS.","/notes page, RSS.xml",Tag filter works
 13.1,Engineering Notes,Post template with Trade-offs,"MDX template with sections: Context, Options, Trade-offs, What I'd do differently.",content/templates/note.mdx,New posts scaffold via script
 14,Systems Gallery,ADR cards & detail pages,Gallery of patterns with ADR triad and diagrams.,apps/site/src/app/systems/*,At least 2 patterns live

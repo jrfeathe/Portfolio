@@ -1,0 +1,76 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "enabledManagers": ["pnpm"],
+  "dependencyDashboard": true,
+  "rangeStrategy": "bump",
+  "schedule": ["after 02:00 on monday"],
+  "timezone": "UTC",
+  "labels": ["dependencies", "WBS:6.2"],
+  "reviewers": ["@jrfeathe"],
+  "constraints": {
+    "pnpm": "10.20.0",
+    "node": "18.18.2"
+  },
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["after 02:00 on monday"]
+  },
+  "postUpgradeTasks": {
+    "commands": [
+      "pnpm install --frozen-lockfile",
+      "pnpm lint",
+      "pnpm -w build",
+      "pnpm test"
+    ],
+    "fileFilters": ["**/package.json", "pnpm-lock.yaml"],
+    "executionMode": "branch"
+  },
+  "packageRules": [
+    {
+      "groupName": "nextjs and react runtime",
+      "matchManagers": ["pnpm"],
+      "matchPackageNames": ["next", "react", "react-dom"],
+      "matchPackagePatterns": ["^@next/", "^@swc/"]
+    },
+    {
+      "groupName": "testing stack",
+      "matchManagers": ["pnpm"],
+      "matchPackagePatterns": [
+        "^@testing-library/",
+        "^@playwright/test$",
+        "^playwright$",
+        "^jest",
+        "^@types/jest$",
+        "^jest-axe$",
+        "^axe-core$"
+      ]
+    },
+    {
+      "groupName": "linting and formatting",
+      "matchManagers": ["pnpm"],
+      "matchPackagePatterns": [
+        "^eslint",
+        "^@typescript-eslint/",
+        "^prettier"
+      ]
+    },
+    {
+      "matchCategories": ["security"],
+      "matchManagers": ["pnpm"],
+      "matchUpdateTypes": ["patch", "minor", "major"],
+      "labels": ["security"]
+    },
+    {
+      "matchManagers": ["pnpm"],
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch"]
+    },
+    {
+      "matchManagers": ["pnpm"],
+      "matchUpdateTypes": ["lockFileMaintenance"]
+    }
+  ]
+}

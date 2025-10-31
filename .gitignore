@@ -28,3 +28,4 @@ apps/site/test-results/
 *.tsbuildinfo
 /coverage/
 apps/site/coverage/
+.gnupg-security/

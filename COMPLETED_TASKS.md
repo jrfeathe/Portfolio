@@ -19,5 +19,9 @@
 | 4.1 | Lighthouse CI integration | 2025-Oct-28     | `.lighthouserc.json` + lighthouse scripts run preview LHCI, enforce ≥0.9 scores, upload JSON & badge outputs from CI. |
 | 4.2 | Playwright e2e tests | 2025-Oct-28     | `playwright.config.ts` + scenario specs cover skim toggle, notes rendering, PlantUML proxy; trade-off suite marked fixme until UI lands. |
 | 4.3 | Coverage & quality gates | 2025-Oct-28     | Jest now enforces ≥90% lines/functions/statements (80% branches) with a coverage gate script; CodeQL workflow scans TS during CI. |
+| 5.0 | OpenTelemetry wiring | 2025-Oct-29     | Node, edge, and fetch instrumentation now emit OTLP traces to Honeycomb when env vars are set; Honeycomb board tracks `portfolio-site` spans. |
+| 6.0 | Strict CSP & headers | 2025-Oct-30     | Edge middleware applies nonce-based CSP + security headers; layout/components propagate per-request nonces so production stays inline-safe. |
+| 6.1 | security.txt & GPG key | 2025-Oct-30     | `.well-known/security.txt` now lists disclosure contacts, preferred language, expiry, and the OpenPGP fingerprint; matching `pubkey.asc` serves the armored key. |
+| 6.2 | Dependency policy | 2025-Oct-31     | Renovate configured for pnpm workspace, CI enforces lint/build/test on update PRs, dependency triage doc added, and weekly review issue template established. |
 
 Update this log as additional WBS items reach completion.

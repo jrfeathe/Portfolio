@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { cookies } from "next/headers";
+import { cookies, headers as getHeaders } from "next/headers";
 import type { ReactNode } from "react";
 
 import "./globals.css";
@@ -11,6 +11,7 @@ import {
   localeCookieName
 } from "../src/utils/i18n";
 import { getDictionary } from "../src/utils/dictionaries";
+import { OtelBootstrap } from "../src/components/telemetry/OtelBootstrap";
 
 const defaultDictionary = getDictionary(defaultLocale);
 
@@ -23,10 +24,31 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const cookieStore = cookies();
   const storedLocale = cookieStore.get(localeCookieName)?.value;
   const locale = isLocale(storedLocale) ? storedLocale : defaultLocale;
+  const headerList = getHeaders();
+  const nonce =
+    headerList.get("x-csp-nonce") ??
+    headerList.get("x-nextjs-csp-nonce") ??
+    headerList.get("x-nonce") ??
+    undefined;
 
   return (
     <html lang={locale} dir={getLocaleDirection(locale)}>
-      <body className="min-h-screen bg-background font-sans text-text antialiased dark:bg-dark-background dark:text-dark-text">
+      <body
+        className="min-h-screen bg-background font-sans text-text antialiased dark:bg-dark-background dark:text-dark-text"
+        data-csp-nonce={nonce}
+      >
+        {nonce ? (
+          <script
+            suppressHydrationWarning
+            nonce={nonce}
+            dangerouslySetInnerHTML={{
+              __html: `window.__webpack_nonce__=${JSON.stringify(
+                nonce
+              )};window.__next_style_nonce__=${JSON.stringify(nonce)};`
+            }}
+          />
+        ) : null}
+        <OtelBootstrap />
         {children}
       </body>
     </html>

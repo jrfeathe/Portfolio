@@ -1,0 +1,5 @@
+Contact: mailto:security@jrfeathe.dev
+Contact: https://github.com/jrfeathe
+Encryption: openpgp4fpr:8F9C57D36802B8146BB1E7CB7FCD8C1F30915A6A
+Preferred-Languages: en
+Expires: 2026-10-30T00:00:00Z

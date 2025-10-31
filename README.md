@@ -25,6 +25,49 @@ supporting packages.
 The default Node version is pinned in `.nvmrc`. Run `nvm use` (or your preferred
 version manager) before installing dependencies to stay aligned with the repo.
 
+## Observability
+
+Task 5.0 adds OpenTelemetry traces to the portfolio site across Node and browser
+runtimes. Edge middleware still creates spans for request flow, but Next.js
+currently blocks shipping the OTLP HTTP exporter in the Edge runtime, so those
+spans remain local-only. Configure an OTLP endpoint before running the app to
+emit spans from Node SSR and browser fetch instrumentation:
+
+- `OTEL_EXPORTER_OTLP_ENDPOINT` – HTTPS endpoint for your collector (server/edge).
+- `NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT` – Public endpoint exposed to the browser.
+- `OTEL_EXPORTER_OTLP_HEADERS` / `NEXT_PUBLIC_OTEL_EXPORTER_OTLP_HEADERS` – Optional
+  `key=value` header pairs (comma-separated) for authentication.
+- `OTEL_SERVICE_NAME` – Optional override for the trace service name (defaults to `portfolio-site`).
+
+When the endpoint variables are unset, instrumentation remains dormant and no
+spans are generated.
+
+### Local environment template
+
+A `.env.example` file is provided at the repo root with the required variables.
+Copy it to `.env` or `.env.local`, fill in your Honeycomb API key and dataset,
+and load the env file before running local commands.
+
+## Security Headers
+
+Task 6 hardens runtime responses with a strict Content Security Policy (no
+`unsafe-inline` scripts) and a comprehensive security header suite. Every HTML
+and API response receives the policy via edge middleware, and a per-request
+nonce is exposed on the `x-nonce` request header so server or client components
+can opt into inline scripts if needed. The nonce is also mirrored to
+`data-csp-nonce` on `<body>` and applied to runtime style/script injection so
+Next.js internals and dynamic diagram styles continue to run without relaxing
+the policy. During local development Next.js still requires `unsafe-eval` and
+some inline styles for its overlay tooling; the policy adds those automatically
+outside production. The defaults allow self-hosted assets, OTLP `https`/`wss`
+calls, and block framing or cross-domain embedding.
+
+## Dependency Policy
+
+Renovate manages npm updates for the pnpm workspace on a weekly cadence. Review
+dependency PRs after the Monday 02:00 UTC run, ensure CI stays green, and follow
+the documented triage SLAs and rollback steps in `docs/dependency-policy.md`.
+
 ## Branch protection & workflow expectations
 
 - All changes land via pull request; direct pushes to `master` are disabled.

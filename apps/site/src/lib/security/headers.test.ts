@@ -13,6 +13,19 @@ function createRequest(url: string) {
   } as unknown as NextRequest;
 }
 
+function runWithNodeEnv(env: string, callback: () => void) {
+  const mutableEnv = process.env as Record<string, string | undefined>;
+  const originalEnv = mutableEnv.NODE_ENV;
+
+  mutableEnv.NODE_ENV = env;
+
+  try {
+    callback();
+  } finally {
+    mutableEnv.NODE_ENV = originalEnv;
+  }
+}
+
 beforeAll(() => {
   Object.defineProperty(globalThis, "crypto", {
     configurable: true,
@@ -46,17 +59,12 @@ describe("security headers helpers", () => {
   });
 
   it("omits unsafe-eval in production mode", () => {
-    const originalEnv = process.env.NODE_ENV;
-    process.env.NODE_ENV = "production";
-
-    try {
+    runWithNodeEnv("production", () => {
       const csp = buildContentSecurityPolicy("prod");
       expect(csp).not.toContain("'unsafe-eval'");
       expect(csp).not.toContain("'unsafe-inline'");
       expect(csp).toContain("style-src 'self' 'nonce-prod'");
-    } finally {
-      process.env.NODE_ENV = originalEnv;
-    }
+    });
   });
 
   it("applies the full header set", () => {

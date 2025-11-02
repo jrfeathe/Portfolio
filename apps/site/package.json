@@ -16,10 +16,10 @@
     "lhci:summarize": "node ../../scripts/lighthouse/summarize.cjs",
     "lhci:report": "node ../../scripts/lighthouse/report.cjs",
     "preplaywright:test": "node ../../scripts/playwright/pretest.cjs",
-    "playwright:test": "playwright test",
+    "playwright:test": "node ../../scripts/playwright/run.cjs",
     "preplaywright:test:headed": "node ../../scripts/playwright/pretest.cjs",
-    "playwright:test:headed": "playwright test --headed",
-    "playwright:test:a11y": "PLAYWRIGHT_HTML_REPORT=playwright-report-a11y PLAYWRIGHT_BLOB_REPORT=blob-report-a11y PLAYWRIGHT_OUTPUT_DIR=test-results/a11y playwright test tests/a11y",
+    "playwright:test:headed": "node ../../scripts/playwright/run.cjs --headed",
+    "playwright:test:a11y": "PLAYWRIGHT_HTML_REPORT=playwright-report-a11y PLAYWRIGHT_BLOB_REPORT=blob-report-a11y PLAYWRIGHT_OUTPUT_DIR=test-results/a11y node ../../scripts/playwright/run.cjs tests/a11y",
     "test:a11y": "pnpm run preplaywright:test && pnpm run playwright:test:a11y"
   },
   "dependencies": {

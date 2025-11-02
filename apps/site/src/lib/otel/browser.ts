@@ -39,6 +39,12 @@ export function registerBrowserInstrumentation() {
     return;
   }
 
+  if (typeof (window as { Zone?: unknown }).Zone === "undefined") {
+    diag.warn("[otel] Zone.js not detected; skipping browser instrumentation.");
+    browserGlobal[BROWSER_SYMBOL] = true;
+    return;
+  }
+
   const provider = new WebTracerProvider({
     resource: buildResource(`${getOtelConfig("browser").serviceName}-browser`),
     spanProcessors: [

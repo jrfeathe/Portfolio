@@ -17,6 +17,10 @@ describe("Chip accessibility", () => {
         Primary action
       </Chip>
     );
+    const interactiveChip = container.querySelector("button");
+    expect(interactiveChip).not.toBeNull();
+    expect(interactiveChip!).toHaveClass("focus-visible:ring-4");
+    expect(interactiveChip!).toHaveClass("focus-visible:ring-focus");
     expect(await axe(container)).toHaveNoViolations();
   });
 });

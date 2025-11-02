@@ -27,6 +27,11 @@ describe("Accordion accessibility", () => {
       </Accordion>
     );
 
+    const trigger = container.querySelector("button");
+    expect(trigger).not.toBeNull();
+    expect(trigger!).toHaveClass("focus-visible:ring-4");
+    expect(trigger!).toHaveClass("focus-visible:ring-focus");
+
     expect(await axe(container)).toHaveNoViolations();
 
     rerender(

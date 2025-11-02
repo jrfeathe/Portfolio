@@ -6,6 +6,7 @@ import {
   type MutableRefObject,
   type Ref,
   useCallback,
+  useEffect,
   useInsertionEffect,
   useRef,
   useState
@@ -81,4 +82,35 @@ export function useIsomorphicLayoutEffect(
   // falls back to useEffect on the server, which keeps tooltip animations
   // consistent during hydration.
   return useInsertionEffect(effect, deps);
+}
+
+export const FOCUS_VISIBLE_RING =
+  "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-surface dark:focus-visible:ring-dark-focus dark:focus-visible:ring-offset-dark-surface motion-reduce:transition-none";
+
+export function usePrefersReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (event: MediaQueryListEvent) => {
+      setPrefersReducedMotion(event.matches);
+    };
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
+    }
+
+    const legacyListener = (event: MediaQueryListEvent) => handleChange(event);
+    mediaQuery.addListener?.(legacyListener);
+    return () => mediaQuery.removeListener?.(legacyListener);
+  }, []);
+
+  return prefersReducedMotion;
 }

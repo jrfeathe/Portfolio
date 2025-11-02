@@ -20,6 +20,7 @@ module.exports = {
         accentHover: light.accentHover,
         accentOn: light.accentOn,
         danger: light.danger,
+        focus: light.focus,
         print: {
           background: print.background,
           surface: print.surface,
@@ -29,7 +30,8 @@ module.exports = {
           textMuted: print.textMuted,
           accent: print.accent,
           accentOn: print.accentOn,
-          danger: print.danger
+          danger: print.danger,
+          focus: print.focus
         },
         dark: {
           background: dark.background,
@@ -41,7 +43,8 @@ module.exports = {
           accent: dark.accent,
           accentHover: dark.accentHover,
           accentOn: dark.accentOn,
-          danger: dark.danger
+          danger: dark.danger,
+          focus: dark.focus
         }
       },
       fontFamily: {

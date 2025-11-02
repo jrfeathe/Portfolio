@@ -18,7 +18,12 @@ import {
 } from "react";
 import clsx from "clsx";
 
-import { composeEventHandlers, mergeRefs, useControllableState } from "./utils";
+import {
+  composeEventHandlers,
+  mergeRefs,
+  useControllableState,
+  FOCUS_VISIBLE_RING
+} from "./utils";
 
 type TabsContextValue = {
   value: string;
@@ -186,7 +191,9 @@ export const TabsTrigger = forwardRef<HTMLButtonElement, TabsTriggerProps>(
         aria-controls={panelId}
         tabIndex={isSelected ? 0 : -1}
         className={clsx(
-          "rounded-full px-4 py-2 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-border data-[state=active]:bg-accent data-[state=active]:text-accentOn dark:focus-visible:outline-dark-border dark:data-[state=active]:bg-dark-accent dark:data-[state=active]:text-dark-accentOn",
+          "rounded-full px-4 py-2 text-sm font-medium transition",
+          FOCUS_VISIBLE_RING,
+          "data-[state=active]:bg-accent data-[state=active]:text-accentOn dark:data-[state=active]:bg-dark-accent dark:data-[state=active]:text-dark-accentOn",
           !isSelected &&
             "text-textMuted hover:bg-surfaceMuted dark:text-dark-textMuted dark:hover:bg-dark-surfaceMuted",
           className

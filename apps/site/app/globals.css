@@ -20,4 +20,150 @@ body {
       @apply text-print-accent;
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0s !important;
+      animation-iteration-count: 1 !important;
+      animation-play-state: paused !important;
+      transition-duration: 0s !important;
+      transition-delay: 0s !important;
+      scroll-behavior: auto !important;
+    }
+
+    html:focus-within {
+      scroll-behavior: auto;
+    }
+  }
+
+  @media (prefers-contrast: more) {
+    :is(button, a, input, select, textarea):focus-visible {
+      box-shadow: none !important;
+      outline: 3px solid #2563eb !important;
+      outline-offset: 4px;
+    }
+
+    .dark :is(button, a, input, select, textarea):focus-visible {
+      outline-color: #38bdf8 !important;
+    }
+  }
+
+  .contrast-high :is(button, a, input, select, textarea) {
+    border-color: #2563eb !important;
+    color: var(--contrast-override-text, #0f172a) !important;
+    background-color: var(--contrast-override-bg, #ffffff) !important;
+  }
+
+  .contrast-high.dark :is(button, a, input, select, textarea) {
+    border-color: #38bdf8 !important;
+    color: #e2e8f0 !important;
+    background-color: #020617 !important;
+  }
+
+  .contrast-high .shell-anchor-nav [aria-current="location"] {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+  }
+
+  .contrast-high.dark .shell-anchor-nav [aria-current="location"] {
+    background-color: #38bdf8 !important;
+    color: #020617 !important;
+  }
+
+  .contrast-high .shell-anchor-nav {
+    border: 2px solid #1d4ed8 !important;
+    background-color: #ffffff !important;
+  }
+
+  .contrast-high.dark .shell-anchor-nav {
+    border: 2px solid #38bdf8 !important;
+    background-color: #020617 !important;
+  }
+
+  .contrast-high .shell-anchor-nav a {
+    border: 2px solid #1d4ed8 !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  .contrast-high .shell-anchor-nav a:not([aria-current="location"]) {
+    background-color: #e0edff !important;
+  }
+
+  .contrast-high.dark .shell-anchor-nav a {
+    border: 2px solid #38bdf8 !important;
+    background-color: #020617 !important;
+    color: #e2e8f0 !important;
+  }
+
+  .contrast-high.dark .shell-anchor-nav a:not([aria-current="location"]) {
+    background-color: #0b162a !important;
+  }
+
+  .contrast-high .shell-sidebar > * {
+    border: 2px solid #1d4ed8 !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+  }
+
+  .contrast-high .shell-sidebar > * :is(a, button) {
+    color: inherit !important;
+    border: 2px solid #1d4ed8 !important;
+    background-color: #ffffff !important;
+    box-shadow: none !important;
+  }
+
+  .contrast-high.dark .shell-sidebar > * {
+    border: 2px solid #38bdf8 !important;
+    background-color: #020617 !important;
+    color: #e2e8f0 !important;
+    box-shadow: none !important;
+  }
+
+  .contrast-high.dark .shell-sidebar > * :is(a, button) {
+    border: 2px solid #38bdf8 !important;
+    background-color: #020617 !important;
+    color: inherit !important;
+    box-shadow: none !important;
+  }
+
+  .contrast-high .grid.gap-4.sm\:grid-cols-2 > * {
+    border: 2px solid #1d4ed8 !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    box-shadow: none !important;
+  }
+
+  .contrast-high.dark .grid.gap-4.sm\:grid-cols-2 > * {
+    border: 2px solid #38bdf8 !important;
+    background-color: #0b162a !important;
+    color: #e2e8f0 !important;
+  }
+
+  .contrast-high :is(button, a, input, select, textarea):focus-visible {
+    box-shadow: none !important;
+    outline: 3px solid #2563eb !important;
+    outline-offset: 4px;
+  }
+
+  .contrast-high.dark :is(button, a, input, select, textarea):focus-visible {
+    outline-color: #38bdf8 !important;
+  }
+
+  @media (forced-colors: active) {
+    :is(button, a, input, select, textarea, [role="button"], [role="tab"], [role="menuitem"]) {
+      border: 1px solid CanvasText !important;
+      color: CanvasText !important;
+      background-color: Canvas !important;
+    }
+
+    :is(button, a, input, select, textarea, [role="button"], [role="tab"], [role="menuitem"]):focus-visible {
+      box-shadow: none !important;
+      outline: 2px solid CanvasText !important;
+      outline-offset: 3px;
+    }
+  }
 }

@@ -1,5 +1,7 @@
 "use client";
 
+import { FOCUS_VISIBLE_RING } from "@portfolio/ui";
+import clsx from "clsx";
 import { useTransition } from "react";
 import type { Route } from "next";
 import {
@@ -63,7 +65,11 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
         {label}
       </span>
       <select
-        className="rounded-md border border-border bg-surface px-3 py-2 text-sm font-medium text-text transition hover:border-borderMuted focus:border-focus focus:outline-none focus:ring-2 focus:ring-focus dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-borderMuted dark:focus:border-dark-focus"
+        className={clsx(
+          "rounded-md border border-border bg-surface px-3 py-2 text-sm font-medium text-text transition hover:border-textMuted dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-textMuted",
+          "focus-visible:border-focus dark:focus-visible:border-dark-focus",
+          FOCUS_VISIBLE_RING
+        )}
         value={activeLocale}
         onChange={(event) => handleSelect(event.target.value as Locale)}
         disabled={isPending}

@@ -6,6 +6,8 @@ import type {
 import { forwardRef } from "react";
 import clsx from "clsx";
 
+import { FOCUS_VISIBLE_RING } from "./utils";
+
 type ChipVariant = "neutral" | "accent" | "outline";
 
 type ChipBaseProps = {
@@ -71,7 +73,8 @@ export const Chip = forwardRef<HTMLElement, ChipProps>(function Chip(
     <Component
       ref={ref as never}
       className={clsx(
-        "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-border dark:focus-visible:outline-dark-border",
+        "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-medium transition",
+        FOCUS_VISIBLE_RING,
         VARIANT_STYLES[variant],
         className
       )}

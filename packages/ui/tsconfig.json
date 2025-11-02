@@ -5,7 +5,7 @@
     "jsx": "react-jsx",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "types": ["react", "react-dom", "node", "jest"]
+    "types": ["react", "react-dom", "node", "jest", "@testing-library/jest-dom"]
   },
   "include": ["src/**/*"],
   "exclude": ["dist", "node_modules", "src/**/*.stories.tsx"]

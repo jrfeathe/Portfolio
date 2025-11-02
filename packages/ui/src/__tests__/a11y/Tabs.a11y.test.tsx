@@ -20,6 +20,11 @@ describe("Tabs accessibility", () => {
       </Tabs>
     );
 
+    const tabTrigger = container.querySelector('[role="tab"]');
+    expect(tabTrigger).not.toBeNull();
+    expect(tabTrigger!).toHaveClass("focus-visible:ring-4");
+    expect(tabTrigger!).toHaveClass("focus-visible:ring-focus");
+
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });

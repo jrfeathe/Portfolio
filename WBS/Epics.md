@@ -28,8 +28,11 @@ Set budgets and enforce them, implement image pipeline, critical CSS/fonts. Code
 **9.x — Schema & Resume (9.0–9.1)**
 Generate JSON-LD per page and ship a JSON Resume + printable PDF. Code a JSON-LD helper and resume export.
 
-**10.x — Home & Hook (10.0–10.1)**
-Build the hero + proof chips and a live health tile on the home page. Code UI components and data binding.
+**10a.x — Personalization (10a.0–10a.3)**
+Craft the brief, rewrite copy in your voice, refresh the visual theme, and add a tech-stack spotlight so the site feels like you. Mix of narrative work, theme/token tweaks, and new layout components.
+
+**10b.x — Home & Hook (10b.0–10b.1)**
+Implement the personalized hero with proof chips and land the live health tile. Focused on shipping the updated UI and wiring telemetry data to the home page.
 
 **11.x — Skim Mode (11.0–11.1)**
 Add a `?skim` route state and a renderer that pulls exactly the fields from your matrix. Code router state + condensed UI.

@@ -78,7 +78,7 @@ export function MermaidDiagram({ source, className }: MermaidDiagramProps) {
 
   if (state === "error") {
     return (
-      <div className="rounded-md border border-danger/30 bg-danger/5 p-4 text-sm text-danger">
+      <div className="rounded-md border border-danger bg-surface p-4 text-sm font-medium text-danger dark:border-dark-danger dark:bg-dark-surface dark:text-dark-danger">
         {error ?? "Mermaid diagram failed to render."}
       </div>
     );

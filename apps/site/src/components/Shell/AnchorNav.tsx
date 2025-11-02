@@ -1,5 +1,6 @@
 "use client";
 
+import { FOCUS_VISIBLE_RING } from "@portfolio/ui";
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
@@ -132,7 +133,8 @@ export function AnchorNav({
               <a
                 href={item.href}
                 className={clsx(
-                  "inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-border dark:focus-visible:outline-dark-border",
+                  "inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium transition",
+                  FOCUS_VISIBLE_RING,
                   isActive
                     ? "bg-accent text-accentOn dark:bg-dark-accent dark:text-dark-accentOn"
                     : "text-textMuted hover:bg-surfaceMuted dark:text-dark-textMuted dark:hover:bg-dark-surfaceMuted"

@@ -149,13 +149,20 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: pnpm --filter @portfolio/site build
 
+      - name: Run accessibility tests
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          CI: true
+          PLAYWRIGHT_SKIP_BUILD: "1"
+        run: pnpm test:a11y
+
       - name: Run Playwright tests
         if: ${{ github.event_name == 'pull_request' }}
         env:
           PLAYWRIGHT_HTML_REPORT: playwright-report
           PLAYWRIGHT_SKIP_BUILD: "1"
         run: |
-          pnpm --filter @portfolio/site run playwright:test
+          pnpm --filter @portfolio/site run playwright:test -- --grep-invert "@a11y"
 
       - name: Upload Playwright artifacts
         if: ${{ github.event_name == 'pull_request' && always() }}
@@ -166,6 +173,9 @@ jobs:
             apps/site/playwright-report
             apps/site/blob-report
             apps/site/test-results
+            apps/site/playwright-report-a11y
+            apps/site/blob-report-a11y
+            apps/site/test-results/a11y
           if-no-files-found: warn
 
       - name: Resolve preview URL

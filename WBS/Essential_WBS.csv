@@ -1,75 +1,79 @@
 ID,Epic,Task,Description,Deliverables,Acceptance Criteria
-0,Program & Repo,Project charter & scope,"Define goals, success metrics ($1k bonus condition), non-goals, target audience (recruiters), and risk log.","CHARTER.md, SUCCESS_METRICS.md, RISK_LOG.md",Docs committed
+0.0,Program & Repo,Project charter & scope,"Define goals, success metrics ($1k bonus condition), non-goals, target audience (recruiters), and risk log.","CHARTER.md, SUCCESS_METRICS.md, RISK_LOG.md",Docs committed
 0.1,Program & Repo,Monorepo scaffolding,"Create monorepo with apps/site (Next.js), packages/ui, packages/config, packages/cli, and infra directory.","Repo with pnpm workspaces, tsconfig base, eslint/prettier configs",`pnpm i && pnpm -w build` succeeds
 0.2,Program & Repo,Branch protections & CODEOWNERS,Protect master with required checks, add CODEOWNERS, PR template
 0.3,Program & Repo,Issue templates & labels,"GitHub issue templates for Feature, Bug, Tech Debt; labels for WBS IDs.",.github/ISSUE_TEMPLATE/*.yml,New issues render forms
-1,Content & Positioning,One-line promise,Craft sharp positioning sentence for above-the-fold.,copy/positioning.md,<120 chars
+1.0,Content & Positioning,One-line promise,Craft sharp positioning sentence for above-the-fold.,copy/positioning.md,<120 chars
 1.1,Content & Positioning,Proof chips mapping,Choose 3 measurable claims and how they are evidenced on-site (links/demos).,copy/proof_chips.md,Each claim maps to a live artifact
 1.2,Content & Positioning,Skim mode content matrix,Define the exact fields for recruiter skim mode and their source of truth.,content/skim_matrix.csv,"Fields cover scope, languages, domains, leadership, eligibility, timezone."
-2,Design System,Typography & tokens,"Tailwind theme with font scale, spacing, radius, shadows; dark/light; print tokens.","packages/ui/tokens.ts, tailwind.config.mjs",Tokens used by components
+2.0,Design System,Typography & tokens,"Tailwind theme with font scale, spacing, radius, shadows; dark/light; print tokens.","packages/ui/tokens.ts, tailwind.config.mjs",Tokens used by components
 2.1,Design System,Core components,"Buttons, Chips, Card, Badge, Tooltip, Tabs, Accordion, StatTile; a11y first.",packages/ui/*,Storybook stories
 2.2,Design System,Page shells,"Responsive layout, sticky CTA, anchor nav, breadcrumbs, Footer.",apps/site/src/components/Shell/*,Layout stable across breakpoints
 2.3,Design System,Print styles,CSS for two-page clean print of resume/skim.,apps/site/src/styles/print.css,"Window print preview yields 2 pages, no truncated sections."
-3,Architecture,Next.js + TS app init,"Create Next.js app with app router, TS strict, edge runtime where possible.",apps/site,`pnpm dev` runs
+3.0,Architecture,Next.js + TS app init,"Create Next.js app with app router, TS strict, edge runtime where possible.",apps/site,`pnpm dev` runs
 3.1,Architecture,Routing & i18n,Set up i18n (EN + 日本語 + 中文) with static dictionaries and language switcher.,"i18n config, middleware, locale segments",Content toggles language
 3.2,Architecture,MDX pipeline,"MDX for Engineering Notes with remark/rehype plugins (slug, autolink, code titles).","content/notes/*.mdx, lib/mdx.ts",MDX renders with TOC and anchors
 3.3,Architecture,Mermaid/PlantUML support,Client-safe Mermaid rendering and PlantUML via server-side image proxy.,"/api/plantuml proxy, <Diagram> component",Example diagram renders
-4,CI/CD,GitHub Actions pipeline,Workflows: typecheck → unit → e2e → Lighthouse CI, artifact upload.,.github/workflows/*.yml
+4.0,CI/CD,GitHub Actions pipeline,Workflows: typecheck → unit → e2e → Lighthouse CI, artifact upload.,.github/workflows/*.yml
 4.1,CI/CD,Lighthouse CI integration,Run LHCI on preview URL, store JSON report, compute badge.
 4.2,CI/CD,Playwright e2e tests,"Critical flows: skim mode, notes render, diagrams, trade-off explorer.",apps/site/tests/*.spec.ts,Headed + headless pass
 4.3,CI/CD,Coverage & quality gates,Jest + TS coverage thresholds, codeql security scan.,"jest.config, codeql.yml"
-5,Observability,OpenTelemetry wiring,Client and edge traces with OTEL SDK, traceparent propagation.,"otel config, exporter to OTLP/collector"
-6,Security,Strict CSP & headers,CSP without unsafe-inline, nonce pipeline, Permissions-Policy
+5.0,Observability,OpenTelemetry wiring,Client and edge traces with OTEL SDK, traceparent propagation.,"otel config, exporter to OTLP/collector"
+6.0,Security,Strict CSP & headers,CSP without unsafe-inline, nonce pipeline, Permissions-Policy
 6.1,Security,security.txt & GPG key,/.well-known/security.txt and contact, optional GPG pubkey.,"public/.well-known/security.txt, pubkey.asc"
 6.2,Security,Dependency policy,"Lockfile maintenance, renovate config, SCA alerts triage.",renovate.json,Weekly PRs open
-7,Accessibility,Global a11y checks,axe-core integration and unit tests for key components.,a11y test suite,No critical violations
+7.0,Accessibility,Global a11y checks,axe-core integration and unit tests for key components.,a11y test suite,No critical violations
 7.1,Accessibility,"Reduced-motion, contrast, focus",Respect prefers-reduced-motion, 4.5:1 contrast, visible focus states.
-8,Performance,Budgets & guardrails,"Set budgets: JS <120KB, LCP <1.5s, CLS <0.1; CI enforcement.","performance-budgets.json, CI step",PR fails when budgets exceeded.
+8.0,Performance,Budgets & guardrails,"Set budgets: JS <120KB, LCP <1.5s, CLS <0.1; CI enforcement.","performance-budgets.json, CI step",PR fails when budgets exceeded.
 8.1,Performance,Image pipeline,Next/Image, AVIF, width hints
 8.2,Performance,Critical CSS & fonts,Inline critical CSS, font-display swap, self-hosted fonts.
-9,Schema & Resume,JSON-LD entities,"Person, Article, Breadcrumb schema; per-page JSON-LD generator.",lib/seo/jsonld.ts,Rich results test passes for key pages.
+9.0,Schema & Resume,JSON-LD entities,"Person, Article, Breadcrumb schema; per-page JSON-LD generator.",lib/seo/jsonld.ts,Rich results test passes for key pages.
 9.1,Schema & Resume,JSON Resume + PDF,/resume.json and printable PDF build step.,"content/resume.json, /resume.pdf",Schema validates
-10,Home & Hook,Hero section & proof chips,"One-line promise, 3 clickable chips mapped to evidence.",apps/site/src/app/(home)/Hero.tsx,Chips navigate to artifacts
-10.1,Home & Hook,Health tile integration,Embed <HealthTile/> with live data.,apps/site/src/app/(home)/HealthPanel.tsx,Shows uptime/latency/error rate with fallback.
-11,Skim Mode,Query param toggle & layout,Implement ?skim route state to condense to 1 scroll.,apps/site/src/app/skim-mode.ts,Adding ?skim condenses page
+10a.0,Personalization,Personalization brief,"Audit existing home experience, moodboard inspiration, and define tonal goals for a warmer feel.","Personalization brief doc, updated content style guide",Stakeholder sign-off on tone, visual direction, and priority sections
+10a.1,Personalization,Voice & copy rewrite,"Rewrite text snippets, and key CTAs to match personal voice.","Updated hero/skim copy, revised content entries",Copy reflects personal tone and passes review for accuracy & clarity
+10a.2,Personalization,Visual theme refresh,"Adjust color palette, typography, and spacing tokens to remove the mechanical feel.","Updated design tokens, screenshot diffs, changelog entry",Home UI shows warmer palette & typography; tokens applied without regressions
+10a.3,Personalization,Tech stack spotlight layout,"Add home-page section that highlights core tools/skills with links to supporting artifacts.","New tech-stack component + content data",Section lists ≥6 skills/tools with captions and proof links
+10b.0,Home & Hook,Hero section & proof chips,"One-line promise, 3 clickable chips mapped to evidence.",apps/site/src/app/(home)/Hero.tsx,Chips navigate to artifacts
+10b.1,Home & Hook,Health tile integration,Embed <HealthTile/> with live data.,apps/site/src/app/(home)/HealthPanel.tsx,Shows uptime/latency/error rate with fallback.
+11.0,Skim Mode,Query param toggle & layout,Implement ?skim route state to condense to 1 scroll.,apps/site/src/app/skim-mode.ts,Adding ?skim condenses page
 11.1,Skim Mode,Skim content renderer,Render fields from content matrix, add copy/download controls.,apps/site/src/components/SkimCard.tsx
-12a,Infra & Hosting (Edge),Hosting & runtime config,Deploy to Vercel/Netlify, edge functions for /ping, KV store.
+12a.0,Infra & Hosting (Edge),Hosting & runtime config,Deploy to Vercel/Netlify, edge functions for /ping, KV store.
 12a.1,Infra & Hosting (Edge),Custom domain & DNS,Buy/point domain, set A/AAAA/CNAME, HTTPS.
 12a.2,Infra & Hosting (Edge),Edge ping service,Cron function to ping site from multiple regions, store latencies in KV.,"/api/ping, edge function, KV schema",Scheduler runs in prod/staging
 12a.3,Infra & Hosting (Edge),Health/SLO tile component,"Real-time tile showing uptime, latency, error rate from KV + logs.",<HealthTile/> component,Renders on home
-12b,Tor & Privacy Mirror,Tor Mirror VPS,"provision VPS, firewall (deny all but Tor), systemd hardening.",,
+12b.0,Tor & Privacy Mirror,Tor Mirror VPS,"provision VPS, firewall (deny all but Tor), systemd hardening.",,
 12b.1,Tor & Privacy Mirror,Tor HS Config,"v3 hidden service, HiddenServicePort, rotation policy; capture address in SECRETS.md.",,
 12b.2,Tor & Privacy Mirror,Mirror Security,"replicate headers/CSP, disable trackers, document privacy posture.",,
 12b.3,Tor & Privacy Mirror,NoScript fallback,"Ship a JS-free rendering path so Tor Browser at 'Safest' displays core content.","apps/site/src/app/(noscript)/*, public/noscript.html","Tor Browser Safest mode loads critical copy without enabling scripts."
-13,Engineering Notes,List & filters,"MDX list with tags, filters, search (client) and RSS.","/notes page, RSS.xml",Tag filter works
+13.0,Engineering Notes,List & filters,"MDX list with tags, filters, search (client) and RSS.","/notes page, RSS.xml",Tag filter works
 13.1,Engineering Notes,Post template with Trade-offs,"MDX template with sections: Context, Options, Trade-offs, What I'd do differently.",content/templates/note.mdx,New posts scaffold via script
-14,Systems Gallery,ADR cards & detail pages,Gallery of patterns with ADR triad and diagrams.,apps/site/src/app/systems/*,At least 2 patterns live
+14.0,Systems Gallery,ADR cards & detail pages,Gallery of patterns with ADR triad and diagrams.,apps/site/src/app/systems/*,At least 2 patterns live
 14.1,Systems Gallery,Diagram pipeline security,Proxy PlantUML to avoid mixed content/CSP issues.,/api/plantuml with allowlist & cache,No external script eval
-15,Micro-demos,Demo framework,Embed TS playground-like demos with WASM/worker support.,<DemoRunner/> component,Two demos run offline
+15.0,Micro-demos,Demo framework,Embed TS playground-like demos with WASM/worker support.,<DemoRunner/> component,Two demos run offline
 15.1,Micro-demos,Profiler panel,Hook into Performance API, render before/after metrics.,<ProfilerPanel/>
 15.2,Micro-demos,Initial demos (2),Virtualized list perf, debounce vs throttle visual.,"/demos/virtualized-list, /demos/debounce-throttle"
-16,Reliability,Public SLOs & error budget,SLO objectives and error budget burn chart.,apps/site/src/app/reliability/page.tsx,Chart reflects ping data
+16.0,Reliability,Public SLOs & error budget,SLO objectives and error budget burn chart.,apps/site/src/app/reliability/page.tsx,Chart reflects ping data
 16.1,Reliability,Incident playbook,"Incident roles, comms template, timeline component.","/reliability/playbook, components",Template printable
 16.2,Reliability,Mirror Healthcheck,"cron or systemd timer to curl through Tor, push status to KV.",,
-17,Changelog,Semver release notes,Changelog generator, conventional commits tie-in.,CHANGELOG.md automation
+17.0,Changelog,Semver release notes,Changelog generator, conventional commits tie-in.,CHANGELOG.md automation
 17.1,Changelog,Roadmap board,Public roadmap sourced from repo issues with label filter.,/roadmap page,Cards show status
-18,Contact,Contact page,"Email, calendar link, social, and static fallback.",apps/site/src/app/contact/page.tsx,Calendar opens
+18.0,Contact,Contact page,"Email, calendar link, social, and static fallback.",apps/site/src/app/contact/page.tsx,Calendar opens
 18.1,Contact,CLI package,`npx meet-yourname` prints summary + contact from resume.json.,"packages/cli with bin, npm publish",Running command outputs expected info
-19,Trade-off Explorer,Data model & scenarios,"Define scenarios (caching, retries, pagination) and sliders (latency, cost, complexity).",lib/tradeoff/models.ts,Model pure functions unit-tested.
+19.0,Trade-off Explorer,Data model & scenarios,"Define scenarios (caching, retries, pagination) and sliders (latency, cost, complexity).",lib/tradeoff/models.ts,Model pure functions unit-tested.
 19.1,Trade-off Explorer,Interactive UI,"UI with sliders, approach cards, failure modes, and export comparison.",apps/site/src/app/tradeoffs/page.tsx,Changing sliders updates outputs within 16ms frame.
-20,Perf Badge,Badge endpoint,Serverless function outputs SVG badge from latest LHCI artifact.,/api/badge.svg,SVG caches for 5m
+20.0,Perf Badge,Badge endpoint,Serverless function outputs SVG badge from latest LHCI artifact.,/api/badge.svg,SVG caches for 5m
 20.1,Perf Badge,Badge widget,Clickable badge linking to stored LH report.,<PerfBadge/> component,Opens report in new tab
-21,Headers,/headers diagnostics,Render current response headers and explainers.,apps/site/src/app/headers/page.tsx,All security headers shown with pass/fail chips.
+21.0,Headers,/headers diagnostics,Render current response headers and explainers.,apps/site/src/app/headers/page.tsx,All security headers shown with pass/fail chips.
 21.1,Headers,Onion-Location Header,add header in clear-web responses, footer link.,
-22,i18n,Language switcher & content,"Second-language content for home, skim, notes index.",i18n dictionaries, switcher component
-23,Analytics,Cookieless analytics,Integrate privacy-friendly analytics (no personal data).,Analytics provider wrapper,DNT respected
-24,Content,Engineering notes (3),"Write three posts: indexing, heisenbugs, zero-downtime.",content/notes/*.mdx,Each ends with Trade-offs & What I'd do differently.
+22.0,i18n,Language switcher & content,"Second-language content for home, skim, notes index.",i18n dictionaries, switcher component
+23.0,Analytics,Cookieless analytics,Integrate privacy-friendly analytics (no personal data).,Analytics provider wrapper,DNT respected
+24.0,Content,Engineering notes (3),"Write three posts: indexing, heisenbugs, zero-downtime.",content/notes/*.mdx,Each ends with Trade-offs & What I'd do differently.
 24.1,Content,Systems diagrams (2),Rate limiter & idempotency patterns with ADR blurbs.,content/systems/*,Each has diagram + ADR
 24.2,Content,PR review samples,"Synthesized, redacted review comments showing judgment.",content/samples/pr-reviews/*.md,At least two samples
 24.3,Content,Incident templates,Comms + roles templates for playbook.,content/reliability/*.md,Printable
-25,QA,Cross-browser/device QA,Manual QA matrix across Chrome/Firefox/Safari + mobile.,"QA_MATRIX.md, issues filed",No P0s remain
+25.0,QA,Cross-browser/device QA,Manual QA matrix across Chrome/Firefox/Safari + mobile.,"QA_MATRIX.md, issues filed",No P0s remain
 25.1,QA,A11y audit,Screen reader paths, color-blind simulation, tab order.
-26,Launch,SEO pass & sitemap,"Sitemap.xml, robots.txt, meta tags, canonical, OG/Twitter.","public/sitemap.xml, robots.txt",Rich results test passes
+26.0,Launch,SEO pass & sitemap,"Sitemap.xml, robots.txt, meta tags, canonical, OG/Twitter.","public/sitemap.xml, robots.txt",Rich results test passes
 26.1,Launch,Final perf hardening,"Bundle analyze, code-split audits, prefetch strategy.","analyze report, tweaks committed",Budgets met on cold 4G
 26.2,Launch,Announcement & backup,"Changelog release, social post; backup/restore test.",Release v1.0.0, BACKUP.md
 26.3,Launch,“Why an Onion Mirror” Post,short write-up linking to headers and SLOs.,,

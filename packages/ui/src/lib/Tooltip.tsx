@@ -14,7 +14,8 @@ import clsx from "clsx";
 import {
   composeEventHandlers,
   mergeRefs,
-  useControllableState
+  useControllableState,
+  usePrefersReducedMotion
 } from "./utils";
 
 export type TooltipPlacement = "top" | "bottom";
@@ -52,15 +53,24 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(
     const [render, setRender] = useState(open);
     const enterTimer = useRef<number>();
     const exitTimer = useRef<number>();
+    const prefersReducedMotion = usePrefersReducedMotion();
+    const resolvedDelay = prefersReducedMotion ? 0 : delay;
+    const hideDelay = prefersReducedMotion ? 0 : 60;
 
     useEffect(() => {
       if (open) {
         setRender(true);
         return;
       }
+
+      if (prefersReducedMotion) {
+        setRender(false);
+        return;
+      }
+
       const timeout = window.setTimeout(() => setRender(false), 80);
       return () => window.clearTimeout(timeout);
-    }, [open]);
+    }, [open, prefersReducedMotion]);
 
     useEffect(() => {
       return () => {
@@ -77,14 +87,22 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(
       if (exitTimer.current) {
         window.clearTimeout(exitTimer.current);
       }
-      enterTimer.current = window.setTimeout(() => setOpen(true), delay);
+      if (resolvedDelay <= 0) {
+        setOpen(true);
+        return;
+      }
+      enterTimer.current = window.setTimeout(() => setOpen(true), resolvedDelay);
     };
 
     const hide = () => {
       if (enterTimer.current) {
         window.clearTimeout(enterTimer.current);
       }
-      exitTimer.current = window.setTimeout(() => setOpen(false), 60);
+      if (hideDelay <= 0) {
+        setOpen(false);
+        return;
+      }
+      exitTimer.current = window.setTimeout(() => setOpen(false), hideDelay);
     };
 
     const childWithRef = children as typeof children & {
@@ -129,7 +147,8 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(
             id={tooltipId}
             aria-hidden={!open}
             className={clsx(
-              "pointer-events-none absolute left-1/2 z-10 min-w-[8rem] -translate-x-1/2 rounded-md border border-border bg-surface px-3 py-2 text-xs font-medium text-text shadow-sm transition-opacity duration-100 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text",
+              "pointer-events-none absolute left-1/2 z-10 min-w-[8rem] -translate-x-1/2 rounded-md border border-border bg-surface px-3 py-2 text-xs font-medium text-text shadow-sm",
+              prefersReducedMotion ? "transition-none" : "transition-opacity duration-100",
               placement === "top"
                 ? "bottom-full mb-2 origin-bottom"
                 : "top-full mt-2 origin-top",

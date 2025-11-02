@@ -50,3 +50,4 @@ export {
   shadows
 } from "./tokens";
 export type { Tokens } from "./tokens";
+export { FOCUS_VISIBLE_RING } from "./lib/utils";

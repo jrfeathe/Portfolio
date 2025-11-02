@@ -7,6 +7,8 @@ import type { BreadcrumbItem } from "./Breadcrumbs";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { ShellFooter } from "./Footer";
 import { LanguageSwitcher } from "../LanguageSwitcher";
+import { ContrastToggle } from "../ContrastToggle";
+import { ThemeToggle } from "../ThemeToggle";
 
 export type ShellSection = {
   id: string;
@@ -55,7 +57,11 @@ export function ShellLayout({
                 className="flex-1"
               />
             ) : null}
-            <LanguageSwitcher className="ml-auto" />
+            <div className="ml-auto flex items-center gap-3">
+              <ThemeToggle />
+              <ContrastToggle />
+              <LanguageSwitcher />
+            </div>
           </div>
           <div className="space-y-3">
             <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>

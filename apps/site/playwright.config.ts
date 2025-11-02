@@ -6,6 +6,9 @@ const webServerCommand =
   process.env.PLAYWRIGHT_WEBSERVER_COMMAND ??
   "pnpm exec next start --hostname 127.0.0.1 --port 3000";
 
+const htmlReportDir = process.env.PLAYWRIGHT_HTML_REPORT ?? "playwright-report";
+const blobReportDir = process.env.PLAYWRIGHT_BLOB_REPORT ?? "blob-report";
+const outputDir = process.env.PLAYWRIGHT_OUTPUT_DIR ?? "test-results";
 
 export default defineConfig({
   testDir: "./tests",
@@ -19,8 +22,8 @@ export default defineConfig({
   },
   reporter: [
     ["list"],
-    ["html", { outputFolder: "playwright-report", open: "never" }],
-    ["blob", { outputDir: "blob-report" }]
+    ["html", { outputFolder: htmlReportDir, open: "never" }],
+    ["blob", { outputDir: blobReportDir }]
   ],
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000",
@@ -29,7 +32,7 @@ export default defineConfig({
     video: "retain-on-failure",
     actionTimeout: 10_000
   },
-  outputDir: "test-results",
+  outputDir,
   webServer: skipWebServer
     ? undefined
     : {

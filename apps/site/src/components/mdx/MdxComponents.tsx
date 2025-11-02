@@ -46,16 +46,28 @@ export const mdxComponents: MDXComponents = {
   h2: createHeading(2),
   h3: createHeading(3),
   h4: createHeading(4),
-  a: ({ className, ...props }) => (
-    <a
-      className={clsx(
-        "font-medium text-primary underline-offset-4 transition hover:underline",
-        "dark:text-dark-primary",
-        className
-      )}
-      {...props}
-    />
-  ),
+  a: ({ className, children, ...props }) => {
+    const hasChildren = Children.count(children) > 0;
+    const fallback =
+      hasChildren || typeof props["aria-label"] !== "string"
+        ? null
+        : props["aria-label"];
+
+    return (
+      <a
+        className={clsx(
+          "font-medium text-primary underline-offset-4 transition hover:underline",
+          "dark:text-dark-primary",
+          className
+        )}
+        {...props}
+      >
+        {hasChildren ? children : fallback ? (
+          <span className="sr-only">{fallback}</span>
+        ) : null}
+      </a>
+    );
+  },
   p: ({ className, ...props }) => (
     <p
       className={clsx(

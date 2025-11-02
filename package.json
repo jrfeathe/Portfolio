@@ -8,6 +8,7 @@
     "dev": "pnpm --filter @portfolio/site dev",
     "lint": "pnpm --filter @portfolio/site lint",
     "test": "pnpm --filter @portfolio/site run test:coverage",
+    "test:a11y": "pnpm --filter @portfolio/ui run test:a11y && pnpm --filter @portfolio/site run test:a11y",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,cjs,mjs,json,md,css}\"",
     "typecheck": "pnpm -r --if-present run typecheck"
   },
@@ -16,6 +17,7 @@
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
     "eslint": "^8.56.0",
+    "eslint-plugin-jsx-a11y": "^6.10.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^3.1.1",

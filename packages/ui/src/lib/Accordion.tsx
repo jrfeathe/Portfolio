@@ -16,7 +16,7 @@ import {
 } from "react";
 import clsx from "clsx";
 
-import { composeEventHandlers } from "./utils";
+import { composeEventHandlers, FOCUS_VISIBLE_RING } from "./utils";
 
 type AccordionContextValue = {
   type: "single" | "multiple";
@@ -186,7 +186,8 @@ export const AccordionTrigger = forwardRef<
       aria-controls={panelId}
       data-state={isOpen ? "open" : "closed"}
       className={clsx(
-        "flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-base font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-border dark:focus-visible:outline-dark-border",
+        "flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-base font-medium transition",
+        FOCUS_VISIBLE_RING,
         "bg-transparent",
         className
       )}
@@ -205,7 +206,7 @@ export const AccordionTrigger = forwardRef<
       <span
         aria-hidden
         className={clsx(
-          "inline-flex h-5 w-5 items-center justify-center rounded-full border border-border transition-transform dark:border-dark-border",
+          "inline-flex h-5 w-5 items-center justify-center rounded-full border border-border transition-transform motion-reduce:transition-none dark:border-dark-border",
           isOpen ? "rotate-45" : "rotate-0"
         )}
       >

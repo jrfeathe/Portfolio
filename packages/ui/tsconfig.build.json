@@ -10,5 +10,5 @@
     "module": "ESNext",
     "target": "ES2019"
   },
-  "exclude": ["src/**/*.stories.tsx"]
+  "exclude": ["src/**/*.stories.tsx", "src/__tests__/**/*"]
 }

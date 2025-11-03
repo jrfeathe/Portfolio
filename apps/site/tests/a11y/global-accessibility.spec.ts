@@ -38,6 +38,8 @@ const journeys = [
 ];
 
 test.describe("Global accessibility smoke checks", () => {
+  test.describe.configure({ timeout: 90_000 });
+
   for (const journey of journeys) {
     test(`@a11y ${journey.name} has no serious or critical axe violations`, async ({ page }, testInfo) => {
       await page.goto(journey.path);

@@ -5,26 +5,7 @@ module.exports = {
   setupFilesAfterEnv: [path.join(__dirname, "jest.setup.ts")],
   testMatch: ["<rootDir>/src/**/__tests__/**/*.test.[jt]s?(x)"],
   transform: {
-    "^.+\\.(t|j)sx?$": [
-      "@swc/jest",
-      {
-        jsc: {
-          target: "es2022",
-          parser: {
-            syntax: "typescript",
-            tsx: true
-          },
-          transform: {
-            react: {
-              runtime: "automatic"
-            }
-          }
-        },
-        module: {
-          type: "commonjs"
-        }
-      }
-    ]
+    "^.+\\.(t|j)sx?$": path.join(__dirname, "jest.transform.cjs")
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
   clearMocks: true,

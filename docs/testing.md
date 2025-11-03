@@ -9,3 +9,11 @@
 - **Failure triage** — Test output attaches `axe` violations that include rule IDs, CSS selectors, and WCAG impacts. Prioritise `critical`/`serious` issues immediately; document any temporary suppressions in `docs/testing.md` along with a tracking issue, and link back to `WBS/Task_7.0_Global_A11y_Checks.md`.
 - **Adding suppressions** — Prefer targeted `AxeBuilder` `.exclude()` blocks or inline `data-testid` anchors with comments describing the rationale. Permanent suppressions require sign-off from the accessibility owner.
 - **Further reading** — The detailed scope, deliverables, and mitigation plan for accessibility automation are tracked in `WBS/Task_7.0_Global_A11y_Checks.md` and `WBS/Task_7.1_Reduced_Motion_Contrast_Focus.md`. Contrast ratios for all design tokens are catalogued in `docs/contrast-audit.md`.
+
+## Performance budgets
+
+- **Local guardrail** — Run `pnpm --filter @portfolio/site run build:budgets` to execute a production `next build` and enforce the per-route gzip budgets defined in `performance-budgets.json`. Pass `--skip-build` if you already have a fresh `.next` directory.
+- **CI coverage** — The `performance-budgets` workflow job runs the bundle budget script on every push/PR and, when a preview URL is available, executes Lighthouse CI against each budgeted route. Failures in either step block merges.
+- **Budget files** — Update `performance-budgets.json` when adding routes or adjusting thresholds. The JSON drives both Lighthouse's `budgetsPath` integration and the build-time bundle check. Document rationale for any increases directly in the PR.
+- **Lighthouse outputs** — After CI completes, inspect `apps/site/.lhci/report.json` for averaged category scores and the `budgets` section, which reports pass/fail status for LCP, CLS, and resource thresholds per route.
+- **Real-user metrics** — Production Core Web Vitals are exported as `web-vital *` traces via the browser OpenTelemetry client. Configure OTLP endpoints (see `README` Observability) to make the spans visible in your collector and to drive alerting.

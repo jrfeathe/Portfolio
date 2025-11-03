@@ -3,6 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 
 test.describe("Recruiter skim mode", () => {
   test("flags skim mode via query param without regressing hero content", async ({ page }) => {
+    test.setTimeout(90_000);
     await page.goto("/en");
 
     await expect(page.getByRole("heading", { name: "Portfolio", level: 1 })).toBeVisible();

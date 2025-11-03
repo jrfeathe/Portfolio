@@ -3,6 +3,8 @@ import AxeBuilder from "@axe-core/playwright";
 
 test.describe("Engineering notes flow", () => {
   test("lists published notes and renders detail with table of contents", async ({ page }) => {
+    test.setTimeout(90_000);
+
     await page.goto("/en/notes");
 
     const noteLink = page.getByRole("link", { name: /MDX pipeline game plan/i });

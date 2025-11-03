@@ -15,6 +15,7 @@
     "lhci:collect": "node ../../scripts/lighthouse/collect.cjs",
     "lhci:summarize": "node ../../scripts/lighthouse/summarize.cjs",
     "lhci:report": "node ../../scripts/lighthouse/report.cjs",
+    "build:budgets": "node ../../scripts/performance/check-build-budgets.cjs",
     "preplaywright:test": "node ../../scripts/playwright/pretest.cjs",
     "playwright:test": "node ../../scripts/playwright/run.cjs",
     "preplaywright:test:headed": "node ../../scripts/playwright/pretest.cjs",

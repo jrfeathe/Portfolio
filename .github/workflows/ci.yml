@@ -21,6 +21,8 @@ jobs:
       contents: read
       pull-requests: write
       issues: write
+    env:
+      PREVIEW_URL: ${{ vars.LIGHTHOUSE_PREVIEW_URL || secrets.LIGHTHOUSE_PREVIEW_URL || '' }}
 
     steps:
       - name: Checkout repository
@@ -58,6 +60,9 @@ jobs:
 
       - name: Build workspace
         run: pnpm -w build
+
+      - name: Enforce bundle budgets
+        run: pnpm --filter @portfolio/site run build:budgets
 
       - name: Run unit tests (coverage)
         env:
@@ -144,67 +149,6 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: pnpm --filter @portfolio/site build
 
-      - name: Run accessibility tests
-        if: ${{ github.event_name == 'pull_request' }}
-        env:
-          CI: true
-          PLAYWRIGHT_SKIP_BUILD: "1"
-        run: pnpm test:a11y
-
-      - name: Run Playwright tests
-        if: ${{ github.event_name == 'pull_request' }}
-        env:
-          PLAYWRIGHT_HTML_REPORT: playwright-report
-          PLAYWRIGHT_SKIP_BUILD: "1"
-        run: |
-          pnpm --filter @portfolio/site run playwright:test -- --grep-invert "@a11y"
-
-      - name: Upload Playwright artifacts
-        if: ${{ github.event_name == 'pull_request' && always() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-results
-          path: |
-            apps/site/playwright-report
-            apps/site/blob-report
-            apps/site/test-results
-            apps/site/playwright-report-a11y
-            apps/site/blob-report-a11y
-            apps/site/test-results/a11y
-          if-no-files-found: warn
-
-  performance-budgets:
-    name: performance-budgets
-    runs-on: ubuntu-latest
-    needs: checks
-    permissions:
-      contents: read
-      pull-requests: write
-    env:
-      PREVIEW_URL: ${{ vars.LIGHTHOUSE_PREVIEW_URL || secrets.LIGHTHOUSE_PREVIEW_URL || '' }}
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 10.19.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: ".nvmrc"
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Enforce bundle budgets
-        run: pnpm --filter @portfolio/site run build:budgets
-
       - name: Resolve preview URL
         if: ${{ github.event_name == 'pull_request' }}
         id: preview
@@ -250,3 +194,32 @@ jobs:
           fi
           badge_json=$(tr -d '\n' < "$badge_path")
           echo "json=$badge_json" >> "$GITHUB_OUTPUT"
+
+      - name: Run accessibility tests
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          CI: true
+          PLAYWRIGHT_SKIP_BUILD: "1"
+        run: pnpm test:a11y
+
+      - name: Run Playwright tests
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          PLAYWRIGHT_HTML_REPORT: playwright-report
+          PLAYWRIGHT_SKIP_BUILD: "1"
+        run: |
+          pnpm --filter @portfolio/site run playwright:test -- --grep-invert "@a11y"
+
+      - name: Upload Playwright artifacts
+        if: ${{ github.event_name == 'pull_request' && always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-results
+          path: |
+            apps/site/playwright-report
+            apps/site/blob-report
+            apps/site/test-results
+            apps/site/playwright-report-a11y
+            apps/site/blob-report-a11y
+            apps/site/test-results/a11y
+          if-no-files-found: warn

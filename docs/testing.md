@@ -17,3 +17,10 @@
 - **Budget files** — Update `performance-budgets.json` when adding routes or adjusting thresholds. The JSON drives both Lighthouse's `budgetsPath` integration and the build-time bundle check. Document rationale for any increases directly in the PR.
 - **Lighthouse outputs** — After CI completes, inspect `apps/site/.lhci/report.json` for averaged category scores and the `budgets` section, which reports pass/fail status for LCP, CLS, and resource thresholds per route.
 - **Real-user metrics** — Production Core Web Vitals are exported as `web-vital *` traces via the browser OpenTelemetry client. Configure OTLP endpoints (see `README` Observability) to make the spans visible in your collector and to drive alerting.
+
+## Media pipeline
+
+- **Shared helper** — All imagery should render through `<ResponsiveImage>` (`apps/site/src/components/ResponsiveImage.tsx`). The helper applies consistent quality, object-fit, and responsive `sizes` hints for `hero`, `content`, and `inline` presets.
+- **Dictionary-driven hero art** — Hero visuals live in `apps/site/src/utils/dictionaries.ts` under `home.hero.media`. Update the descriptor (src, alt, width/height) and drop assets into `apps/site/public/media/**`.
+- **Lint guardrail** — ESLint enforces `@next/next/no-img-element`. If you must bypass optimisation (e.g., RSS feeds), document the exception and add a targeted disable comment.
+- **Documentation** — Follow `docs/media-guidelines.md` for authoring guidance, verification steps, and remote image allowlisting.

@@ -165,7 +165,7 @@ export default function HomePage({ params, searchParams }: PageProps) {
   const sections = buildSections(dictionary);
   const breadcrumbs = resolveBreadcrumbs(dictionary, locale);
   const {
-    hero: { title, subtitle, cta }
+    hero: { title, subtitle, cta, media }
   } = dictionary.home;
   const skimModeEnabled = resolveSkimMode(searchParams);
 
@@ -174,6 +174,7 @@ export default function HomePage({ params, searchParams }: PageProps) {
       <ShellLayout
         title={title}
         subtitle={subtitle}
+        heroMedia={media}
         breadcrumbs={breadcrumbs}
         sections={sections}
         cta={

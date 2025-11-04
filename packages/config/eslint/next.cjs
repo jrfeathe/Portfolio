@@ -6,6 +6,6 @@ module.exports = {
     "next/core-web-vitals"
   ],
   rules: {
-    "@next/next/no-img-element": "off"
+    "@next/next/no-img-element": "error"
   }
 };

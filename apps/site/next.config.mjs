@@ -138,6 +138,21 @@ const config = {
       "@opentelemetry/semantic-conventions"
     ]
   },
+  images: {
+    formats: ["image/avif", "image/webp"],
+    deviceSizes: [320, 420, 640, 768, 960, 1024, 1280, 1536, 1920],
+    imageSizes: [48, 64, 96, 128, 160, 256, 320, 384],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.ctfassets.net"
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com"
+      }
+    ]
+  },
   webpack: (webpackConfig, options) => {
     const shouldEmitPerformanceManifest =
       !options.isServer &&

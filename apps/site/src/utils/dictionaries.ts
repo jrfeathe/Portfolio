@@ -1,3 +1,4 @@
+import type { ImageDescriptor, ResponsiveImagePreset } from "../lib/images";
 import type { Locale } from "./i18n";
 
 export type CtaVariant = "primary" | "secondary" | "ghost";
@@ -19,6 +20,11 @@ export type AppDictionary = {
         title: string;
         description: string;
         actions: Array<{ label: string; variant: CtaVariant }>;
+      };
+      media?: {
+        image: ImageDescriptor;
+        preset?: ResponsiveImagePreset;
+        caption?: string;
       };
     };
     sections: {
@@ -72,6 +78,18 @@ const en: AppDictionary = {
       title: "Portfolio",
       subtitle:
         "Blueprinting a recruiter-friendly experience that foregrounds measurable impact, operating rituals, and proof you can audit.",
+      media: {
+        image: {
+          src: "/media/hero/hero-glow.svg",
+          alt: "Abstract gradient artwork representing portfolio velocity and focus.",
+          width: 960,
+          height: 720,
+          blurDataURL:
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAr8B9ngcRwAAAABJRU5ErkJggg=="
+        },
+        preset: "hero",
+        caption: "Gradient artwork used as the default hero visual."
+      },
       cta: {
         title: "Need proof fast?",
         description:
@@ -170,6 +188,18 @@ const ja: AppDictionary = {
       title: "ポートフォリオ",
       subtitle:
         "測定可能な成果、運用リズム、検証できる証跡を前面に出し、採用担当者にとって使いやすい体験を設計しています。",
+      media: {
+        image: {
+          src: "/media/hero/hero-glow.svg",
+          alt: "ポートフォリオの集中と推進力を表現した抽象的なグラデーションアート。",
+          width: 960,
+          height: 720,
+          blurDataURL:
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAr8B9ngcRwAAAABJRU5ErkJggg=="
+        },
+        preset: "hero",
+        caption: "既定のヒーロービジュアルとして使用するグラデーションアート。"
+      },
       cta: {
         title: "証跡がすぐに必要ですか？",
         description:

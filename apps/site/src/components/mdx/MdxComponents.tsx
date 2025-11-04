@@ -3,6 +3,8 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 import type { MDXComponents } from "mdx/types";
 import clsx from "clsx";
 import { Diagram, type DiagramType } from "../Diagram";
+import { ResponsiveImage } from "../ResponsiveImage";
+import type { ImageDescriptor } from "../../lib/images";
 
 function createHeading(level: 2 | 3 | 4) {
   const Component = `h${level}` as const;
@@ -104,6 +106,56 @@ export const mdxComponents: MDXComponents = {
       {...props}
     />
   ),
+  img: ({ className, src, alt, width, height }) => {
+    if (typeof src !== "string") {
+      return null;
+    }
+
+    const parsedWidth =
+      typeof width === "number"
+        ? width
+        : typeof width === "string"
+        ? Number.parseInt(width, 10)
+        : undefined;
+    const parsedHeight =
+      typeof height === "number"
+        ? height
+        : typeof height === "string"
+        ? Number.parseInt(height, 10)
+        : undefined;
+
+    if (!parsedWidth || !parsedHeight) {
+      const descriptor: ImageDescriptor = {
+        src,
+        alt: typeof alt === "string" ? alt : "",
+        width: 1200,
+        height: 720
+      };
+
+      return (
+        <ResponsiveImage
+          image={descriptor}
+          preset="content"
+          className={clsx("my-6 w-full", className)}
+        />
+      );
+    }
+
+    const descriptor: ImageDescriptor = {
+      src,
+      alt: typeof alt === "string" ? alt : "",
+      width: parsedWidth,
+      height: parsedHeight
+    };
+
+    return (
+      <ResponsiveImage
+        image={descriptor}
+        preset="content"
+        className={clsx("my-6 w-full", className)}
+      />
+    );
+  },
   pre: ({ className, children, ...props }) => {
     let language: DiagramType | null = null;
     let diagramSource = "";

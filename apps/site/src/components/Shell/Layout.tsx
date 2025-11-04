@@ -9,6 +9,11 @@ import { ShellFooter } from "./Footer";
 import { LanguageSwitcher } from "../LanguageSwitcher";
 import { ContrastToggle } from "../ContrastToggle";
 import { ThemeToggle } from "../ThemeToggle";
+import { ResponsiveImage } from "../ResponsiveImage";
+import type {
+  ImageDescriptor,
+  ResponsiveImagePreset
+} from "../../lib/images";
 
 export type ShellSection = {
   id: string;
@@ -27,6 +32,11 @@ export type ShellLayoutProps = {
   cta?: ReactNode;
   footer?: ReactNode;
   className?: string;
+  heroMedia?: {
+    image: ImageDescriptor;
+    preset?: ResponsiveImagePreset;
+    caption?: ReactNode;
+  };
 };
 
 export function ShellLayout({
@@ -37,7 +47,8 @@ export function ShellLayout({
   anchorItems,
   cta,
   footer,
-  className
+  className,
+  heroMedia
 }: ShellLayoutProps) {
   const navItems =
     anchorItems ??
@@ -63,12 +74,32 @@ export function ShellLayout({
               <LanguageSwitcher />
             </div>
           </div>
-          <div className="space-y-3">
-            <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
-            {subtitle ? (
-              <p className="max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted">
-                {subtitle}
-              </p>
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
+            <div className="space-y-3">
+              <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
+              {subtitle ? (
+                <p className="max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted">
+                  {subtitle}
+                </p>
+              ) : null}
+            </div>
+            {heroMedia ? (
+              <figure className="group relative overflow-hidden rounded-2xl border border-border/40 bg-gradient-to-br from-surface/40 via-surface/10 to-surface/50 shadow-xl ring-1 ring-border/20 backdrop-blur-sm dark:border-dark-border/30 dark:from-dark-surface/40 dark:via-dark-surface/10 dark:to-dark-surface/50 dark:ring-dark-border/20">
+                <div className="relative aspect-[4/3]">
+                  <ResponsiveImage
+                    image={heroMedia.image}
+                    preset={heroMedia.preset ?? "hero"}
+                    priority
+                    fill
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                {heroMedia.caption ? (
+                  <figcaption className="border-t border-border/30 bg-surface/70 px-4 py-2 text-xs font-medium text-textMuted backdrop-blur-sm dark:border-dark-border/30 dark:bg-dark-surface/70 dark:text-dark-textMuted">
+                    {heroMedia.caption}
+                  </figcaption>
+                ) : null}
+              </figure>
             ) : null}
           </div>
           {navItems.length ? (

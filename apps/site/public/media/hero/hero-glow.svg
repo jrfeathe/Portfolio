@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="720" viewBox="0 0 960 720" role="img" aria-labelledby="title desc">
+  <title id="title">Abstract blue and purple gradient background</title>
+  <desc id="desc">Soft radial gradient blending deep navy into vibrant magenta representing focus and velocity.</desc>
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#7f5cff" stop-opacity="0.95" />
+      <stop offset="45%" stop-color="#5a3eff" stop-opacity="0.8" />
+      <stop offset="75%" stop-color="#1f1a62" stop-opacity="0.85" />
+      <stop offset="100%" stop-color="#0b1024" stop-opacity="1" />
+    </radialGradient>
+    <radialGradient id="accent" cx="80%" cy="65%" r="45%">
+      <stop offset="0%" stop-color="#ff9d5c" stop-opacity="0.7" />
+      <stop offset="60%" stop-color="#7f5cff" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="960" height="720" fill="#080c1c" />
+  <rect width="960" height="720" fill="url(#glow)" />
+  <ellipse cx="720" cy="520" rx="260" ry="200" fill="url(#accent)" />
+  <g opacity="0.4">
+    <circle cx="220" cy="190" r="140" fill="#5ce1ff" />
+    <circle cx="220" cy="190" r="140" fill="url(#glow)" />
+  </g>
+  <g opacity="0.25">
+    <path d="M120 580 Q 320 420 560 560 T 940 520" fill="none" stroke="#ffb7ff" stroke-width="36" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M160 600 Q 340 460 600 600 T 960 560" fill="none" stroke="#00f0ff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>

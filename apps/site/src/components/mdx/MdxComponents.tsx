@@ -1,10 +1,23 @@
 import { Children, isValidElement } from "react";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
-import type { MDXComponents } from "mdx/types";
 import clsx from "clsx";
-import { Diagram, type DiagramType } from "../Diagram";
+import dynamic from "next/dynamic";
+import type { MDXComponents } from "mdx/types";
+import type { DiagramType } from "../Diagram";
 import { ResponsiveImage } from "../ResponsiveImage";
 import type { ImageDescriptor } from "../../lib/images";
+
+const Diagram = dynamic(
+  () => import("../Diagram").then((module) => module.Diagram),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="rounded-md border border-border bg-surface p-4 text-sm text-textMuted dark:border-dark-border dark:bg-dark-surface dark:text-dark-textMuted">
+        Rendering diagram…
+      </div>
+    )
+  }
+);
 
 function createHeading(level: 2 | 3 | 4) {
   const Component = `h${level}` as const;

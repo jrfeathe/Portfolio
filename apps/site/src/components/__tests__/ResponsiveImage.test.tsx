@@ -1,22 +1,31 @@
+/* eslint-disable @next/next/no-img-element */
 import { render, screen } from "@testing-library/react";
 
 jest.mock("next/image", () => ({
   __esModule: true,
-  default: ({
-    alt,
-    priority: _priority,
-    fill: _fill,
-    blurDataURL: _blurDataURL,
-    placeholder: _placeholder,
-    ...props
-  }: Record<string, unknown>) => (
+  default: ({ alt, ...props }: Record<string, unknown>) => {
+    const {
+      priority,
+      fill,
+      blurDataURL,
+      placeholder,
+      ...rest
+    } = props as Record<string, unknown>;
+
+    void priority;
+    void fill;
+    void blurDataURL;
+    void placeholder;
+
     // eslint-disable-next-line jsx-a11y/alt-text
-    <img
-      alt={typeof alt === "string" ? alt : ""}
-      data-mocked-image
-      {...props}
-    />
-  )
+    return (
+      <img
+        alt={typeof alt === "string" ? alt : ""}
+        data-mocked-image
+        {...rest}
+      />
+    );
+  }
 }));
 
 import { ResponsiveImage } from "../ResponsiveImage";

@@ -1,11 +1,3 @@
-import { diag } from "@opentelemetry/api";
-import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
-import { ZoneContextManager } from "@opentelemetry/context-zone-peer-dep";
-import { BatchSpanProcessor } from "@opentelemetry/sdk-trace-base";
-import { WebTracerProvider } from "@opentelemetry/sdk-trace-web";
-import { buildResource, parseExporter, withFetchedTrace } from "./common";
-import { getOtelConfig } from "./config";
-
 const BROWSER_SYMBOL = Symbol.for("portfolio.otel.browser");
 const BROWSER_FETCH_SYMBOL = Symbol.for("portfolio.otel.browser.fetch");
 
@@ -14,11 +6,61 @@ type BrowserGlobal = typeof globalThis & {
   [BROWSER_FETCH_SYMBOL]?: boolean;
 };
 
+type BrowserDependencies = {
+  diag: typeof import("@opentelemetry/api").diag;
+  OTLPTraceExporter: typeof import("@opentelemetry/exporter-trace-otlp-http").OTLPTraceExporter;
+  ZoneContextManager: typeof import("@opentelemetry/context-zone-peer-dep").ZoneContextManager;
+  BatchSpanProcessor: typeof import("@opentelemetry/sdk-trace-base").BatchSpanProcessor;
+  WebTracerProvider: typeof import("@opentelemetry/sdk-trace-web").WebTracerProvider;
+  buildResource: typeof import("./common").buildResource;
+  parseExporter: typeof import("./common").parseExporter;
+  withFetchedTrace: typeof import("./common").withFetchedTrace;
+  getOtelConfig: typeof import("./config").getOtelConfig;
+};
+
+let dependencyPromise: Promise<BrowserDependencies> | null = null;
+
+function loadBrowserDependencies(): Promise<BrowserDependencies> {
+  if (!dependencyPromise) {
+    dependencyPromise = Promise.all([
+      import("@opentelemetry/api"),
+      import("@opentelemetry/exporter-trace-otlp-http"),
+      import("@opentelemetry/context-zone-peer-dep"),
+      import("@opentelemetry/sdk-trace-base"),
+      import("@opentelemetry/sdk-trace-web"),
+      import("./common"),
+      import("./config")
+    ]).then(
+      ([
+        api,
+        exporter,
+        zone,
+        traceBase,
+        traceWeb,
+        common,
+        config
+      ]) => ({
+        diag: api.diag,
+        OTLPTraceExporter: exporter.OTLPTraceExporter,
+        ZoneContextManager: zone.ZoneContextManager,
+        BatchSpanProcessor: traceBase.BatchSpanProcessor,
+        WebTracerProvider: traceWeb.WebTracerProvider,
+        buildResource: common.buildResource,
+        parseExporter: common.parseExporter,
+        withFetchedTrace: common.withFetchedTrace,
+        getOtelConfig: config.getOtelConfig
+      })
+    );
+  }
+
+  return dependencyPromise;
+}
+
 function getBrowserGlobal(): BrowserGlobal {
   return globalThis as BrowserGlobal;
 }
 
-export function registerBrowserInstrumentation() {
+export async function registerBrowserInstrumentation(): Promise<void> {
   if (typeof window === "undefined") {
     return;
   }
@@ -29,6 +71,19 @@ export function registerBrowserInstrumentation() {
     return;
   }
 
+  let deps: BrowserDependencies;
+
+  try {
+    deps = await loadBrowserDependencies();
+  } catch (error) {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("[otel] Failed to load browser instrumentation:", error);
+    }
+    browserGlobal[BROWSER_SYMBOL] = true;
+    return;
+  }
+
+  const { parseExporter, diag } = deps;
   const exporter = parseExporter("browser");
 
   if (!exporter) {
@@ -45,6 +100,16 @@ export function registerBrowserInstrumentation() {
     return;
   }
 
+  const {
+    WebTracerProvider,
+    BatchSpanProcessor,
+    OTLPTraceExporter,
+    ZoneContextManager,
+    buildResource,
+    withFetchedTrace,
+    getOtelConfig
+  } = deps;
+
   const provider = new WebTracerProvider({
     resource: buildResource(`${getOtelConfig("browser").serviceName}-browser`),
     spanProcessors: [
@@ -56,12 +121,14 @@ export function registerBrowserInstrumentation() {
     contextManager: new ZoneContextManager()
   });
 
-  patchBrowserFetch();
+  patchBrowserFetch(withFetchedTrace);
 
   browserGlobal[BROWSER_SYMBOL] = true;
 }
 
-function patchBrowserFetch() {
+function patchBrowserFetch(
+  withFetchedTrace: BrowserDependencies["withFetchedTrace"]
+) {
   const browserGlobal = getBrowserGlobal();
 
   if (browserGlobal[BROWSER_FETCH_SYMBOL]) {

@@ -117,13 +117,7 @@ export function ShellLayout({
           className
         )}
       >
-        {navItems.length ? (
-          <div className="hidden lg:block">
-            <AnchorNav items={navItems} className="sticky top-24" />
-          </div>
-        ) : null}
-
-        <main className="flex flex-col gap-16">
+        <main className="flex flex-col gap-16 lg:col-start-2">
           {sections.map((section) => (
             <section
               id={section.id}
@@ -152,9 +146,15 @@ export function ShellLayout({
           ))}
         </main>
 
-        <div className="shell-sidebar space-y-6">
+        <div className="shell-sidebar space-y-6 lg:col-start-3">
           {cta}
         </div>
+
+        {navItems.length ? (
+          <div className="hidden lg:block lg:col-start-1 lg:row-start-1">
+            <AnchorNav items={navItems} className="sticky top-24" />
+          </div>
+        ) : null}
       </div>
       {footer ?? <ShellFooter />}
     </div>

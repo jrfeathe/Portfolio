@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-type PlantUmlDiagramProps = {
+export type PlantUmlDiagramProps = {
   source: string;
   format?: "svg" | "png";
   className?: string;

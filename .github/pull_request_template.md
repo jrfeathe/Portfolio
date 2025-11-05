@@ -2,8 +2,13 @@
 - _Describe the change in a couple sentences._
 
 ## Testing
+- [ ] `pnpm lint`
+- [ ] `pnpm typecheck`
 - [ ] `pnpm -w build`
-- [ ] `pnpm --filter @portfolio/site lint`
+- [ ] `pnpm test`
+- [ ] `pnpm --filter @portfolio/site run build:budgets`
+- [ ] `pnpm test:a11y`
+- [ ] `pnpm --filter @portfolio/site run playwright:test -- --grep-invert "@a11y"`
 - [ ] Other (specify):
 
 ## Deployment Notes

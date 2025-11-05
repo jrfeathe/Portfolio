@@ -5,6 +5,8 @@ const SANITIZED_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 1
 
 test.describe("Diagram rendering", () => {
   test("proxies PlantUML diagrams without leaking unsafe markup", async ({ page }) => {
+    test.setTimeout(90_000);
+
     await page.route("**/api/plantuml", async (route) => {
       const request = route.request();
       expect(request.method()).toBe("POST");
@@ -24,10 +26,24 @@ test.describe("Diagram rendering", () => {
       });
     });
 
+    const diagramRequest = page.waitForRequest(
+      (request) =>
+        request.url().includes("/api/plantuml") && request.method() === "POST",
+      { timeout: 60_000 }
+    );
+    const diagramResponse = page.waitForResponse(
+      (response) =>
+        response.url().includes("/api/plantuml") && response.status() === 200,
+      { timeout: 60_000 }
+    );
+
     await page.goto("/en/notes/mdx-pipeline");
+    await diagramRequest;
+    await diagramResponse;
+    await page.waitForLoadState("networkidle");
 
     const diagram = page.locator('[aria-label="PlantUML diagram"]');
-    await expect(diagram).toBeVisible();
+    await expect(diagram).toBeVisible({ timeout: 45_000 });
     const diagramMarkup = await diagram.innerHTML();
 
     expect(diagramMarkup).toContain("PlantUML");

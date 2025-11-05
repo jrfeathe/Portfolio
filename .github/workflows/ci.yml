@@ -23,9 +23,6 @@ jobs:
       issues: write
     env:
       PREVIEW_URL: ${{ vars.LIGHTHOUSE_PREVIEW_URL || secrets.LIGHTHOUSE_PREVIEW_URL || '' }}
-    outputs:
-      badge_json: ${{ steps.badge.outputs.json }}
-      preview_url: ${{ steps.preview.outputs.url }}
 
     steps:
       - name: Checkout repository
@@ -63,6 +60,9 @@ jobs:
 
       - name: Build workspace
         run: pnpm -w build
+
+      - name: Enforce bundle budgets
+        run: pnpm --filter @portfolio/site run build:budgets
 
       - name: Run unit tests (coverage)
         env:
@@ -149,6 +149,52 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         run: pnpm --filter @portfolio/site build
 
+      - name: Resolve preview URL
+        if: ${{ github.event_name == 'pull_request' }}
+        id: preview
+        run: |
+          url="${PREVIEW_URL:-}"
+          if [ -z "$url" ] && [ -n "${DEPLOYMENT_URL:-}" ]; then
+            url="$DEPLOYMENT_URL"
+          fi
+          if [ -z "$url" ] && [ -n "${VERCEL_PREVIEW_URL:-}" ]; then
+            url="$VERCEL_PREVIEW_URL"
+          fi
+          if [ -z "$url" ]; then
+            echo "::warning::Skipping Lighthouse: no preview URL provided."
+            echo "has_url=false" >> "$GITHUB_OUTPUT"
+            echo "url=" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "Resolved preview URL: $url"
+          echo "has_url=true" >> "$GITHUB_OUTPUT"
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+
+      - name: Run Lighthouse CI
+        if: ${{ github.event_name == 'pull_request' && steps.preview.outputs.has_url == 'true' }}
+        env:
+          PREVIEW_URL: ${{ steps.preview.outputs.url }}
+        run: pnpm --filter @portfolio/site run lhci:report
+
+      - name: Upload Lighthouse artifacts
+        if: ${{ github.event_name == 'pull_request' && steps.preview.outputs.has_url == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: apps/site/.lhci
+          if-no-files-found: warn
+
+      - name: Publish badge output
+        if: ${{ github.event_name == 'pull_request' && steps.preview.outputs.has_url == 'true' }}
+        run: |
+          badge_path="apps/site/.lhci/badge.json"
+          if [ ! -f "$badge_path" ]; then
+            echo "::warning::No badge payload generated."
+            exit 0
+          fi
+          badge_json=$(tr -d '\n' < "$badge_path")
+          echo "json=$badge_json" >> "$GITHUB_OUTPUT"
+
       - name: Run accessibility tests
         if: ${{ github.event_name == 'pull_request' }}
         env:
@@ -177,50 +223,3 @@ jobs:
             apps/site/blob-report-a11y
             apps/site/test-results/a11y
           if-no-files-found: warn
-
-      - name: Resolve preview URL
-        if: ${{ github.event_name == 'pull_request' }}
-        id: preview
-        run: |
-          url="${PREVIEW_URL:-}"
-          if [ -z "$url" ] && [ -n "${DEPLOYMENT_URL:-}" ]; then
-            url="$DEPLOYMENT_URL"
-          fi
-          if [ -z "$url" ] && [ -n "${VERCEL_PREVIEW_URL:-}" ]; then
-            url="$VERCEL_PREVIEW_URL"
-          fi
-          if [ -z "$url" ]; then
-            echo "::warning::Skipping Lighthouse: no preview URL provided."
-            echo "has_url=false" >> "$GITHUB_OUTPUT"
-            echo "url=" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          echo "Resolved preview URL: $url"
-          echo "has_url=true" >> "$GITHUB_OUTPUT"
-          echo "url=$url" >> "$GITHUB_OUTPUT"
-
-      - name: Run Lighthouse CI
-        if: ${{ github.event_name == 'pull_request' && steps.preview.outputs.has_url == 'true' }}
-        env:
-          PREVIEW_URL: ${{ steps.preview.outputs.url }}
-        run: pnpm --filter @portfolio/site lhci:report
-
-      - name: Upload Lighthouse artifacts
-        if: ${{ github.event_name == 'pull_request' && steps.preview.outputs.has_url == 'true' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: lighthouse-report
-          path: apps/site/.lhci
-          if-no-files-found: warn
-
-      - name: Publish badge output
-        id: badge
-        if: ${{ github.event_name == 'pull_request' && steps.preview.outputs.has_url == 'true' }}
-        run: |
-          badge_path="apps/site/.lhci/badge.json"
-          if [ ! -f "$badge_path" ]; then
-            echo "::warning::No badge payload generated."
-            exit 0
-          fi
-          badge_json=$(tr -d '\n' < "$badge_path")
-          echo "json=$badge_json" >> "$GITHUB_OUTPUT"

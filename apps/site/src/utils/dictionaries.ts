@@ -1,3 +1,4 @@
+import type { ImageDescriptor, ResponsiveImagePreset } from "../lib/images";
 import type { Locale } from "./i18n";
 
 export type CtaVariant = "primary" | "secondary" | "ghost";
@@ -19,6 +20,11 @@ export type AppDictionary = {
         title: string;
         description: string;
         actions: Array<{ label: string; variant: CtaVariant }>;
+      };
+      media?: {
+        image: ImageDescriptor;
+        preset?: ResponsiveImagePreset;
+        caption?: string;
       };
     };
     sections: {
@@ -58,6 +64,14 @@ export type AppDictionary = {
   };
 };
 
+const HERO_IMAGE_BASE: Omit<ImageDescriptor, "alt"> = {
+  src: "/media/hero/hero-glow.svg",
+  width: 960,
+  height: 720,
+  blurDataURL:
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAr8B9ngcRwAAAABJRU5ErkJggg=="
+};
+
 const en: AppDictionary = {
   metadata: {
     title: "Jack F. Portfolio",
@@ -72,6 +86,14 @@ const en: AppDictionary = {
       title: "Portfolio",
       subtitle:
         "Blueprinting a recruiter-friendly experience that foregrounds measurable impact, operating rituals, and proof you can audit.",
+      media: {
+        image: {
+          ...HERO_IMAGE_BASE,
+          alt: "Abstract gradient artwork representing portfolio velocity and focus.",
+        },
+        preset: "hero",
+        caption: "Gradient artwork used as the default hero visual."
+      },
       cta: {
         title: "Need proof fast?",
         description:
@@ -170,6 +192,14 @@ const ja: AppDictionary = {
       title: "ポートフォリオ",
       subtitle:
         "測定可能な成果、運用リズム、検証できる証跡を前面に出し、採用担当者にとって使いやすい体験を設計しています。",
+      media: {
+        image: {
+          ...HERO_IMAGE_BASE,
+          alt: "ポートフォリオの集中と推進力を表現した抽象的なグラデーションアート。",
+        },
+        preset: "hero",
+        caption: "既定のヒーロービジュアルとして使用するグラデーションアート。"
+      },
       cta: {
         title: "証跡がすぐに必要ですか？",
         description:
@@ -268,6 +298,14 @@ const zh: AppDictionary = {
       title: "作品集",
       subtitle:
         "打造讓招募方快速理解的體驗，突出可量化的影響、運營節奏，以及可驗證的證據。",
+      media: {
+        image: {
+          ...HERO_IMAGE_BASE,
+          alt: "抽象漸層藝術，象徵作品集的速度與專注。",
+        },
+        preset: "hero",
+        caption: "預設首頁視覺所使用的漸層藝術。"
+      },
       cta: {
         title: "需要立即取得證據嗎？",
         description:

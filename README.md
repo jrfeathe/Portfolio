@@ -21,6 +21,7 @@ supporting packages.
 2. Build everything with `pnpm -w build`.
 3. Launch the site via `pnpm dev`.
 4. Run linting with `pnpm lint` and formatting with `pnpm format`.
+5. Validate bundle budgets with `pnpm --filter @portfolio/site run build:budgets` before pushing heavy UI changes.
 
 The default Node version is pinned in `.nvmrc`. Run `nvm use` (or your preferred
 version manager) before installing dependencies to stay aligned with the repo.
@@ -41,6 +42,12 @@ emit spans from Node SSR and browser fetch instrumentation:
 
 When the endpoint variables are unset, instrumentation remains dormant and no
 spans are generated.
+
+Real-user web vitals (LCP, CLS, FCP, TBT, INP) are captured via the App Router
+`reportWebVitals` hook. Metrics publish as browser spans labelled
+`web-vital <metric>` and piggyback on the existing OTLP trace exporter, so no
+additional vendor wiring is required. During local development the hook also
+logs metrics to the console to make regression triage faster.
 
 ### Local environment template
 

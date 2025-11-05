@@ -2,6 +2,7 @@ import clsx from "clsx";
 import type { Metadata } from "next";
 import { cookies, headers as getHeaders } from "next/headers";
 import type { ReactNode } from "react";
+import localFont from "next/font/local";
 
 import "./globals.css";
 import "../src/styles/print.css";
@@ -23,6 +24,75 @@ import {
   type ThemePreference
 } from "../src/utils/theme";
 import { OtelBootstrap } from "../src/components/telemetry/OtelBootstrap";
+import { CriticalCss } from "./CriticalCss";
+
+const sansFont = localFont({
+  src: [
+    {
+      path: "../public/fonts/ubuntu/Ubuntu-Regular.ttf",
+      weight: "400",
+      style: "normal"
+    },
+    {
+      path: "../public/fonts/ubuntu/Ubuntu-Medium.ttf",
+      weight: "500",
+      style: "normal"
+    },
+    {
+      path: "../public/fonts/ubuntu/Ubuntu-Bold.ttf",
+      weight: "700",
+      style: "normal"
+    }
+  ],
+  display: "swap",
+  preload: true,
+  variable: "--font-sans",
+  fallback: [
+    "ui-sans-serif",
+    "system-ui",
+    "-apple-system",
+    "BlinkMacSystemFont",
+    "\"Segoe UI\"",
+    "Roboto",
+    "\"Helvetica Neue\"",
+    "Arial",
+    "\"Noto Sans\"",
+    "sans-serif",
+    "\"Apple Color Emoji\"",
+    "\"Segoe UI Emoji\"",
+    "\"Segoe UI Symbol\"",
+    "\"Noto Color Emoji\""
+  ]
+});
+
+const monoFont = localFont({
+  src: [
+    {
+      path: "../public/fonts/ubuntu-mono/UbuntuMono-Regular.ttf",
+      weight: "400",
+      style: "normal"
+    },
+    {
+      path: "../public/fonts/ubuntu-mono/UbuntuMono-Bold.ttf",
+      weight: "700",
+      style: "normal"
+    }
+  ],
+  display: "swap",
+  preload: true,
+  variable: "--font-mono",
+  fallback: [
+    "\"Fira Code\"",
+    "ui-monospace",
+    "SFMono-Regular",
+    "Menlo",
+    "Monaco",
+    "Consolas",
+    "\"Liberation Mono\"",
+    "\"Courier New\"",
+    "monospace"
+  ]
+});
 
 const defaultDictionary = getDictionary(defaultLocale);
 
@@ -87,9 +157,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       data-contrast={storedContrast}
     >
       <body
-        className="min-h-screen bg-background font-sans text-text antialiased dark:bg-dark-background dark:text-dark-text"
+        className={clsx(
+          "min-h-screen bg-background font-sans text-text antialiased dark:bg-dark-background dark:text-dark-text",
+          sansFont.variable,
+          monoFont.variable
+        )}
         data-csp-nonce={nonce}
       >
+        <CriticalCss nonce={nonce} />
         <script
           nonce={nonce}
           dangerouslySetInnerHTML={{ __html: themeInitScript }}

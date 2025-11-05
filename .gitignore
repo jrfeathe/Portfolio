@@ -25,6 +25,7 @@ apps/site/.lhci/
 apps/site/playwright-report/
 apps/site/blob-report/
 apps/site/test-results/
+apps/site/app/critical.css
 *.tsbuildinfo
 /coverage/
 apps/site/coverage/

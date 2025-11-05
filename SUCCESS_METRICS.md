@@ -9,7 +9,8 @@ The portfolio succeeds when recruiters can verify fit quickly and signal for nex
 | Recruiter contact-to-screen conversion | ≥ 60% | Track number of inbound recruiter contacts that progress to a phone screen within 10 business days.  | Signals positioning clarity and trust. |
 | Time-to-proof artifact | ≤ 2 minutes | User testing sessions with recruiters: measure time from landing to opening any proof chip artifact. | Validates navigation and evidence density. |
 | Portfolio uptime (rolling 30-day) | ≥ 99.5% | Observability dashboard fed by edge ping service.                                                    | Maintains reliability expectations. |
-| Lighthouse performance score (mobile) | ≥ 90 | Automated CI Lighthouse audit on master branch.                                                      | Correlates with recruiter patience on mobile. |
+| Lighthouse performance score (mobile) | ≥ 90 | Automated CI Lighthouse job (see `performance-budgets` workflow) across `/en`, `/en/notes`, `/en/notes/mdx-pipeline`. | Correlates with recruiter patience on mobile and guards bundle creep. |
+| Core Web Vitals (p75) | LCP ≤ 1.5 s, CLS ≤ 0.1 | OTLP collector dashboard sourced from `web-vital` spans emitted in production (7-day window). | Alerts engineering to real-user regressions before they hit hiring loops. |
 | Accessibility violations (axe automated) | 0 critical / 0 serious | CI axe-core suite against core page shells.                                                          | Reinforces inclusive design. |
 
 ## Leading Indicators

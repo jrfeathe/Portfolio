@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import mermaid from "mermaid";
 
-type MermaidDiagramProps = {
+export type MermaidDiagramProps = {
   source: string;
   className?: string;
 };
@@ -25,6 +24,8 @@ export function MermaidDiagram({ source, className }: MermaidDiagramProps) {
       setError(null);
 
       try {
+        const { default: mermaid } = await import("mermaid");
+
         mermaid.initialize({
           startOnLoad: false,
           securityLevel: "strict",

@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && node ../../scripts/performance/generate-critical-css.mjs",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "test": "jest",
+    "test": "jest --runInBand",
     "test:coverage": "jest --coverage --runInBand --passWithNoTests",
     "coverage:check": "node ../../scripts/coverage/check.cjs",
     "coverage:report": "node ../../scripts/coverage/check.cjs --report",

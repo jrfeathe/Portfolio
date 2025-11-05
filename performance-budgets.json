@@ -23,6 +23,67 @@
     ],
     "bundle": {
       "firstLoadJs": 120
+    },
+    "criticalCss": {
+      "inlineKb": 16
+    }
+  },
+  {
+    "path": "/ja",
+    "resourceSizes": [
+      {
+        "resourceType": "script",
+        "budget": 120
+      },
+      {
+        "resourceType": "total",
+        "budget": 350
+      }
+    ],
+    "timings": [
+      {
+        "metric": "largest-contentful-paint",
+        "budget": 1500
+      },
+      {
+        "metric": "cumulative-layout-shift",
+        "budget": 0.1
+      }
+    ],
+    "bundle": {
+      "firstLoadJs": 120
+    },
+    "criticalCss": {
+      "inlineKb": 16
+    }
+  },
+  {
+    "path": "/zh",
+    "resourceSizes": [
+      {
+        "resourceType": "script",
+        "budget": 120
+      },
+      {
+        "resourceType": "total",
+        "budget": 350
+      }
+    ],
+    "timings": [
+      {
+        "metric": "largest-contentful-paint",
+        "budget": 1500
+      },
+      {
+        "metric": "cumulative-layout-shift",
+        "budget": 0.1
+      }
+    ],
+    "bundle": {
+      "firstLoadJs": 120
+    },
+    "criticalCss": {
+      "inlineKb": 16
     }
   },
   {

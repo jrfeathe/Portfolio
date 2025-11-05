@@ -1,5 +1,10 @@
 # Changelog
 
+# Task 8.2 — Critical CSS & Font Delivery
+- Swapped Google-hosted fonts for self-hosted Ubuntu families via `next/font/local`, exposing CSS variables consumed by Tailwind and ensuring `font-display: swap` fallbacks.
+- Added a scripted Tailwind extraction (`scripts/performance/generate-critical-css.mjs`) that emits `apps/site/app/critical-css.manifest.json` and injects the inline payload at layout render time.
+- Extended the performance budget guardrail to enforce inline critical CSS size across `/en`, `/ja`, and `/zh`, updated the Jest suite with a manifest smoke test, and documented the workflow in `docs/performance/critical-css-fonts.md`.
+
 ## Task 8.1 — Image Pipeline & Delivery
 - Added a shared `<ResponsiveImage>` component and helper presets so hero, content, and inline media automatically use modern formats with tuned `sizes` hints.
 - Enabled AVIF/WebP output and remote allowlisting in `next.config.mjs`, updated locale dictionaries to describe hero artwork, and wired the shell layout to render the new media block.

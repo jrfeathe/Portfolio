@@ -27,5 +27,6 @@
 | 7.1 | Reduced motion, contrast, focus | 2025-Nov-01     | Focus ring tokens/classes added across UI, reduced-motion + forced-colors CSS guards ship in `app/globals.css`, explicit theme/contrast toggles persist overrides, and `docs/contrast-audit.md` captures WCAG ratios. |
 | 8.0 | Performance budgets & guardrails | 2025-Nov-03     | `performance-budgets.json` drives bundle/Lighthouse thresholds, `build:budgets` script gates Next builds, CI adds a dedicated performance job, web vitals emit via OTEL spans, and docs outline remediation workflows. |
 | 8.1 | Image pipeline | 2025-Nov-04     | Shared responsive image helper rolls out across hero/MDX content, Next.js emits AVIF/WebP by default, lint/test guardrails prevent raw `<img>` usage, and media authoring guidance documents the workflow. |
+| 8.2 | Critical CSS & fonts | 2025-Nov-05     | Inline critical CSS manifest (14.8 KB) generated post-build, `next/font/local` self-hosts Ubuntu/Ubuntu Mono with `swap`, budgets now gate inline CSS alongside JS, smoke tests cover the manifest, and `docs/performance/critical-css-fonts.md` documents the workflow. |
 
 Update this log as additional WBS items reach completion.

@@ -12,6 +12,11 @@ const SITE_DIR = resolve(REPO_ROOT, "apps/site");
 const DIST_DIR = resolve(SITE_DIR, ".next");
 const BUDGET_PATH = resolve(REPO_ROOT, "performance-budgets.json");
 const BUNDLE_MANIFEST_NAME = "performance-bundle-manifest.json";
+const CRITICAL_MANIFEST_PATH = resolve(
+  SITE_DIR,
+  "app",
+  "critical-css.manifest.json"
+);
 
 function readJson(path) {
   try {
@@ -21,7 +26,7 @@ function readJson(path) {
   }
 }
 
-function loadBundleBudgets() {
+function loadBudgets() {
   if (!existsSync(BUDGET_PATH)) {
     throw new Error(`Missing performance budgets file at ${BUDGET_PATH}`);
   }
@@ -32,7 +37,8 @@ function loadBundleBudgets() {
     throw new Error("performance-budgets.json must export an array");
   }
 
-  const bundles = new Map();
+  const bundleBudgets = new Map();
+  const criticalBudgets = new Map();
 
   for (const entry of raw) {
     if (
@@ -44,17 +50,29 @@ function loadBundleBudgets() {
       continue;
     }
 
-    const limit = entry.bundle && entry.bundle.firstLoadJs;
+    const bundleLimit = entry.bundle && entry.bundle.firstLoadJs;
 
-    if (typeof limit === "number" && Number.isFinite(limit)) {
-      bundles.set(entry.path, {
-        limit,
+    if (typeof bundleLimit === "number" && Number.isFinite(bundleLimit)) {
+      bundleBudgets.set(entry.path, {
+        limit: bundleLimit,
+        raw: entry
+      });
+    }
+
+    const criticalLimit = entry.criticalCss && entry.criticalCss.inlineKb;
+
+    if (typeof criticalLimit === "number" && Number.isFinite(criticalLimit)) {
+      criticalBudgets.set(entry.path, {
+        limit: criticalLimit,
         raw: entry
       });
     }
   }
 
-  return bundles;
+  return {
+    bundleBudgets,
+    criticalBudgets
+  };
 }
 
 function runNextBuild() {
@@ -73,6 +91,19 @@ function runNextBuild() {
         NEXT_TELEMETRY_DISABLED: process.env.NEXT_TELEMETRY_DISABLED ?? "1",
         NODE_ENV: "production",
         PERF_BUDGETS: "1"
+      }
+    }
+  );
+
+  execFileSync(
+    "node",
+    [resolve(__dirname, "generate-critical-css.mjs")],
+    {
+      cwd: REPO_ROOT,
+      stdio: "inherit",
+      env: {
+        ...process.env,
+        NODE_ENV: "production"
       }
     }
   );
@@ -126,6 +157,48 @@ function loadBundleManifest() {
     .filter(Boolean);
 }
 
+function loadCriticalCssManifest() {
+  if (!existsSync(CRITICAL_MANIFEST_PATH)) {
+    throw new Error(
+      `Missing critical CSS manifest at ${CRITICAL_MANIFEST_PATH}. Generate it before enforcing budgets.`
+    );
+  }
+
+  const manifest = readJson(CRITICAL_MANIFEST_PATH);
+  const routes = manifest.routes;
+
+  if (!routes || typeof routes !== "object") {
+    throw new Error(
+      "critical-css.manifest.json is malformed. Expected a `routes` object."
+    );
+  }
+
+  return Object.entries(routes)
+    .map(([route, entry]) => {
+      if (!route || typeof route !== "string" || !entry) {
+        return null;
+      }
+
+      const kilobytes =
+        typeof entry.kilobytes === "number"
+          ? entry.kilobytes
+          : typeof entry.bytes === "number"
+          ? Number((entry.bytes / 1024).toFixed(2))
+          : null;
+
+      if (kilobytes == null) {
+        return null;
+      }
+
+      return {
+        route,
+        kilobytes,
+        matcher: getRouteMatcher(getRouteRegex(route))
+      };
+    })
+    .filter(Boolean);
+}
+
 function formatRow(row) {
   const route = row.route.padEnd(28, " ");
   const budget = row.budget.toFixed(1).padStart(10, " ");
@@ -134,27 +207,11 @@ function formatRow(row) {
   return `${route} | ${budget} | ${actual} | ${status}`;
 }
 
-function main() {
-  const args = new Set(process.argv.slice(2));
-  const skipBuild = args.has("--skip-build");
-
-  const bundleBudgets = loadBundleBudgets();
-
-  if (bundleBudgets.size === 0) {
-    console.warn("No bundle budgets defined in performance-budgets.json; nothing to enforce.");
-    return;
-  }
-
-  if (!skipBuild) {
-    runNextBuild();
-  }
-
-  const manifestEntries = loadBundleManifest();
-
+function evaluateBudgets(manifestEntries, budgets) {
   const results = [];
   let hasFailure = false;
 
-  for (const [budgetPath, { limit }] of bundleBudgets.entries()) {
+  for (const [budgetPath, { limit }] of budgets.entries()) {
     const entry = manifestEntries.find((candidate) => {
       const match = candidate.matcher(budgetPath);
       return match !== false;
@@ -162,7 +219,7 @@ function main() {
 
     if (!entry) {
       console.warn(
-        `No performance bundle manifest entry matched route "${budgetPath}". Skipping.`
+        `No manifest entry matched route "${budgetPath}". Skipping.`
       );
       continue;
     }
@@ -182,25 +239,78 @@ function main() {
     });
   }
 
-  if (results.length === 0) {
-    console.warn("No routes were evaluated for bundle budgets.");
+  return {
+    results,
+    hasFailure
+  };
+}
+
+function main() {
+  const args = new Set(process.argv.slice(2));
+  const skipBuild = args.has("--skip-build");
+
+  const { bundleBudgets, criticalBudgets } = loadBudgets();
+
+  if (bundleBudgets.size === 0 && criticalBudgets.size === 0) {
+    console.warn(
+      "No bundle or critical CSS budgets defined in performance-budgets.json; nothing to enforce."
+    );
     return;
   }
 
-  console.log("Route                        |  Budget KB |  Actual KB | Status");
-  console.log("----------------------------------------------------------------");
-  for (const row of results) {
-    console.log(formatRow(row));
+  if (!skipBuild) {
+    runNextBuild();
+  }
+
+  let hasFailure = false;
+
+  if (bundleBudgets.size > 0) {
+    const manifestEntries = loadBundleManifest();
+    const { results, hasFailure: bundleFailure } = evaluateBudgets(
+      manifestEntries,
+      bundleBudgets
+    );
+
+    if (results.length > 0) {
+      console.log("Bundle Budgets");
+      console.log("Route                        |  Budget KB |  Actual KB | Status");
+      console.log("----------------------------------------------------------------");
+      for (const row of results) {
+        console.log(formatRow(row));
+      }
+      console.log("");
+    } else {
+      console.warn("No routes were evaluated for bundle budgets.");
+    }
+
+    hasFailure = hasFailure || bundleFailure;
+  }
+
+  if (criticalBudgets.size > 0) {
+    const criticalEntries = loadCriticalCssManifest();
+    const { results, hasFailure: criticalFailure } = evaluateBudgets(
+      criticalEntries,
+      criticalBudgets
+    );
+
+    if (results.length > 0) {
+      console.log("Critical CSS Budgets");
+      console.log("Route                        |  Budget KB |  Actual KB | Status");
+      console.log("----------------------------------------------------------------");
+      for (const row of results) {
+        console.log(formatRow(row));
+      }
+      console.log("");
+    } else {
+      console.warn("No routes were evaluated for critical CSS budgets.");
+    }
+
+    hasFailure = hasFailure || criticalFailure;
   }
 
   if (hasFailure) {
-    throw new Error("Bundle budgets exceeded. See rows marked FAIL above.");
+    throw new Error("Performance budgets exceeded. See rows marked FAIL above.");
   }
 }
 
-try {
-  main();
-} catch (error) {
-  console.error(error.message);
-  process.exitCode = 1;
-}
+main();

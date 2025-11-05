@@ -6,8 +6,8 @@
 - [ ] `pnpm typecheck`
 - [ ] `pnpm -w build`
 - [ ] `pnpm test`
-- [ ] `pnpm test:a11y`
 - [ ] `pnpm --filter @portfolio/site run build:budgets`
+- [ ] `pnpm test:a11y`
 - [ ] `pnpm --filter @portfolio/site run playwright:test -- --grep-invert "@a11y"`
 - [ ] Other (specify):
 

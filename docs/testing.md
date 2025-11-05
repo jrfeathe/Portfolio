@@ -18,6 +18,15 @@
 - **Lighthouse outputs** — After CI completes, inspect `apps/site/.lhci/report.json` for averaged category scores and the `budgets` section, which reports pass/fail status for LCP, CLS, and resource thresholds per route.
 - **Real-user metrics** — Production Core Web Vitals are exported as `web-vital *` traces via the browser OpenTelemetry client. Configure OTLP endpoints (see `README` Observability) to make the spans visible in your collector and to drive alerting.
 
+## Critical CSS & fonts
+
+- **Primary command** — `pnpm --filter @portfolio/site run build` generates the critical CSS manifest after `next build`. The manifest lives at `apps/site/app/critical-css.manifest.json`.
+- **Guardrail** — Inline CSS budgets are enforced alongside JS budgets via `pnpm --filter @portfolio/site run build:budgets`; the script reads both the bundle manifest and the critical CSS manifest.
+- **Adding routes** — Edit `scripts/performance/generate-critical-css.mjs` to list new paths and Tailwind content globs, then add a matching `criticalCss.inlineKb` entry to `performance-budgets.json`.
+- **Locale coverage** — Budgets currently cover `/en`, `/ja`, and `/zh` so every localized home route stays within the 16 KB inline CSS cap.
+- **Font updates** — Drop new font files under `apps/site/public/fonts/**`, adjust the `next/font/local` configuration in `app/layout.tsx`, and rerun the build. Keep the workflow documented in `docs/performance/critical-css-fonts.md`.
+- **Smoke tests** — `apps/site/src/components/__tests__/CriticalCss.test.tsx` verifies the manifest decodes correctly. Manually spot-check `/en` (light/dark/high-contrast) to ensure no FOIT/CLS on first paint.
+
 ## Media pipeline
 
 - **Shared helper** — All imagery should render through `<ResponsiveImage>` (`apps/site/src/components/ResponsiveImage.tsx`). The helper applies consistent quality, object-fit, and responsive `sizes` hints for `hero`, `content`, and `inline` presets.

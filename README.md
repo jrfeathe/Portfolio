@@ -69,6 +69,14 @@ some inline styles for its overlay tooling; the policy adds those automatically
 outside production. The defaults allow self-hosted assets, OTLP `https`/`wss`
 calls, and block framing or cross-domain embedding.
 
+## SEO & Structured Data
+
+Task 9.0 wires JSON-LD for the home page, notes index, and individual notes. The
+workflow, testing commands, and Rich Results checklist live in
+`docs/seo/structured-data.md`. Update that doc whenever `content/resume.json`
+or the canonical domains (currently `https://jrfeathe.com` and the placeholder
+`https://placeholder.onion`) change so future SEO scope can trace back to WBS 9.0.
+
 ## Dependency Policy
 
 Renovate manages npm updates for the pnpm workspace on a weekly cadence. Review

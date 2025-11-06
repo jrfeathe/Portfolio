@@ -1,5 +1,10 @@
 # Changelog
 
+# Task 9.0 — Schema & Resume JSON-LD
+- Added a resume transformer + JSON-LD generator library so `Person`, `WebSite`, `BreadcrumbList`, and `Article` entities all read from `content/resume.json`, enforce the placeholder Tor mirror (`https://placeholder.onion`), and publish the agreed public region (Upstate New York / NYC hybrid availability).
+- Introduced a CSP-compliant `<StructuredData>` component, nonce utilities, and route wiring (`/[locale]`, `/[locale]/notes`, `/[locale]/notes/[slug]`) that render exactly one escaped `<script type="application/ld+json">` block per page regardless of nonce availability.
+- Documented the workflow in `docs/seo/structured-data.md`, linked it from the README, and shipped focused Jest + Playwright coverage (schema snapshots + route assertions) behind `pnpm --filter @portfolio/site test structured-data` and `tests/structured-data.spec.ts`.
+
 # Task 8.2 — Critical CSS & Font Delivery
 - Swapped Google-hosted fonts for self-hosted Ubuntu families via `next/font/local`, exposing CSS variables consumed by Tailwind and ensuring `font-display: swap` fallbacks.
 - Added a scripted Tailwind extraction (`scripts/performance/generate-critical-css.mjs`) that emits `apps/site/app/critical-css.manifest.json` and injects the inline payload at layout render time.

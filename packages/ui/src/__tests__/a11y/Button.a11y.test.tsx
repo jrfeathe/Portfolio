@@ -15,4 +15,17 @@ describe("Button accessibility", () => {
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
+
+  it("renders an accessible anchor when href is provided", async () => {
+    const { container, getByRole } = render(
+      <Button href="/resume.pdf" download>
+        Download resume
+      </Button>
+    );
+    const link = getByRole("link", { name: "Download resume" });
+    expect(link).toHaveAttribute("href", "/resume.pdf");
+    expect(link).toHaveAttribute("download");
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
 });

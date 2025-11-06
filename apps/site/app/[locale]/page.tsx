@@ -174,6 +174,7 @@ export default function HomePage({ params, searchParams }: PageProps) {
   } = dictionary.home;
   const skimModeEnabled = resolveSkimMode(searchParams);
   const resumeProfile = getResumeProfile();
+  const resumeDownloadFilename = `jack-featherstone-resume-${resumeProfile.resumeVersion}.pdf`;
   const structuredData = buildHomePageJsonLd({
     locale,
     dictionary,
@@ -194,9 +195,27 @@ export default function HomePage({ params, searchParams }: PageProps) {
           cta={
             <StickyCTA title={cta.title} description={cta.description}>
               {cta.actions.map((action) => (
-                <Button key={action.label} variant={action.variant}>
-                  {action.label}
-                </Button>
+                action.href ? (
+                  <Button
+                    key={`${action.label}-${action.variant}`}
+                    variant={action.variant}
+                    href={action.href}
+                    download={
+                      action.download ? resumeDownloadFilename : undefined
+                    }
+                    rel={
+                      action.href.startsWith("http")
+                        ? "noreferrer noopener"
+                        : undefined
+                    }
+                  >
+                    {action.label}
+                  </Button>
+                ) : (
+                  <Button key={`${action.label}-${action.variant}`} variant={action.variant}>
+                    {action.label}
+                  </Button>
+                )
               ))}
             </StickyCTA>
           }

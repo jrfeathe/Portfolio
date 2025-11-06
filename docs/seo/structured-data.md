@@ -9,6 +9,7 @@ Task [9.0 – Schema & Resume JSON-LD](../../WBS/Task_9.0_Schema_and_Resume_JSON
   - `PORTFOLIO_BASE_URL` is set to `https://jrfeathe.com` as the proposed domain. Swap this constant once the domain is purchased; search engines will pick up the new canonical URLs automatically.
   - `PERSON_ID` and `WEBSITE_ID` anchor the `Person` and `WebSite` nodes so detail routes can reference them without redefining the payload.
 - Route components load the resume profile, call the matching builder (`buildHomePageJsonLd`, `buildNotesIndexJsonLd`, `buildNoteDetailJsonLd`), and render `<StructuredData data={...} />`. The component reads the nonce from the current headers (matching `data-csp-nonce` on `<body>`) and escapes JSON safely via `escapeJsonForHtml`.
+- Resume downloads (`/resume.json`, `/resume.pdf`) share the same sanitized contract. See [docs/resume/publishing.md](../resume/publishing.md) for regeneration and validation steps.
 
 When the Tor mirror ships, replace `https://placeholder.onion` with the real address inside `profile.ts` and rerun the tests. The public schema will advertise both the clear-web domain and the mirror automatically.
 

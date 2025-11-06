@@ -19,7 +19,12 @@ export type AppDictionary = {
       cta: {
         title: string;
         description: string;
-        actions: Array<{ label: string; variant: CtaVariant }>;
+        actions: Array<{
+          label: string;
+          variant: CtaVariant;
+          href?: string;
+          download?: boolean;
+        }>;
       };
       media?: {
         image: ImageDescriptor;
@@ -99,8 +104,13 @@ const en: AppDictionary = {
         description:
           "Grab the highlights, download artifacts, or book time to walk through the operating model.",
         actions: [
-          { label: "View case studies", variant: "primary" },
-          { label: "Download resume", variant: "secondary" },
+          { label: "View case studies", variant: "primary", href: "/en/notes" },
+          {
+            label: "Download resume",
+            variant: "secondary",
+            href: "/resume.pdf",
+            download: true
+          },
           { label: "Book a 20-minute intro", variant: "ghost" }
         ]
       }
@@ -205,8 +215,13 @@ const ja: AppDictionary = {
         description:
           "ハイライトをまとめて確認し、成果物をダウンロードするか、オペレーティングモデルを説明する時間を予約してください。",
         actions: [
-          { label: "ケーススタディを見る", variant: "primary" },
-          { label: "履歴書をダウンロード", variant: "secondary" },
+          { label: "ケーススタディを見る", variant: "primary", href: "/ja/notes" },
+          {
+            label: "履歴書をダウンロード",
+            variant: "secondary",
+            href: "/resume.pdf",
+            download: true
+          },
           { label: "20分の導入ミーティングを予約", variant: "ghost" }
         ]
       }
@@ -311,8 +326,13 @@ const zh: AppDictionary = {
         description:
           "快速查看重點、下載成果物，或預約時間深入介紹整體運作模式。",
         actions: [
-          { label: "查看案例研究", variant: "primary" },
-          { label: "下載履歷", variant: "secondary" },
+          { label: "查看案例研究", variant: "primary", href: "/zh/notes" },
+          {
+            label: "下載履歷",
+            variant: "secondary",
+            href: "/resume.pdf",
+            download: true
+          },
           { label: "預約 20 分鐘會談", variant: "ghost" }
         ]
       }

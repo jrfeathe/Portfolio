@@ -74,6 +74,8 @@ calls, and block framing or cross-domain embedding.
 Task 9.0 wires JSON-LD for the home page, notes index, and individual notes. The
 workflow, testing commands, and Rich Results checklist live in
 `docs/seo/structured-data.md`. Update that doc whenever `content/resume.json`
+changes and follow `docs/resume/publishing.md` to regenerate `/resume.json`
+and `/resume.pdf`.
 or the canonical domains (currently `https://jrfeathe.com` and the placeholder
 `https://placeholder.onion`) change so future SEO scope can trace back to WBS 9.0.
 

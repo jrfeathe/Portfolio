@@ -15,8 +15,8 @@ test.describe("Recruiter skim mode", () => {
     await expect(skimContainer).toHaveCount(1);
     await expect(page.getByRole("heading", { name: "Portfolio", level: 1 })).toBeVisible();
 
-    await expect(page.getByRole("button", { name: "View case studies" })).toBeVisible();
-    await expect(page.getByRole("button", { name: "Download resume" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "View case studies" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Download resume" })).toBeVisible();
     await expect(page.getByRole("button", { name: "Book a 20-minute intro" })).toBeVisible();
 
     const accessibilityScan = await new AxeBuilder({ page })

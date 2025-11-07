@@ -28,6 +28,25 @@ import { CriticalCss } from "./CriticalCss";
 import { extractNonceFromHeaders } from "../src/utils/csp";
 import { escapeJsonForHtml } from "../src/utils/serialization";
 
+// Escapes potentially dangerous characters for safe JS embedding in <script> tags
+const charMap = {
+  '<': '\\u003C',
+  '>': '\\u003E',
+  '/': '\\u002F',
+  '\\': '\\\\',
+  '\b': '\\b',
+  '\f': '\\f',
+  '\n': '\\n',
+  '\r': '\\r',
+  '\t': '\\t',
+  '\0': '\\0',
+  '\u2028': '\\u2028',
+  '\u2029': '\\u2029'
+};
+function escapeUnsafeChars(str: string): string {
+  return str.replace(/[<>\b\f\n\r\t\0\u2028\u2029/\\]/g, (c) => charMap[c as keyof typeof charMap] || c);
+}
+
 const sansFont = localFont({
   src: [
     {
@@ -132,9 +151,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       ? "contrast-high"
       : undefined;
 
-  const themeInitScript = `(function(){const cookieName=${escapeJsonForHtml(
+  const themeInitScript = `(function(){const cookieName=${escapeUnsafeChars(
     JSON.stringify(themeCookieName)
-  )};const contrastCookie=${escapeJsonForHtml(
+  )};const contrastCookie=${escapeUnsafeChars(
     JSON.stringify(contrastCookieName)
   )};const root=document.documentElement;const getCookie=function(name){const match=document.cookie.split('; ').find((row)=>row.startsWith(name+'='));return match?match.split('=')[1]:undefined;};const resolveTheme=function(mode){if(mode==='system'){return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}return mode;};const applyTheme=function(mode){const resolved=resolveTheme(mode);root.classList.toggle('dark',resolved==='dark');root.dataset.theme=mode;};let storedTheme=getCookie(cookieName);if(storedTheme!=='light'&&storedTheme!=='dark'&&storedTheme!=='system'){storedTheme='system';}applyTheme(storedTheme);const themeMedia=window.matchMedia('(prefers-color-scheme: dark)');const themeListener=function(){const current=getCookie(cookieName);if(!current||current==='system'){applyTheme('system');}};if(typeof themeMedia.addEventListener==='function'){themeMedia.addEventListener('change',themeListener);}else if(typeof themeMedia.addListener==='function'){themeMedia.addListener(themeListener);}const resolveContrast=function(mode){if(mode==='system'){return window.matchMedia('(prefers-contrast: more)').matches?'high':'standard';}return mode;};const applyContrast=function(mode){const resolved=resolveContrast(mode);root.classList.toggle('contrast-high',resolved==='high');root.dataset.contrast=mode;};let storedContrast=getCookie(contrastCookie);if(storedContrast!=='high'&&storedContrast!=='standard'&&storedContrast!=='system'){storedContrast='system';}applyContrast(storedContrast);const contrastMedia=window.matchMedia('(prefers-contrast: more)');const contrastListener=function(){const current=getCookie(contrastCookie);if(!current||current==='system'){applyContrast('system');}};if(typeof contrastMedia.addEventListener==='function'){contrastMedia.addEventListener('change',contrastListener);}else if(typeof contrastMedia.addListener==='function'){contrastMedia.addListener(contrastListener);}window.__portfolioTheme={get:function(){const value=getCookie(cookieName);return value==='light'||value==='dark'||value==='system'?value:'system';},set:function(mode){const value=mode==='light'||mode==='dark'?mode:'system';document.cookie=cookieName+'='+value+'; path=/; max-age=31536000; SameSite=Lax';applyTheme(value);}};window.__portfolioContrast={get:function(){const value=getCookie(contrastCookie);return value==='high'||value==='standard'||value==='system'?value:'system';},set:function(mode){const value=mode==='high'||mode==='standard'?mode:'system';document.cookie=contrastCookie+'='+value+'; path=/; max-age=31536000; SameSite=Lax';applyContrast(value);}};})();`;
 

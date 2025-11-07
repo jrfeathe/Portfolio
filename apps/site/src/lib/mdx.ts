@@ -36,6 +36,7 @@ export type NoteFrontmatter = {
   publishedAt: string;
   tags?: string[];
   draft?: boolean;
+  authors?: string[];
 };
 
 export type TocItem = {

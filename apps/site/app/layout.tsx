@@ -25,6 +25,26 @@ import {
 } from "../src/utils/theme";
 import { OtelBootstrap } from "../src/components/telemetry/OtelBootstrap";
 import { CriticalCss } from "./CriticalCss";
+import { extractNonceFromHeaders } from "../src/utils/csp";
+
+// Escapes potentially dangerous characters for safe JS embedding in <script> tags
+const charMap = {
+  '<': '\\u003C',
+  '>': '\\u003E',
+  '/': '\\u002F',
+  '\\': '\\\\',
+  '\b': '\\b',
+  '\f': '\\f',
+  '\n': '\\n',
+  '\r': '\\r',
+  '\t': '\\t',
+  '\0': '\\0',
+  '\u2028': '\\u2028',
+  '\u2029': '\\u2029'
+};
+function escapeUnsafeChars(str: string): string {
+  return str.replace(/[<>\b\f\n\r\t\0\u2028\u2029/\\]/g, (c) => charMap[c as keyof typeof charMap] || c);
+}
 
 const sansFont = localFont({
   src: [
@@ -96,14 +116,6 @@ const monoFont = localFont({
 
 const defaultDictionary = getDictionary(defaultLocale);
 
-const escapeUnsafeChars = (value: string): string =>
-  value
-    .replace(/</g, "\\u003C")
-    .replace(/>/g, "\\u003E")
-    .replace(/\//g, "\\u002F")
-    .replace(/\u2028/g, "\\u2028")
-    .replace(/\u2029/g, "\\u2029");
-
 export const metadata: Metadata = {
   title: defaultDictionary.metadata.title,
   description: defaultDictionary.metadata.description
@@ -114,11 +126,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const storedLocale = cookieStore.get(localeCookieName)?.value;
   const locale = isLocale(storedLocale) ? storedLocale : defaultLocale;
   const headerList = getHeaders();
-  const nonce =
-    headerList.get("x-csp-nonce") ??
-    headerList.get("x-nextjs-csp-nonce") ??
-    headerList.get("x-nonce") ??
-    undefined;
+  const nonce = extractNonceFromHeaders(headerList);
   const storedThemeCookie = cookieStore.get(themeCookieName)?.value;
   const storedTheme: ThemePreference = isThemePreference(storedThemeCookie)
     ? storedThemeCookie

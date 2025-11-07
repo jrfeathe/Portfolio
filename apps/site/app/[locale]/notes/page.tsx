@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata, Route } from "next";
 import { notFound } from "next/navigation";
+import { headers } from "next/headers";
 
 import {
   getDictionary,
@@ -16,8 +17,12 @@ import {
   ShellLayout,
   type ShellSection
 } from "../../../src/components/Shell";
+import { StructuredData } from "../../../src/components/seo/StructuredData";
+import { buildNotesIndexJsonLd } from "../../../src/lib/seo/jsonld";
+import { extractNonceFromHeaders } from "../../../src/utils/csp";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 type PageParams = {
   params: {
@@ -132,13 +137,21 @@ export default async function NotesIndexPage({ params }: PageParams) {
       label: dictionary.notes.index.title
     }
   ];
+  const structuredData = buildNotesIndexJsonLd({
+    locale,
+    dictionary
+  });
+  const nonce = extractNonceFromHeaders(headers());
 
   return (
-    <ShellLayout
-      title={dictionary.notes.index.title}
-      subtitle={dictionary.notes.index.subtitle}
-      breadcrumbs={breadcrumbs}
-      sections={sections}
-    />
+    <>
+      <StructuredData data={structuredData} nonce={nonce} />
+      <ShellLayout
+        title={dictionary.notes.index.title}
+        subtitle={dictionary.notes.index.subtitle}
+        breadcrumbs={breadcrumbs}
+        sections={sections}
+      />
+    </>
   );
 }

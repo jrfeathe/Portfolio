@@ -1,5 +1,17 @@
 # Changelog
 
+# Task 9.1 — Resume JSON & PDF Downloads
+- Introduced `getPublicResume()` to publish a sanitized resume contract (summary, roles, downloads metadata) that powers schema, JSON, and print consumers without leaking placeholder fields.
+- Added `/resume.json` and `/resume/print` app routes: the JSON endpoint serves cacheable public data with ETag/Last-Modified headers, while the print route renders a two-page resume layout reused by automated PDF generation.
+- Documented a manual publishing flow for `apps/site/public/resume.pdf` (and locale variants) so updated exports can be dropped in alongside the automated JSON deliverable.
+- Converted hero CTA buttons to link-aware downloads using the upgraded `<Button>` component (now anchor-compatible), updated locale dictionaries/tests accordingly, and added Playwright coverage (`tests/downloads.spec.ts`) to verify both downloads work.
+- Documented regeneration + validation steps in `docs/resume/publishing.md`, linked the guidance from the SEO README section, and captured the final Task 9.1 decisions in the WBS notes.
+
+# Task 9.0 — Schema & Resume JSON-LD
+- Added a resume transformer + JSON-LD generator library so `Person`, `WebSite`, `BreadcrumbList`, and `Article` entities all read from `content/resume.json`, enforce the placeholder Tor mirror (`https://placeholder.onion`), and publish the agreed public region (Upstate New York / NYC hybrid availability).
+- Introduced a CSP-compliant `<StructuredData>` component, nonce utilities, and route wiring (`/[locale]`, `/[locale]/notes`, `/[locale]/notes/[slug]`) that render exactly one escaped `<script type="application/ld+json">` block per page regardless of nonce availability.
+- Documented the workflow in `docs/seo/structured-data.md`, linked it from the README, and shipped focused Jest + Playwright coverage (schema snapshots + route assertions) behind `pnpm --filter @portfolio/site test structured-data` and `tests/structured-data.spec.ts`.
+
 # Task 8.2 — Critical CSS & Font Delivery
 - Swapped Google-hosted fonts for self-hosted Ubuntu families via `next/font/local`, exposing CSS variables consumed by Tailwind and ensuring `font-display: swap` fallbacks.
 - Added a scripted Tailwind extraction (`scripts/performance/generate-critical-css.mjs`) that emits `apps/site/app/critical-css.manifest.json` and injects the inline payload at layout render time.

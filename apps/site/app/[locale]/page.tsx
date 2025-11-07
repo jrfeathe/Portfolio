@@ -11,6 +11,11 @@ import {
   ShellLayout,
   StickyCTA
 } from "../../src/components/Shell";
+import { headers } from "next/headers";
+import { StructuredData } from "../../src/components/seo/StructuredData";
+import { getResumeProfile } from "../../src/lib/resume/profile";
+import { buildHomePageJsonLd } from "../../src/lib/seo/jsonld";
+import { extractNonceFromHeaders } from "../../src/utils/csp";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
@@ -168,25 +173,54 @@ export default function HomePage({ params, searchParams }: PageProps) {
     hero: { title, subtitle, cta, media }
   } = dictionary.home;
   const skimModeEnabled = resolveSkimMode(searchParams);
+  const resumeProfile = getResumeProfile();
+  const resumeDownloadFilename = `jack-featherstone-resume-${resumeProfile.resumeVersion}.pdf`;
+  const structuredData = buildHomePageJsonLd({
+    locale,
+    dictionary,
+    profile: resumeProfile
+  });
+  const nonce = extractNonceFromHeaders(headers());
 
   return (
-    <div data-skim-mode={skimModeEnabled ? "true" : "false"}>
-      <ShellLayout
-        title={title}
-        subtitle={subtitle}
-        heroMedia={media}
-        breadcrumbs={breadcrumbs}
-        sections={sections}
-        cta={
-          <StickyCTA title={cta.title} description={cta.description}>
-            {cta.actions.map((action) => (
-              <Button key={action.label} variant={action.variant}>
-                {action.label}
-              </Button>
-            ))}
-          </StickyCTA>
-        }
-      />
-    </div>
+    <>
+      <StructuredData data={structuredData} nonce={nonce} />
+      <div data-skim-mode={skimModeEnabled ? "true" : "false"}>
+        <ShellLayout
+          title={title}
+          subtitle={subtitle}
+          heroMedia={media}
+          breadcrumbs={breadcrumbs}
+          sections={sections}
+          cta={
+            <StickyCTA title={cta.title} description={cta.description}>
+              {cta.actions.map((action) => (
+                action.href ? (
+                  <Button
+                    key={`${action.label}-${action.variant}`}
+                    variant={action.variant}
+                    href={action.href}
+                    download={
+                      action.download ? resumeDownloadFilename : undefined
+                    }
+                    rel={
+                      action.href.startsWith("http")
+                        ? "noreferrer noopener"
+                        : undefined
+                    }
+                  >
+                    {action.label}
+                  </Button>
+                ) : (
+                  <Button key={`${action.label}-${action.variant}`} variant={action.variant}>
+                    {action.label}
+                  </Button>
+                )
+              ))}
+            </StickyCTA>
+          }
+        />
+      </div>
+    </>
   );
 }

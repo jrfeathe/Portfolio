@@ -28,5 +28,7 @@
 | 8.0 | Performance budgets & guardrails | 2025-Nov-03     | `performance-budgets.json` drives bundle/Lighthouse thresholds, `build:budgets` script gates Next builds, CI adds a dedicated performance job, web vitals emit via OTEL spans, and docs outline remediation workflows. |
 | 8.1 | Image pipeline | 2025-Nov-04     | Shared responsive image helper rolls out across hero/MDX content, Next.js emits AVIF/WebP by default, lint/test guardrails prevent raw `<img>` usage, and media authoring guidance documents the workflow. |
 | 8.2 | Critical CSS & fonts | 2025-Nov-05     | Inline critical CSS manifest (14.8 KB) generated post-build, `next/font/local` self-hosts Ubuntu/Ubuntu Mono with `swap`, budgets now gate inline CSS alongside JS, smoke tests cover the manifest, and `docs/performance/critical-css-fonts.md` documents the workflow. |
+| 9.0 | Schema & resume JSON-LD | 2025-Nov-06     | Resume transformer feeds JSON-LD builders, `<StructuredData>` renders CSP-safe payloads on home/notes routes, docs/tests added (`docs/seo/structured-data.md`, `pnpm --filter @portfolio/site test structured-data`, Playwright spec). |
+| 9.1 | Resume JSON & PDF downloads | 2025-Nov-06     | Sanitized resume contract now powers `/resume.json`, manual PDFs live in `public/`, hero/footer CTAs link to the downloads, Playwright/Jest coverage validates responses, and `docs/resume/publishing.md` documents the workflow. |
 
 Update this log as additional WBS items reach completion.

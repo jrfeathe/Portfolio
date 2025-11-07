@@ -1,10 +1,7 @@
+import type { NoteFrontmatter } from "../../lib/mdx";
+
 type NoteHeaderProps = {
-  frontmatter: {
-    title: string;
-    summary: string;
-    publishedAt: string;
-    tags?: string[];
-  };
+  frontmatter: Pick<NoteFrontmatter, "title" | "summary" | "publishedAt" | "tags">;
   locale: string;
 };
 

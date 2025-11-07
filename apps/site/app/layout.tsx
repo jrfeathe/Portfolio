@@ -26,7 +26,6 @@ import {
 import { OtelBootstrap } from "../src/components/telemetry/OtelBootstrap";
 import { CriticalCss } from "./CriticalCss";
 import { extractNonceFromHeaders } from "../src/utils/csp";
-import { escapeJsonForHtml } from "../src/utils/serialization";
 
 // Escapes potentially dangerous characters for safe JS embedding in <script> tags
 const charMap = {

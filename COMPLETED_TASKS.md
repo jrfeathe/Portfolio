@@ -30,5 +30,6 @@
 | 8.2 | Critical CSS & fonts | 2025-Nov-05     | Inline critical CSS manifest (14.8 KB) generated post-build, `next/font/local` self-hosts Ubuntu/Ubuntu Mono with `swap`, budgets now gate inline CSS alongside JS, smoke tests cover the manifest, and `docs/performance/critical-css-fonts.md` documents the workflow. |
 | 9.0 | Schema & resume JSON-LD | 2025-Nov-06     | Resume transformer feeds JSON-LD builders, `<StructuredData>` renders CSP-safe payloads on home/notes routes, docs/tests added (`docs/seo/structured-data.md`, `pnpm --filter @portfolio/site test structured-data`, Playwright spec). |
 | 9.1 | Resume JSON & PDF downloads | 2025-Nov-06     | Sanitized resume contract now powers `/resume.json`, manual PDFs live in `public/`, hero/footer CTAs link to the downloads, Playwright/Jest coverage validates responses, and `docs/resume/publishing.md` documents the workflow. |
+| 10a.0 | Personalization brief | 2025-Nov-10     | `docs/personalization/brief.md` published with audit, tonal pillars, module priorities, asset plan, and sign-off; `docs/content-style-guide.md` + `docs/personalization/reference/README.md` satisfy remaining deliverables. |
 
 Update this log as additional WBS items reach completion.

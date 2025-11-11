@@ -77,10 +77,7 @@ function resolveBreadcrumbs(dictionary: AppDictionary, locale: Locale) {
     home: { breadcrumbs }
   } = dictionary;
 
-  return [
-    { label: breadcrumbs.home, href: `/${locale}` },
-    { label: breadcrumbs.workspace }
-  ];
+  return [{ label: breadcrumbs.home, href: `/${locale}` }];
 }
 
 function buildSections(dictionary: AppDictionary) {
@@ -90,23 +87,51 @@ function buildSections(dictionary: AppDictionary) {
 
   return [
     {
-      id: "mission",
+      id: "site-purpose",
       eyebrow: sections.mission.eyebrow,
       title: sections.mission.title,
       description: sections.mission.description,
       content: (
         <>
           <p>{sections.mission.overview}</p>
-          <ul className="list-disc space-y-2 pl-5">
-            {sections.mission.bulletPoints.map((bullet) => (
-              <li key={bullet}>{bullet}</li>
+          {sections.mission.bulletPoints.length ? (
+            <ul className="list-disc space-y-2 pl-5">
+              {sections.mission.bulletPoints.map((bullet) => (
+                <li key={bullet}>{bullet}</li>
+              ))}
+            </ul>
+          ) : null}
+        </>
+      )
+    },
+    {
+      id: "tech-stack",
+      eyebrow: sections.techStack.eyebrow,
+      title: sections.techStack.title,
+      description: sections.techStack.description,
+      content: (
+        <>
+          <p>{sections.techStack.overview}</p>
+          <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {sections.techStack.items.map((item) => (
+              <li key={item.name}>
+                <a
+                  href={item.href}
+                  className="flex items-center justify-between gap-3 rounded-xl border border-border bg-surface px-4 py-3 text-sm font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <span>{item.name}</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </li>
             ))}
           </ul>
         </>
       )
     },
     {
-      id: "proof",
+      id: "past-achievements",
       eyebrow: sections.proof.eyebrow,
       title: sections.proof.title,
       description: sections.proof.description,
@@ -132,7 +157,7 @@ function buildSections(dictionary: AppDictionary) {
       )
     },
     {
-      id: "roadmap",
+      id: "current-projects",
       eyebrow: sections.roadmap.eyebrow,
       title: sections.roadmap.title,
       description: sections.roadmap.description,
@@ -192,6 +217,7 @@ export default function HomePage({ params, searchParams }: PageProps) {
           heroMedia={media}
           breadcrumbs={breadcrumbs}
           sections={sections}
+          footerContent={dictionary.home.footer}
           cta={
             <StickyCTA title={cta.title} description={cta.description}>
               {cta.actions.map((action) => (

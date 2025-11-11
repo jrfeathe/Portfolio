@@ -1,11 +1,34 @@
 import clsx from "clsx";
 
-export type ShellFooterProps = {
-  className?: string;
+export type ShellFooterContent = {
+  heading: string;
+  body: string;
+  email: string;
+  notesLabel: string;
+  notesHref: string;
+  resumeLabel: string;
+  resumeHref: string;
+  closing: string;
 };
 
-export function ShellFooter({ className }: ShellFooterProps) {
-  const year = new Date().getFullYear();
+export type ShellFooterProps = {
+  className?: string;
+  content?: ShellFooterContent;
+};
+
+const DEFAULT_FOOTER_CONTENT: ShellFooterContent = {
+  heading: "Jack Featherstone - Software Engineering Portfolio",
+  body: "Showcasing my purpose, skills, achievements, and interests!",
+  email: "jfstone2000@proton.me",
+  notesLabel: "Engineering notes",
+  notesHref: "/notes",
+  resumeLabel: "Resume (PDF)",
+  resumeHref: "/resume.pdf",
+  closing: "2025. Jack Featherstone. Built with Codex, Next.js, pnpm, and spiritual pressure."
+};
+
+export function ShellFooter({ className, content }: ShellFooterProps) {
+  const footerContent = content ?? DEFAULT_FOOTER_CONTENT;
 
   return (
     <footer
@@ -17,33 +40,33 @@ export function ShellFooter({ className }: ShellFooterProps) {
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 md:flex-row md:items-center md:justify-between">
         <div className="space-y-2">
           <p className="text-base font-semibold text-text dark:text-dark-text">
-            Jack F. Engineering Portfolio
+            {footerContent.heading}
           </p>
-          <p className="max-w-md leading-relaxed">
-            Documentation-first case studies, operating notes, and recruiter
-            enablement artifacts curated for rapid evaluation.
-          </p>
+          <p className="max-w-md leading-relaxed">{footerContent.body}</p>
         </div>
         <div className="flex flex-col gap-4 text-sm md:text-right">
           <a
-            href="mailto:jack@example.com"
+            href={`mailto:${footerContent.email}`}
             className="hover:text-text dark:hover:text-dark-text"
           >
-            jack@example.com
-          </a>
-          <a href="/notes" className="hover:text-text dark:hover:text-dark-text">
-            Engineering notes
+            {footerContent.email}
           </a>
           <a
-            href="/resume.pdf"
+            href={footerContent.notesHref}
             className="hover:text-text dark:hover:text-dark-text"
           >
-            Resume (PDF)
+            {footerContent.notesLabel}
+          </a>
+          <a
+            href={footerContent.resumeHref}
+            className="hover:text-text dark:hover:text-dark-text"
+          >
+            {footerContent.resumeLabel}
           </a>
         </div>
       </div>
       <div className="mx-auto mt-6 w-full max-w-6xl px-4 text-xs text-textMuted dark:text-dark-textMuted">
-        © {year} Jack F. Built with Next.js, pnpm, and an obsession with measurable impact.
+        {footerContent.closing}
       </div>
     </footer>
   );

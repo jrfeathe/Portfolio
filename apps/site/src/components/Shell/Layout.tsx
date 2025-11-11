@@ -5,7 +5,7 @@ import type { AnchorNavItem } from "./AnchorNav";
 import { AnchorNav } from "./AnchorNav";
 import type { BreadcrumbItem } from "./Breadcrumbs";
 import { Breadcrumbs } from "./Breadcrumbs";
-import { ShellFooter } from "./Footer";
+import { ShellFooter, type ShellFooterContent } from "./Footer";
 import { LanguageSwitcher } from "../LanguageSwitcher";
 import { ContrastToggle } from "../ContrastToggle";
 import { ThemeToggle } from "../ThemeToggle";
@@ -31,6 +31,7 @@ export type ShellLayoutProps = {
   anchorItems?: AnchorNavItem[];
   cta?: ReactNode;
   footer?: ReactNode;
+  footerContent?: ShellFooterContent;
   className?: string;
   heroMedia?: {
     image: ImageDescriptor;
@@ -47,6 +48,7 @@ export function ShellLayout({
   anchorItems,
   cta,
   footer,
+  footerContent,
   className,
   heroMedia
 }: ShellLayoutProps) {
@@ -156,7 +158,7 @@ export function ShellLayout({
           </div>
         ) : null}
       </div>
-      {footer ?? <ShellFooter />}
+      {footer ?? <ShellFooter content={footerContent} />}
     </div>
   );
 }

@@ -67,7 +67,7 @@
     "languages_spoken": [
       { "language": "English", "proficiency": "native" },
       { "language": "Japanese 日本語", "proficiency": "JLPT N5" },
-      { "language": "Chinese 中文", "proficiency": "HSK1" }
+      { "language": "Chinese (Simplified) 中文（简体）", "proficiency": "HSK1" }
     ]
   },
   "domains": [

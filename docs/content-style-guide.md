@@ -15,7 +15,7 @@ This guide codifies the voice and accessibility expectations for the personaliza
   - Always OK: “portfolio,” “project,” “evidence,” “proof.”
   - Avoid: “synergy,” “leverage,” “growth hacking,” or other corporate clichés.
 - **Humor**: Sparing. No emoji in body copy; emoji/icons only inside UI controls when necessary for clarity.
-- **Localization**: Japanese and Chinese copy mirror English meaning with slightly heightened formality. Keep tone compassionate and concise; avoid idioms that do not translate.
+- **Localization**: Japanese and Simplified Chinese copy mirror English meaning with slightly heightened formality. Keep tone compassionate and concise; avoid idioms that do not translate.
 
 ## Accessibility & Inclusivity
 - Ensure high color contrast in new components; avoid light gray text on white backgrounds.

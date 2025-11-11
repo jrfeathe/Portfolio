@@ -4,7 +4,7 @@ Prepared to unblock Tasks 10a.1–10a.3 by capturing the audit, tonal direction,
 
 ## Objective & Guardrails
 - Deliver a warmer, first-person home experience while keeping the current color palette intact.
-- All rewrites currently target English; tone guidance will inform Japanese and Chinese copy with a slightly more formal register.
+- All rewrites currently target English; tone guidance will inform Japanese and Simplified Chinese copy with a slightly more formal register.
 - Visual screenshots are optional. Scope centers on narrative, component direction, and asset swaps.
 
 ## Current-State Audit
@@ -13,7 +13,7 @@ Prepared to unblock Tasks 10a.1–10a.3 by capturing the audit, tonal direction,
 | Header shell | Breadcrumb shows “Home / Workspace overview” and H1 “Portfolio.” | Sounds like an internal tool, not a personal site. | Trim breadcrumb to “Home,” rename H1 to “Jack Featherstone,” pair with autobiographical hero line. |
 | Hero visual | Abstract gradient hero art. | Anonymous and sterile—no personal anchor point. | Replace with a 4:3 self portrait paired with a first-person hero statement. |
 | Hero copy | “Blueprinting a recruiter-friendly experience…” | Jargon-heavy, third-person tone. | Swap with “Hi, I'm Jack…” paragraph in the draft copy. |
-| Mode toggles | Simple dark/high-contrast/language switches. | Utility UI clashes with softer tone. | Use rounded 3-position sliders (Light/Sys/Dark, Normal/Sys/High, 日本語/English/中文) plus an obvious Skim Mode button. |
+| Mode toggles | Simple dark/high-contrast/language switches. | Utility UI clashes with softer tone. | Use rounded 3-position sliders (Light/Sys/Dark, Normal/Sys/High, 日本語/English/简体中文) plus an obvious Skim Mode button. |
 | Side nav | Sections titled “Why this portfolio exists,” “Proof chips & supporting artifacts,” etc. | Mechanical naming; unclear value. | Rename to “Site purpose,” “Past achievements,” “Current projects & plans,” add “Tech stack & skills.” |
 | Sidebar CTAs | Secondary paragraph and CTAs (“View case studies,” “Book a 20-minute intro”). | Verbose fluff + routes that mis-match. | Remove filler, make “Download resume” first, add “View experience” → `/experience`, “Book a short intro” → `/meetings`. |
 | Site purpose block | Focuses on delivering “measurable proof” in three clicks. | Reads like sales collateral; no personal story. | Replace with clear explanation of site intent and evolution. |
@@ -48,7 +48,7 @@ Adjectives: uncluttered, high-contrast, compassionate, concise. Avoid corporate 
 - Contractions: lightly discouraged—prefer full forms unless stiffness results.
 - CTA verbs: respectful, direct (“Download,” “View experience,” “Book a short intro”).
 - Accessibility: keyboard navigation must work for sliders/skim button; emoji limited to UI icons.
-- Localization: apply same guidance to JP/CN with slightly more formal tone to maintain respect.
+- Localization: apply the same guidance to Japanese and Simplified Chinese (zh) with slightly more formal tone to maintain respect.
 - Full guidance lives in `docs/content-style-guide.md#personalization-tone`.
 
 ## Module Narrative Priorities

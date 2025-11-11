@@ -5,7 +5,7 @@ test.describe("Accessibility preference handling", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/en");
 
-    const ctaButton = page.getByRole("link", { name: "View case studies" });
+    const ctaButton = page.getByRole("link", { name: "Download resume" });
     const transitionDuration = await ctaButton.evaluate((element) => {
       const value = getComputedStyle(element).transitionDuration;
       const numeric = parseFloat(value);
@@ -19,7 +19,7 @@ test.describe("Accessibility preference handling", () => {
     await page.emulateMedia({ forcedColors: "active" });
     await page.goto("/en");
 
-    const ctaButton = page.getByRole("link", { name: "View case studies" });
+    const ctaButton = page.getByRole("link", { name: "Download resume" });
 
     for (let attempt = 0; attempt < 10; attempt += 1) {
       await page.keyboard.press("Tab");

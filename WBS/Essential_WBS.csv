@@ -11,7 +11,7 @@ ID,Epic,Task,Description,Deliverables,Acceptance Criteria
 2.2,Design System,Page shells,"Responsive layout, sticky CTA, anchor nav, breadcrumbs, Footer.",apps/site/src/components/Shell/*,Layout stable across breakpoints
 2.3,Design System,Print styles,CSS for two-page clean print of resume/skim.,apps/site/src/styles/print.css,"Window print preview yields 2 pages, no truncated sections."
 3.0,Architecture,Next.js + TS app init,"Create Next.js app with app router, TS strict, edge runtime where possible.",apps/site,`pnpm dev` runs
-3.1,Architecture,Routing & i18n,Set up i18n (EN + 日本語 + 中文) with static dictionaries and language switcher.,"i18n config, middleware, locale segments",Content toggles language
+3.1,Architecture,Routing & i18n,Set up i18n (EN + 日本語 + 简体中文) with static dictionaries and language switcher.,"i18n config, middleware, locale segments",Content toggles language
 3.2,Architecture,MDX pipeline,"MDX for Engineering Notes with remark/rehype plugins (slug, autolink, code titles).","content/notes/*.mdx, lib/mdx.ts",MDX renders with TOC and anchors
 3.3,Architecture,Mermaid/PlantUML support,Client-safe Mermaid rendering and PlantUML via server-side image proxy.,"/api/plantuml proxy, <Diagram> component",Example diagram renders
 4.0,CI/CD,GitHub Actions pipeline,Workflows: typecheck → unit → e2e → Lighthouse CI, artifact upload.,.github/workflows/*.yml

@@ -15,13 +15,13 @@ type LocalePresentation = {
 const localePresentation: Record<Locale, LocalePresentation> = {
   en: { label: "English", nativeLabel: "English", direction: "ltr" },
   ja: { label: "Japanese", nativeLabel: "日本語", direction: "ltr" },
-  zh: { label: "Chinese", nativeLabel: "中文", direction: "ltr" }
+  zh: { label: "Chinese (Simplified)", nativeLabel: "简体中文", direction: "ltr" }
 };
 
 const languageSwitcherLabel: Record<Locale, string> = {
   en: "Language",
   ja: "言語",
-  zh: "語言"
+  zh: "语言"
 };
 
 export function isLocale(value: string | null | undefined): value is Locale {

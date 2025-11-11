@@ -11,7 +11,7 @@ Header:
 - Add large obvious button to toggle skim mode
 - Change UI for Dark mode selector. 3 section slider, rounded. Use symbols for light and dark (Light // Sys(0)tem // Dark)
 - Change UI for High contrast selector. 3 section slider, rounded. (Normal // Sys(0)tem // High Contrast)
-- Change UI for Language selector. 3 section slider, rounded. (日本語 // English // 中文)
+- Change UI for Language selector. 3 section slider, rounded. (日本語 // English // 简体中文)
 
 Side Nav:
 - Replace "Why this portfolio exists" with "Site purpose"
@@ -66,7 +66,7 @@ Body:
 - Replace list
   - "Publish recruiter skim matrix with structured data for search."
     - Replace with "Revisit Quester2000: Add more functionality and improve UI. Possible smartwatch integration."
-  - "Wire i18n routing with English, Japanese, and Chinese toggles."
+  - "Wire i18n routing with English, Japanese, and Chinese (Simplified) toggles."
     - Replace with "The Four Horsemen: Develop a new mod for Stellaris to spawn an end-game crisis, compatible with Gigastructural Engineering"
   - "Introduce MDX pipeline for engineering notes and diagrams."
     - Replace with "Pixelmon Problem: Continue work to backport an update to Pixelmon to fix a periodic client-side crash on my private server."

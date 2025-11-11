@@ -31,7 +31,7 @@ describe("i18n utilities", () => {
     });
     expect(getLocaleDirection("en")).toBe("ltr");
     expect(getLocaleDirection("ja")).toBe("ltr");
-    expect(getLanguageSwitcherLabel("zh")).toBe("語言");
+    expect(getLanguageSwitcherLabel("zh")).toBe("语言");
   });
 
   it("parses locale inputs", () => {

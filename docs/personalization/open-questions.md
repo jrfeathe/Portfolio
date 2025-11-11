@@ -42,7 +42,7 @@ Use this checklist to supply the missing context for Task 10a.0. Once these ques
 - Are there accessibility or inclusivity notes (gender-neutral language, emoji usage, multilingual considerations) that must be documented?
   - The site should be easy to navigate with a keyboard. Emojis are fine for UI indicators, but avoid in text. 
 - Does the tone guidance extend to all locales/languages or only English?
-  - Localization for Japanese and Chinese will convey the information as identically as possible, with a similar tone but VERY slightly more formal.
+- Localization for Japanese and Simplified Chinese will convey the information as identically as possible, with a similar tone but VERY slightly more formal.
 
 ## Narrative Priorities & Module Jobs
 - Which home modules are highest priority for personalization (hero, tech stack spotlight, achievements grid, etc.)? Specify each module’s narrative job to guide rewrites.

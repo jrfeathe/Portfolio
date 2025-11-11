@@ -3,6 +3,12 @@ import type { Locale } from "./i18n";
 
 export type CtaVariant = "primary" | "secondary" | "ghost";
 
+type TechStackEntry = {
+  name: string;
+  href: string;
+  assetId: string;
+};
+
 export type AppDictionary = {
   metadata: {
     title: string;
@@ -18,7 +24,7 @@ export type AppDictionary = {
       subtitle: string;
       cta: {
         title: string;
-        description: string;
+        description?: string;
         actions: Array<{
           label: string;
           variant: CtaVariant;
@@ -40,6 +46,13 @@ export type AppDictionary = {
         overview: string;
         bulletPoints: string[];
       };
+      techStack: {
+        eyebrow: string;
+        title: string;
+        description: string;
+        overview: string;
+        items: TechStackEntry[];
+      };
       proof: {
         eyebrow: string;
         title: string;
@@ -54,6 +67,16 @@ export type AppDictionary = {
         overview: string;
         nextSteps: string[];
       };
+    };
+    footer: {
+      heading: string;
+      body: string;
+      email: string;
+      notesLabel: string;
+      notesHref: string;
+      resumeLabel: string;
+      resumeHref: string;
+      closing: string;
     };
   };
   notes: {
@@ -77,6 +100,31 @@ const HERO_IMAGE_BASE: Omit<ImageDescriptor, "alt"> = {
     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAr8B9ngcRwAAAABJRU5ErkJggg=="
 };
 
+const DEFAULT_TECH_STACK_ITEMS: TechStackEntry[] = [
+  { name: "React", href: "https://react.dev/", assetId: "react" },
+  { name: "HTML", href: "https://html.spec.whatwg.org/multipage/", assetId: "html" },
+  { name: "CSS", href: "https://www.w3.org/Style/CSS/Overview.en.html", assetId: "css" },
+  { name: "JavaScript", href: "https://developer.mozilla.org/docs/Web/JavaScript", assetId: "javascript" },
+  { name: "TypeScript", href: "https://www.typescriptlang.org/", assetId: "typescript" },
+  { name: "C", href: "https://en.cppreference.com/w/c", assetId: "c" },
+  { name: "C++", href: "https://en.cppreference.com/w/cpp", assetId: "cpp" },
+  { name: "Java", href: "https://dev.java/", assetId: "java" },
+  { name: "Linux", href: "https://www.linuxfoundation.org/", assetId: "linux" },
+  { name: "JSON", href: "https://www.json.org/json-en.html", assetId: "json" },
+  { name: "Bash", href: "https://www.gnu.org/software/bash/", assetId: "bash" },
+  { name: "XML", href: "https://www.w3.org/XML/", assetId: "xml" },
+  { name: "KVM", href: "https://www.linux-kvm.org/page/Main_Page", assetId: "kvm" },
+  { name: "QEMU", href: "https://www.qemu.org/", assetId: "qemu" },
+  { name: "PostgreSQL", href: "https://www.postgresql.org/", assetId: "postgresql" },
+  { name: "SQL", href: "https://www.iso.org/standard/63555.html", assetId: "sql" },
+  { name: "Lua", href: "https://www.lua.org/", assetId: "lua" },
+  { name: "Prisma", href: "https://www.prisma.io/", assetId: "prisma" },
+  { name: "Oracle Cloud", href: "https://www.oracle.com/cloud/", assetId: "oracle-cloud" },
+  { name: "AWS", href: "https://aws.amazon.com/", assetId: "aws" },
+  { name: "Stellaris Mods", href: "https://steamcommunity.com/app/281990/workshop/", assetId: "stellaris-mods" },
+  { name: "Minecraft Mods", href: "https://modrinth.com/", assetId: "minecraft-mods" }
+];
+
 const en: AppDictionary = {
   metadata: {
     title: "Jack F. Portfolio",
@@ -88,9 +136,9 @@ const en: AppDictionary = {
       workspace: "Workspace overview"
     },
     hero: {
-      title: "Portfolio",
+      title: "Jack Featherstone",
       subtitle:
-        "Blueprinting a recruiter-friendly experience that foregrounds measurable impact, operating rituals, and proof you can audit.",
+        "Hi, I'm Jack and this is my Software Engineering portfolio! I'm looking to begin my career as a Junior Fullstack Developer. The intent of this site is to prove my skills and abilities, and to capitalize on opportunities to network.",
       media: {
         image: {
           ...HERO_IMAGE_BASE,
@@ -101,77 +149,91 @@ const en: AppDictionary = {
       },
       cta: {
         title: "Need proof fast?",
-        description:
-          "Grab the highlights, download artifacts, or book time to walk through the operating model.",
         actions: [
-          { label: "View case studies", variant: "primary", href: "/en/notes" },
           {
             label: "Download resume",
-            variant: "secondary",
+            variant: "primary",
             href: "/resume.pdf",
             download: true
           },
-          { label: "Book a 20-minute intro", variant: "ghost" }
+          { label: "View experience", variant: "secondary", href: "/experience" },
+          { label: "Book a short intro", variant: "ghost", href: "/meetings" }
         ]
       }
     },
     sections: {
       mission: {
         eyebrow: "Orientation",
-        title: "Why this portfolio exists",
+        title: "Site purpose",
         description:
-          "Give recruiters and hiring managers measurable proof of delivery, leadership, and operational maturity in under three clicks.",
+          "Create distinctive evidence of my abilities for fullstack development, showcasing my capabilities to job recruiters in under three clicks.",
         overview:
-          "The portfolio initiative reframes a personal site as an operating system. Every artifact is instrumented so talent partners can quickly sample outcomes, delivery patterns, and working agreements.",
-        bulletPoints: [
-          "Documentation-first case studies with linked telemetry.",
-          "Design system primitives shared across the app and print views.",
-          "Automations that keep resume, notes, and demos in sync."
-        ]
+          "While the site began as a dedicated service to host my resume, it evolved into a central place for hosting my personal projects.",
+        bulletPoints: []
+      },
+      techStack: {
+        eyebrow: "Skills",
+        title: "Tech stack & skills",
+        description:
+          "",
+        overview:
+          "",
+        items: DEFAULT_TECH_STACK_ITEMS
       },
       proof: {
         eyebrow: "Evidence",
-        title: "Proof chips & supporting artifacts",
-        description:
-          "Each claim on the landing page links directly to proof so stakeholders can verify impact without booking a call.",
+        title: "Past achievements",
+        description: "Relatable highlights from the past few years.",
         overview:
-          "Proof chips map key promises to tangible evidence: recorded demos, performance dashboards, stakeholder quotes, and delivery matrices.",
+          "Each card focuses on a project or role that tells the story behind the skills shown above.",
         proofChips: [
           {
-            title: "Shipping velocity",
-            details:
-              "DORA metrics exported weekly with regression alerts surfaced on the site."
+            title: "Rollodex",
+            details: "Co-led development of a contact management web application."
           },
           {
-            title: "Leadership range",
+            title: "Quester2000",
             details:
-              "Case studies document org design choices, trade-off memos, and stakeholder alignment rituals."
+              "A point tracking to-do list tool for managing your work-life balance."
           },
           {
-            title: "Operational excellence",
+            title: "SER321 TA",
             details:
-              "Playbooks cover rollout gates, observability baselines, and incident response posture."
+              "Supported a high level Distributed Software Systems course as a teacher’s assistant."
           },
           {
-            title: "Hiring enablement",
+            title: "Stellaris Modding",
             details:
-              "Recruiter skim mode aggregates eligibility, timezone, compensation guardrails, and references."
+              "Upgraded the memory management library for Stellaris to boost performance."
           }
         ]
       },
       roadmap: {
         eyebrow: "Roadmap",
-        title: "What ships next",
+        title: "Current projects & plans",
         description:
-          "The Essential WBS guides delivery so the experience lands in iterative, verifiable slices.",
+          "My current focus is on building some small scale projects that make a difference in my life. G.O.A.T.: Grind, Optimize, Automate, Thrive.",
         overview:
-          "Design system foundations are in place. Next milestones add localized content, MDX-based engineering notes, and Lighthouse-backed CI.",
+          "While it is very rewarding to optimize and automate, I also find joy in learning new skills and technologies!",
         nextSteps: [
-          "Publish recruiter skim matrix with structured data for search.",
-          "Wire i18n routing with English, Japanese, and Chinese toggles.",
-          "Introduce MDX pipeline for engineering notes and diagrams."
+          "Revisit Quester2000: Add more functionality and improve UI. Possible smartwatch integration.",
+          "The Four Horsemen: Develop a new mod for Stellaris to spawn an end-game crisis, compatible with Gigastructural Engineering.",
+          "Pixelmon Problem: Continue work to backport an update to Pixelmon to fix a periodic client-side crash on my private server.",
+          "C++ Game Engine: Continue work on a private game / engine. Abstract loosely-autobiographical RPG adventure.",
+          "Social Networking: Find events to meet people in industry. Considering indie games conventions in NYC."
         ]
       }
+    }
+    ,
+    footer: {
+      heading: "Jack Featherstone - Software Engineering Portfolio",
+      body: "Showcasing my purpose, skills, achievements, and interests!",
+      email: "jfstone2000@proton.me",
+      notesLabel: "Engineering notes",
+      notesHref: "/en/notes",
+      resumeLabel: "Resume (PDF)",
+      resumeHref: "/resume.pdf",
+      closing: "2025. Jack Featherstone. Built with Codex, Next.js, pnpm, and my spiritual pressure."
     }
   },
   notes: {
@@ -199,9 +261,9 @@ const ja: AppDictionary = {
       workspace: "ワークスペース概要"
     },
     hero: {
-      title: "ポートフォリオ",
+      title: "Jack Featherstone",
       subtitle:
-        "測定可能な成果、運用リズム、検証できる証跡を前面に出し、採用担当者にとって使いやすい体験を設計しています。",
+        "はじめまして、Jack と申します。こちらは私のソフトウェアエンジニアリング・ポートフォリオです。現在、ジュニア・フルスタック開発者としてキャリアを開始する機会を探しています。本サイトの目的は、私のスキルと実務能力を証拠に基づいて示し、ネットワーク構築の機会につなげることです。",
       media: {
         image: {
           ...HERO_IMAGE_BASE,
@@ -212,77 +274,90 @@ const ja: AppDictionary = {
       },
       cta: {
         title: "証跡がすぐに必要ですか？",
-        description:
-          "ハイライトをまとめて確認し、成果物をダウンロードするか、オペレーティングモデルを説明する時間を予約してください。",
         actions: [
-          { label: "ケーススタディを見る", variant: "primary", href: "/ja/notes" },
           {
             label: "履歴書をダウンロード",
-            variant: "secondary",
+            variant: "primary",
             href: "/resume.pdf",
             download: true
           },
-          { label: "20分の導入ミーティングを予約", variant: "ghost" }
+          { label: "経験を見る", variant: "secondary", href: "/experience" },
+          { label: "短時間の面談を予約", variant: "ghost", href: "/meetings" }
         ]
       }
     },
     sections: {
       mission: {
         eyebrow: "オリエンテーション",
-        title: "このポートフォリオの目的",
+        title: "サイトの目的",
         description:
-          "リクルーターと採用マネージャーが、3クリック以内で成果・リーダーシップ・運用成熟度を測れるようにします。",
+          "フルスタック開発に関する私の能力を、採用担当者の方々が 3 クリック以内で把握できるよう、独自の証跡として提示します。",
         overview:
-          "このポートフォリオ施策は、個人サイトをオペレーティングシステムとして再構築したものです。各成果物に計測機能を組み込み、タレントパートナーが成果や働き方をすばやく確認できます。",
-        bulletPoints: [
-          "テレメトリーと連動したドキュメント主導のケーススタディ。",
-          "アプリと印刷ビューで共通化されたデザインシステムのプリミティブ。",
-          "履歴書・ノート・デモを同期し続ける自動化。"
-        ]
+          "当初は履歴書を掲載するための専用サイトとして開始しましたが、現在は個人プロジェクトを集約して紹介する中核の場へと発展しています。",
+        bulletPoints: []
+      },
+      techStack: {
+        eyebrow: "スキル",
+        title: "技術スタックとスキル",
+        description:
+          "",
+        overview:
+          "",
+        items: DEFAULT_TECH_STACK_ITEMS
       },
       proof: {
         eyebrow: "エビデンス",
-        title: "証跡チップと関連アーティファクト",
-        description:
-          "ランディングページの主張ごとに直接証跡へリンクし、打ち合わせ不要でインパクトを検証できます。",
+        title: "過去の実績",
+        description: "近年の主なハイライトを抜粋して掲載しています。",
         overview:
-          "証跡チップは主要な約束を具体的なエビデンスに対応付けます。収録済みデモ、パフォーマンスダッシュボード、ステークホルダーの声、デリバリーマトリクスなどです。",
+          "各カードは、上記のスキルの裏付けとなるプロジェクトや役割のストーリーに焦点を当てています。",
         proofChips: [
           {
-            title: "出荷速度",
-            details:
-              "DORA 指標を毎週エクスポートし、回帰アラートをサイト上で可視化します。"
+            title: "Rollodex",
+            details: "連絡先管理 Web アプリの開発を共同リードしました。"
           },
           {
-            title: "リーダーシップの幅",
+            title: "Quester2000",
             details:
-              "ケーススタディで組織設計の意思決定、トレードオフメモ、ステークホルダー調整の儀式を記録します。"
+              "ワークライフバランスの管理を支援するポイント制の ToDo ツール。"
           },
           {
-            title: "オペレーショナル・エクセレンス",
+            title: "SER321 TA（ティーチングアシスタント）",
             details:
-              "導入ゲート、観測可能性のベースライン、インシデント対応姿勢をカバーするプレイブック。"
+              "上級レベルの分散ソフトウェアシステム講義でティーチングアシスタントを務めました。"
           },
           {
-            title: "採用支援",
+            title: "Stellaris Modding",
             details:
-              "リクルーター向けスキムモードで、応募要件、タイムゾーン、報酬基準、推薦情報を集約します。"
+              "Stellaris のメモリ管理ライブラリを改良し、パフォーマンスを向上させました。"
           }
         ]
       },
       roadmap: {
         eyebrow: "ロードマップ",
-        title: "これから提供するもの",
+        title: "現在の取り組みと計画",
         description:
-          "Essential WBS に沿って、検証可能なスライスで体験をリリースします。",
+          "現在は、日々の生活に実際の価値をもたらす小規模プロジェクトの構築に注力しています。G.O.A.T.（Grind, Optimize, Automate, Thrive）。",
         overview:
-          "デザインシステムの基盤は整いました。次のマイルストーンではローカライズされたコンテンツ、MDX ベースのエンジニアリングノート、Lighthouse による CI を追加します。",
+          "最適化や自動化は非常に有益ですが、新しい技術やスキルを学ぶ楽しさも大切にしています。",
         nextSteps: [
-          "検索向けの構造化データ付きで、リクルーター向けスキムマトリクスを公開。",
-          "英語・日本語・中国語のトグルで i18n ルーティングを配線。",
-          "エンジニアリングノートとダイアグラムのための MDX パイプラインを導入。"
+          "Quester2000 の見直し：機能拡充と UI 改善。スマートウォッチ連携の可能性も検討。",
+          "The Four Horsemen：Stellaris で終盤クライシスを発生させる新規 Mod を開発。Gigastructural Engineering との互換性を確保。",
+          "Pixelmon の課題対応：プライベートサーバーで発生する定期的なクライアントクラッシュを解消するため、アップデートのバックポート作業を継続。",
+          "C++ 製ゲーム／エンジンの継続開発：自伝的要素を取り入れた RPG 体験を目指す。",
+          "交流活動：業界イベントを探索し、人脈づくりを推進。NYC のインディーゲーム系イベント参加も検討。"
         ]
       }
+    },
+    footer: {
+      heading: "Jack Featherstone - ソフトウェアエンジニアリング・ポートフォリオ",
+      body: "私の目的、スキル、実績、関心領域を分かりやすくご紹介します。",
+      email: "jfstone2000@proton.me",
+      notesLabel: "エンジニアリングノート",
+      notesHref: "/ja/notes",
+      resumeLabel: "履歴書 (PDF)",
+      resumeHref: "/resume.pdf",
+      closing: "2025年。Jack Featherstone。Codex、Next.js、pnpm で構築し、霊圧を添えました。"
     }
   },
   notes: {
@@ -302,108 +377,120 @@ const ja: AppDictionary = {
 const zh: AppDictionary = {
   metadata: {
     title: "Jack F. 作品集",
-    description: "展示工程成果與實驗的個人項目中樞。"
+    description: "展示工程成果与实验的个人项目中枢。"
   },
   home: {
     breadcrumbs: {
-      home: "首頁",
-      workspace: "工作區總覽"
+      home: "首页",
+      workspace: "工作区总览"
     },
     hero: {
-      title: "作品集",
+      title: "Jack Featherstone",
       subtitle:
-        "打造讓招募方快速理解的體驗，突出可量化的影響、運營節奏，以及可驗證的證據。",
+        "您好，我叫 Jack。这里是我的软件工程作品集。我正寻求以初级全端开发者的身份开启职业生涯的机会。本网站旨在以可验证的证据呈现我的技能与能力，并拓展专业人脉。",
       media: {
         image: {
           ...HERO_IMAGE_BASE,
-          alt: "抽象漸層藝術，象徵作品集的速度與專注。",
+          alt: "抽象渐变艺术，象征作品集的速度与专注。",
         },
         preset: "hero",
-        caption: "預設首頁視覺所使用的漸層藝術。"
+        caption: "预设首页视觉所使用的渐变艺术。"
       },
       cta: {
-        title: "需要立即取得證據嗎？",
-        description:
-          "快速查看重點、下載成果物，或預約時間深入介紹整體運作模式。",
+        title: "需要立即取得证据吗？",
         actions: [
-          { label: "查看案例研究", variant: "primary", href: "/zh/notes" },
           {
-            label: "下載履歷",
-            variant: "secondary",
+            label: "下载履历",
+            variant: "primary",
             href: "/resume.pdf",
             download: true
           },
-          { label: "預約 20 分鐘會談", variant: "ghost" }
+          { label: "查看经历", variant: "secondary", href: "/experience" },
+          { label: "预约简短介绍会谈", variant: "ghost", href: "/meetings" }
         ]
       }
     },
     sections: {
       mission: {
-        eyebrow: "導覽",
-        title: "這份作品集的定位",
+        eyebrow: "导览",
+        title: "网站宗旨",
         description:
-          "讓招募與用人主管在三次點擊內，就能看到交付成果、領導力，以及運營成熟度。",
+          "以独特且可验证的证据呈现我在全端开发方面的能力，使招聘方能在三次点击内快速掌握重点。",
         overview:
-          "這個作品集計畫把個人網站重新定義為一套操作系統。每個成果物都內建量測，協助招募夥伴快速了解成果、交付節奏與合作方式。",
-        bulletPoints: [
-          "以文件為先的案例研究，並附上可追蹤的遙測資料。",
-          "在網站與列印視圖之間共用的設計系統元件。",
-          "自動化流程確保履歷、筆記與展示保持同步。"
-        ]
+          "本网站起初作为履历托管之用，现已发展为集中呈现我个人项目的核心平台。",
+        bulletPoints: []
+      },
+      techStack: {
+        eyebrow: "技能",
+        title: "技术栈与技能",
+        description:
+          "",
+        overview:
+          "",
+        items: DEFAULT_TECH_STACK_ITEMS
       },
       proof: {
-        eyebrow: "證據",
-        title: "證據晶片與支援性素材",
-        description:
-          "著陸頁上的每項主張都直接連到證據，讓利害關係人無需預約就能驗證影響力。",
+        eyebrow: "证据",
+        title: "过往成就",
+        description: "选取近年具有代表性的亮点。",
         overview:
-          "證據晶片把關鍵承諾映射到具體素材：錄製的示範、效能儀表板、利害關係人引言與交付矩陣。",
+          "每张卡片均聚焦于能够展现上述技能背景的项目或角色。",
         proofChips: [
           {
-            title: "交付速度",
-            details: "每週輸出 DORA 指標，並在站點上顯示回歸警報。"
+            title: "Rollodex",
+            details: "共同主导开发一款联系人管理的 Web 应用。"
           },
           {
-            title: "領導廣度",
-            details:
-              "案例研究記錄組織設計決策、權衡備忘錄與利害關係人對齊流程。"
+            title: "Quester2000",
+            details: "用于管理工作与生活平衡的积分制待办工具。"
           },
           {
-            title: "營運卓越",
-            details: "操作手冊涵蓋上線關卡、可觀測性基準與事件回應作法。"
+            title: "SER321 TA（教学助理）",
+            details: "担任高级分布式软件系统课程的教学助理。"
           },
           {
-            title: "招募賦能",
-            details:
-              "招募者快速瀏覽模式整合任用條件、時區、薪酬範圍與推薦資訊。"
+            title: "Stellaris Modding",
+            details: "改进 Stellaris 的内存管理库，以提升性能。"
           }
         ]
       },
       roadmap: {
-        eyebrow: "路線圖",
-        title: "下一步計畫",
+        eyebrow: "路线图",
+        title: "目前的项目与规划",
         description:
-          "依照 Essential WBS，以可驗證的切片逐步發佈完整體驗。",
+          "目前专注于构建能为我日常带来实际价值的小型项目。G.O.A.T.（Grind, Optimize, Automate, Thrive）。",
         overview:
-          "設計系統基礎已就緒。接下來的里程碑會加入在地化內容、基於 MDX 的工程筆記，以及 Lighthouse 驗證的 CI。",
+          "尽管优化与自动化成效显著，我同样享受学习新技术与新技能的过程。",
         nextSteps: [
-          "公開招募者瀏覽矩陣，並提供搜尋用的結構化資料。",
-          "串接支援英文、日文、中文的國際化路由與切換器。",
-          "為工程筆記與圖表導入 MDX 流程。"
+          "回顾 Quester2000：扩充功能并改进 UI，评估智能手表整合。",
+          "The Four Horsemen：为 Stellaris 开发可触发终局危机的新 Mod，并确保与 Gigastructural Engineering 兼容。",
+          "Pixelmon 问题：持续回溯移植更新，以修复我私有服务器上周期性发生的客户端崩溃。",
+          "C++ 游戏引擎：持续开发私人游戏／引擎，目标为带有自传色彩的 RPG 体验。",
+          "社交网络：寻找行业交流活动并拓展人脉，考虑参加纽约市的独立游戏展会。"
         ]
       }
+    },
+    footer: {
+      heading: "Jack Featherstone - 软件工程作品集",
+      body: "清晰呈现我的目标、技能、成果与兴趣。",
+      email: "jfstone2000@proton.me",
+      notesLabel: "工程笔记",
+      notesHref: "/zh/notes",
+      resumeLabel: "履历 (PDF)",
+      resumeHref: "/resume.pdf",
+      closing: "2025 年。Jack Featherstone。以 Codex、Next.js、pnpm 构建，并注入灵压。"
     }
   },
   notes: {
     index: {
-      title: "工程筆記",
+      title: "工程笔记",
       subtitle:
-        "延伸說明本作品集背後的交付決策、監測手法，以及合作共識。",
-      empty: "筆記即將發布。"
+        "延伸说明本作品集背后的交付决策、监测手法，以及合作共识。",
+      empty: "笔记即将发布。"
     },
     detail: {
-      backLabel: "返回筆記",
-      tocLabel: "頁面導覽"
+      backLabel: "返回笔记",
+      tocLabel: "页面导览"
     }
   }
 };

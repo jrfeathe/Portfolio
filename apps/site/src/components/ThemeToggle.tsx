@@ -1,25 +1,14 @@
 "use client";
 
-import { FOCUS_VISIBLE_RING } from "@portfolio/ui";
-import clsx from "clsx";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
+import type { Locale } from "../utils/i18n";
+import { getTopBarCopy } from "../utils/i18n";
+import { type ThemePreference } from "../utils/theme";
 import {
-  getNextTheme,
-  type ThemePreference
-} from "../utils/theme";
-
-const THEME_LABELS: Record<ThemePreference, string> = {
-  system: "System",
-  light: "Light",
-  dark: "Dark"
-};
-
-const THEME_ICONS: Record<ThemePreference, string> = {
-  system: "🌀",
-  light: "🌞",
-  dark: "🌙"
-};
+  SegmentedControl,
+  type SegmentedControlOption
+} from "./controls/SegmentedControl";
 
 function readTheme(): ThemePreference {
   if (typeof window === "undefined") {
@@ -33,8 +22,19 @@ function readTheme(): ThemePreference {
   return value === "light" || value === "dark" ? value : "system";
 }
 
-export function ThemeToggle({ className }: { className?: string }) {
+type ThemeToggleProps = {
+  className?: string;
+  locale: Locale;
+};
+
+export function ThemeToggle({ className, locale }: ThemeToggleProps) {
   const [theme, setTheme] = useState<ThemePreference>("system");
+  const { themeLabel, themeOptions } = getTopBarCopy(locale);
+  const options: SegmentedControlOption<ThemePreference>[] = [
+    { value: "light", label: `☀️`, testId: "theme-light" },
+    { value: "system", label: themeOptions.system, testId: "theme-system" },
+    { value: "dark", label: `🌙`, testId: "theme-dark" }
+  ];
 
   useEffect(() => {
     setTheme(readTheme());
@@ -56,35 +56,18 @@ export function ThemeToggle({ className }: { className?: string }) {
     return () => media.removeListener?.(handleChange);
   }, []);
 
-  const buttonLabel = useMemo(
-    () => `Switch color theme (currently ${THEME_LABELS[theme]})`,
-    [theme]
-  );
-
-  const handleClick = () => {
-    const next = getNextTheme(theme);
+  const handleSelect = (next: ThemePreference) => {
     window.__portfolioTheme?.set(next);
     setTheme(next);
   };
 
   return (
-    <button
-      type="button"
-      data-testid="theme-toggle"
-      className={clsx(
-        "inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-2 text-sm font-medium text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-surfaceMuted",
-        FOCUS_VISIBLE_RING,
-        className
-      )}
-      onClick={handleClick}
-      aria-label={buttonLabel}
-      title={buttonLabel}
-    >
-      <span aria-hidden className="text-base">
-        {THEME_ICONS[theme]}
-      </span>
-      <span aria-hidden>{THEME_LABELS[theme]}</span>
-      <span className="sr-only">{buttonLabel}</span>
-    </button>
+    <SegmentedControl
+      label={themeLabel}
+      value={theme}
+      options={options}
+      onChange={handleSelect}
+      className={className}
+    />
   );
 }

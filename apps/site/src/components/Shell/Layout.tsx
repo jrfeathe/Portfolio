@@ -9,11 +9,13 @@ import { ShellFooter, type ShellFooterContent } from "./Footer";
 import { LanguageSwitcher } from "../LanguageSwitcher";
 import { ContrastToggle } from "../ContrastToggle";
 import { ThemeToggle } from "../ThemeToggle";
+import { SkimToggleButton } from "../SkimToggleButton";
 import { ResponsiveImage } from "../ResponsiveImage";
 import type {
   ImageDescriptor,
   ResponsiveImagePreset
 } from "../../lib/images";
+import type { Locale } from "../../utils/i18n";
 
 export type ShellSection = {
   id: string;
@@ -38,6 +40,8 @@ export type ShellLayoutProps = {
     preset?: ResponsiveImagePreset;
     caption?: ReactNode;
   };
+  skimModeEnabled?: boolean;
+  locale: Locale;
 };
 
 export function ShellLayout({
@@ -50,7 +54,9 @@ export function ShellLayout({
   footer,
   footerContent,
   className,
-  heroMedia
+  heroMedia,
+  skimModeEnabled = false,
+  locale
 }: ShellLayoutProps) {
   const navItems =
     anchorItems ??
@@ -70,23 +76,27 @@ export function ShellLayout({
                 className="flex-1"
               />
             ) : null}
-            <div className="ml-auto flex items-center gap-3">
-              <ThemeToggle />
-              <ContrastToggle />
-              <LanguageSwitcher />
+            <div className="ml-auto flex flex-1 flex-wrap items-center justify-end gap-3 md:flex-none">
+              <ThemeToggle className="min-w-[180px] flex-1 md:flex-none" locale={locale} />
+              <ContrastToggle className="min-w-[200px] flex-1 md:flex-none" locale={locale} />
+              <LanguageSwitcher className="min-w-[250px] flex-1 md:flex-none" />
             </div>
           </div>
           <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
-            <div className="space-y-3">
+            <div className="space-y-4">
               <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
               {subtitle ? (
                 <p className="max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted">
                   {subtitle}
                 </p>
               ) : null}
+              <SkimToggleButton active={skimModeEnabled} locale={locale} />
             </div>
             {heroMedia ? (
-              <figure className="group relative overflow-hidden rounded-2xl border border-border/40 bg-gradient-to-br from-surface/40 via-surface/10 to-surface/50 shadow-xl ring-1 ring-border/20 backdrop-blur-sm dark:border-dark-border/30 dark:from-dark-surface/40 dark:via-dark-surface/10 dark:to-dark-surface/50 dark:ring-dark-border/20">
+              <figure
+                className="group relative overflow-hidden rounded-2xl border border-border/40 bg-gradient-to-br from-surface/40 via-surface/10 to-surface/50 shadow-xl ring-1 ring-border/20 backdrop-blur-sm dark:border-dark-border/30 dark:from-dark-surface/40 dark:via-dark-surface/10 dark:to-dark-surface/50 dark:ring-dark-border/20"
+                data-hero-portrait="true"
+              >
                 <div className="relative aspect-[4/3]">
                   <ResponsiveImage
                     image={heroMedia.image}

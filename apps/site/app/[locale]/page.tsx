@@ -16,6 +16,7 @@ import { StructuredData } from "../../src/components/seo/StructuredData";
 import { getResumeProfile } from "../../src/lib/resume/profile";
 import { buildHomePageJsonLd } from "../../src/lib/seo/jsonld";
 import { extractNonceFromHeaders } from "../../src/utils/csp";
+import { TechStackCarousel } from "../../src/components/TechStackCarousel";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
@@ -112,21 +113,7 @@ function buildSections(dictionary: AppDictionary) {
       content: (
         <>
           <p>{sections.techStack.overview}</p>
-          <ul className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {sections.techStack.items.map((item) => (
-              <li key={item.name}>
-                <a
-                  href={item.href}
-                  className="flex items-center justify-between gap-3 rounded-xl border border-border bg-surface px-4 py-3 text-sm font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  <span>{item.name}</span>
-                  <span aria-hidden="true">↗</span>
-                </a>
-              </li>
-            ))}
-          </ul>
+          <TechStackCarousel items={sections.techStack.items} />
         </>
       )
     },
@@ -217,6 +204,8 @@ export default function HomePage({ params, searchParams }: PageProps) {
           heroMedia={media}
           breadcrumbs={breadcrumbs}
           sections={sections}
+          skimModeEnabled={skimModeEnabled}
+          locale={locale}
           footerContent={dictionary.home.footer}
           cta={
             <StickyCTA title={cta.title} description={cta.description}>
@@ -226,6 +215,8 @@ export default function HomePage({ params, searchParams }: PageProps) {
                     key={`${action.label}-${action.variant}`}
                     variant={action.variant}
                     href={action.href}
+                    className="w-full"
+                    data-variant={action.variant}
                     download={
                       action.download ? resumeDownloadFilename : undefined
                     }
@@ -238,7 +229,12 @@ export default function HomePage({ params, searchParams }: PageProps) {
                     {action.label}
                   </Button>
                 ) : (
-                  <Button key={`${action.label}-${action.variant}`} variant={action.variant}>
+                  <Button
+                    key={`${action.label}-${action.variant}`}
+                    variant={action.variant}
+                    className="w-full"
+                    data-variant={action.variant}
+                  >
                     {action.label}
                   </Button>
                 )

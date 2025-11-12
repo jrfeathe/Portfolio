@@ -76,6 +76,13 @@ Adjectives: uncluttered, high-contrast, compassionate, concise. Avoid corporate 
 3. **Task 10a.3** — finalize tech stack spotlight visuals/interactions and integrate assets.
 4. Capture hero portrait + missing logos before Task 10a.2 reaches QA.
 
+## Task 10a.2 Implementation Notes
+- Hero gradient replaced by the temporary portrait placeholder at `apps/site/public/media/hero/portrait-placeholder.svg`, wired through the hero media dictionary entries with localized alt/caption text.
+- Theme, contrast, and language controls now use rounded segmented sliders (`SegmentedControl`) with visible focus states, while a dedicated `SkimToggleButton` enables/disables `?skim` directly from the hero block.
+- Sticky CTA layout upgraded to a responsive grid so the three CTAs balance in one row on mobile and stack cleanly inside the sidebar on desktop.
+- Tech stack data renders through the new `TechStackCarousel` component that scroll-snaps on mobile and becomes a multi-column grid on larger screens; placeholder SVG logos live under `apps/site/public/tech-stack/`.
+- Placeholder routes for `/experience` and `/meetings` exist under `apps/site/app/experience` and `apps/site/app/meetings` until their full content ships.
+
 ## Stakeholder Sign-off
 | Date | Reviewer | Decision | Notes |
 | --- | --- | --- | --- |

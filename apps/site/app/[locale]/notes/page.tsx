@@ -151,6 +151,7 @@ export default async function NotesIndexPage({ params }: PageParams) {
         subtitle={dictionary.notes.index.subtitle}
         breadcrumbs={breadcrumbs}
         sections={sections}
+        locale={locale}
       />
     </>
   );

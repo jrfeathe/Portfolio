@@ -93,7 +93,7 @@ export type AppDictionary = {
 };
 
 const HERO_IMAGE_BASE: Omit<ImageDescriptor, "alt"> = {
-  src: "/media/hero/hero-glow.svg",
+  src: "/media/hero/portrait-placeholder.svg",
   width: 960,
   height: 720,
   blurDataURL:
@@ -142,10 +142,10 @@ const en: AppDictionary = {
       media: {
         image: {
           ...HERO_IMAGE_BASE,
-          alt: "Abstract gradient artwork representing portfolio velocity and focus.",
+          alt: "Portrait of Jack Featherstone standing under warm light.",
         },
         preset: "hero",
-        caption: "Gradient artwork used as the default hero visual."
+        caption: "Self portrait captured for the 2025 personalization refresh."
       },
       cta: {
         title: "Need proof fast?",
@@ -267,10 +267,10 @@ const ja: AppDictionary = {
       media: {
         image: {
           ...HERO_IMAGE_BASE,
-          alt: "ポートフォリオの集中と推進力を表現した抽象的なグラデーションアート。",
+          alt: "暖かな光の下に立つ Jack Featherstone のポートレート。",
         },
         preset: "hero",
-        caption: "既定のヒーロービジュアルとして使用するグラデーションアート。"
+        caption: "2025 年のパーソナライズ刷新に向けて撮影したセルフポートレート。"
       },
       cta: {
         title: "証跡がすぐに必要ですか？",
@@ -391,10 +391,10 @@ const zh: AppDictionary = {
       media: {
         image: {
           ...HERO_IMAGE_BASE,
-          alt: "抽象渐变艺术，象征作品集的速度与专注。",
+          alt: "暖色灯光下站立的 Jack Featherstone 肖像。",
         },
         preset: "hero",
-        caption: "预设首页视觉所使用的渐变艺术。"
+        caption: "为 2025 年个性化焕新拍摄的自画像。"
       },
       cta: {
         title: "需要立即取得证据吗？",

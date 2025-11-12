@@ -90,6 +90,29 @@ export type AppDictionary = {
       tocLabel: string;
     };
   };
+  experience: {
+    title: string;
+    subtitle: string;
+    entries: Array<{
+      company: string;
+      role: string;
+      timeframe: string;
+      summary: string;
+      highlights: string[];
+    }>;
+  };
+  meetings: {
+    title: string;
+    subtitle: string;
+    intro: string;
+    slots: Array<{
+      title: string;
+      description: string;
+    }>;
+    contactLabel: string;
+    contactHref: string;
+    contactNote: string;
+  };
 };
 
 const HERO_IMAGE_BASE: Omit<ImageDescriptor, "alt"> = {
@@ -156,8 +179,8 @@ const en: AppDictionary = {
             href: "/resume.pdf",
             download: true
           },
-          { label: "View experience", variant: "secondary", href: "/experience" },
-          { label: "Book a short intro", variant: "ghost", href: "/meetings" }
+          { label: "View experience", variant: "secondary", href: "/en/experience" },
+          { label: "Book a short intro", variant: "ghost", href: "/en/meetings" }
         ]
       }
     },
@@ -247,6 +270,71 @@ const en: AppDictionary = {
       backLabel: "Back to notes",
       tocLabel: "On this page"
     }
+  },
+  experience: {
+    title: "Experience snapshots",
+    subtitle: "A quick skim through the projects and roles that shaped my toolkit.",
+    entries: [
+      {
+        company: "Rollodex",
+        role: "Co-lead developer",
+        timeframe: "2023 — Present",
+        summary:
+          "Partnered with a small team to ship a contact management web app for student founders and early-career operators.",
+        highlights: [
+          "Owned the React + Prisma stack, iterating on the data model and UI to keep onboarding under five minutes.",
+          "Ran weekly release reviews that combined QA notes, bug triage, and rollout planning."
+        ]
+      },
+      {
+        company: "SER321 (TA)",
+        role: "Distributed systems teaching assistant",
+        timeframe: "2022 — 2023",
+        summary:
+          "Supported an upper-division course focused on distributed systems patterns, RPC fundamentals, and testing discipline.",
+        highlights: [
+          "Hosted office hours twice a week to debug concurrency labs and guided teams through their capstone demos.",
+          "Built grading scripts that linted C++ submissions and surfaced flaky behaviors before review."
+        ]
+      },
+      {
+        company: "Freelance / Mods",
+        role: "Gameplay systems tinkerer",
+        timeframe: "Ongoing",
+        summary:
+          "Maintain a handful of Lua and Stellaris mods plus a private Pixelmon server, treating each as a sandbox for performance tuning.",
+        highlights: [
+          "Refactored resource loaders to cut average tick time by ~18% on a busy server.",
+          "Applied profiling to memory-bound Stellaris scripts, reducing save/load spikes for large empires."
+        ]
+      }
+    ]
+  },
+  meetings: {
+    title: "Book a short intro",
+    subtitle: "Pick the format that works for you and we will keep it under 20 minutes.",
+    intro:
+      "Most chats fall into one of the buckets below. If you need something else, send an email and I will tailor the time.",
+    slots: [
+      {
+        title: "Portfolio walkthrough",
+        description:
+          "Fast skim of the site, tech stack, and anything you would like me to expand on (resume JSON, telemetry, etc.)."
+      },
+      {
+        title: "Project deep dive",
+        description:
+          "Focus on a single project—Rollodex, Quester2000, or a mod—and unpack the tradeoffs, timelines, and lessons learned."
+      },
+      {
+        title: "Open Q&A",
+        description:
+          "Need a second opinion on a junior role brief or want to chat about gameplay systems? I am happy to jam without a formal agenda."
+      }
+    ],
+    contactLabel: "Email jfstone2000@proton.me to confirm a slot",
+    contactHref: "mailto:jfstone2000@proton.me",
+    contactNote: "Async works too—include a few windows (ET) and I will reply with a calendar invite."
   }
 };
 
@@ -281,8 +369,8 @@ const ja: AppDictionary = {
             href: "/resume.pdf",
             download: true
           },
-          { label: "経験を見る", variant: "secondary", href: "/experience" },
-          { label: "短時間の面談を予約", variant: "ghost", href: "/meetings" }
+          { label: "経験を見る", variant: "secondary", href: "/ja/experience" },
+          { label: "短時間の面談を予約", variant: "ghost", href: "/ja/meetings" }
         ]
       }
     },
@@ -371,6 +459,71 @@ const ja: AppDictionary = {
       backLabel: "ノート一覧に戻る",
       tocLabel: "このページの内容"
     }
+  },
+  experience: {
+    title: "経験スナップショット",
+    subtitle: "スキルセットを作り上げたプロジェクトと役割を簡潔にまとめています。",
+    entries: [
+      {
+        company: "Rollodex",
+        role: "共同リード開発者",
+        timeframe: "2023年 — 現在",
+        summary:
+          "学生起業家や若手エンジニア向けの連絡先管理 Web アプリを少人数チームで構築しました。",
+        highlights: [
+          "React + Prisma スタックを担当し、3〜5 分でオンボーディングが終わるようデータモデルと UI を改善。",
+          "QA ノートやバグトリアージ、リリース計画をまとめた週次レビューを運営。"
+        ]
+      },
+      {
+        company: "SER321 (TA)",
+        role: "分散システム講義ティーチングアシスタント",
+        timeframe: "2022年 — 2023年",
+        summary:
+          "分散システムの設計パターンや RPC、テスト手法を扱う上級講義をサポートしました。",
+        highlights: [
+          "週 2 回のオフィスアワーで並行処理課題のデバッグや最終デモのリハーサルを支援。",
+          "C++ 課題のリンター兼テストスクリプトを作成し、レビュー前に不具合を可視化。"
+        ]
+      },
+      {
+        company: "Freelance / Mods",
+        role: "ゲームプレイシステム開発",
+        timeframe: "継続中",
+        summary:
+          "Lua や Stellaris の Mod、プライベート Pixelmon サーバーをメンテし、パフォーマンス検証の場としています。",
+        highlights: [
+          "リソースローダーをリファクタし、混雑時サーバーの平均 tick 時間を約 18% 改善。",
+          "Stellaris スクリプトのメモリ負荷を解析し、大規模帝国のセーブ/ロード遅延を低減。"
+        ]
+      }
+    ]
+  },
+  meetings: {
+    title: "ショート面談のご案内",
+    subtitle: "20 分以内で終えられるライトな打ち合わせを想定しています。",
+    intro:
+      "下記のいずれかに当てはまるケースが多いですが、別の目的でもお気軽にご連絡ください。内容に合わせて構成します。",
+    slots: [
+      {
+        title: "ポートフォリオ概要",
+        description:
+          "サイト全体や技術スタック、気になる箇所（履歴書 JSON やテレメトリなど）を短時間でご案内します。"
+      },
+      {
+        title: "プロジェクト深掘り",
+        description:
+          "Rollodex や Quester2000 など 1 件に絞り、意思決定・スケジュール・学びをじっくり共有します。"
+      },
+      {
+        title: "オープン Q&A",
+        description:
+          "ジュニア採用のブリーフ確認やゲームシステム談義など、 agenda フリーな相談枠としてご利用ください。"
+      }
+    ],
+    contactLabel: "日程調整は jfstone2000@proton.me まで",
+    contactHref: "mailto:jfstone2000@proton.me",
+    contactNote: "東部時間でいくつか候補を添えていただければ、カレンダー招待で返信します。"
   }
 };
 
@@ -405,8 +558,8 @@ const zh: AppDictionary = {
             href: "/resume.pdf",
             download: true
           },
-          { label: "查看经历", variant: "secondary", href: "/experience" },
-          { label: "预约简短介绍会谈", variant: "ghost", href: "/meetings" }
+          { label: "查看经历", variant: "secondary", href: "/zh/experience" },
+          { label: "预约简短介绍会谈", variant: "ghost", href: "/zh/meetings" }
         ]
       }
     },
@@ -492,6 +645,71 @@ const zh: AppDictionary = {
       backLabel: "返回笔记",
       tocLabel: "页面导览"
     }
+  },
+  experience: {
+    title: "经验速览",
+    subtitle: "快速了解塑造我技能组合的项目与职责。",
+    entries: [
+      {
+        company: "Rollodex",
+        role: "联合负责人",
+        timeframe: "2023 — 至今",
+        summary:
+          "与小团队合作，为学生创始人与初级工程师打造联系人管理 Web 应用。",
+        highlights: [
+          "负责 React + Prisma 技术栈，优化数据模型与界面，让注册流程控制在 5 分钟内。",
+          "主持每周发布评审，合并 QA 记录、缺陷排期与上线计划。"
+        ]
+      },
+      {
+        company: "SER321 (助教)",
+        role: "分布式系统课程助教",
+        timeframe: "2022 — 2023",
+        summary:
+          "支持高级分布式系统课程，覆盖 RPC 基础与测试规范。",
+        highlights: [
+          "每周两次答疑，协助学生调试并发实验并准备期末展示。",
+          "编写 C++ 作业的 lint/测试脚本，在评分前提前暴露不稳定行为。"
+        ]
+      },
+      {
+        company: "自由职业 / Mods",
+        role: "玩法系统调优",
+        timeframe: "持续",
+        summary:
+          "维护多款 Lua、Stellaris Mod 以及私有 Pixelmon 服务器，用作性能实验场。",
+        highlights: [
+          "重构资源加载器，在高负载服务器上将平均 tick 时间降低约 18%。",
+          "分析 Stellaris 脚本的内存热点，减少大型帝国的存档/读取尖峰。"
+        ]
+      }
+    ]
+  },
+  meetings: {
+    title: "预约简介会",
+    subtitle: "选择适合的形式，控制在 20 分钟左右。",
+    intro:
+      "大多数交流可以归入以下场景。如需其他主题，发送邮件即可；我会根据需求整理议程。",
+    slots: [
+      {
+        title: "作品集速览",
+        description:
+          "快速演示站点、技术栈以及您想深入了解的部分（如简历 JSON、观测方案等）。"
+      },
+      {
+        title: "项目深聊",
+        description:
+          "聚焦单个项目（Rollodex、Quester2000 或某个 Mod），拆解权衡、时间线与收获。"
+      },
+      {
+        title: "自由问答",
+        description:
+          "需要讨论初级岗位需求或想聊玩法系统？可以在没有正式议程的前提下交流。"
+      }
+    ],
+    contactLabel: "请发送邮件至 jfstone2000@proton.me 预约",
+    contactHref: "mailto:jfstone2000@proton.me",
+    contactNote: "写上几个东部时区的备选时间，我会回信附上日程邀请。"
   }
 };
 

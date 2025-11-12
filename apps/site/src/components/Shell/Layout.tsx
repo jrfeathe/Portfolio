@@ -41,6 +41,7 @@ export type ShellLayoutProps = {
     caption?: ReactNode;
   };
   skimModeEnabled?: boolean;
+  showSkimToggle?: boolean;
   locale: Locale;
 };
 
@@ -56,6 +57,7 @@ export function ShellLayout({
   className,
   heroMedia,
   skimModeEnabled = false,
+  showSkimToggle = true,
   locale
 }: ShellLayoutProps) {
   const navItems =
@@ -90,7 +92,9 @@ export function ShellLayout({
                   {subtitle}
                 </p>
               ) : null}
-              <SkimToggleButton active={skimModeEnabled} locale={locale} />
+              {showSkimToggle ? (
+                <SkimToggleButton active={skimModeEnabled} locale={locale} />
+              ) : null}
             </div>
             {heroMedia ? (
               <figure

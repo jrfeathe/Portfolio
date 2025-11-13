@@ -56,10 +56,38 @@ body {
     background-color: var(--contrast-override-bg, #ffffff) !important;
   }
 
+  .contrast-high [data-tech-stack-item] {
+    border-color: transparent !important;
+    background-color: transparent !important;
+    color: inherit !important;
+  }
+
   .contrast-high.dark :is(button, a, input, select, textarea) {
     border-color: #38bdf8 !important;
     color: #e2e8f0 !important;
     background-color: #020617 !important;
+  }
+
+  .contrast-high.dark [data-tech-stack-item] {
+    border-color: transparent !important;
+    background-color: transparent !important;
+    color: inherit !important;
+  }
+
+  .contrast-high [data-tech-stack-icon] {
+    border: 3px solid #1d4ed8 !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.3) !important;
+  }
+
+  .contrast-high.dark [data-tech-stack-icon] {
+    border: 3px solid #38bdf8 !important;
+    background-color: #020617 !important;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.35) !important;
+  }
+
+  [data-tech-stack-icon="stellaris-mods"] img {
+    transform: scale(1.12);
   }
 
   .contrast-high .shell-anchor-nav [aria-current="location"] {

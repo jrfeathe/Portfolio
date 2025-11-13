@@ -12,7 +12,8 @@ import {
 } from "../../../src/utils/i18n";
 import {
   ShellLayout,
-  type ShellSection
+  type ShellSection,
+  type AnchorNavItem
 } from "../../../src/components/Shell";
 
 export const runtime = "nodejs";
@@ -33,16 +34,17 @@ function ensureLocale(value: string): Locale {
 }
 
 function buildSections(dictionary: AppDictionary): ShellSection[] {
-  return [
+  const sections: ShellSection[] = [
     {
-      id: "experience",
-      title: dictionary.experience.title,
-      description: dictionary.experience.subtitle,
+      id: "projects",
+      title: dictionary.experience.section1title,
+      description: dictionary.experience.section1subtitle,
       content: (
         <div className="space-y-6">
           {dictionary.experience.entries.map((entry) => (
             <article
               key={`${entry.company}-${entry.role}`}
+              id={entry.id}
               className="rounded-2xl border border-border bg-surface p-6 shadow-sm transition hover:border-accent dark:border-dark-border dark:bg-dark-surface dark:hover:border-dark-accent"
             >
               <div className="flex flex-col gap-1">
@@ -68,8 +70,49 @@ function buildSections(dictionary: AppDictionary): ShellSection[] {
           ))}
         </div>
       )
+    },
+    {
+      id: "tech-stack",
+      title: dictionary.experience.section2title,
+      description: dictionary.experience.section2subtitle,
+      content: dictionary.experience.techStack.length ? (
+        <div className="space-y-6">
+          {dictionary.experience.techStack.map((tech) => (
+            <article
+              key={tech.id}
+              id={tech.id}
+              className="rounded-2xl border border-border bg-surface p-6 shadow-sm transition hover:border-accent dark:border-dark-border dark:bg-dark-surface dark:hover:border-dark-accent"
+            >
+              <div className="flex flex-col gap-1">
+                <h3 className="text-xl font-semibold text-text dark:text-dark-text">
+                  {tech.title}
+                </h3>
+                <p className="text-sm text-textMuted dark:text-dark-textMuted">
+                  {tech.context}
+                </p>
+              </div>
+              <p className="mt-4 text-sm text-text dark:text-dark-text">
+                {tech.summary}
+              </p>
+              {tech.highlights.length ? (
+                <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-text dark:text-dark-text">
+                  {tech.highlights.map((highlight) => (
+                    <li key={highlight}>{highlight}</li>
+                  ))}
+                </ul>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      ) : (
+        <p className="text-sm text-textMuted dark:text-dark-textMuted">
+          Tech stack details are coming soon.
+        </p>
+      )
     }
   ];
+
+  return sections;
 }
 
 export async function generateStaticParams() {
@@ -90,6 +133,26 @@ export default function ExperiencePage({ params }: PageParams) {
   const locale = ensureLocale(params.locale);
   const dictionary = getDictionary(locale);
   const sections = buildSections(dictionary);
+  const projectAnchors: AnchorNavItem[] = dictionary.experience.entries.map((entry) => ({
+    label: entry.company,
+    href: `#${entry.id}`
+  }));
+  const techStackAnchors: AnchorNavItem[] = dictionary.experience.techStack.map((tech) => ({
+    label: tech.title,
+    href: `#${tech.id}`
+  }));
+  const anchorItems: AnchorNavItem[] = [
+    {
+      label: dictionary.experience.section1title,
+      href: "#projects",
+      children: projectAnchors
+    },
+    {
+      label: dictionary.experience.section2title,
+      href: "#tech-stack",
+      children: techStackAnchors
+    }
+  ];
   const breadcrumbs = [
     {
       label: dictionary.home.breadcrumbs.home,
@@ -106,6 +169,7 @@ export default function ExperiencePage({ params }: PageParams) {
       subtitle={dictionary.experience.subtitle}
       breadcrumbs={breadcrumbs}
       sections={sections}
+      anchorItems={anchorItems}
       showSkimToggle={false}
       locale={locale}
     />

@@ -7,6 +7,7 @@ describe("dictionaries", () => {
     expect(dictionary.home.hero.title).toBe("Jack Featherstone");
     expect(dictionary.home.hero.cta.actions[0]?.label).toBe("Download resume");
     expect(dictionary.home.sections.techStack.items.length).toBeGreaterThan(10);
+    expect(dictionary.experience.techStack.length).toBeGreaterThan(10);
     expect(dictionary.notes.detail.tocLabel).toBe("On this page");
   });
 

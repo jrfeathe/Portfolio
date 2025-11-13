@@ -1,5 +1,6 @@
 export type { AnchorNavItem, AnchorNavProps } from "./AnchorNav";
 export { AnchorNav } from "./AnchorNav";
+export { AnchorControlPanel } from "./AnchorControlPanel";
 export type { BreadcrumbItem, BreadcrumbsProps } from "./Breadcrumbs";
 export { Breadcrumbs } from "./Breadcrumbs";
 export { ShellFooter } from "./Footer";

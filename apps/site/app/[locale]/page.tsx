@@ -81,10 +81,18 @@ function resolveBreadcrumbs(dictionary: AppDictionary, locale: Locale) {
   return [{ label: breadcrumbs.home, href: `/${locale}` }];
 }
 
-function buildSections(dictionary: AppDictionary) {
+function buildSections(dictionary: AppDictionary, locale: Locale) {
   const {
     home: { sections }
   } = dictionary;
+  const techDetailMap = new Map(
+    dictionary.experience.techStack.map((entry) => [entry.title.toLowerCase(), entry.id])
+  );
+
+  const techStackItems = sections.techStack.items.map((item) => ({
+    ...item,
+    href: `/${locale}/experience#${techDetailMap.get(item.name.toLowerCase()) ?? item.assetId}`
+  }));
 
   return [
     {
@@ -95,7 +103,7 @@ function buildSections(dictionary: AppDictionary) {
       content: (
         <>
           <p>{sections.techStack.overview}</p>
-          <TechStackCarousel items={sections.techStack.items} />
+          <TechStackCarousel items={techStackItems} />
         </>
       )
     },
@@ -161,7 +169,7 @@ export function generateMetadata({ params }: PageParams): Metadata {
 export default function HomePage({ params, searchParams }: PageProps) {
   const locale = ensureLocale(params.locale);
   const dictionary = getDictionary(locale);
-  const sections = buildSections(dictionary);
+  const sections = buildSections(dictionary, locale);
   const breadcrumbs = resolveBreadcrumbs(dictionary, locale);
   const {
     hero: { title, subtitle, cta, media }

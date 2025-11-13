@@ -14,10 +14,6 @@ const ITEMS_PER_SLIDE = ITEMS_PER_ROW * ROWS_PER_SLIDE;
 const SLIDE_LOCK_DURATION = 420;
 
 export function TechStackCarousel({ items }: { items: TechStackItems }) {
-  if (!items.length) {
-    return null;
-  }
-
   const slides = useMemo(() => {
     const chunked: TechStackItem[][] = [];
     for (let i = 0; i < items.length; i += ITEMS_PER_SLIDE) {
@@ -122,6 +118,10 @@ export function TechStackCarousel({ items }: { items: TechStackItems }) {
       node.removeEventListener("wheel", handleWheel);
     };
   }, [handleWheel]);
+
+  if (!slides.length) {
+    return null;
+  }
 
   return (
     <div className="relative mt-3">

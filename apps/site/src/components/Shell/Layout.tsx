@@ -3,6 +3,7 @@ import clsx from "clsx";
 
 import type { AnchorNavItem } from "./AnchorNav";
 import { AnchorNav } from "./AnchorNav";
+import { AnchorControlPanel } from "./AnchorControlPanel";
 import type { BreadcrumbItem } from "./Breadcrumbs";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { ShellFooter, type ShellFooterContent } from "./Footer";
@@ -66,9 +67,13 @@ export function ShellLayout({
       label: typeof section.title === "string" ? section.title : section.id,
       href: `#${section.id}`
     }));
+  const hasNestedAnchors = navItems.some((item) => item.children?.length);
 
   return (
-    <div className="bg-background text-text dark:bg-dark-background dark:text-dark-text">
+    <div
+      id="top"
+      className="bg-background text-text dark:bg-dark-background dark:text-dark-text"
+    >
       <header className="border-b border-border bg-surface pb-8 pt-10 dark:border-dark-border dark:bg-dark-surface">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4">
           <div className="flex flex-wrap items-center gap-4">
@@ -167,8 +172,17 @@ export function ShellLayout({
         </div>
 
         {navItems.length ? (
-          <div className="hidden lg:block lg:col-start-1 lg:row-start-1">
-            <AnchorNav items={navItems} className="sticky top-24" />
+          <div className="hidden lg:col-start-1 lg:row-start-1 lg:block">
+            <div className="sticky top-24 space-y-3">
+              <AnchorControlPanel enabled={hasNestedAnchors} />
+              <AnchorNav items={navItems} />
+              <a
+                href="#top"
+                className="inline-flex w-full items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+              >
+                Return to top
+              </a>
+            </div>
           </div>
         ) : null}
       </div>

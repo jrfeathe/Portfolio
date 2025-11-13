@@ -9,6 +9,14 @@ type TechStackEntry = {
   assetId: string;
 };
 
+type TechExperienceEntry = {
+  id: string;
+  title: string;
+  context: string;
+  summary: string;
+  highlights: string[];
+};
+
 export type AppDictionary = {
   metadata: {
     title: string;
@@ -93,13 +101,19 @@ export type AppDictionary = {
   experience: {
     title: string;
     subtitle: string;
+    section1title: string;
+    section1subtitle: string;
+    section2title: string;
+    section2subtitle: string;
     entries: Array<{
+      id: string;
       company: string;
       role: string;
       timeframe: string;
       summary: string;
       highlights: string[];
     }>;
+    techStack: TechExperienceEntry[];
   };
   meetings: {
     title: string;
@@ -146,6 +160,251 @@ const DEFAULT_TECH_STACK_ITEMS: TechStackEntry[] = [
   { name: "AWS", href: "https://aws.amazon.com/", assetId: "aws" },
   { name: "Stellaris Mods", href: "https://steamcommunity.com/app/281990/workshop/", assetId: "stellaris-mods" },
   { name: "Minecraft Mods", href: "https://modrinth.com/", assetId: "minecraft-mods" }
+];
+
+const DEFAULT_TECH_STACK_DETAILS: TechExperienceEntry[] = [
+  {
+    id: "react",
+    title: "React",
+    context: "Rollodex product UI & portfolio refresh",
+    summary:
+      "React powers both the Rollodex capstone and this portfolio, letting me pair server components with client-side polish without sacrificing performance.",
+    highlights: [
+      "Owned the Rollodex onboarding flow, wiring React forms to Prisma APIs to keep setup under five minutes.",
+      "Maintained theme-aware ShellLayout controls so recruiters experience consistent navigation across devices."
+    ]
+  },
+  {
+    id: "html",
+    title: "HTML",
+    context: "Portfolio shell & resume exports",
+    summary:
+      "Semantic HTML keeps the site skim-friendly, screen-reader aware, and ready for PDF export without additional tooling.",
+    highlights: [
+      "Structured ShellLayout landmarks so anchor navigation and skim mode remain accessible.",
+      "Authored print-focused markup for the resume route to satisfy recruiter download workflows."
+    ]
+  },
+  {
+    id: "css",
+    title: "CSS",
+    context: "Tailwind tokens & bespoke layouts",
+    summary:
+      "I lean on Tailwind plus custom variables to manage responsive grids, dark-mode palettes, and print styles without UI kit bloat.",
+    highlights: [
+      "Implemented the shell grid that scales from a single column to the tri-column desktop layout.",
+      "Maintained dual contrast themes and validated them with Playwright accessibility runs."
+    ]
+  },
+  {
+    id: "javascript",
+    title: "JavaScript",
+    context: "Node utilities & instrumentation",
+    summary:
+      "Plain JavaScript still powers my quick automation scripts and browser logic when TypeScript would slow experimentation.",
+    highlights: [
+      "Built telemetry shims that sanitize request payloads before forwarding them to monitoring endpoints.",
+      "Scripted content migrations for dictionaries and resume data to keep pull requests reviewable."
+    ]
+  },
+  {
+    id: "typescript",
+    title: "TypeScript",
+    context: "Next.js app & shared utilities",
+    summary:
+      "Strict TypeScript keeps localization, design tokens, and API contracts honest across the monorepo.",
+    highlights: [
+      "Defined dictionary types that guarantee every locale string is accounted for before build time.",
+      "Modeled theme and contrast preferences as discriminated unions to prevent runtime toggling errors."
+    ]
+  },
+  {
+    id: "c",
+    title: "C",
+    context: "Systems programming coursework",
+    summary:
+      "C remains my go-to for networking labs and embedded-style exercises that demand explicit memory control.",
+    highlights: [
+      "Implemented RPC framing labs that stress pointer safety and deterministic resource cleanup.",
+      "Led debugging sessions that taught classmates how to reason about segmentation faults and data races."
+    ]
+  },
+  {
+    id: "cpp",
+    title: "C++",
+    context: "Distributed systems labs & grading scripts",
+    summary:
+      "C++ powers the concurrency labs and tooling I supported as part of the SER321 teaching team.",
+    highlights: [
+      "Extended multi-threaded labs with profiling hooks so students could visualize race conditions.",
+      "Authored linting utilities that validated C++ submissions before manual grading."
+    ]
+  },
+  {
+    id: "java",
+    title: "Java",
+    context: "SER321 teaching assistantship",
+    summary:
+      "Java is the backbone of the distributed systems assignments I built and supported on AWS.",
+    highlights: [
+      "Shipped a graded Java client/server assignment that faculty adopted for the course.",
+      "Ran office hours focused on threading, networking, and deployment troubleshooting."
+    ]
+  },
+  {
+    id: "linux",
+    title: "Linux",
+    context: "Homelab & virtualization hosts",
+    summary:
+      "Most of my infrastructure—from self-hosted services to VFIO experiments—runs on Debian or Arch-based distributions.",
+    highlights: [
+      "Maintained Nextcloud and private game servers with automated backups and monitoring.",
+      "Tuned kernel parameters to support GPU passthrough without destabilizing the host."
+    ]
+  },
+  {
+    id: "json",
+    title: "JSON",
+    context: "Resume + localization pipelines",
+    summary:
+      "Resume content, localization dictionaries, and telemetry fixtures all flow through JSON so they can be linted and diffed easily.",
+    highlights: [
+      "Keep `resume.json` authoritative so PDF and HTML exports stay in sync.",
+      "Structure localization dictionaries so every change is reviewable in git."
+    ]
+  },
+  {
+    id: "bash",
+    title: "Bash",
+    context: "Automation + local tooling",
+    summary:
+      "Bash scripts handle repetitive chores across the portfolio repo and my homelab.",
+    highlights: [
+      "Wrote PNPM and Playwright helpers to standardize local test runs.",
+      "Automated log rotation and archival tasks on self-hosted servers."
+    ]
+  },
+  {
+    id: "xml",
+    title: "XML",
+    context: "Game mod configuration",
+    summary:
+      "Large portions of my Stellaris and Minecraft mod work involve editing XML definitions and localization files.",
+    highlights: [
+      "Extended Stellaris event chains and localization entries to support new crisis mechanics.",
+      "Patched Minecraft modpack configs to resolve schema drift between releases."
+    ]
+  },
+  {
+    id: "kvm",
+    title: "KVM",
+    context: "Virtualization stack",
+    summary:
+      "KVM is the foundation for my GPU-passthrough Windows and Linux guests.",
+    highlights: [
+      "Configured VFIO bindings and hugepages for reliable gaming VMs.",
+      "Documented repeatable setup steps so rebuilds stay predictable."
+    ]
+  },
+  {
+    id: "qemu",
+    title: "QEMU",
+    context: "Low-level VM tuning",
+    summary:
+      "Custom QEMU launch scripts expose PCI devices, shared folders, and USB peripherals exactly how I need them.",
+    highlights: [
+      "Authored per-VM command lines for GPU and USB passthrough.",
+      "Instrumented boot times to compare virtio models and caching strategies."
+    ]
+  },
+  {
+    id: "postgresql",
+    title: "PostgreSQL",
+    context: "Rollodex data layer",
+    summary:
+      "PostgreSQL paired with Prisma handles the Rollodex schema, migrations, and reporting queries.",
+    highlights: [
+      "Normalized contact and activity tables to keep analytics queries under 200ms.",
+      "Used pgTAP-style checks and seed scripts to validate schema changes."
+    ]
+  },
+  {
+    id: "sql",
+    title: "SQL",
+    context: "Reporting + debugging",
+    summary:
+      "From migrations to ad-hoc debugging, SQL is the glue between application behavior and the data layer.",
+    highlights: [
+      "Created parameterized queries that power Rollodex reporting endpoints.",
+      "Used SQL traces to investigate Prisma regressions during capstone sprints."
+    ]
+  },
+  {
+    id: "lua",
+    title: "Lua",
+    context: "Gameplay scripting",
+    summary:
+      "Lua fuels my Stellaris and Pixelmon scripting experiments where quick iteration matters.",
+    highlights: [
+      "Optimized resource loaders to cut tick time on a private server by ~18%.",
+      "Inserted telemetry hooks that surface misbehaving scripts during playtests."
+    ]
+  },
+  {
+    id: "prisma",
+    title: "Prisma",
+    context: "Node/Next backend modeling",
+    summary:
+      "Prisma provides typed, migration-friendly access to PostgreSQL for Rollodex and internal tooling.",
+    highlights: [
+      "Managed schema migrations while coordinating with frontend delivery milestones.",
+      "Used seed scripts to keep Playwright fixtures deterministic across CI runs."
+    ]
+  },
+  {
+    id: "oracle-cloud",
+    title: "Oracle Cloud",
+    context: "Digital fabrication internship & prototypes",
+    summary:
+      "Oracle Cloud's Always Free tier let me host fabrication trackers and small experiments without cost.",
+    highlights: [
+      "Deployed a fabrication request tracker for BAM Logistics during my internship.",
+      "Scripted reproducible setup steps for OCI networking and storage resources."
+    ]
+  },
+  {
+    id: "aws",
+    title: "AWS",
+    context: "Coursework & teaching support",
+    summary:
+      "AWS hosts the distributed systems labs and demos I delivered as a SER321 teaching assistant.",
+    highlights: [
+      "Packaged a Java client/server assignment on EC2 so students could test remotely.",
+      "Used CloudWatch and IAM policies to monitor and secure the teaching environment."
+    ]
+  },
+  {
+    id: "stellaris-mods-tech",
+    title: "Stellaris Mods",
+    context: "Long-running gameplay project",
+    summary:
+      "Stellaris modding combines scripting, balance work, and profiling to keep large empires playable.",
+    highlights: [
+      "Upgraded memory management scripts to reduce stutter in late-game saves.",
+      "Coordinated feedback from private testers to prioritize crisis-mechanic fixes."
+    ]
+  },
+  {
+    id: "minecraft-mods",
+    title: "Minecraft Mods",
+    context: "Private Pixelmon server",
+    summary:
+      "I maintain a private modpack, backporting fixes and tuning configs to keep the Pixelmon server stable.",
+    highlights: [
+      "Backported a crash fix so the Pixelmon server stayed available for my community.",
+      "Balanced resource costs and quest lines through iterative scripting."
+    ]
+  }
 ];
 
 const en: AppDictionary = {
@@ -272,10 +531,15 @@ const en: AppDictionary = {
     }
   },
   experience: {
-    title: "Experience snapshots",
-    subtitle: "A quick skim through the projects and roles that shaped my toolkit.",
+    title: "Experience",
+    subtitle: "Major interactions that have defined my current skill set.",
+    section1title: "Projects",
+    section1subtitle: "Important projects and roles that have shaped my current skills.",
+    section2title: "Tech stack",
+    section2subtitle: "Relevant experience with each technology.",
     entries: [
       {
+        id: "rollodex",
         company: "Rollodex",
         role: "Co-lead developer",
         timeframe: "2023 — Present",
@@ -287,6 +551,7 @@ const en: AppDictionary = {
         ]
       },
       {
+        id: "ser321",
         company: "SER321 (TA)",
         role: "Distributed systems teaching assistant",
         timeframe: "2022 — 2023",
@@ -298,6 +563,7 @@ const en: AppDictionary = {
         ]
       },
       {
+        id: "stellaris-mods-project",
         company: "Freelance / Mods",
         role: "Gameplay systems tinkerer",
         timeframe: "Ongoing",
@@ -308,7 +574,8 @@ const en: AppDictionary = {
           "Applied profiling to memory-bound Stellaris scripts, reducing save/load spikes for large empires."
         ]
       }
-    ]
+    ],
+    techStack: DEFAULT_TECH_STACK_DETAILS
   },
   meetings: {
     title: "Book a short intro",
@@ -465,6 +732,7 @@ const ja: AppDictionary = {
     subtitle: "スキルセットを作り上げたプロジェクトと役割を簡潔にまとめています。",
     entries: [
       {
+        id: "rollodex",
         company: "Rollodex",
         role: "共同リード開発者",
         timeframe: "2023年 — 現在",
@@ -476,6 +744,7 @@ const ja: AppDictionary = {
         ]
       },
       {
+        id: "ser321",
         company: "SER321 (TA)",
         role: "分散システム講義ティーチングアシスタント",
         timeframe: "2022年 — 2023年",
@@ -487,6 +756,7 @@ const ja: AppDictionary = {
         ]
       },
       {
+        id: "stellaris-mods-project",
         company: "Freelance / Mods",
         role: "ゲームプレイシステム開発",
         timeframe: "継続中",
@@ -497,7 +767,8 @@ const ja: AppDictionary = {
           "Stellaris スクリプトのメモリ負荷を解析し、大規模帝国のセーブ/ロード遅延を低減。"
         ]
       }
-    ]
+    ],
+    techStack: DEFAULT_TECH_STACK_DETAILS
   },
   meetings: {
     title: "ショート面談のご案内",
@@ -651,6 +922,7 @@ const zh: AppDictionary = {
     subtitle: "快速了解塑造我技能组合的项目与职责。",
     entries: [
       {
+        id: "rollodex",
         company: "Rollodex",
         role: "联合负责人",
         timeframe: "2023 — 至今",
@@ -662,6 +934,7 @@ const zh: AppDictionary = {
         ]
       },
       {
+        id: "ser321",
         company: "SER321 (助教)",
         role: "分布式系统课程助教",
         timeframe: "2022 — 2023",
@@ -673,6 +946,7 @@ const zh: AppDictionary = {
         ]
       },
       {
+        id: "stellaris-mods-project",
         company: "自由职业 / Mods",
         role: "玩法系统调优",
         timeframe: "持续",
@@ -683,7 +957,8 @@ const zh: AppDictionary = {
           "分析 Stellaris 脚本的内存热点，减少大型帝国的存档/读取尖峰。"
         ]
       }
-    ]
+    ],
+    techStack: DEFAULT_TECH_STACK_DETAILS
   },
   meetings: {
     title: "预约简介会",

@@ -1,5 +1,11 @@
 # Changelog
 
+# Task 10a.KING — Freeform Personalization Spike
+- Expanded the Experience page to house both Projects and Tech Stack write-ups: dictionaries now carry structured `techStack` narratives plus stable IDs, `apps/site/app/[locale]/experience/page.tsx` renders them as anchored cards, and the sidebar nav exposes nested dropdowns for every project/tech with expand/collapse controls and a sticky “Return to top”.
+- Re-linked the home-page Tech Stack carousel so each logo routes to its corresponding experience anchor (e.g., `/en/experience#react`), added a differentiating `stellaris-mods-project` vs. `stellaris-mods-tech` slug, and ensured all locale dictionaries share the new identifiers.
+- Introduced the reusable `AnchorControlPanel` client component, refactored `AnchorNav` to support collapsible children with scroll-clamped overflow, and added global expand/collapse events while automatically hiding the buttons on pages without nested anchors.
+- Updated `WBS/Essential_WBS.csv` and `WBS/Epics.md` with the new 10a.KING / 10a.REVOLT workflow so the documentation matches this experimentation burst.
+
 # Task 10a.1 — Personalized Home Copy Rewrites
 - Updated the home dictionaries (EN/JA/ZH) per the personalization brief: new hero subtitle, breadcrumb simplification, CTA ordering text, section eyebrows/descriptions, and refreshed footer copy now render through `apps/site/app/[locale]/page.tsx`.
 - Taught the home layout/tests to rely on the trimmed breadcrumb list and CTA set so the Playwright skim-mode spec keeps guarding the new labels without regressions.

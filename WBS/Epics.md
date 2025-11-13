@@ -28,8 +28,8 @@ Set budgets and enforce them, implement image pipeline, critical CSS/fonts. Code
 **9.x — Schema & Resume (9.0–9.1)**
 Generate JSON-LD per page and ship a JSON Resume + printable PDF. Code a JSON-LD helper and resume export.
 
-**10a.x — Personalization (10a.0–10a.3)**
-Craft the brief, rewrite copy in your voice, refresh the visual theme, and add a tech-stack spotlight so the site feels like you. Mix of narrative work, theme/token tweaks, and new layout components.
+**10a.x — Personalization (10a.0–10a.3 + KING/REVOLT)**
+Craft the brief, rewrite copy in your voice, refresh the visual theme, and add a tech-stack spotlight so the site feels like you. Mix of narrative work, theme/token tweaks, and new layout components. Between 10a.2 and 10a.3 you can optionally enter **10a.KING**, a freeform “do whatever feels right” burst with minimal documentation, followed by **10a.REVOLT**, the cleanup sprint that restores order (tests, docs, fixes) before rejoining the main track.
 
 **10b.x — Home & Hook (10b.0–10b.1)**
 Implement the personalized hero with proof chips and land the live health tile. Focused on shipping the updated UI and wiring telemetry data to the home page.

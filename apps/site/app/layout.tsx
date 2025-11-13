@@ -118,7 +118,10 @@ const defaultDictionary = getDictionary(defaultLocale);
 
 export const metadata: Metadata = {
   title: defaultDictionary.metadata.title,
-  description: defaultDictionary.metadata.description
+  description: defaultDictionary.metadata.description,
+  icons: {
+    icon: "/tech-stack/bash.svg"
+  }
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

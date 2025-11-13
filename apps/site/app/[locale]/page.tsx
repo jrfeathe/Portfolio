@@ -88,24 +88,6 @@ function buildSections(dictionary: AppDictionary) {
 
   return [
     {
-      id: "site-purpose",
-      eyebrow: sections.mission.eyebrow,
-      title: sections.mission.title,
-      description: sections.mission.description,
-      content: (
-        <>
-          <p>{sections.mission.overview}</p>
-          {sections.mission.bulletPoints.length ? (
-            <ul className="list-disc space-y-2 pl-5">
-              {sections.mission.bulletPoints.map((bullet) => (
-                <li key={bullet}>{bullet}</li>
-              ))}
-            </ul>
-          ) : null}
-        </>
-      )
-    },
-    {
       id: "tech-stack",
       eyebrow: sections.techStack.eyebrow,
       title: sections.techStack.title,

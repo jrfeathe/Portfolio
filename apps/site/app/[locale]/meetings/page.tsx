@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -41,6 +42,34 @@ function buildSections(dictionary: AppDictionary): ShellSection[] {
       content: (
         <div className="space-y-6">
           <p>{dictionary.meetings.intro}</p>
+          <figure className="rounded-3xl border border-border bg-surface p-4 text-sm text-textMuted dark:border-dark-border dark:bg-dark-surface dark:text-dark-textMuted">
+            <div className="overflow-hidden rounded-2xl">
+              <Image
+                src="/meeting-avail.png"
+                alt={dictionary.meetings.availability.alt}
+                width={378}
+                height={611}
+                className="mx-auto h-auto w-full max-w-[320px]"
+              />
+            </div>
+            <figcaption className="mt-3 text-center">
+              {dictionary.meetings.availability.description}
+              {dictionary.meetings.availability.timezoneHref ? (
+                <>
+                  {" "}
+                  <a
+                    href={dictionary.meetings.availability.timezoneHref}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="text-text underline underline-offset-4 hover:text-accent dark:text-dark-text dark:hover:text-dark-accent"
+                  >
+                    {dictionary.meetings.availability.timezoneLabel ??
+                      dictionary.meetings.availability.timezoneHref}
+                  </a>
+                </>
+              ) : null}
+            </figcaption>
+          </figure>
           <ul className="space-y-4">
             {dictionary.meetings.slots.map((slot) => (
               <li

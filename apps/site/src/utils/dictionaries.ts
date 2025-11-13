@@ -119,6 +119,12 @@ export type AppDictionary = {
     title: string;
     subtitle: string;
     intro: string;
+    availability: {
+      alt: string;
+      description: string;
+      timezoneHref?: string;
+      timezoneLabel?: string;
+    };
     slots: Array<{
       title: string;
       description: string;
@@ -581,7 +587,13 @@ const en: AppDictionary = {
     title: "Book a short intro",
     subtitle: "Pick the format that works for you and we will keep it under 20 minutes.",
     intro:
-      "Most chats fall into one of the buckets below. If you need something else, send an email and I will tailor the time.",
+      "Green areas indicate my common availability (New York time, EST/EDT). If you need another window, send an email and I will do my best to accommodate you.",
+    availability: {
+      alt: "Calendar snapshot showing weekly availability with green blocks highlighting openings.",
+      description: "Weekly snapshot of common availability.",
+      timezoneHref: "https://www.timeanddate.com/worldclock/usa/new-york",
+      timezoneLabel: "Check the current New York time"
+    },
     slots: [
       {
         title: "Portfolio walkthrough",
@@ -775,6 +787,13 @@ const ja: AppDictionary = {
     subtitle: "20 分以内で終えられるライトな打ち合わせを想定しています。",
     intro:
       "下記のいずれかに当てはまるケースが多いですが、別の目的でもお気軽にご連絡ください。内容に合わせて構成します。",
+    availability: {
+      alt: "週次の空き状況を示すカレンダー。緑は空き枠、グレーは集中作業時間。",
+      description:
+        "直近の空き状況スナップショットです。緑のブロックが予約可能枠、グレーは集中作業タイムを表します。",
+      timezoneHref: "https://www.timeanddate.com/worldclock/usa/new-york",
+      timezoneLabel: "ニューヨーク時間を確認"
+    },
     slots: [
       {
         title: "ポートフォリオ概要",
@@ -965,6 +984,13 @@ const zh: AppDictionary = {
     subtitle: "选择适合的形式，控制在 20 分钟左右。",
     intro:
       "大多数交流可以归入以下场景。如需其他主题，发送邮件即可；我会根据需求整理议程。",
+    availability: {
+      alt: "周日程截图，绿色块为空档，灰色块为专注时段。",
+      description:
+        "近期的可用时间一览：绿色块可预约，灰色块保留给专注工作。写信时可直接引用这些窗口。",
+      timezoneHref: "https://www.timeanddate.com/worldclock/usa/new-york",
+      timezoneLabel: "查看纽约当前时间"
+    },
     slots: [
       {
         title: "作品集速览",

@@ -116,8 +116,11 @@ export type AppDictionary = {
     techStack: TechExperienceEntry[];
   };
   meetings: {
+    metadataTitle: string;
     title: string;
     subtitle: string;
+    section1title: string;
+    section1subtitle: string;
     intro: string;
     availability: {
       alt: string;
@@ -584,8 +587,11 @@ const en: AppDictionary = {
     techStack: DEFAULT_TECH_STACK_DETAILS
   },
   meetings: {
-    title: "Book a short intro",
-    subtitle: "Pick the format that works for you and we will keep it under 20 minutes.",
+    metadataTitle: "Jack F. Contact",
+    title: "Contact",
+    subtitle: "I'm open to answering any questions you may have, in any format that works for you.",
+    section1title: "Availability",
+    section1subtitle: "I am commonly able to schedule a short meeting during the hours listed below.",
     intro:
       "Green areas indicate my common availability (New York time, EST/EDT). If you need another window, send an email and I will do my best to accommodate you.",
     availability: {
@@ -598,22 +604,22 @@ const en: AppDictionary = {
       {
         title: "Portfolio walkthrough",
         description:
-          "Fast skim of the site, tech stack, and anything you would like me to expand on (resume JSON, telemetry, etc.)."
+          "Fast skim of the site, tech stack, and anything you would like me to expand on (resume, telemetry, project management, etc.)."
       },
       {
         title: "Project deep dive",
         description:
-          "Focus on a single project—Rollodex, Quester2000, or a mod—and unpack the tradeoffs, timelines, and lessons learned."
+          "Focus on a single project, such as Rollodex, Quester2000, or a mod. Discuss the tradeoffs, timelines, and lessons learned."
       },
       {
         title: "Open Q&A",
         description:
-          "Need a second opinion on a junior role brief or want to chat about gameplay systems? I am happy to jam without a formal agenda."
+          "Need a second opinion on a tech issue or just want to chat? I am happy to help you without a formal agenda. Async may fit better for this case!"
       }
     ],
-    contactLabel: "Email jfstone2000@proton.me to confirm a slot",
+    contactLabel: "Email to confirm: jfstone2000@proton.me",
     contactHref: "mailto:jfstone2000@proton.me",
-    contactNote: "Async works too—include a few windows (ET) and I will reply with a calendar invite."
+    contactNote: "Available on multiple messaging platforms! Suggest something that works for you. You can typically expect an async reply within 24 hours."
   }
 };
 
@@ -783,37 +789,42 @@ const ja: AppDictionary = {
     techStack: DEFAULT_TECH_STACK_DETAILS
   },
   meetings: {
-    title: "ショート面談のご案内",
-    subtitle: "20 分以内で終えられるライトな打ち合わせを想定しています。",
+    metadataTitle: "Jack F. へのお問い合わせ",
+    title: "お問い合わせ",
+    subtitle:
+      "ご都合のよい方法であれば、どのようなご質問にも喜んでお答えします。",
+    section1title: "面談可能時間",
+    section1subtitle:
+      "下記の時間帯であれば、短時間のミーティングを比較的柔軟に調整できます。",
     intro:
-      "下記のいずれかに当てはまるケースが多いですが、別の目的でもお気軽にご連絡ください。内容に合わせて構成します。",
+      "緑色の部分は、私の主な空き時間を示しています（ニューヨーク時間、EST/EDT）。この時間帯以外をご希望の場合は、メールでお知らせください。可能な限り調整いたします。",
     availability: {
-      alt: "週次の空き状況を示すカレンダー。緑は空き枠、グレーは集中作業時間。",
-      description:
-        "直近の空き状況スナップショットです。緑のブロックが予約可能枠、グレーは集中作業タイムを表します。",
+      alt: "週ごとの空き時間を示したカレンダーのスナップショット。緑色のブロックが空いている時間帯を示しています。",
+      description: "通常の空き時間を示した週次スナップショット。",
       timezoneHref: "https://www.timeanddate.com/worldclock/usa/new-york",
-      timezoneLabel: "ニューヨーク時間を確認"
+      timezoneLabel: "現在のニューヨーク時刻を確認する"
     },
     slots: [
       {
-        title: "ポートフォリオ概要",
+        title: "ポートフォリオの概要ご説明",
         description:
-          "サイト全体や技術スタック、気になる箇所（履歴書 JSON やテレメトリなど）を短時間でご案内します。"
+          "サイト全体や技術スタックの概要を手短にご紹介し、ご希望があれば職務経歴書、テレメトリ、プロジェクトマネジメントなど、詳しくお聞きになりたい点を深掘りします。"
       },
       {
-        title: "プロジェクト深掘り",
+        title: "プロジェクトの深掘り",
         description:
-          "Rollodex や Quester2000 など 1 件に絞り、意思決定・スケジュール・学びをじっくり共有します。"
+          "Rollodex、Quester2000、各種 MOD など、特定のプロジェクトを一つ選び、トレードオフやスケジュール、得られた知見について集中的に議論します。"
       },
       {
         title: "オープン Q&A",
         description:
-          "ジュニア採用のブリーフ確認やゲームシステム談義など、 agenda フリーな相談枠としてご利用ください。"
+          "技術的な課題についてセカンドオピニオンが欲しい場合や、ざっくばらんにお話ししたいだけの場合でも歓迎です。正式なアジェンダがなくても問題ありません。このような場合は、メールなどの非同期コミュニケーションの方が適しているかもしれません。"
       }
     ],
-    contactLabel: "日程調整は jfstone2000@proton.me まで",
+    contactLabel: "日程確認用メール: jfstone2000@proton.me",
     contactHref: "mailto:jfstone2000@proton.me",
-    contactNote: "東部時間でいくつか候補を添えていただければ、カレンダー招待で返信します。"
+    contactNote:
+      "複数のメッセージングプラットフォームに対応可能です。ご都合のよいツールをご提案ください。通常、24時間以内に非同期でご返信いたします。"
   }
 };
 
@@ -980,37 +991,42 @@ const zh: AppDictionary = {
     techStack: DEFAULT_TECH_STACK_DETAILS
   },
   meetings: {
-    title: "预约简介会",
-    subtitle: "选择适合的形式，控制在 20 分钟左右。",
+    metadataTitle: "Jack F. 联系",
+    title: "联系",
+    subtitle:
+      "欢迎通过适合您的任何方式联系我，我很乐意回答您的任何问题。",
+    section1title: "可会面时间",
+    section1subtitle:
+      "我通常可以在下列时间段安排一次简短的会面。",
     intro:
-      "大多数交流可以归入以下场景。如需其他主题，发送邮件即可；我会根据需求整理议程。",
+      "绿色区域表示我常见的可用时间（纽约时间，EST/EDT）。如果您需要其他时间段，请发邮件告诉我，我会尽量配合安排。",
     availability: {
-      alt: "周日程截图，绿色块为空档，灰色块为专注时段。",
-      description:
-        "近期的可用时间一览：绿色块可预约，灰色块保留给专注工作。写信时可直接引用这些窗口。",
+      alt: "显示每周可用时间的日历快照，绿色方块标出可约时间。",
+      description: "常见可用时间的每周快照。",
       timezoneHref: "https://www.timeanddate.com/worldclock/usa/new-york",
-      timezoneLabel: "查看纽约当前时间"
+      timezoneLabel: "查看当前纽约时间"
     },
     slots: [
       {
-        title: "作品集速览",
+        title: "作品集导览",
         description:
-          "快速演示站点、技术栈以及您想深入了解的部分（如简历 JSON、观测方案等）。"
+          "一起快速浏览网站、技术栈，以及您希望我重点展开介绍的部分（简历、数据/遥测、项目管理等）。"
       },
       {
-        title: "项目深聊",
+        title: "项目深度交流",
         description:
-          "聚焦单个项目（Rollodex、Quester2000 或某个 Mod），拆解权衡、时间线与收获。"
+          "围绕某一个项目深入讨论，例如 Rollodex、Quester2000，或某个 Mod，一起聊聊权衡取舍、时间安排以及从中获得的经验和反思。"
       },
       {
-        title: "自由问答",
+        title: "开放式问答",
         description:
-          "需要讨论初级岗位需求或想聊玩法系统？可以在没有正式议程的前提下交流。"
+          "在技术问题上需要第二个意见，或者只是想随便聊聊？即使没有正式议程，我也很乐意帮忙。对于这种场景，异步沟通可能会更合适！"
       }
     ],
-    contactLabel: "请发送邮件至 jfstone2000@proton.me 预约",
+    contactLabel: "确认请发邮件至：jfstone2000@proton.me",
     contactHref: "mailto:jfstone2000@proton.me",
-    contactNote: "写上几个东部时区的备选时间，我会回信附上日程邀请。"
+    contactNote:
+      "我也使用多个消息平台，欢迎提出对您最方便的工具。一般情况下，您可以在 24 小时内收到异步回复。"
   }
 };
 

@@ -37,8 +37,8 @@ function buildSections(dictionary: AppDictionary): ShellSection[] {
   return [
     {
       id: "formats",
-      title: dictionary.meetings.title,
-      description: dictionary.meetings.subtitle,
+      title: dictionary.meetings.section1title,
+      description: dictionary.meetings.section1subtitle,
       content: (
         <div className="space-y-6">
           <p>{dictionary.meetings.intro}</p>
@@ -117,7 +117,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   const dictionary = getDictionary(locale);
 
   return {
-    title: dictionary.meetings.title,
+    title: dictionary.meetings.metadataTitle,
     description: dictionary.meetings.subtitle
   };
 }

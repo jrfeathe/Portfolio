@@ -175,243 +175,214 @@ const DEFAULT_TECH_STACK_DETAILS: TechExperienceEntry[] = [
   {
     id: "react",
     title: "React",
-    context: "Rollodex product UI & portfolio refresh",
-    summary:
-      "React powers both the Rollodex capstone and this portfolio, letting me pair server components with client-side polish without sacrificing performance.",
+    context: "2 years of experience",
+    summary: "Frontend design for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
     highlights: [
-      "Owned the Rollodex onboarding flow, wiring React forms to Prisma APIs to keep setup under five minutes.",
-      "Maintained theme-aware ShellLayout controls so recruiters experience consistent navigation across devices."
+      "Rollodex - Implemented various components to build templated forms and redesign search/filter UI.",
+      "Portfolio - Implemented a wide suite of custom UI components."
     ]
   },
   {
     id: "html",
     title: "HTML",
-    context: "Portfolio shell & resume exports",
-    summary:
-      "Semantic HTML keeps the site skim-friendly, screen-reader aware, and ready for PDF export without additional tooling.",
+    context: "5 years of experience",
+    summary: "Web design for Web Development & Design Foundations coursework, Software Portfolio (this website), Rollodex Capstone, Quester2000.",
     highlights: [
-      "Structured ShellLayout landmarks so anchor navigation and skim mode remain accessible.",
-      "Authored print-focused markup for the resume route to satisfy recruiter download workflows."
+      "Built legacy style websites using HTML and CSS to display information and navigate between pages.",
+      "Integrated with JavaScript, TypeScript, and React to build complex web apps."
     ]
   },
   {
     id: "css",
     title: "CSS",
-    context: "Tailwind tokens & bespoke layouts",
-    summary:
-      "I lean on Tailwind plus custom variables to manage responsive grids, dark-mode palettes, and print styles without UI kit bloat.",
+    context: "5 years of experience",
+    summary: "UI design for Software Portfolio (this website), Rollodex Capstone, Quester2000, Various courses.",
     highlights: [
-      "Implemented the shell grid that scales from a single column to the tri-column desktop layout.",
-      "Maintained dual contrast themes and validated them with Playwright accessibility runs."
+      "Created themes for web applications to customize and improve accessibility."
     ]
   },
   {
     id: "javascript",
     title: "JavaScript",
-    context: "Node utilities & instrumentation",
-    summary:
-      "Plain JavaScript still powers my quick automation scripts and browser logic when TypeScript would slow experimentation.",
+    context: "3 years of experience",
+    summary: "Backend logic for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
     highlights: [
-      "Built telemetry shims that sanitize request payloads before forwarding them to monitoring endpoints.",
-      "Scripted content migrations for dictionaries and resume data to keep pull requests reviewable."
+      "Built client/server logic to power complex features, such as menu interfaces, search filtering, and form templates."
     ]
   },
   {
     id: "typescript",
     title: "TypeScript",
-    context: "Next.js app & shared utilities",
-    summary:
-      "Strict TypeScript keeps localization, design tokens, and API contracts honest across the monorepo.",
+    context: "6 months of experience",
+    summary: "Backend logic for Software Portfolio (this website), Quester2000.",
     highlights: [
-      "Defined dictionary types that guarantee every locale string is accounted for before build time.",
-      "Modeled theme and contrast preferences as discriminated unions to prevent runtime toggling errors."
+      "Built web apps meant to run on cloud services."
     ]
   },
   {
     id: "c",
     title: "C",
-    context: "Systems programming coursework",
-    summary:
-      "C remains my go-to for networking labs and embedded-style exercises that demand explicit memory control.",
+    context: "3 years of experience",
+    summary: "Coursework for various courses.",
     highlights: [
-      "Implemented RPC framing labs that stress pointer safety and deterministic resource cleanup.",
-      "Led debugging sessions that taught classmates how to reason about segmentation faults and data races."
+      "SER334 - Built a Loadable Kernel Module that uses Linux data structures to display details about the processes executing in the kernel.",
+      "Applied scripting for various topics such as thread/compiler optimization, page replacement, image processing, and scheduling algorithms."
     ]
   },
   {
     id: "cpp",
     title: "C++",
-    context: "Distributed systems labs & grading scripts",
-    summary:
-      "C++ powers the concurrency labs and tooling I supported as part of the SER321 teaching team.",
+    context: "7 years of experience",
+    summary: "Core language foundation. Used for custom game engine and many small projects.",
     highlights: [
-      "Extended multi-threaded labs with profiling hooks so students could visualize race conditions.",
-      "Authored linting utilities that validated C++ submissions before manual grading."
+      "Developed a custom game engine for a current project. (Limited information disclosure)",
+      "The language that I first learned and my top preference."
     ]
   },
   {
     id: "java",
     title: "Java",
-    context: "SER321 teaching assistantship",
-    summary:
-      "Java is the backbone of the distributed systems assignments I built and supported on AWS.",
+    context: "7 years of experience",
+    summary: "Distributed systems teaching, Minecraft modding, Various courses/projects.",
     highlights: [
-      "Shipped a graded Java client/server assignment that faculty adopted for the course.",
-      "Ran office hours focused on threading, networking, and deployment troubleshooting."
+      "Built a Wheel of Fortune Java client/server assignment for students.",
+      "Decompiled code to patch a crash and reassemble."
     ]
   },
   {
     id: "linux",
     title: "Linux",
-    context: "Homelab & virtualization hosts",
-    summary:
-      "Most of my infrastructure—from self-hosted services to VFIO experiments—runs on Debian or Arch-based distributions.",
+    context: "7 years of experience",
+    summary: "My daily driver kernel, set up on many systems. Also used for various courses.",
     highlights: [
-      "Maintained Nextcloud and private game servers with automated backups and monitoring.",
-      "Tuned kernel parameters to support GPU passthrough without destabilizing the host."
+      "Actively maintaining Nextcloud and game servers with backups and monitoring.",
+      "Configured VFIO and kernel tuning for GPU passthrough to VMs."
     ]
   },
   {
     id: "json",
     title: "JSON",
-    context: "Resume + localization pipelines",
-    summary:
-      "Resume content, localization dictionaries, and telemetry fixtures all flow through JSON so they can be linted and diffed easily.",
+    context: "5 years of experience",
+    summary: "Modding, Game Engine, Various courses.",
     highlights: [
-      "Keep `resume.json` authoritative so PDF and HTML exports stay in sync.",
-      "Structure localization dictionaries so every change is reviewable in git."
+      "Stored complex application objects to file, and read them back upon application reload.",
+      "Commonly used when modding Stellaris and Minecraft."
     ]
   },
   {
     id: "bash",
     title: "Bash",
-    context: "Automation + local tooling",
-    summary:
-      "Bash scripts handle repetitive chores across the portfolio repo and my homelab.",
+    context: "5 years of experience",
+    summary: "Local tooling on Linux systems",
     highlights: [
-      "Wrote PNPM and Playwright helpers to standardize local test runs.",
-      "Automated log rotation and archival tasks on self-hosted servers."
+      "Scripting to modify various behaviors of Linux machines.",
+      "Used heavily during application development."
     ]
   },
   {
     id: "xml",
     title: "XML",
-    context: "Game mod configuration",
-    summary:
-      "Large portions of my Stellaris and Minecraft mod work involve editing XML definitions and localization files.",
+    context: "5 years of experience",
+    summary: "Game mod configuration, Various courses",
     highlights: [
-      "Extended Stellaris event chains and localization entries to support new crisis mechanics.",
-      "Patched Minecraft modpack configs to resolve schema drift between releases."
+      "Patched Minecraft config XMLs to optimize servers and align with modpack updates.",
+      "Deploy virtual machines and optimize them."
     ]
   },
   {
     id: "kvm",
     title: "KVM",
-    context: "Virtualization stack",
-    summary:
-      "KVM is the foundation for my GPU-passthrough Windows and Linux guests.",
+    context: "4 years of experience",
+    summary: "Virtualize Windows on Linux systems",
     highlights: [
-      "Configured VFIO bindings and hugepages for reliable gaming VMs.",
-      "Documented repeatable setup steps so rebuilds stay predictable."
+      "Set up Windows 10 virtual machines optimized for gaming, with GPU passthrough.",
+      "Used with QEMU."
     ]
   },
   {
     id: "qemu",
     title: "QEMU",
-    context: "Low-level VM tuning",
-    summary:
-      "Custom QEMU launch scripts expose PCI devices, shared folders, and USB peripherals exactly how I need them.",
+    context: "4 years of experience",
+    summary: "Virtualize Windows on Linux systems",
     highlights: [
-      "Authored per-VM command lines for GPU and USB passthrough.",
-      "Instrumented boot times to compare virtio models and caching strategies."
+      "Set up Windows 10 virtual machines optimized for gaming, with GPU passthrough.",
+      "Used with KVM."
     ]
   },
   {
     id: "postgresql",
     title: "PostgreSQL",
-    context: "Rollodex data layer",
-    summary:
-      "PostgreSQL paired with Prisma handles the Rollodex schema, migrations, and reporting queries.",
+    context: "2 years of experience",
+    summary: "Rollodex, Quester2000",
     highlights: [
-      "Normalized contact and activity tables to keep analytics queries under 200ms.",
-      "Used pgTAP-style checks and seed scripts to validate schema changes."
+      "Modeled contact/search data to support fast filtering.",
+      "Stored app data for user accounts."
     ]
   },
   {
     id: "sql",
     title: "SQL",
-    context: "Reporting + debugging",
-    summary:
-      "From migrations to ad-hoc debugging, SQL is the glue between application behavior and the data layer.",
+    context: "2 years of experience",
+    summary: "Rollodex, SER322 - Database Management course",
     highlights: [
-      "Created parameterized queries that power Rollodex reporting endpoints.",
-      "Used SQL traces to investigate Prisma regressions during capstone sprints."
+      "Designed Retail Inventory Management system for SER322.",
+      "Used queries to troubleshoot and speed up search for Rollodex."
     ]
   },
   {
     id: "lua",
     title: "Lua",
-    context: "Gameplay scripting",
-    summary:
-      "Lua fuels my Stellaris and Pixelmon scripting experiments where quick iteration matters.",
+    context: "2 years of experience",
+    summary: "Stellaris Modding",
     highlights: [
-      "Optimized resource loaders to cut tick time on a private server by ~18%.",
-      "Inserted telemetry hooks that surface misbehaving scripts during playtests."
+      "Built gameplay scripts and UI hooks for custom content.",
+      "Iterated on mod changes to improve balance."
     ]
   },
   {
     id: "prisma",
     title: "Prisma",
-    context: "Node/Next backend modeling",
-    summary:
-      "Prisma provides typed, migration-friendly access to PostgreSQL for Rollodex and internal tooling.",
+    context: "2 years of experience",
+    summary: "Rollodex, Quester2000",
     highlights: [
-      "Managed schema migrations while coordinating with frontend delivery milestones.",
-      "Used seed scripts to keep Playwright fixtures deterministic across CI runs."
+      "Managed schema migrations and models for database structure."
     ]
   },
   {
     id: "oracle-cloud",
     title: "Oracle Cloud",
-    context: "Digital fabrication internship & prototypes",
-    summary:
-      "Oracle Cloud's Always Free tier let me host fabrication trackers and small experiments without cost.",
+    context: "2 years of experience",
+    summary: "WireGuard experiments with intermediate IP",
     highlights: [
-      "Deployed a fabrication request tracker for BAM Logistics during my internship.",
-      "Scripted reproducible setup steps for OCI networking and storage resources."
+      "Set up a ping point to create a secure connection to my home server."
     ]
   },
   {
     id: "aws",
     title: "AWS",
-    context: "Coursework & teaching support",
-    summary:
-      "AWS hosts the distributed systems labs and demos I delivered as a SER321 teaching assistant.",
+    context: "2 years of experience",
+    summary: "Server deployment for various projects",
     highlights: [
-      "Packaged a Java client/server assignment on EC2 so students could test remotely.",
-      "Used CloudWatch and IAM policies to monitor and secure the teaching environment."
+      "Used to host client-server applications for SER321."
     ]
   },
   {
     id: "stellaris-mods-tech",
     title: "Stellaris Mods",
-    context: "Long-running gameplay project",
-    summary:
-      "Stellaris modding combines scripting, balance work, and profiling to keep large empires playable.",
+    context: "3 years of experience",
+    summary: "Repeated bandaging of a broken modpack to encourage a desired storyline.",
     highlights: [
-      "Upgraded memory management scripts to reduce stutter in late-game saves.",
-      "Coordinated feedback from private testers to prioritize crisis-mechanic fixes."
+      "Built custom Stellaris mechanics and memory optimizing scripts."
     ]
   },
   {
     id: "minecraft-mods",
     title: "Minecraft Mods",
-    context: "Private Pixelmon server",
-    summary:
-      "I maintain a private modpack, backporting fixes and tuning configs to keep the Pixelmon server stable.",
+    context: "5 years of experience",
+    summary: "10+ high performance modded servers.",
     highlights: [
-      "Backported a crash fix so the Pixelmon server stayed available for my community.",
-      "Balanced resource costs and quest lines through iterative scripting."
+      "Backported crash fixes to patch a rare client side disconnect.",
+      "Added new features with custom mods, and optimized modpacks."
     ]
   }
 ];
@@ -550,39 +521,36 @@ const en: AppDictionary = {
       {
         id: "rollodex",
         company: "Rollodex",
-        role: "Co-lead developer",
-        timeframe: "2023 — Present",
-        summary:
-          "Partnered with a small team to ship a contact management web app for student founders and early-career operators.",
+        role: "Co-lead fullstack developer",
+        timeframe: "2023–2024 (capstone)",
+        summary: "Co-led a remote fullstack development team, developing a contact management tool. Took ownership of API/data integrations and accessibility, while maintaining the repo as Git master across two-week Scrum releases.",
         highlights: [
-          "Owned the React + Prisma stack, iterating on the data model and UI to keep onboarding under five minutes.",
-          "Ran weekly release reviews that combined QA notes, bug triage, and rollout planning."
+          "Designed APIs and database schemas, templated forms, and rebuilt search/filter UI.",
+          "Cut search latency from ~5s to ~200ms while maintaining repo practices, docs, and two-week sprints."
         ]
       },
       {
         id: "ser321",
         company: "SER321 (TA)",
-        role: "Distributed systems teaching assistant",
-        timeframe: "2022 — 2023",
-        summary:
-          "Supported an upper-division course focused on distributed systems patterns, RPC fundamentals, and testing discipline.",
+        role: "Undergraduate TA for SER 321 (Distributed Software Systems)",
+        timeframe: "March – May 2024",
+        summary: "Designed and coded an assignment (“Wheel of Fortune” Java server supporting a dynamic amount of concurrent clients). Mentored students in designing distributed systems hosted on AWS and debugging client-server architectures.",
         highlights: [
-          "Hosted office hours twice a week to debug concurrency labs and guided teams through their capstone demos.",
-          "Built grading scripts that linted C++ submissions and surfaced flaky behaviors before review."
+          "Actively answered student questions on Slack discussion boards, and hosted office hours once per week.",
+          "Assisted in debugging complex issues with code logic, networking, threading, AWS deployment, Ubuntu, and virtualization."
         ]
       },
       {
         id: "stellaris-mods-project",
         company: "Freelance / Mods",
-        role: "Gameplay systems tinkerer",
+        role: "Mod developer (Stellaris & Minecraft)",
         timeframe: "Ongoing",
-        summary:
-          "Maintain a handful of Lua and Stellaris mods plus a private Pixelmon server, treating each as a sandbox for performance tuning.",
+        summary: "Maintain a handful of Minecraft and Stellaris mods plus high performance heavily modded private servers.",
         highlights: [
-          "Refactored resource loaders to cut average tick time by ~18% on a busy server.",
-          "Applied profiling to memory-bound Stellaris scripts, reducing save/load spikes for large empires."
+          "Built custom mod features and balance tweaks for Stellaris and Minecraft.",
+          "Operate game servers and customize modpacks with ongoing profiling and tuning."
         ]
-      }
+      },
     ],
     techStack: DEFAULT_TECH_STACK_DETAILS
   },
@@ -748,43 +716,40 @@ const ja: AppDictionary = {
   experience: {
     title: "経験スナップショット",
     subtitle: "スキルセットを作り上げたプロジェクトと役割を簡潔にまとめています。",
-    entries: [
+        entries: [
       {
         id: "rollodex",
         company: "Rollodex",
-        role: "共同リード開発者",
-        timeframe: "2023年 — 現在",
-        summary:
-          "学生起業家や若手エンジニア向けの連絡先管理 Web アプリを少人数チームで構築しました。",
+        role: "Co-lead fullstack developer",
+        timeframe: "2023–2024 (capstone)",
+        summary: "Co-led a remote fullstack development team, developing a contact management tool. Took ownership of API/data integrations and accessibility, while maintaining the repo as Git master across two-week Scrum releases.",
         highlights: [
-          "React + Prisma スタックを担当し、3〜5 分でオンボーディングが終わるようデータモデルと UI を改善。",
-          "QA ノートやバグトリアージ、リリース計画をまとめた週次レビューを運営。"
+          "Designed APIs and database schemas, templated forms, and rebuilt search/filter UI.",
+          "Cut search latency from ~5s to ~200ms while maintaining repo practices, docs, and two-week sprints."
         ]
       },
       {
         id: "ser321",
         company: "SER321 (TA)",
-        role: "分散システム講義ティーチングアシスタント",
-        timeframe: "2022年 — 2023年",
-        summary:
-          "分散システムの設計パターンや RPC、テスト手法を扱う上級講義をサポートしました。",
+        role: "Undergraduate TA for SER 321 (Distributed Software Systems)",
+        timeframe: "March – May 2024",
+        summary: "Designed and coded an assignment (“Wheel of Fortune” Java server supporting a dynamic amount of concurrent clients). Mentored students in designing distributed systems hosted on AWS and debugging client-server architectures.",
         highlights: [
-          "週 2 回のオフィスアワーで並行処理課題のデバッグや最終デモのリハーサルを支援。",
-          "C++ 課題のリンター兼テストスクリプトを作成し、レビュー前に不具合を可視化。"
+          "Actively answered student questions on Slack discussion boards, and hosted office hours once per week.",
+          "Assisted in debugging complex issues with code logic, networking, threading, AWS deployment, Ubuntu, and virtualization."
         ]
       },
       {
         id: "stellaris-mods-project",
         company: "Freelance / Mods",
-        role: "ゲームプレイシステム開発",
-        timeframe: "継続中",
-        summary:
-          "Lua や Stellaris の Mod、プライベート Pixelmon サーバーをメンテし、パフォーマンス検証の場としています。",
+        role: "Mod developer (Stellaris & Minecraft)",
+        timeframe: "Ongoing",
+        summary: "Maintain a handful of Minecraft and Stellaris mods plus high performnce heavily modded private servers.",
         highlights: [
-          "リソースローダーをリファクタし、混雑時サーバーの平均 tick 時間を約 18% 改善。",
-          "Stellaris スクリプトのメモリ負荷を解析し、大規模帝国のセーブ/ロード遅延を低減。"
+          "Built custom mod features and balance tweaks for Stellaris and Minecraft.",
+          "Operate game servers and customize modpacks with ongoing profiling and tuning."
         ]
-      }
+      },
     ],
     techStack: DEFAULT_TECH_STACK_DETAILS
   },
@@ -950,43 +915,40 @@ const zh: AppDictionary = {
   experience: {
     title: "经验速览",
     subtitle: "快速了解塑造我技能组合的项目与职责。",
-    entries: [
+        entries: [
       {
         id: "rollodex",
         company: "Rollodex",
-        role: "联合负责人",
-        timeframe: "2023 — 至今",
-        summary:
-          "与小团队合作，为学生创始人与初级工程师打造联系人管理 Web 应用。",
+        role: "Co-lead fullstack developer",
+        timeframe: "2023–2024 (capstone)",
+        summary: "Co-led a remote fullstack development team, developing a contact management tool. Took ownership of API/data integrations and accessibility, while maintaining the repo as Git master across two-week Scrum releases.",
         highlights: [
-          "负责 React + Prisma 技术栈，优化数据模型与界面，让注册流程控制在 5 分钟内。",
-          "主持每周发布评审，合并 QA 记录、缺陷排期与上线计划。"
+          "Designed APIs and database schemas, templated forms, and rebuilt search/filter UI.",
+          "Cut search latency from ~5s to ~200ms while maintaining repo practices, docs, and two-week sprints."
         ]
       },
       {
         id: "ser321",
-        company: "SER321 (助教)",
-        role: "分布式系统课程助教",
-        timeframe: "2022 — 2023",
-        summary:
-          "支持高级分布式系统课程，覆盖 RPC 基础与测试规范。",
+        company: "SER321 (TA)",
+        role: "Undergraduate TA for SER 321 (Distributed Software Systems)",
+        timeframe: "March – May 2024",
+        summary: "Designed and coded an assignment (“Wheel of Fortune” Java server supporting a dynamic amount of concurrent clients). Mentored students in designing distributed systems hosted on AWS and debugging client-server architectures.",
         highlights: [
-          "每周两次答疑，协助学生调试并发实验并准备期末展示。",
-          "编写 C++ 作业的 lint/测试脚本，在评分前提前暴露不稳定行为。"
+          "Actively answered student questions on Slack discussion boards, and hosted office hours once per week.",
+          "Assisted in debugging complex issues with code logic, networking, threading, AWS deployment, Ubuntu, and virtualization."
         ]
       },
       {
         id: "stellaris-mods-project",
-        company: "自由职业 / Mods",
-        role: "玩法系统调优",
-        timeframe: "持续",
-        summary:
-          "维护多款 Lua、Stellaris Mod 以及私有 Pixelmon 服务器，用作性能实验场。",
+        company: "Freelance / Mods",
+        role: "Mod developer (Stellaris & Minecraft)",
+        timeframe: "Ongoing",
+        summary: "Maintain a handful of Minecraft and Stellaris mods plus high performnce heavily modded private servers.",
         highlights: [
-          "重构资源加载器，在高负载服务器上将平均 tick 时间降低约 18%。",
-          "分析 Stellaris 脚本的内存热点，减少大型帝国的存档/读取尖峰。"
+          "Built custom mod features and balance tweaks for Stellaris and Minecraft.",
+          "Operate game servers and customize modpacks with ongoing profiling and tuning."
         ]
-      }
+      },
     ],
     techStack: DEFAULT_TECH_STACK_DETAILS
   },

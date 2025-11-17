@@ -1,7 +1,16 @@
+import stellarisModsProjectData from "../../data/projects/stellaris-mods.json";
+import minecraftModsProjectData from "../../data/projects/minecraft-mods.json";
+import quester2000ProjectData from "../../data/projects/quester2000.json";
+import rollodexProjectData from "../../data/projects/rollodex.json";
+import ser321ProjectData from "../../data/projects/ser321-ta.json";
+import portfolioProjectData from "../../data/projects/portfolio.json";
+import cppGameEngineProjectData from "../../data/projects/cpp-game-engine.json";
 import type { ImageDescriptor, ResponsiveImagePreset } from "../lib/images";
 import type { Locale } from "./i18n";
 
 export type CtaVariant = "primary" | "secondary" | "ghost";
+
+type LocalizedStringMap = Partial<Record<Locale, string>>;
 
 type TechStackEntry = {
   name: string;
@@ -15,6 +24,32 @@ type TechExperienceEntry = {
   context: string;
   summary: string;
   highlights: string[];
+};
+
+type ExperienceEntry = {
+  id: string;
+  company: string;
+  role: string;
+  timeframe: string;
+  summary: string;
+  highlights: string[];
+};
+
+type ProjectContent = {
+  id: string;
+  names?: {
+    proofTitle?: string;
+    techStackTitle?: string;
+  };
+  home?: {
+    proofDetails?: LocalizedStringMap;
+    roadmapNextStep?: LocalizedStringMap;
+  };
+  techStack?: {
+    item: TechStackEntry;
+    experience: TechExperienceEntry;
+  };
+  experienceEntry?: ExperienceEntry;
 };
 
 export type AppDictionary = {
@@ -105,14 +140,7 @@ export type AppDictionary = {
     section1subtitle: string;
     section2title: string;
     section2subtitle: string;
-    entries: Array<{
-      id: string;
-      company: string;
-      role: string;
-      timeframe: string;
-      summary: string;
-      highlights: string[];
-    }>;
+    entries: ExperienceEntry[];
     techStack: TechExperienceEntry[];
   };
   meetings: {
@@ -137,6 +165,66 @@ export type AppDictionary = {
     contactNote: string;
   };
 };
+
+const stellarisModsProject = stellarisModsProjectData as ProjectContent;
+const minecraftModsProject = minecraftModsProjectData as ProjectContent;
+const quester2000Project = quester2000ProjectData as ProjectContent;
+const rollodexProject = rollodexProjectData as ProjectContent;
+const ser321Project = ser321ProjectData as ProjectContent;
+const portfolioProject = portfolioProjectData as ProjectContent;
+const cppGameEngineProject = cppGameEngineProjectData as ProjectContent;
+
+function requireExperience(project: ProjectContent, id: string): ExperienceEntry {
+  const experience = project.experienceEntry;
+  if (!experience) {
+    throw new Error(`Experience entry is required for project "${id}".`);
+  }
+  return experience;
+}
+
+function requireTechStack(project: ProjectContent, id: string) {
+  const techStack = project.techStack;
+  if (!techStack) {
+    throw new Error(`Tech stack is required for project "${id}".`);
+  }
+  return techStack;
+}
+
+function buildProofChip(project: ProjectContent, locale: Locale, fallbackTitle: string) {
+  const fallbackDetail = project.home?.proofDetails?.["en"] ?? "";
+  return {
+    title: project.names?.proofTitle ?? fallbackTitle,
+    details: project.home?.proofDetails?.[locale] ?? fallbackDetail
+  };
+}
+
+function getRoadmapStep(project: ProjectContent, locale: Locale) {
+  const fallback = project.home?.roadmapNextStep?.["en"] ?? "";
+  return project.home?.roadmapNextStep?.[locale] ?? fallback;
+}
+
+const PORTFOLIO_EXPERIENCE_ENTRY = requireExperience(portfolioProject, "portfolio-site");
+const ROLLODEX_EXPERIENCE_ENTRY = requireExperience(rollodexProject, "rollodex");
+const SER321_EXPERIENCE_ENTRY = requireExperience(ser321Project, "ser321-ta");
+const CPP_GAME_ENGINE_EXPERIENCE_ENTRY = requireExperience(cppGameEngineProject, "cpp-game-engine");
+const STELLARIS_EXPERIENCE_ENTRY = requireExperience(stellarisModsProject, "stellaris-mods");
+
+const { item: STELLARIS_TECH_STACK_ITEM, experience: STELLARIS_TECH_STACK_EXPERIENCE } =
+  requireTechStack(stellarisModsProject, "stellaris-mods");
+const { item: MINECRAFT_TECH_STACK_ITEM, experience: MINECRAFT_TECH_STACK_EXPERIENCE } =
+  requireTechStack(minecraftModsProject, "minecraft-mods");
+
+const buildStellarisProofChip = (locale: Locale) => buildProofChip(stellarisModsProject, locale, "Stellaris Modding");
+const getStellarisRoadmapStep = (locale: Locale) => getRoadmapStep(stellarisModsProject, locale);
+const getMinecraftRoadmapStep = (locale: Locale) => getRoadmapStep(minecraftModsProject, locale);
+const buildQuesterProofChip = (locale: Locale) => buildProofChip(quester2000Project, locale, "Quester2000");
+const buildPortfolioProofChip = (locale: Locale) => buildProofChip(portfolioProject, locale, "Portfolio");
+const buildCppGameEngineProofChip = (locale: Locale) =>
+  buildProofChip(cppGameEngineProject, locale, "C++ Game Engine");
+const buildSer321ProofChip = (locale: Locale) => buildProofChip(ser321Project, locale, "SER321 TA");
+const buildRollodexProofChip = (locale: Locale) => buildProofChip(rollodexProject, locale, "Rollodex");
+const getQuesterRoadmapStep = (locale: Locale) => getRoadmapStep(quester2000Project, locale);
+const getCppGameEngineRoadmapStep = (locale: Locale) => getRoadmapStep(cppGameEngineProject, locale);
 
 const HERO_IMAGE_BASE: Omit<ImageDescriptor, "alt"> = {
   src: "/media/hero/portrait-placeholder.svg",
@@ -167,8 +255,8 @@ const DEFAULT_TECH_STACK_ITEMS: TechStackEntry[] = [
   { name: "Prisma", href: "https://www.prisma.io/", assetId: "prisma" },
   { name: "Oracle Cloud", href: "https://www.oracle.com/cloud/", assetId: "oracle-cloud" },
   { name: "AWS", href: "https://aws.amazon.com/", assetId: "aws" },
-  { name: "Stellaris Mods", href: "https://steamcommunity.com/app/281990/workshop/", assetId: "stellaris-mods" },
-  { name: "Minecraft Mods", href: "https://modrinth.com/", assetId: "minecraft-mods" }
+  STELLARIS_TECH_STACK_ITEM,
+  MINECRAFT_TECH_STACK_ITEM
 ];
 
 const DEFAULT_TECH_STACK_DETAILS: TechExperienceEntry[] = [
@@ -366,25 +454,8 @@ const DEFAULT_TECH_STACK_DETAILS: TechExperienceEntry[] = [
       "Used to host client-server applications for SER321."
     ]
   },
-  {
-    id: "stellaris-mods-tech",
-    title: "Stellaris Mods",
-    context: "3 years of experience",
-    summary: "Repeated bandaging of a broken modpack to encourage a desired storyline.",
-    highlights: [
-      "Built custom Stellaris mechanics and memory optimizing scripts."
-    ]
-  },
-  {
-    id: "minecraft-mods",
-    title: "Minecraft Mods",
-    context: "5 years of experience",
-    summary: "10+ high performance modded servers.",
-    highlights: [
-      "Backported crash fixes to patch a rare client side disconnect.",
-      "Added new features with custom mods, and optimized modpacks."
-    ]
-  }
+  STELLARIS_TECH_STACK_EXPERIENCE,
+  MINECRAFT_TECH_STACK_EXPERIENCE
 ];
 
 const en: AppDictionary = {
@@ -449,25 +520,12 @@ const en: AppDictionary = {
         overview:
           "Each card focuses on a project or role that tells the story behind the skills shown above.",
         proofChips: [
-          {
-            title: "Rollodex",
-            details: "Co-led development of a contact management web application."
-          },
-          {
-            title: "Quester2000",
-            details:
-              "A point tracking to-do list tool for managing your work-life balance."
-          },
-          {
-            title: "SER321 TA",
-            details:
-              "Supported a high level Distributed Software Systems course as a teacher’s assistant."
-          },
-          {
-            title: "Stellaris Modding",
-            details:
-              "Upgraded the memory management library for Stellaris to boost performance."
-          }
+          buildPortfolioProofChip("en"),
+          buildRollodexProofChip("en"),
+          buildQuesterProofChip("en"),
+          buildSer321ProofChip("en"),
+          buildCppGameEngineProofChip("en"),
+          buildStellarisProofChip("en")
         ]
       },
       roadmap: {
@@ -478,10 +536,10 @@ const en: AppDictionary = {
         overview:
           "While it is very rewarding to optimize and automate, I also find joy in learning new skills and technologies!",
         nextSteps: [
-          "Revisit Quester2000: Add more functionality and improve UI. Possible smartwatch integration.",
-          "The Four Horsemen: Develop a new mod for Stellaris to spawn an end-game crisis, compatible with Gigastructural Engineering.",
-          "Pixelmon Problem: Continue work to backport an update to Pixelmon to fix a periodic client-side crash on my private server.",
-          "C++ Game Engine: Continue work on a private game / engine. Abstract loosely-autobiographical RPG adventure.",
+          getQuesterRoadmapStep("en"),
+          getStellarisRoadmapStep("en"),
+          getMinecraftRoadmapStep("en"),
+          getCppGameEngineRoadmapStep("en"),
           "Social Networking: Find events to meet people in industry. Considering indie games conventions in NYC."
         ]
       }
@@ -518,39 +576,11 @@ const en: AppDictionary = {
     section2title: "Tech stack",
     section2subtitle: "Relevant experience with each technology.",
     entries: [
-      {
-        id: "rollodex",
-        company: "Rollodex",
-        role: "Co-lead fullstack developer",
-        timeframe: "2023–2024 (capstone)",
-        summary: "Co-led a remote fullstack development team, developing a contact management tool. Took ownership of API/data integrations and accessibility, while maintaining the repo as Git master across two-week Scrum releases.",
-        highlights: [
-          "Designed APIs and database schemas, templated forms, and rebuilt search/filter UI.",
-          "Cut search latency from ~5s to ~200ms while maintaining repo practices, docs, and two-week sprints."
-        ]
-      },
-      {
-        id: "ser321",
-        company: "SER321 (TA)",
-        role: "Undergraduate TA for SER 321 (Distributed Software Systems)",
-        timeframe: "March – May 2024",
-        summary: "Designed and coded an assignment (“Wheel of Fortune” Java server supporting a dynamic amount of concurrent clients). Mentored students in designing distributed systems hosted on AWS and debugging client-server architectures.",
-        highlights: [
-          "Actively answered student questions on Slack discussion boards, and hosted office hours once per week.",
-          "Assisted in debugging complex issues with code logic, networking, threading, AWS deployment, Ubuntu, and virtualization."
-        ]
-      },
-      {
-        id: "stellaris-mods-project",
-        company: "Freelance / Mods",
-        role: "Mod developer (Stellaris & Minecraft)",
-        timeframe: "Ongoing",
-        summary: "Maintain a handful of Minecraft and Stellaris mods plus high performance heavily modded private servers.",
-        highlights: [
-          "Built custom mod features and balance tweaks for Stellaris and Minecraft.",
-          "Operate game servers and customize modpacks with ongoing profiling and tuning."
-        ]
-      },
+      PORTFOLIO_EXPERIENCE_ENTRY,
+      ROLLODEX_EXPERIENCE_ENTRY,
+      SER321_EXPERIENCE_ENTRY,
+      CPP_GAME_ENGINE_EXPERIENCE_ENTRY,
+      STELLARIS_EXPERIENCE_ENTRY,
     ],
     techStack: DEFAULT_TECH_STACK_DETAILS
   },
@@ -653,25 +683,12 @@ const ja: AppDictionary = {
         overview:
           "各カードは、上記のスキルの裏付けとなるプロジェクトや役割のストーリーに焦点を当てています。",
         proofChips: [
-          {
-            title: "Rollodex",
-            details: "連絡先管理 Web アプリの開発を共同リードしました。"
-          },
-          {
-            title: "Quester2000",
-            details:
-              "ワークライフバランスの管理を支援するポイント制の ToDo ツール。"
-          },
-          {
-            title: "SER321 TA（ティーチングアシスタント）",
-            details:
-              "上級レベルの分散ソフトウェアシステム講義でティーチングアシスタントを務めました。"
-          },
-          {
-            title: "Stellaris Modding",
-            details:
-              "Stellaris のメモリ管理ライブラリを改良し、パフォーマンスを向上させました。"
-          }
+          buildPortfolioProofChip("ja"),
+          buildRollodexProofChip("ja"),
+          buildQuesterProofChip("ja"),
+          buildSer321ProofChip("ja"),
+          buildCppGameEngineProofChip("ja"),
+          buildStellarisProofChip("ja")
         ]
       },
       roadmap: {
@@ -682,10 +699,10 @@ const ja: AppDictionary = {
         overview:
           "最適化や自動化は非常に有益ですが、新しい技術やスキルを学ぶ楽しさも大切にしています。",
         nextSteps: [
-          "Quester2000 の見直し：機能拡充と UI 改善。スマートウォッチ連携の可能性も検討。",
-          "The Four Horsemen：Stellaris で終盤クライシスを発生させる新規 Mod を開発。Gigastructural Engineering との互換性を確保。",
-          "Pixelmon の課題対応：プライベートサーバーで発生する定期的なクライアントクラッシュを解消するため、アップデートのバックポート作業を継続。",
-          "C++ 製ゲーム／エンジンの継続開発：自伝的要素を取り入れた RPG 体験を目指す。",
+          getQuesterRoadmapStep("ja"),
+          getStellarisRoadmapStep("ja"),
+          getMinecraftRoadmapStep("ja"),
+          getCppGameEngineRoadmapStep("ja"),
           "交流活動：業界イベントを探索し、人脈づくりを推進。NYC のインディーゲーム系イベント参加も検討。"
         ]
       }
@@ -716,40 +733,16 @@ const ja: AppDictionary = {
   experience: {
     title: "経験スナップショット",
     subtitle: "スキルセットを作り上げたプロジェクトと役割を簡潔にまとめています。",
-        entries: [
-      {
-        id: "rollodex",
-        company: "Rollodex",
-        role: "Co-lead fullstack developer",
-        timeframe: "2023–2024 (capstone)",
-        summary: "Co-led a remote fullstack development team, developing a contact management tool. Took ownership of API/data integrations and accessibility, while maintaining the repo as Git master across two-week Scrum releases.",
-        highlights: [
-          "Designed APIs and database schemas, templated forms, and rebuilt search/filter UI.",
-          "Cut search latency from ~5s to ~200ms while maintaining repo practices, docs, and two-week sprints."
-        ]
-      },
-      {
-        id: "ser321",
-        company: "SER321 (TA)",
-        role: "Undergraduate TA for SER 321 (Distributed Software Systems)",
-        timeframe: "March – May 2024",
-        summary: "Designed and coded an assignment (“Wheel of Fortune” Java server supporting a dynamic amount of concurrent clients). Mentored students in designing distributed systems hosted on AWS and debugging client-server architectures.",
-        highlights: [
-          "Actively answered student questions on Slack discussion boards, and hosted office hours once per week.",
-          "Assisted in debugging complex issues with code logic, networking, threading, AWS deployment, Ubuntu, and virtualization."
-        ]
-      },
-      {
-        id: "stellaris-mods-project",
-        company: "Freelance / Mods",
-        role: "Mod developer (Stellaris & Minecraft)",
-        timeframe: "Ongoing",
-        summary: "Maintain a handful of Minecraft and Stellaris mods plus high performnce heavily modded private servers.",
-        highlights: [
-          "Built custom mod features and balance tweaks for Stellaris and Minecraft.",
-          "Operate game servers and customize modpacks with ongoing profiling and tuning."
-        ]
-      },
+    section1title: "Projects",
+    section1subtitle: "Important projects and roles that have shaped my current skills.",
+    section2title: "Tech stack",
+    section2subtitle: "Relevant experience with each technology.",
+    entries: [
+      PORTFOLIO_EXPERIENCE_ENTRY,
+      ROLLODEX_EXPERIENCE_ENTRY,
+      SER321_EXPERIENCE_ENTRY,
+      CPP_GAME_ENGINE_EXPERIENCE_ENTRY,
+      STELLARIS_EXPERIENCE_ENTRY,
     ],
     techStack: DEFAULT_TECH_STACK_DETAILS
   },
@@ -855,22 +848,12 @@ const zh: AppDictionary = {
         overview:
           "每张卡片均聚焦于能够展现上述技能背景的项目或角色。",
         proofChips: [
-          {
-            title: "Rollodex",
-            details: "共同主导开发一款联系人管理的 Web 应用。"
-          },
-          {
-            title: "Quester2000",
-            details: "用于管理工作与生活平衡的积分制待办工具。"
-          },
-          {
-            title: "SER321 TA（教学助理）",
-            details: "担任高级分布式软件系统课程的教学助理。"
-          },
-          {
-            title: "Stellaris Modding",
-            details: "改进 Stellaris 的内存管理库，以提升性能。"
-          }
+          buildPortfolioProofChip("zh"),
+          buildRollodexProofChip("zh"),
+          buildQuesterProofChip("zh"),
+          buildSer321ProofChip("zh"),
+          buildCppGameEngineProofChip("zh"),
+          buildStellarisProofChip("zh")
         ]
       },
       roadmap: {
@@ -881,10 +864,10 @@ const zh: AppDictionary = {
         overview:
           "尽管优化与自动化成效显著，我同样享受学习新技术与新技能的过程。",
         nextSteps: [
-          "回顾 Quester2000：扩充功能并改进 UI，评估智能手表整合。",
-          "The Four Horsemen：为 Stellaris 开发可触发终局危机的新 Mod，并确保与 Gigastructural Engineering 兼容。",
-          "Pixelmon 问题：持续回溯移植更新，以修复我私有服务器上周期性发生的客户端崩溃。",
-          "C++ 游戏引擎：持续开发私人游戏／引擎，目标为带有自传色彩的 RPG 体验。",
+          getQuesterRoadmapStep("zh"),
+          getStellarisRoadmapStep("zh"),
+          getMinecraftRoadmapStep("zh"),
+          getCppGameEngineRoadmapStep("zh"),
           "社交网络：寻找行业交流活动并拓展人脉，考虑参加纽约市的独立游戏展会。"
         ]
       }
@@ -915,40 +898,16 @@ const zh: AppDictionary = {
   experience: {
     title: "经验速览",
     subtitle: "快速了解塑造我技能组合的项目与职责。",
-        entries: [
-      {
-        id: "rollodex",
-        company: "Rollodex",
-        role: "Co-lead fullstack developer",
-        timeframe: "2023–2024 (capstone)",
-        summary: "Co-led a remote fullstack development team, developing a contact management tool. Took ownership of API/data integrations and accessibility, while maintaining the repo as Git master across two-week Scrum releases.",
-        highlights: [
-          "Designed APIs and database schemas, templated forms, and rebuilt search/filter UI.",
-          "Cut search latency from ~5s to ~200ms while maintaining repo practices, docs, and two-week sprints."
-        ]
-      },
-      {
-        id: "ser321",
-        company: "SER321 (TA)",
-        role: "Undergraduate TA for SER 321 (Distributed Software Systems)",
-        timeframe: "March – May 2024",
-        summary: "Designed and coded an assignment (“Wheel of Fortune” Java server supporting a dynamic amount of concurrent clients). Mentored students in designing distributed systems hosted on AWS and debugging client-server architectures.",
-        highlights: [
-          "Actively answered student questions on Slack discussion boards, and hosted office hours once per week.",
-          "Assisted in debugging complex issues with code logic, networking, threading, AWS deployment, Ubuntu, and virtualization."
-        ]
-      },
-      {
-        id: "stellaris-mods-project",
-        company: "Freelance / Mods",
-        role: "Mod developer (Stellaris & Minecraft)",
-        timeframe: "Ongoing",
-        summary: "Maintain a handful of Minecraft and Stellaris mods plus high performnce heavily modded private servers.",
-        highlights: [
-          "Built custom mod features and balance tweaks for Stellaris and Minecraft.",
-          "Operate game servers and customize modpacks with ongoing profiling and tuning."
-        ]
-      },
+    section1title: "Projects",
+    section1subtitle: "Important projects and roles that have shaped my current skills.",
+    section2title: "Tech stack",
+    section2subtitle: "Relevant experience with each technology.",
+    entries: [
+      PORTFOLIO_EXPERIENCE_ENTRY,
+      ROLLODEX_EXPERIENCE_ENTRY,
+      SER321_EXPERIENCE_ENTRY,
+      CPP_GAME_ENGINE_EXPERIENCE_ENTRY,
+      STELLARIS_EXPERIENCE_ENTRY,
     ],
     techStack: DEFAULT_TECH_STACK_DETAILS
   },

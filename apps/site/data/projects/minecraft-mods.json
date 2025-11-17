@@ -1,0 +1,27 @@
+{
+  "id": "minecraft-mods",
+  "home": {
+    "roadmapNextStep": {
+      "en": "Pixelmon Problem: Continue work to backport an update to Pixelmon to fix a periodic client-side crash on my private server.",
+      "ja": "Pixelmon の課題対応：プライベートサーバーで発生する定期的なクライアントクラッシュを解消するため、アップデートのバックポート作業を継続。",
+      "zh": "Pixelmon 问题：持续回溯移植更新，以修复我的私有服务器上周期性发生的客户端崩溃。"
+    }
+  },
+  "techStack": {
+    "item": {
+      "name": "Minecraft Mods",
+      "href": "https://modrinth.com/",
+      "assetId": "minecraft-mods"
+    },
+    "experience": {
+      "id": "minecraft-mods",
+      "title": "Minecraft Mods",
+      "context": "5 years of experience",
+      "summary": "10+ high performance modded servers.",
+      "highlights": [
+        "Backporting of crash fixes to patch a rare client side disconnect.",
+        "Added new features with custom mods, and optimized modpacks."
+      ]
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "quester2000",
+  "names": {
+    "proofTitle": "Quester2000"
+  },
+  "home": {
+    "proofDetails": {
+      "en": "A point tracking to-do list tool for managing your work-life balance.",
+      "ja": "ワークライフバランスの管理を支援するポイント制の ToDo ツール。",
+      "zh": "用于管理工作与生活平衡的积分制待办工具。"
+    },
+    "roadmapNextStep": {
+      "en": "Revisit Quester2000: Add more functionality and improve UI. Possible smartwatch integration.",
+      "ja": "Quester2000 の見直し：機能拡充と UI 改善。スマートウォッチ連携の可能性も検討。",
+      "zh": "回顾 Quester2000：扩充功能并改进 UI，评估智能手表整合。"
+    }
+  }
+}

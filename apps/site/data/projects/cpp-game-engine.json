@@ -6,13 +6,13 @@
   "home": {
     "proofDetails": {
       "en": "Building a personal C++ game engine and RPG prototype with custom tooling.",
-      "ja": "オリジナルの C++ ゲームエンジンと RPG プロトタイプを自作ツールで開発しています。",
-      "zh": "用 C++ 自研游戏引擎和 RPG 原型，并编写配套工具链。"
+      "ja": "",
+      "zh": ""
     },
     "roadmapNextStep": {
       "en": "C++ Game Engine: Continue work on a private game / engine. An abstract loosely-autobiographical RPG adventure.",
-      "ja": "C++ 製ゲーム／エンジンの継続開発：自伝的要素を取り入れた RPG 体験を目指す。",
-      "zh": "C++ 游戏引擎：持续开发私人游戏／引擎，目标为带有自传色彩的 RPG 体验。"
+      "ja": "",
+      "zh": ""
     }
   },
   "experienceEntry": {
@@ -24,6 +24,32 @@
     "highlights": [
       "Implemented core engine loops, asset loading, and input systems with a focus on determinism and debuggability.",
       "Experimented with tooling for narrative scripting and component-based gameplay logic."
-    ]
+    ],
+    "localized": {
+      "en": {
+        "company": "Indie game development",
+        "role": "Solo Fullstack Engineer",
+        "timeframe": "Ongoing",
+        "summary": "Building a personal C++ engine and story-driven RPG prototype, focusing on custom tooling, rendering pipelines, and systems design.",
+        "highlights": [
+          "Implemented core engine loops, asset loading, and input systems with a focus on determinism and debuggability.",
+          "Experimented with tooling for narrative scripting and component-based gameplay logic."
+        ]
+      },
+      "ja": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      },
+      "zh": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      }
+    }
   }
 }

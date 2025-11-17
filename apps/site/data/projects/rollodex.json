@@ -6,8 +6,8 @@
   "home": {
     "proofDetails": {
       "en": "Co-led fullstack development of a contact management web application.",
-      "ja": "連絡先管理 Web アプリの開発を共同リードしました。",
-      "zh": "共同主导开发一款联系人管理的 Web 应用。"
+      "ja": "",
+      "zh": ""
     }
   },
   "experienceEntry": {
@@ -19,6 +19,32 @@
     "highlights": [
       "Designed APIs and database schemas, templated forms, and rebuilt search/filter logic & UI.",
       "Cut search latency from ~5s to ~200ms while maintaining repo practices, docs, and two-week sprints."
-    ]
+    ],
+    "localized": {
+      "en": {
+        "company": "Rollodex for Appy.yo",
+        "role": "Co-lead Fullstack Developer",
+        "timeframe": "2024–2025 (capstone)",
+        "summary": "Co-led a remote fullstack development team, developing a contact management tool. Took ownership of API/data integrations and accessibility, while maintaining the repo as Git master across two-week Scrum releases.",
+        "highlights": [
+          "Designed APIs and database schemas, templated forms, and rebuilt search/filter logic & UI.",
+          "Cut search latency from ~5s to ~200ms while maintaining repo practices, docs, and two-week sprints."
+        ]
+      },
+      "ja": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      },
+      "zh": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      }
+    }
   }
 }

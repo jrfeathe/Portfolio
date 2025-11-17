@@ -5,6 +5,7 @@ import rollodexProjectData from "../../data/projects/rollodex.json";
 import ser321ProjectData from "../../data/projects/ser321-ta.json";
 import portfolioProjectData from "../../data/projects/portfolio.json";
 import cppGameEngineProjectData from "../../data/projects/cpp-game-engine.json";
+import techStackDetailsData from "../../data/tech-stack-details.json";
 import type { ImageDescriptor, ResponsiveImagePreset } from "../lib/images";
 import type { Locale } from "./i18n";
 
@@ -21,9 +22,17 @@ type TechStackEntry = {
 type TechExperienceEntry = {
   id: string;
   title: string;
-  context: string;
-  summary: string;
-  highlights: string[];
+  context: string | LocalizedStringMap;
+  summary: string | LocalizedStringMap;
+  highlights: string[] | Partial<Record<Locale, string[]>>;
+};
+
+type LocalizedTechExperienceEntry = {
+  id: string;
+  title: string;
+  context: Partial<Record<Locale, string>>;
+  summary: Partial<Record<Locale, string>>;
+  highlights: Partial<Record<Locale, string[]>>;
 };
 
 type ExperienceEntry = {
@@ -47,7 +56,7 @@ type ProjectContent = {
   };
   techStack?: {
     item: TechStackEntry;
-    experience: TechExperienceEntry;
+    experience: LocalizedTechExperienceEntry | TechExperienceEntry;
   };
   experienceEntry?: ExperienceEntry;
 };
@@ -173,6 +182,7 @@ const rollodexProject = rollodexProjectData as ProjectContent;
 const ser321Project = ser321ProjectData as ProjectContent;
 const portfolioProject = portfolioProjectData as ProjectContent;
 const cppGameEngineProject = cppGameEngineProjectData as ProjectContent;
+const baseTechStackDetails = techStackDetailsData as LocalizedTechExperienceEntry[];
 
 function requireExperience(project: ProjectContent, id: string): ExperienceEntry {
   const experience = project.experienceEntry;
@@ -184,7 +194,7 @@ function requireExperience(project: ProjectContent, id: string): ExperienceEntry
 
 function requireTechStack(project: ProjectContent, id: string) {
   const techStack = project.techStack;
-  if (!techStack) {
+  if (!techStack || !techStack.item || !techStack.experience) {
     throw new Error(`Tech stack is required for project "${id}".`);
   }
   return techStack;
@@ -208,23 +218,58 @@ const ROLLODEX_EXPERIENCE_ENTRY = requireExperience(rollodexProject, "rollodex")
 const SER321_EXPERIENCE_ENTRY = requireExperience(ser321Project, "ser321-ta");
 const CPP_GAME_ENGINE_EXPERIENCE_ENTRY = requireExperience(cppGameEngineProject, "cpp-game-engine");
 const STELLARIS_EXPERIENCE_ENTRY = requireExperience(stellarisModsProject, "stellaris-mods");
-
-const { item: STELLARIS_TECH_STACK_ITEM, experience: STELLARIS_TECH_STACK_EXPERIENCE } =
+const { item: STELLARIS_TECH_STACK_ITEM, experience: STELLARIS_TECH_STACK_EXPERIENCE_RAW } =
   requireTechStack(stellarisModsProject, "stellaris-mods");
-const { item: MINECRAFT_TECH_STACK_ITEM, experience: MINECRAFT_TECH_STACK_EXPERIENCE } =
+const { item: MINECRAFT_TECH_STACK_ITEM, experience: MINECRAFT_TECH_STACK_EXPERIENCE_RAW } =
   requireTechStack(minecraftModsProject, "minecraft-mods");
 
 const buildStellarisProofChip = (locale: Locale) => buildProofChip(stellarisModsProject, locale, "Stellaris Modding");
-const getStellarisRoadmapStep = (locale: Locale) => getRoadmapStep(stellarisModsProject, locale);
-const getMinecraftRoadmapStep = (locale: Locale) => getRoadmapStep(minecraftModsProject, locale);
 const buildQuesterProofChip = (locale: Locale) => buildProofChip(quester2000Project, locale, "Quester2000");
 const buildPortfolioProofChip = (locale: Locale) => buildProofChip(portfolioProject, locale, "Portfolio");
 const buildCppGameEngineProofChip = (locale: Locale) =>
   buildProofChip(cppGameEngineProject, locale, "C++ Game Engine");
 const buildSer321ProofChip = (locale: Locale) => buildProofChip(ser321Project, locale, "SER321 TA");
 const buildRollodexProofChip = (locale: Locale) => buildProofChip(rollodexProject, locale, "Rollodex");
+
+const getStellarisRoadmapStep = (locale: Locale) => getRoadmapStep(stellarisModsProject, locale);
+const getMinecraftRoadmapStep = (locale: Locale) => getRoadmapStep(minecraftModsProject, locale);
 const getQuesterRoadmapStep = (locale: Locale) => getRoadmapStep(quester2000Project, locale);
 const getCppGameEngineRoadmapStep = (locale: Locale) => getRoadmapStep(cppGameEngineProject, locale);
+
+function normalizeTechExperience(
+  experience: TechExperienceEntry | LocalizedTechExperienceEntry
+): LocalizedTechExperienceEntry {
+  const context =
+    typeof experience.context === "string" ? { en: experience.context } : (experience.context ?? {});
+  const summary =
+    typeof experience.summary === "string" ? { en: experience.summary } : (experience.summary ?? {});
+  const highlights =
+    Array.isArray(experience.highlights)
+      ? { en: experience.highlights }
+      : (experience.highlights ?? {});
+
+  return {
+    id: experience.id,
+    title: experience.title,
+    context,
+    summary,
+    highlights
+  };
+}
+
+function localizeTechExperience(entry: LocalizedTechExperienceEntry, locale: Locale): TechExperienceEntry {
+  const fallbackContext = entry.context.en ?? "";
+  const fallbackSummary = entry.summary.en ?? "";
+  const fallbackHighlights = entry.highlights.en ?? [];
+
+  return {
+    id: entry.id,
+    title: entry.title,
+    context: entry.context[locale] ?? fallbackContext,
+    summary: entry.summary[locale] ?? fallbackSummary,
+    highlights: entry.highlights[locale] ?? fallbackHighlights
+  };
+}
 
 const HERO_IMAGE_BASE: Omit<ImageDescriptor, "alt"> = {
   src: "/media/hero/portrait-placeholder.svg",
@@ -260,202 +305,9 @@ const DEFAULT_TECH_STACK_ITEMS: TechStackEntry[] = [
 ];
 
 const DEFAULT_TECH_STACK_DETAILS: TechExperienceEntry[] = [
-  {
-    id: "react",
-    title: "React",
-    context: "2 years of experience",
-    summary: "Frontend design for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
-    highlights: [
-      "Rollodex - Implemented various components to build templated forms and redesign search/filter UI.",
-      "Portfolio - Implemented a wide suite of custom UI components."
-    ]
-  },
-  {
-    id: "html",
-    title: "HTML",
-    context: "5 years of experience",
-    summary: "Web design for Web Development & Design Foundations coursework, Software Portfolio (this website), Rollodex Capstone, Quester2000.",
-    highlights: [
-      "Built legacy style websites using HTML and CSS to display information and navigate between pages.",
-      "Integrated with JavaScript, TypeScript, and React to build complex web apps."
-    ]
-  },
-  {
-    id: "css",
-    title: "CSS",
-    context: "5 years of experience",
-    summary: "UI design for Software Portfolio (this website), Rollodex Capstone, Quester2000, Various courses.",
-    highlights: [
-      "Created themes for web applications to customize and improve accessibility."
-    ]
-  },
-  {
-    id: "javascript",
-    title: "JavaScript",
-    context: "3 years of experience",
-    summary: "Backend logic for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
-    highlights: [
-      "Built client/server logic to power complex features, such as menu interfaces, search filtering, and form templates."
-    ]
-  },
-  {
-    id: "typescript",
-    title: "TypeScript",
-    context: "6 months of experience",
-    summary: "Backend logic for Software Portfolio (this website), Quester2000.",
-    highlights: [
-      "Built web apps meant to run on cloud services."
-    ]
-  },
-  {
-    id: "c",
-    title: "C",
-    context: "3 years of experience",
-    summary: "Coursework for various courses.",
-    highlights: [
-      "SER334 - Built a Loadable Kernel Module that uses Linux data structures to display details about the processes executing in the kernel.",
-      "Applied scripting for various topics such as thread/compiler optimization, page replacement, image processing, and scheduling algorithms."
-    ]
-  },
-  {
-    id: "cpp",
-    title: "C++",
-    context: "7 years of experience",
-    summary: "Core language foundation. Used for custom game engine and many small projects.",
-    highlights: [
-      "Developed a custom game engine for a current project. (Limited information disclosure)",
-      "The language that I first learned and my top preference."
-    ]
-  },
-  {
-    id: "java",
-    title: "Java",
-    context: "7 years of experience",
-    summary: "Distributed systems teaching, Minecraft modding, Various courses/projects.",
-    highlights: [
-      "Built a Wheel of Fortune Java client/server assignment for students.",
-      "Decompiled code to patch a crash and reassemble."
-    ]
-  },
-  {
-    id: "linux",
-    title: "Linux",
-    context: "7 years of experience",
-    summary: "My daily driver kernel, set up on many systems. Also used for various courses.",
-    highlights: [
-      "Actively maintaining Nextcloud and game servers with backups and monitoring.",
-      "Configured VFIO and kernel tuning for GPU passthrough to VMs."
-    ]
-  },
-  {
-    id: "json",
-    title: "JSON",
-    context: "5 years of experience",
-    summary: "Modding, Game Engine, Various courses.",
-    highlights: [
-      "Stored complex application objects to file, and read them back upon application reload.",
-      "Commonly used when modding Stellaris and Minecraft."
-    ]
-  },
-  {
-    id: "bash",
-    title: "Bash",
-    context: "5 years of experience",
-    summary: "Local tooling on Linux systems",
-    highlights: [
-      "Scripting to modify various behaviors of Linux machines.",
-      "Used heavily during application development."
-    ]
-  },
-  {
-    id: "xml",
-    title: "XML",
-    context: "5 years of experience",
-    summary: "Game mod configuration, Various courses",
-    highlights: [
-      "Patched Minecraft config XMLs to optimize servers and align with modpack updates.",
-      "Deploy virtual machines and optimize them."
-    ]
-  },
-  {
-    id: "kvm",
-    title: "KVM",
-    context: "4 years of experience",
-    summary: "Virtualize Windows on Linux systems",
-    highlights: [
-      "Set up Windows 10 virtual machines optimized for gaming, with GPU passthrough.",
-      "Used with QEMU."
-    ]
-  },
-  {
-    id: "qemu",
-    title: "QEMU",
-    context: "4 years of experience",
-    summary: "Virtualize Windows on Linux systems",
-    highlights: [
-      "Set up Windows 10 virtual machines optimized for gaming, with GPU passthrough.",
-      "Used with KVM."
-    ]
-  },
-  {
-    id: "postgresql",
-    title: "PostgreSQL",
-    context: "2 years of experience",
-    summary: "Rollodex, Quester2000",
-    highlights: [
-      "Modeled contact/search data to support fast filtering.",
-      "Stored app data for user accounts."
-    ]
-  },
-  {
-    id: "sql",
-    title: "SQL",
-    context: "2 years of experience",
-    summary: "Rollodex, SER322 - Database Management course",
-    highlights: [
-      "Designed Retail Inventory Management system for SER322.",
-      "Used queries to troubleshoot and speed up search for Rollodex."
-    ]
-  },
-  {
-    id: "lua",
-    title: "Lua",
-    context: "2 years of experience",
-    summary: "Stellaris Modding",
-    highlights: [
-      "Built gameplay scripts and UI hooks for custom content.",
-      "Iterated on mod changes to improve balance."
-    ]
-  },
-  {
-    id: "prisma",
-    title: "Prisma",
-    context: "2 years of experience",
-    summary: "Rollodex, Quester2000",
-    highlights: [
-      "Managed schema migrations and models for database structure."
-    ]
-  },
-  {
-    id: "oracle-cloud",
-    title: "Oracle Cloud",
-    context: "2 years of experience",
-    summary: "WireGuard experiments with intermediate IP",
-    highlights: [
-      "Set up a ping point to create a secure connection to my home server."
-    ]
-  },
-  {
-    id: "aws",
-    title: "AWS",
-    context: "2 years of experience",
-    summary: "Server deployment for various projects",
-    highlights: [
-      "Used to host client-server applications for SER321."
-    ]
-  },
-  STELLARIS_TECH_STACK_EXPERIENCE,
-  MINECRAFT_TECH_STACK_EXPERIENCE
+  ...baseTechStackDetails.map((entry) => localizeTechExperience(entry, "en")),
+  localizeTechExperience(normalizeTechExperience(STELLARIS_TECH_STACK_EXPERIENCE_RAW), "en"),
+  localizeTechExperience(normalizeTechExperience(MINECRAFT_TECH_STACK_EXPERIENCE_RAW), "en")
 ];
 
 const en: AppDictionary = {

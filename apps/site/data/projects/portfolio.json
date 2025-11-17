@@ -6,8 +6,8 @@
   "home": {
     "proofDetails": {
       "en": "Built this portfolio with Next.js, localization, and custom UI components.",
-      "ja": "Next.js とカスタム UI で本ポートフォリオを構築し、多言語対応とアクセシビリティを実装しました。",
-      "zh": "使用 Next.js 和自定义 UI 构建此作品集站点，实现多语言和无障碍支持。"
+      "ja": "",
+      "zh": ""
     }
   },
   "experienceEntry": {
@@ -20,6 +20,33 @@
       "Shipped en/ja/zh localization with shared content definitions to keep information consistent.",
       "Built a custom component set with theme/contrast controls and accessibility guardrails.",
       "Centered performance and observability with critical CSS, edge rendering, and structured data."
-    ]
+    ],
+    "localized": {
+      "en": {
+        "company": "Portfolio (this website)",
+        "role": "Solo Fullstack Engineer",
+        "timeframe": "October - December 2025",
+        "summary": "Designed and built a personalized engineering portfolio with localization, accessibility, telemetry-ready structure, and custom UI components.",
+        "highlights": [
+          "Shipped en/ja/zh localization with shared content definitions to keep information consistent.",
+          "Built a custom component set with theme/contrast controls and accessibility guardrails.",
+          "Centered performance and observability with critical CSS, edge rendering, and structured data."
+        ]
+      },
+      "ja": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      },
+      "zh": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      }
+    }
   }
 }

@@ -16,12 +16,51 @@
     "experience": {
       "id": "minecraft-mods",
       "title": "Minecraft Mods",
-      "context": "5 years of experience",
-      "summary": "10+ high performance modded servers.",
-      "highlights": [
-        "Backporting of crash fixes to patch a rare client side disconnect.",
-        "Added new features with custom mods, and optimized modpacks."
-      ]
+      "context": { "en": "5 years of experience", "ja": "", "zh": "" },
+      "summary": {
+        "en": "10+ high performance modded servers.",
+        "ja": "",
+        "zh": ""
+      },
+      "highlights": {
+        "en": [
+          "Backporting of crash fixes to patch a rare client side disconnect.",
+          "Added new features with custom mods, and optimized modpacks."
+        ],
+        "ja": [],
+        "zh": []
+      }
+    }
+  },
+  "experienceEntry": {
+    "id": "minecraft-mods",
+    "company": "",
+    "role": "",
+    "timeframe": "",
+    "summary": "",
+    "highlights": [],
+    "localized": {
+      "en": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      },
+      "ja": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      },
+      "zh": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      }
     }
   }
 }

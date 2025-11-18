@@ -124,7 +124,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   const dictionary = getDictionary(locale);
 
   return {
-    title: dictionary.experience.title,
+    title: dictionary.experience.metadataTitle,
     description: dictionary.experience.subtitle
   };
 }

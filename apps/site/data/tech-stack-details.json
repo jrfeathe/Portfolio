@@ -134,19 +134,19 @@
       "zh": ""
     },
     "context": {
-      "en": "6 years of experience",
+      "en": "3 years of experience",
       "ja": "",
       "zh": ""
     },
     "summary": {
-      "en": "C++ Game Engine, SER222, SER334",
+      "en": "Coursework for various courses.",
       "ja": "",
       "zh": ""
     },
     "highlights": {
       "en": [
-        "Worked on a C++ game engine, including memory management and rendering components.",
-        "Recreated Minesweeper in SDL2, customized data structures using procedural generation."
+        "SER334 - Built a Loadable Kernel Module that uses Linux data structures to display details about the processes executing in the kernel.",
+        "Applied scripting for various topics such as thread/compiler optimization, page replacement, image processing, and scheduling algorithms."
       ],
       "ja": [],
       "zh": []
@@ -160,19 +160,19 @@
       "zh": ""
     },
     "context": {
-      "en": "6 years of experience",
+      "en": "7 years of experience",
       "ja": "",
       "zh": ""
     },
     "summary": {
-      "en": "C++ Engine, SER222, SER334",
+      "en": "Core language foundation. Used for custom game engine and many small projects.",
       "ja": "",
       "zh": ""
     },
     "highlights": {
       "en": [
-        "Built a C++ Game Engine with custom shaders and configuration files.",
-        "Implemented RayTracer and rendering pipelines for the engine."
+        "Developed a custom game engine for a current project. (Limited information disclosure)",
+        "The language that I first learned and my top preference."
       ],
       "ja": [],
       "zh": []
@@ -191,14 +191,14 @@
       "zh": ""
     },
     "summary": {
-      "en": "Wheel of Fortune, SER321 (Hosting, testing, debugging), SER222, SER334",
+      "en": "Distributed systems teaching, Minecraft modding, Various courses/projects.",
       "ja": "",
       "zh": ""
     },
     "highlights": {
       "en": [
-        "Developed Wheel of Fortune server for SER321, scalable to multiple clients.",
-        "Built custom data structures and tests."
+        "Built a Wheel of Fortune Java client/server assignment for students.",
+        "Decompiled code to patch a crash and reassemble."
       ],
       "ja": [],
       "zh": []
@@ -321,14 +321,14 @@
       "zh": ""
     },
     "summary": {
-      "en": "Used for hobby virtualization servers and KVM setups.",
+      "en": "Virtualize Windows on Linux systems",
       "ja": "",
       "zh": ""
     },
     "highlights": {
       "en": [
-        "Optimized for GPU passthrough to get near-native performance while running games & multimedia.",
-        "Used conjunction with QEMU."
+        "Set up Windows 10 virtual machines optimized for gaming, with GPU passthrough.",
+        "Used with QEMU."
       ],
       "ja": [],
       "zh": []

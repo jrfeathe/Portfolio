@@ -19,6 +19,12 @@ type TechStackEntry = {
   assetId: string;
 };
 
+type LocalizedTechStackEntry = {
+  name: LocalizedStringMap;
+  href: string;
+  assetId: string;
+};
+
 type TechExperienceEntry = {
   id: string;
   title: string;
@@ -29,7 +35,7 @@ type TechExperienceEntry = {
 
 type LocalizedTechExperienceEntry = {
   id: string;
-  title: string;
+  title: LocalizedStringMap | string;
   context: Partial<Record<Locale, string>>;
   summary: Partial<Record<Locale, string>>;
   highlights: Partial<Record<Locale, string[]>>;
@@ -44,21 +50,30 @@ type ExperienceEntry = {
   highlights: string[];
 };
 
+type LocalizedExperienceEntry = {
+  id: string;
+  company: LocalizedStringMap;
+  role: LocalizedStringMap;
+  timeframe: LocalizedStringMap;
+  summary: LocalizedStringMap;
+  highlights: Partial<Record<Locale, string[]>>;
+};
+
 type ProjectContent = {
   id: string;
   names?: {
-    proofTitle?: string;
-    techStackTitle?: string;
+    proofTitle?: LocalizedStringMap;
+    techStackTitle?: LocalizedStringMap;
   };
   home?: {
     proofDetails?: LocalizedStringMap;
     roadmapNextStep?: LocalizedStringMap;
   };
   techStack?: {
-    item: TechStackEntry;
+    item: LocalizedTechStackEntry;
     experience: LocalizedTechExperienceEntry | TechExperienceEntry;
   };
-  experienceEntry?: ExperienceEntry;
+  experienceEntry?: LocalizedExperienceEntry;
 };
 
 export type AppDictionary = {
@@ -143,6 +158,7 @@ export type AppDictionary = {
     };
   };
   experience: {
+    metadataTitle: string;
     title: string;
     subtitle: string;
     section1title: string;
@@ -184,7 +200,29 @@ const portfolioProject = portfolioProjectData as ProjectContent;
 const cppGameEngineProject = cppGameEngineProjectData as ProjectContent;
 const baseTechStackDetails = techStackDetailsData as LocalizedTechExperienceEntry[];
 
-function requireExperience(project: ProjectContent, id: string): ExperienceEntry {
+function ensureLocalizedString(map: LocalizedStringMap | string | undefined): LocalizedStringMap {
+  return typeof map === "string" ? { en: map } : (map ?? {});
+}
+
+function localizeString(map: LocalizedStringMap | undefined, locale: Locale, fallback = ""): string {
+  const localized = ensureLocalizedString(map);
+  return localized[locale] ?? localized.en ?? fallback;
+}
+
+function localizeStringList(
+  map: Partial<Record<Locale, string[]>> | string[] | undefined,
+  locale: Locale,
+  fallback: string[] = []
+): string[] {
+  if (Array.isArray(map)) {
+    return map;
+  }
+
+  const localized = map ?? {};
+  return localized[locale] ?? localized.en ?? fallback;
+}
+
+function requireExperience(project: ProjectContent, id: string): LocalizedExperienceEntry {
   const experience = project.experienceEntry;
   if (!experience) {
     throw new Error(`Experience entry is required for project "${id}".`);
@@ -200,11 +238,18 @@ function requireTechStack(project: ProjectContent, id: string) {
   return techStack;
 }
 
-function buildProofChip(project: ProjectContent, locale: Locale, fallbackTitle: string) {
-  const fallbackDetail = project.home?.proofDetails?.["en"] ?? "";
+function localizeTechStackItem(item: LocalizedTechStackEntry, locale: Locale): TechStackEntry {
   return {
-    title: project.names?.proofTitle ?? fallbackTitle,
-    details: project.home?.proofDetails?.[locale] ?? fallbackDetail
+    name: localizeString(item.name, locale),
+    href: item.href,
+    assetId: item.assetId
+  };
+}
+
+function buildProofChip(project: ProjectContent, locale: Locale, fallbackTitle: string) {
+  return {
+    title: localizeString(project.names?.proofTitle, locale, fallbackTitle),
+    details: localizeString(project.home?.proofDetails, locale)
   };
 }
 
@@ -213,15 +258,18 @@ function getRoadmapStep(project: ProjectContent, locale: Locale) {
   return project.home?.roadmapNextStep?.[locale] ?? fallback;
 }
 
-const PORTFOLIO_EXPERIENCE_ENTRY = requireExperience(portfolioProject, "portfolio-site");
-const ROLLODEX_EXPERIENCE_ENTRY = requireExperience(rollodexProject, "rollodex");
-const SER321_EXPERIENCE_ENTRY = requireExperience(ser321Project, "ser321-ta");
-const CPP_GAME_ENGINE_EXPERIENCE_ENTRY = requireExperience(cppGameEngineProject, "cpp-game-engine");
-const STELLARIS_EXPERIENCE_ENTRY = requireExperience(stellarisModsProject, "stellaris-mods");
 const { item: STELLARIS_TECH_STACK_ITEM, experience: STELLARIS_TECH_STACK_EXPERIENCE_RAW } =
   requireTechStack(stellarisModsProject, "stellaris-mods");
 const { item: MINECRAFT_TECH_STACK_ITEM, experience: MINECRAFT_TECH_STACK_EXPERIENCE_RAW } =
   requireTechStack(minecraftModsProject, "minecraft-mods");
+
+const PROJECT_EXPERIENCE_ENTRIES: LocalizedExperienceEntry[] = [
+  requireExperience(portfolioProject, "portfolio-site"),
+  requireExperience(rollodexProject, "rollodex"),
+  requireExperience(ser321Project, "ser321-ta"),
+  requireExperience(cppGameEngineProject, "cpp-game-engine"),
+  requireExperience(stellarisModsProject, "stellaris-mods")
+];
 
 const buildStellarisProofChip = (locale: Locale) => buildProofChip(stellarisModsProject, locale, "Stellaris Modding");
 const buildQuesterProofChip = (locale: Locale) => buildProofChip(quester2000Project, locale, "Quester2000");
@@ -231,14 +279,31 @@ const buildCppGameEngineProofChip = (locale: Locale) =>
 const buildSer321ProofChip = (locale: Locale) => buildProofChip(ser321Project, locale, "SER321 TA");
 const buildRollodexProofChip = (locale: Locale) => buildProofChip(rollodexProject, locale, "Rollodex");
 
+// Structure for "Evidence" section of Home page. CONTROLS FEATURED PROJECTS
+const buildProofChips = (locale: Locale) => [
+  buildPortfolioProofChip(locale),
+  buildRollodexProofChip(locale),
+  buildQuesterProofChip(locale),
+  buildSer321ProofChip(locale),
+  buildCppGameEngineProofChip(locale),
+  buildStellarisProofChip(locale)
+];
+
 const getStellarisRoadmapStep = (locale: Locale) => getRoadmapStep(stellarisModsProject, locale);
 const getMinecraftRoadmapStep = (locale: Locale) => getRoadmapStep(minecraftModsProject, locale);
 const getQuesterRoadmapStep = (locale: Locale) => getRoadmapStep(quester2000Project, locale);
 const getCppGameEngineRoadmapStep = (locale: Locale) => getRoadmapStep(cppGameEngineProject, locale);
+const getRoadmapSteps = (locale: Locale) => [
+  getQuesterRoadmapStep(locale),
+  getStellarisRoadmapStep(locale),
+  getMinecraftRoadmapStep(locale),
+  getCppGameEngineRoadmapStep(locale)
+];
 
 function normalizeTechExperience(
   experience: TechExperienceEntry | LocalizedTechExperienceEntry
 ): LocalizedTechExperienceEntry {
+  const title = typeof experience.title === "string" ? { en: experience.title } : (experience.title ?? {});
   const context =
     typeof experience.context === "string" ? { en: experience.context } : (experience.context ?? {});
   const summary =
@@ -250,7 +315,7 @@ function normalizeTechExperience(
 
   return {
     id: experience.id,
-    title: experience.title,
+    title,
     context,
     summary,
     highlights
@@ -261,13 +326,26 @@ function localizeTechExperience(entry: LocalizedTechExperienceEntry, locale: Loc
   const fallbackContext = entry.context.en ?? "";
   const fallbackSummary = entry.summary.en ?? "";
   const fallbackHighlights = entry.highlights.en ?? [];
+  const fallbackTitle = typeof entry.title === "string" ? entry.title : entry.title.en ?? "";
 
   return {
     id: entry.id,
-    title: entry.title,
+    title: typeof entry.title === "string" ? entry.title : entry.title[locale] ?? fallbackTitle,
     context: entry.context[locale] ?? fallbackContext,
     summary: entry.summary[locale] ?? fallbackSummary,
     highlights: entry.highlights[locale] ?? fallbackHighlights
+  };
+}
+
+function localizeExperienceEntry(entry: LocalizedExperienceEntry, locale: Locale): ExperienceEntry {
+  const fallbackHighlights = entry.highlights.en ?? [];
+  return {
+    id: entry.id,
+    company: localizeString(entry.company, locale),
+    role: localizeString(entry.role, locale),
+    timeframe: localizeString(entry.timeframe, locale),
+    summary: localizeString(entry.summary, locale),
+    highlights: localizeStringList(entry.highlights, locale, fallbackHighlights)
   };
 }
 
@@ -279,7 +357,7 @@ const HERO_IMAGE_BASE: Omit<ImageDescriptor, "alt"> = {
     "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAr8B9ngcRwAAAABJRU5ErkJggg=="
 };
 
-const DEFAULT_TECH_STACK_ITEMS: TechStackEntry[] = [
+const STATIC_TECH_STACK_ITEMS: TechStackEntry[] = [
   { name: "React", href: "https://react.dev/", assetId: "react" },
   { name: "HTML", href: "https://html.spec.whatwg.org/multipage/", assetId: "html" },
   { name: "CSS", href: "https://www.w3.org/Style/CSS/Overview.en.html", assetId: "css" },
@@ -300,15 +378,22 @@ const DEFAULT_TECH_STACK_ITEMS: TechStackEntry[] = [
   { name: "Prisma", href: "https://www.prisma.io/", assetId: "prisma" },
   { name: "Oracle Cloud", href: "https://www.oracle.com/cloud/", assetId: "oracle-cloud" },
   { name: "AWS", href: "https://aws.amazon.com/", assetId: "aws" },
-  STELLARIS_TECH_STACK_ITEM,
-  MINECRAFT_TECH_STACK_ITEM
 ];
 
-const DEFAULT_TECH_STACK_DETAILS: TechExperienceEntry[] = [
-  ...baseTechStackDetails.map((entry) => localizeTechExperience(entry, "en")),
-  localizeTechExperience(normalizeTechExperience(STELLARIS_TECH_STACK_EXPERIENCE_RAW), "en"),
-  localizeTechExperience(normalizeTechExperience(MINECRAFT_TECH_STACK_EXPERIENCE_RAW), "en")
+const getTechStackItems = (locale: Locale): TechStackEntry[] => [
+  ...STATIC_TECH_STACK_ITEMS,
+  localizeTechStackItem(STELLARIS_TECH_STACK_ITEM, locale),
+  localizeTechStackItem(MINECRAFT_TECH_STACK_ITEM, locale)
 ];
+
+const getTechStackDetails = (locale: Locale): TechExperienceEntry[] => [
+  ...baseTechStackDetails.map((entry) => localizeTechExperience(entry, locale)),
+  localizeTechExperience(normalizeTechExperience(STELLARIS_TECH_STACK_EXPERIENCE_RAW), locale),
+  localizeTechExperience(normalizeTechExperience(MINECRAFT_TECH_STACK_EXPERIENCE_RAW), locale)
+];
+
+const getExperienceEntries = (locale: Locale): ExperienceEntry[] =>
+  PROJECT_EXPERIENCE_ENTRIES.map((entry) => localizeExperienceEntry(entry, locale));
 
 const en: AppDictionary = {
   metadata: {
@@ -363,7 +448,7 @@ const en: AppDictionary = {
           "",
         overview:
           "",
-        items: DEFAULT_TECH_STACK_ITEMS
+        items: getTechStackItems("en")
       },
       proof: {
         eyebrow: "Evidence",
@@ -371,14 +456,7 @@ const en: AppDictionary = {
         description: "Relatable highlights from the past few years.",
         overview:
           "Each card focuses on a project or role that tells the story behind the skills shown above.",
-        proofChips: [
-          buildPortfolioProofChip("en"),
-          buildRollodexProofChip("en"),
-          buildQuesterProofChip("en"),
-          buildSer321ProofChip("en"),
-          buildCppGameEngineProofChip("en"),
-          buildStellarisProofChip("en")
-        ]
+        proofChips: buildProofChips("en")
       },
       roadmap: {
         eyebrow: "Roadmap",
@@ -388,10 +466,7 @@ const en: AppDictionary = {
         overview:
           "While it is very rewarding to optimize and automate, I also find joy in learning new skills and technologies!",
         nextSteps: [
-          getQuesterRoadmapStep("en"),
-          getStellarisRoadmapStep("en"),
-          getMinecraftRoadmapStep("en"),
-          getCppGameEngineRoadmapStep("en"),
+          ...getRoadmapSteps("en"),
           "Social Networking: Find events to meet people in industry. Considering indie games conventions in NYC."
         ]
       }
@@ -421,20 +496,15 @@ const en: AppDictionary = {
     }
   },
   experience: {
+    metadataTitle: "Jack F. Experience",
     title: "Experience",
     subtitle: "Major interactions that have defined my current skill set.",
     section1title: "Projects",
     section1subtitle: "Important projects and roles that have shaped my current skills.",
     section2title: "Tech stack",
     section2subtitle: "Relevant experience with each technology.",
-    entries: [
-      PORTFOLIO_EXPERIENCE_ENTRY,
-      ROLLODEX_EXPERIENCE_ENTRY,
-      SER321_EXPERIENCE_ENTRY,
-      CPP_GAME_ENGINE_EXPERIENCE_ENTRY,
-      STELLARIS_EXPERIENCE_ENTRY,
-    ],
-    techStack: DEFAULT_TECH_STACK_DETAILS
+    entries: getExperienceEntries("en"),
+    techStack: getTechStackDetails("en")
   },
   meetings: {
     metadataTitle: "Jack F. Contact",
@@ -526,7 +596,7 @@ const ja: AppDictionary = {
           "",
         overview:
           "",
-        items: DEFAULT_TECH_STACK_ITEMS
+        items: getTechStackItems("ja")
       },
       proof: {
         eyebrow: "エビデンス",
@@ -534,14 +604,7 @@ const ja: AppDictionary = {
         description: "近年の主なハイライトを抜粋して掲載しています。",
         overview:
           "各カードは、上記のスキルの裏付けとなるプロジェクトや役割のストーリーに焦点を当てています。",
-        proofChips: [
-          buildPortfolioProofChip("ja"),
-          buildRollodexProofChip("ja"),
-          buildQuesterProofChip("ja"),
-          buildSer321ProofChip("ja"),
-          buildCppGameEngineProofChip("ja"),
-          buildStellarisProofChip("ja")
-        ]
+        proofChips: buildProofChips("ja")
       },
       roadmap: {
         eyebrow: "ロードマップ",
@@ -551,10 +614,7 @@ const ja: AppDictionary = {
         overview:
           "最適化や自動化は非常に有益ですが、新しい技術やスキルを学ぶ楽しさも大切にしています。",
         nextSteps: [
-          getQuesterRoadmapStep("ja"),
-          getStellarisRoadmapStep("ja"),
-          getMinecraftRoadmapStep("ja"),
-          getCppGameEngineRoadmapStep("ja"),
+          ...getRoadmapSteps("ja"),
           "交流活動：業界イベントを探索し、人脈づくりを推進。NYC のインディーゲーム系イベント参加も検討。"
         ]
       }
@@ -583,20 +643,15 @@ const ja: AppDictionary = {
     }
   },
   experience: {
+    metadataTitle: "Jack F. 経験",
     title: "経験スナップショット",
     subtitle: "スキルセットを作り上げたプロジェクトと役割を簡潔にまとめています。",
     section1title: "Projects",
     section1subtitle: "Important projects and roles that have shaped my current skills.",
     section2title: "Tech stack",
     section2subtitle: "Relevant experience with each technology.",
-    entries: [
-      PORTFOLIO_EXPERIENCE_ENTRY,
-      ROLLODEX_EXPERIENCE_ENTRY,
-      SER321_EXPERIENCE_ENTRY,
-      CPP_GAME_ENGINE_EXPERIENCE_ENTRY,
-      STELLARIS_EXPERIENCE_ENTRY,
-    ],
-    techStack: DEFAULT_TECH_STACK_DETAILS
+    entries: getExperienceEntries("ja"),
+    techStack: getTechStackDetails("ja")
   },
   meetings: {
     metadataTitle: "Jack F. へのお問い合わせ",
@@ -691,7 +746,7 @@ const zh: AppDictionary = {
           "",
         overview:
           "",
-        items: DEFAULT_TECH_STACK_ITEMS
+        items: getTechStackItems("zh")
       },
       proof: {
         eyebrow: "证据",
@@ -699,14 +754,7 @@ const zh: AppDictionary = {
         description: "选取近年具有代表性的亮点。",
         overview:
           "每张卡片均聚焦于能够展现上述技能背景的项目或角色。",
-        proofChips: [
-          buildPortfolioProofChip("zh"),
-          buildRollodexProofChip("zh"),
-          buildQuesterProofChip("zh"),
-          buildSer321ProofChip("zh"),
-          buildCppGameEngineProofChip("zh"),
-          buildStellarisProofChip("zh")
-        ]
+        proofChips: buildProofChips("zh")
       },
       roadmap: {
         eyebrow: "路线图",
@@ -716,10 +764,7 @@ const zh: AppDictionary = {
         overview:
           "尽管优化与自动化成效显著，我同样享受学习新技术与新技能的过程。",
         nextSteps: [
-          getQuesterRoadmapStep("zh"),
-          getStellarisRoadmapStep("zh"),
-          getMinecraftRoadmapStep("zh"),
-          getCppGameEngineRoadmapStep("zh"),
+          ...getRoadmapSteps("zh"),
           "社交网络：寻找行业交流活动并拓展人脉，考虑参加纽约市的独立游戏展会。"
         ]
       }
@@ -748,20 +793,15 @@ const zh: AppDictionary = {
     }
   },
   experience: {
+    metadataTitle: "Jack F. 经验",
     title: "经验速览",
     subtitle: "快速了解塑造我技能组合的项目与职责。",
     section1title: "Projects",
     section1subtitle: "Important projects and roles that have shaped my current skills.",
     section2title: "Tech stack",
     section2subtitle: "Relevant experience with each technology.",
-    entries: [
-      PORTFOLIO_EXPERIENCE_ENTRY,
-      ROLLODEX_EXPERIENCE_ENTRY,
-      SER321_EXPERIENCE_ENTRY,
-      CPP_GAME_ENGINE_EXPERIENCE_ENTRY,
-      STELLARIS_EXPERIENCE_ENTRY,
-    ],
-    techStack: DEFAULT_TECH_STACK_DETAILS
+    entries: getExperienceEntries("zh"),
+    techStack: getTechStackDetails("zh")
   },
   meetings: {
     metadataTitle: "Jack F. 联系",

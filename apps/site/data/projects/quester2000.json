@@ -61,27 +61,31 @@
   "experienceEntry": {
     "id": "quester2000",
     "company": {
-      "en": "",
+      "en": "Quester2000 - Personal project",
       "ja": "",
       "zh": ""
     },
     "role": {
-      "en": "",
+      "en": "Fullstack Engineer",
       "ja": "",
       "zh": ""
     },
     "timeframe": {
-      "en": "",
+      "en": "Ongoing",
       "ja": "",
       "zh": ""
     },
     "summary": {
-      "en": "",
+      "en": "Created a point tracking to-do list tool that promotes self discipline and rewarding.",
       "ja": "",
       "zh": ""
     },
     "highlights": {
-      "en": [],
+      "en": [
+        "Designed a database schema for storing user credentials, custom quests, and custom items.",
+        "Implemented a flexible frontend UI, designed to work on a variety of systems.",
+        "Became familiar with modern tooling used to create a modern web app."
+      ],
       "ja": [],
       "zh": []
     }

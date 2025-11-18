@@ -14,7 +14,7 @@
   },
   "home": {
     "proofDetails": {
-      "en": "Built this portfolio with Next.js, localization, and custom UI components.",
+      "en": "AI-assisted rapid fullstack development to increase opportunities in job hunting.",
       "ja": "",
       "zh": ""
     },
@@ -61,12 +61,12 @@
   "experienceEntry": {
     "id": "portfolio-site",
     "company": {
-      "en": "Portfolio (this website)",
+      "en": "Portfolio (this website) - Personal project",
       "ja": "",
       "zh": ""
     },
     "role": {
-      "en": "Solo Fullstack Engineer",
+      "en": "Solo AI-Assisted Fullstack Engineer",
       "ja": "",
       "zh": ""
     },
@@ -76,13 +76,14 @@
       "zh": ""
     },
     "summary": {
-      "en": "Designed and built a personalized engineering portfolio with localization, accessibility, telemetry-ready structure, and custom UI components.",
+      "en": "Designed and built a personalized engineering portfolio with localization, accessibility, basic telemetry, and custom UI components.",
       "ja": "",
       "zh": ""
     },
     "highlights": {
       "en": [
-        "Shipped en/ja/zh localization with shared content definitions to keep information consistent.",
+        "Instructed Codex to perform complex tasks based on high level documentation and a detailed Work Breakdown Structure.",
+        "Full en/ja/zh localization with centralized content definitions to keep information consistent.",
         "Built a custom component set with theme/contrast controls and accessibility guardrails.",
         "Centered performance and observability with critical CSS, edge rendering, and structured data."
       ],

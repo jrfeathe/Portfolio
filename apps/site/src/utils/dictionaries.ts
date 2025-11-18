@@ -264,11 +264,12 @@ const { item: MINECRAFT_TECH_STACK_ITEM, experience: MINECRAFT_TECH_STACK_EXPERI
   requireTechStack(minecraftModsProject, "minecraft-mods");
 
 const PROJECT_EXPERIENCE_ENTRIES: LocalizedExperienceEntry[] = [
-  requireExperience(portfolioProject, "portfolio-site"),
   requireExperience(rollodexProject, "rollodex"),
+  requireExperience(quester2000Project, "quester2000"),
   requireExperience(ser321Project, "ser321-ta"),
   requireExperience(cppGameEngineProject, "cpp-game-engine"),
-  requireExperience(stellarisModsProject, "stellaris-mods")
+  requireExperience(stellarisModsProject, "stellaris-mods"),
+  requireExperience(portfolioProject, "portfolio-site")
 ];
 
 const buildStellarisProofChip = (locale: Locale) => buildProofChip(stellarisModsProject, locale, "Stellaris Modding");
@@ -281,12 +282,12 @@ const buildRollodexProofChip = (locale: Locale) => buildProofChip(rollodexProjec
 
 // Structure for "Evidence" section of Home page. CONTROLS FEATURED PROJECTS
 const buildProofChips = (locale: Locale) => [
-  buildPortfolioProofChip(locale),
   buildRollodexProofChip(locale),
   buildQuesterProofChip(locale),
   buildSer321ProofChip(locale),
-  buildCppGameEngineProofChip(locale),
-  buildStellarisProofChip(locale)
+  buildStellarisProofChip(locale),
+  //buildCppGameEngineProofChip(locale),
+  //buildPortfolioProofChip(locale)
 ];
 
 const getStellarisRoadmapStep = (locale: Locale) => getRoadmapStep(stellarisModsProject, locale);
@@ -453,9 +454,9 @@ const en: AppDictionary = {
       proof: {
         eyebrow: "Evidence",
         title: "Past achievements",
-        description: "Relatable highlights from the past few years.",
+        description: "Highlights from the past few years.",
         overview:
-          "Each card focuses on a project or role that tells the story behind the skills shown above.",
+          "",
         proofChips: buildProofChips("en")
       },
       roadmap: {
@@ -603,7 +604,7 @@ const ja: AppDictionary = {
         title: "過去の実績",
         description: "近年の主なハイライトを抜粋して掲載しています。",
         overview:
-          "各カードは、上記のスキルの裏付けとなるプロジェクトや役割のストーリーに焦点を当てています。",
+          "",
         proofChips: buildProofChips("ja")
       },
       roadmap: {
@@ -753,7 +754,7 @@ const zh: AppDictionary = {
         title: "过往成就",
         description: "选取近年具有代表性的亮点。",
         overview:
-          "每张卡片均聚焦于能够展现上述技能背景的项目或角色。",
+          "",
         proofChips: buildProofChips("zh")
       },
       roadmap: {

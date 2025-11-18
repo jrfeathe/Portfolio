@@ -2,7 +2,7 @@
   "id": "cpp-game-engine",
   "names": {
     "proofTitle": {
-      "en": "C++ Game Engine",
+      "en": "C++ Game Engine / Game",
       "ja": "",
       "zh": ""
     },
@@ -14,7 +14,7 @@
   },
   "home": {
     "proofDetails": {
-      "en": "Building a personal C++ game engine and RPG prototype with custom tooling.",
+      "en": "Building a C++ game engine and RPG adventure.",
       "ja": "",
       "zh": ""
     },
@@ -66,7 +66,7 @@
       "zh": ""
     },
     "role": {
-      "en": "Solo Fullstack Engineer",
+      "en": "Fullstack Engineer",
       "ja": "",
       "zh": ""
     },
@@ -76,14 +76,14 @@
       "zh": ""
     },
     "summary": {
-      "en": "Building a personal C++ engine and story-driven RPG prototype, focusing on custom tooling, rendering pipelines, and systems design.",
+      "en": "Building a C++ game engine and story driven RPG adventure.",
       "ja": "",
       "zh": ""
     },
     "highlights": {
       "en": [
-        "Implemented core engine loops, asset loading, and input systems with a focus on determinism and debuggability.",
-        "Experimented with tooling for narrative scripting and component-based gameplay logic."
+        "Implemented core engine loops, asset loading, vertex buffers, and JSON data structures.",
+        "Experimented with tooling such as OpenGL, SDL, and Dear ImGui."
       ],
       "ja": [],
       "zh": []

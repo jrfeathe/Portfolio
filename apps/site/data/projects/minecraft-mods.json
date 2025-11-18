@@ -19,7 +19,7 @@
       "zh": ""
     },
     "roadmapNextStep": {
-      "en": "Pixelmon Problem: Continue work to backport an update to Pixelmon to fix a periodic client-side crash on my private server.",
+      "en": "Pixelmon Problem: Continue work to backport an update to Minecraft Pixelmon to fix a periodic client-side crash on my private server.",
       "ja": "",
       "zh": ""
     }
@@ -53,7 +53,7 @@
       },
       "highlights": {
         "en": [
-          "Backporting of crash fixes to patch a rare client side disconnect.",
+          "Backporting of crash fixes to patch a semi-common client side disconnect.",
           "Added new features with custom mods, and optimized modpacks."
         ],
         "ja": [],

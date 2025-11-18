@@ -1,23 +1,6 @@
 {
   "id": "minecraft-mods",
-  "names": {
-    "proofTitle": {
-      "en": "Minecraft Mods",
-      "ja": "",
-      "zh": ""
-    },
-    "techStackTitle": {
-      "en": "Minecraft Mods",
-      "ja": "",
-      "zh": ""
-    }
-  },
   "home": {
-    "proofDetails": {
-      "en": "",
-      "ja": "",
-      "zh": ""
-    },
     "roadmapNextStep": {
       "en": "Pixelmon Problem: Continue work to backport an update to Pixelmon to fix a periodic client-side crash on my private server.",
       "ja": "",
@@ -36,11 +19,7 @@
     },
     "experience": {
       "id": "minecraft-mods",
-      "title": {
-        "en": "Minecraft Mods",
-        "ja": "",
-        "zh": ""
-      },
+      "title": "Minecraft Mods",
       "context": {
         "en": "5 years of experience",
         "ja": "",
@@ -63,30 +42,28 @@
   },
   "experienceEntry": {
     "id": "minecraft-mods",
-    "company": {
-      "en": "",
-      "ja": "",
-      "zh": ""
-    },
-    "role": {
-      "en": "",
-      "ja": "",
-      "zh": ""
-    },
-    "timeframe": {
-      "en": "",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [],
-      "ja": [],
-      "zh": []
+    "localized": {
+      "en": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      },
+      "ja": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      },
+      "zh": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      }
     }
   }
 }

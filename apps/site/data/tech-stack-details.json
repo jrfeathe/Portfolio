@@ -1,8 +1,16 @@
 [
   {
     "id": "react",
-    "title": "React",
-    "context": { "en": "2 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "React",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "Frontend design for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
       "ja": "",
@@ -19,8 +27,16 @@
   },
   {
     "id": "html",
-    "title": "HTML",
-    "context": { "en": "5 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "HTML",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "5 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "Web design for Web Development & Design Foundations coursework, Software Portfolio (this website), Rollodex Capstone, Quester2000.",
       "ja": "",
@@ -37,8 +53,16 @@
   },
   {
     "id": "css",
-    "title": "CSS",
-    "context": { "en": "5 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "CSS",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "5 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "UI design for Software Portfolio (this website), Rollodex Capstone, Quester2000, Various courses.",
       "ja": "",
@@ -54,8 +78,16 @@
   },
   {
     "id": "javascript",
-    "title": "JavaScript",
-    "context": { "en": "3 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "JavaScript",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "3 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "Backend logic for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
       "ja": "",
@@ -71,8 +103,16 @@
   },
   {
     "id": "typescript",
-    "title": "TypeScript",
-    "context": { "en": "6 months of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "TypeScript",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "6 months of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "Backend logic for Software Portfolio (this website), Quester2000.",
       "ja": "",
@@ -88,8 +128,16 @@
   },
   {
     "id": "c",
-    "title": "C",
-    "context": { "en": "6 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "C",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "6 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "C++ Game Engine, SER222, SER334",
       "ja": "",
@@ -106,8 +154,16 @@
   },
   {
     "id": "cpp",
-    "title": "C++",
-    "context": { "en": "6 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "C++",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "6 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "C++ Engine, SER222, SER334",
       "ja": "",
@@ -124,8 +180,16 @@
   },
   {
     "id": "java",
-    "title": "Java",
-    "context": { "en": "7 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "Java",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "7 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "Wheel of Fortune, SER321 (Hosting, testing, debugging), SER222, SER334",
       "ja": "",
@@ -142,8 +206,16 @@
   },
   {
     "id": "linux",
-    "title": "Linux",
-    "context": { "en": "7 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "Linux",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "7 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "My daily driver kernel, set up on many systems. Also used for various courses.",
       "ja": "",
@@ -160,8 +232,16 @@
   },
   {
     "id": "json",
-    "title": "JSON",
-    "context": { "en": "5 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "JSON",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "5 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "Modding, Game Engine, Various courses.",
       "ja": "",
@@ -178,8 +258,16 @@
   },
   {
     "id": "bash",
-    "title": "Bash",
-    "context": { "en": "5 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "Bash",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "5 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "Local tooling on Linux systems",
       "ja": "",
@@ -196,8 +284,16 @@
   },
   {
     "id": "xml",
-    "title": "XML",
-    "context": { "en": "5 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "XML",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "5 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "Game mod configuration, Various courses",
       "ja": "",
@@ -214,8 +310,16 @@
   },
   {
     "id": "kvm",
-    "title": "KVM",
-    "context": { "en": "4 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "KVM",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "4 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "Used for hobby virtualization servers and KVM setups.",
       "ja": "",
@@ -232,8 +336,16 @@
   },
   {
     "id": "qemu",
-    "title": "QEMU",
-    "context": { "en": "4 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "QEMU",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "4 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "Virtualize Windows on Linux systems",
       "ja": "",
@@ -250,8 +362,16 @@
   },
   {
     "id": "postgresql",
-    "title": "PostgreSQL",
-    "context": { "en": "2 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "PostgreSQL",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "Rollodex, Quester2000",
       "ja": "",
@@ -268,8 +388,16 @@
   },
   {
     "id": "sql",
-    "title": "SQL",
-    "context": { "en": "2 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "SQL",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "Rollodex, SER322 - Database Management course",
       "ja": "",
@@ -286,8 +414,16 @@
   },
   {
     "id": "lua",
-    "title": "Lua",
-    "context": { "en": "2 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "Lua",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "Stellaris Modding",
       "ja": "",
@@ -304,8 +440,16 @@
   },
   {
     "id": "prisma",
-    "title": "Prisma",
-    "context": { "en": "2 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "Prisma",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "Rollodex, Quester2000",
       "ja": "",
@@ -321,8 +465,16 @@
   },
   {
     "id": "oracle-cloud",
-    "title": "Oracle Cloud",
-    "context": { "en": "2 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "Oracle Cloud",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "WireGuard experiments with intermediate IP",
       "ja": "",
@@ -338,8 +490,16 @@
   },
   {
     "id": "aws",
-    "title": "AWS",
-    "context": { "en": "2 years of experience", "ja": "", "zh": "" },
+    "title": {
+      "en": "AWS",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
     "summary": {
       "en": "Server deployment for various projects",
       "ja": "",

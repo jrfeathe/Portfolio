@@ -1,0 +1,51 @@
+{
+  "id": "cpp-game-engine",
+  "names": {
+    "proofTitle": {
+      "en": "C++ Game Engine",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "home": {
+    "proofDetails": {
+      "en": "Building a personal C++ game engine and RPG prototype with custom tooling.",
+      "ja": "",
+      "zh": ""
+    },
+    "roadmapNextStep": {
+      "en": "C++ Game Engine: Continue work on a private game / engine. An abstract loosely-autobiographical RPG adventure.",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "experienceEntry": {
+    "id": "cpp-game-engine",
+    "localized": {
+      "en": {
+        "company": "Indie game development",
+        "role": "Solo Fullstack Engineer",
+        "timeframe": "Ongoing",
+        "summary": "Building a personal C++ engine and story-driven RPG prototype, focusing on custom tooling, rendering pipelines, and systems design.",
+        "highlights": [
+          "Implemented core engine loops, asset loading, and input systems with a focus on determinism and debuggability.",
+          "Experimented with tooling for narrative scripting and component-based gameplay logic."
+        ]
+      },
+      "ja": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      },
+      "zh": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      }
+    }
+  }
+}

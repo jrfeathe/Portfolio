@@ -1,52 +1,93 @@
 {
   "id": "portfolio-site",
   "names": {
-    "proofTitle": "Portfolio"
+    "proofTitle": {
+      "en": "Portfolio",
+      "ja": "",
+      "zh": ""
+    },
+    "techStackTitle": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    }
   },
   "home": {
     "proofDetails": {
       "en": "Built this portfolio with Next.js, localization, and custom UI components.",
       "ja": "",
       "zh": ""
+    },
+    "roadmapNextStep": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "techStack": {
+    "item": {
+      "name": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "href": "",
+      "assetId": "portfolio-site"
+    },
+    "experience": {
+      "id": "portfolio-site",
+      "title": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "context": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "summary": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "highlights": {
+        "en": [],
+        "ja": [],
+        "zh": []
+      }
     }
   },
   "experienceEntry": {
     "id": "portfolio-site",
-    "company": "Portfolio (this website)",
-    "role": "Solo Fullstack Engineer",
-    "timeframe": "October - December 2025",
-    "summary": "Designed and built a personalized engineering portfolio with localization, accessibility, telemetry-ready structure, and custom UI components.",
-    "highlights": [
-      "Shipped en/ja/zh localization with shared content definitions to keep information consistent.",
-      "Built a custom component set with theme/contrast controls and accessibility guardrails.",
-      "Centered performance and observability with critical CSS, edge rendering, and structured data."
-    ],
-    "localized": {
-      "en": {
-        "company": "Portfolio (this website)",
-        "role": "Solo Fullstack Engineer",
-        "timeframe": "October - December 2025",
-        "summary": "Designed and built a personalized engineering portfolio with localization, accessibility, telemetry-ready structure, and custom UI components.",
-        "highlights": [
-          "Shipped en/ja/zh localization with shared content definitions to keep information consistent.",
-          "Built a custom component set with theme/contrast controls and accessibility guardrails.",
-          "Centered performance and observability with critical CSS, edge rendering, and structured data."
-        ]
-      },
-      "ja": {
-        "company": "",
-        "role": "",
-        "timeframe": "",
-        "summary": "",
-        "highlights": []
-      },
-      "zh": {
-        "company": "",
-        "role": "",
-        "timeframe": "",
-        "summary": "",
-        "highlights": []
-      }
+    "company": {
+      "en": "Portfolio (this website)",
+      "ja": "",
+      "zh": ""
+    },
+    "role": {
+      "en": "Solo Fullstack Engineer",
+      "ja": "",
+      "zh": ""
+    },
+    "timeframe": {
+      "en": "October - December 2025",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Designed and built a personalized engineering portfolio with localization, accessibility, telemetry-ready structure, and custom UI components.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Shipped en/ja/zh localization with shared content definitions to keep information consistent.",
+        "Built a custom component set with theme/contrast controls and accessibility guardrails.",
+        "Centered performance and observability with critical CSS, edge rendering, and structured data."
+      ],
+      "ja": [],
+      "zh": []
     }
   }
 }

@@ -1,0 +1,49 @@
+{
+  "id": "quester2000",
+  "names": {
+    "proofTitle": "Quester2000"
+  },
+  "home": {
+    "proofDetails": {
+      "en": "A point tracking to-do list tool for managing your work-life balance.",
+      "ja": "",
+      "zh": ""
+    },
+    "roadmapNextStep": {
+      "en": "Revisit Quester2000: Add more functionality and improve UI. Possible smartwatch integration.",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "experienceEntry": {
+    "id": "quester2000",
+    "company": "",
+    "role": "",
+    "timeframe": "",
+    "summary": "",
+    "highlights": [],
+    "localized": {
+      "en": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      },
+      "ja": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      },
+      "zh": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      }
+    }
+  }
+}

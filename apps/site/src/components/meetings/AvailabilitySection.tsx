@@ -40,6 +40,10 @@ const minuteToQuarterKey: Record<string, QuarterHourKey> = {
 
 const MINUTES_PER_HOUR = 60;
 
+const ROW_HEIGHT_REM = 0.5;
+const HOUR_GAP_REM = 0.25;
+const HEADER_OFFSET_REM = 3;
+
 type QuarterMetadata = {
   index: number;
   hour: string;
@@ -254,72 +258,71 @@ function AvailabilityGrid({
   copy,
   quarterMeta
 }: AvailabilityGridProps) {
+  const firstVisibleIndex = quarterMeta[0]?.index ?? 0;
+  const labelOffsets = computeLabelOffsets(quarterMeta, firstVisibleIndex);
+
   return (
     <div className="overflow-auto">
-      <div
-        role="grid"
-        aria-label={ariaLabel}
-        aria-describedby={descriptionId}
-        id={id}
-        className="grid text-xs"
-        style={{
-          gridTemplateColumns: `minmax(3rem,auto) repeat(${WEEKDAYS.length}, minmax(0, 1fr))`
-        }}
-      >
-        <Fragment key="spacer-row">
-          <div aria-hidden="true" className="h-2" />
-          {WEEKDAYS.map((day) => (
-            <div key={`spacer-${day}`} aria-hidden="true" className="h-2" />
-          ))}
-        </Fragment>
+      <div className="relative pl-10">
         <div
-          role="columnheader"
-          className="sticky top-0 z-10 bg-surface px-2 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-textMuted dark:bg-dark-surface dark:text-dark-textMuted"
+          role="grid"
+          aria-label={ariaLabel}
+          aria-describedby={descriptionId}
+          id={id}
+          className="grid gap-x-[2px] text-xs"
+          style={{
+            gridTemplateColumns: `repeat(${WEEKDAYS.length}, minmax(0, 1fr))`
+          }}
         >
-          {copy.timeColumnLabel}
-        </div>
-        {WEEKDAYS.map((day) => {
-          const label = dayLabels[day];
-          return (
-          <div
-              key={day}
-            role="columnheader"
-            className="sticky top-0 z-10 border-b border-border/30 px-2 py-1 text-center text-[0.65rem] font-semibold uppercase tracking-wide text-textMuted dark:border-dark-border/40 dark:text-dark-textMuted"
-          >
-            {label.short}
-            </div>
-          );
-        })}
-        {quarterMeta.map((meta) => (
-          <Fragment key={meta.index}>
-            <div
-              role="rowheader"
-              className="border-b border-border/30 px-2 py-1 text-[0.65rem] font-medium text-textMuted dark:border-dark-border/40 dark:text-dark-textMuted"
-            >
-              {formatRowLabel(meta.hour, meta.minute)}
-            </div>
-            {WEEKDAYS.map((day) => {
-              const quarterKey = minuteToQuarterKey[meta.minute];
-              const isAvailable = quarterKey ? matrix[day]?.[meta.hour]?.[quarterKey] : false;
-              const ariaLabel = `${dayLabels[day].long} ${meta.label} ${
-                isAvailable ? copy.availableLabel : copy.unavailableLabel
-              }`;
-              return (
-                <div
-                  key={`${day}-${meta.index}`}
-                  role="gridcell"
-                  tabIndex={isAvailable ? 0 : -1}
-                  aria-label={ariaLabel}
-                  className={`h-2 w-full border border-border/40 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
-                    isAvailable
-                      ? "bg-accent/80 text-white dark:bg-dark-accent/70"
-                      : "bg-transparent dark:border-dark-border/40"
-                  }`}
-                />
-              );
-            })}
+          <Fragment key="spacer-row">
+            {WEEKDAYS.map((day) => (
+              <div key={`spacer-${day}`} aria-hidden="true" className="h-2" />
+            ))}
           </Fragment>
-        ))}
+          {WEEKDAYS.map((day) => {
+            const label = dayLabels[day];
+            return (
+              <div
+                key={day}
+                role="columnheader"
+                className="sticky top-0 z-10 border-b border-border/30 px-2 py-1 text-center text-[0.65rem] font-semibold uppercase tracking-wide text-textMuted dark:border-dark-border/40 dark:text-dark-textMuted"
+              >
+                {label.short}
+              </div>
+            );
+          })}
+          {quarterMeta.map((meta) => {
+            const needsGap = isHourBreak(meta, firstVisibleIndex);
+            return (
+              <Fragment key={meta.index}>
+                {needsGap ? (
+                  <div className="col-span-full h-1" aria-hidden="true" />
+                ) : null}
+                {WEEKDAYS.map((day) => {
+                  const quarterKey = minuteToQuarterKey[meta.minute];
+                  const isAvailable = quarterKey ? matrix[day]?.[meta.hour]?.[quarterKey] : false;
+                  const ariaLabel = `${dayLabels[day].long} ${meta.label} ${
+                    isAvailable ? copy.availableLabel : copy.unavailableLabel
+                  }`;
+                  return (
+                    <div
+                      key={`${day}-${meta.index}`}
+                      role="gridcell"
+                      tabIndex={isAvailable ? 0 : -1}
+                      aria-label={ariaLabel}
+                      className={`h-2 w-full border border-border/40 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+                        isAvailable
+                          ? "bg-accent/80 text-white dark:bg-dark-accent/70"
+                          : "bg-transparent dark:border-dark-border/40"
+                      }`}
+                    />
+                  );
+                })}
+              </Fragment>
+            );
+          })}
+        </div>
+        <TimeColumnOverlay copy={copy} labelOffsets={labelOffsets} />
       </div>
     </div>
   );
@@ -353,11 +356,16 @@ function formatHourLabel(hour: string) {
 }
 
 function formatRowLabel(hour: string, minute: string) {
-  if (minute !== "45") {
+  if (minute !== "00") {
     return "";
   }
-  const nextHour = (Number(hour) + 1) % 24;
-  return formatHourLabel(nextHour.toString().padStart(2, "0"));
+  if (hour === "00") {
+    return "12 AM";
+  }
+  if (hour === "12") {
+    return "12 PM";
+  }
+  return formatHourLabel(hour);
 }
 
 function formatRange(start: string, end: string) {
@@ -374,6 +382,63 @@ function ensureDefaultTimezone(options: string[], defaultTimezone: string) {
     list.unshift(defaultTimezone);
   }
   return Array.from(new Set(list));
+}
+
+function isHourBreak(meta: QuarterMetadata, firstVisibleIndex: number) {
+  if (meta.minute !== "00") {
+    return false;
+  }
+  return meta.index !== firstVisibleIndex;
+}
+
+function computeLabelOffsets(quarterMeta: QuarterMetadata[], firstVisibleIndex: number) {
+  let gapCount = 0;
+  return quarterMeta.map((meta) => {
+    const offset =
+      HEADER_OFFSET_REM +
+      (meta.index - firstVisibleIndex) * ROW_HEIGHT_REM +
+      gapCount * HOUR_GAP_REM;
+    if (isHourBreak(meta, firstVisibleIndex)) {
+      gapCount += 1;
+    }
+    return { meta, offset };
+  });
+}
+
+type TimeColumnOverlayProps = {
+  copy: AvailabilityCopy;
+  labelOffsets: Array<{ meta: QuarterMetadata; offset: number }>;
+};
+
+function TimeColumnOverlay({ copy, labelOffsets }: TimeColumnOverlayProps) {
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 left-0 w-10"
+    >
+      <span className="pointer-events-auto absolute left-0 top-2 text-[0.65rem] font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
+        {copy.timeColumnLabel}
+      </span>
+      {labelOffsets.map(({ meta, offset }) => {
+        const label = formatRowLabel(meta.hour, meta.minute);
+        if (!label) {
+          return null;
+        }
+        return (
+          <span
+            key={`label-${meta.index}`}
+            className="absolute right-2 text-[0.65rem] font-medium text-textMuted dark:text-dark-textMuted"
+            style={{
+              top: `calc(${offset}rem)`,
+              transform: "translateY(-50%)"
+            }}
+          >
+            {label}
+          </span>
+        );
+      })}
+    </div>
+  );
 }
 
 type ReferenceDialogProps = {

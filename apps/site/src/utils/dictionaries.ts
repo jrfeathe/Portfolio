@@ -6,6 +6,7 @@ import ser321ProjectData from "../../data/projects/ser321-ta.json";
 import portfolioProjectData from "../../data/projects/portfolio.json";
 import cppGameEngineProjectData from "../../data/projects/cpp-game-engine.json";
 import techStackDetailsData from "../../data/tech-stack-details.json";
+import type { Weekday } from "../lib/availability";
 import type { ImageDescriptor, ResponsiveImagePreset } from "../lib/images";
 import type { Locale } from "./i18n";
 
@@ -178,6 +179,21 @@ export type AppDictionary = {
     availability: {
       alt: string;
       description: string;
+      legend: string;
+      primaryLabel: string;
+      referenceLabel: string;
+      referenceButtonLabel: string;
+      referenceDialogTitle: string;
+      referenceDialogDescription: string;
+      referenceCloseLabel: string;
+      timezoneDropdownLabel: string;
+      dropdownDescription: string;
+      windowLabelPrefix: string;
+      availableLabel: string;
+      unavailableLabel: string;
+      noAvailabilityLabel: string;
+      timeColumnLabel: string;
+      dayLabels: Record<Weekday, { short: string; long: string }>;
       timezoneHref?: string;
       timezoneLabel?: string;
     };
@@ -514,10 +530,33 @@ const en: AppDictionary = {
     section1title: "Availability",
     section1subtitle: "I am commonly able to schedule a short meeting during the hours listed below.",
     intro:
-      "Green areas indicate my common availability (New York time, EST/EDT). If you need another window, send an email and I will do my best to accommodate you.",
+      "Use the interactive map to compare my recurring availability with your timezone. If you need another window, send an email and I will do my best to accommodate you.",
     availability: {
-      alt: "Calendar snapshot showing weekly availability with green blocks highlighting openings.",
+      alt: "Interactive availability map showing weekly time blocks with recurring openings.",
       description: "Weekly snapshot of common availability.",
+      legend: "Green blocks highlight recurring availability.",
+      primaryLabel: "Converted timezone",
+      referenceLabel: "Reference (New York)",
+      referenceButtonLabel: "View New York reference",
+      referenceDialogTitle: "Reference availability",
+      referenceDialogDescription: "Compare against the original New York time blocks.",
+      referenceCloseLabel: "Close reference",
+      timezoneDropdownLabel: "View in another timezone",
+      dropdownDescription: "Select the location you want to compare against Eastern Time. The grid updates instantly.",
+      windowLabelPrefix: "Visible hours:",
+      availableLabel: "commonly available",
+      unavailableLabel: "typically unavailable",
+      noAvailabilityLabel: "No recurring availability.",
+      timeColumnLabel: "Time",
+      dayLabels: {
+        sun: { short: "Sun", long: "Sunday" },
+        mon: { short: "Mon", long: "Monday" },
+        tue: { short: "Tue", long: "Tuesday" },
+        wed: { short: "Wed", long: "Wednesday" },
+        thu: { short: "Thu", long: "Thursday" },
+        fri: { short: "Fri", long: "Friday" },
+        sat: { short: "Sat", long: "Saturday" }
+      },
       timezoneHref: "https://www.timeanddate.com/worldclock/usa/new-york",
       timezoneLabel: "Check the current New York time"
     },
@@ -663,10 +702,33 @@ const ja: AppDictionary = {
     section1subtitle:
       "下記の時間帯であれば、短時間のミーティングを比較的柔軟に調整できます。",
     intro:
-      "緑色の部分は、私の主な空き時間を示しています（ニューヨーク時間、EST/EDT）。この時間帯以外をご希望の場合は、メールでお知らせください。可能な限り調整いたします。",
+      "インタラクティブなマップを使えば、タイムゾーンごとに私のよく空いている時間帯を自動で比較できます。別の時間帯をご希望の場合はメールでご相談ください。",
     availability: {
-      alt: "週ごとの空き時間を示したカレンダーのスナップショット。緑色のブロックが空いている時間帯を示しています。",
+      alt: "週間の空き時間を示すインタラクティブなマップ。緑色のブロックが頻繁に空いている時間帯です。",
       description: "通常の空き時間を示した週次スナップショット。",
+      legend: "緑のブロックが柔軟に対応できる時間帯です。",
+      primaryLabel: "変換後のタイムゾーン",
+      referenceLabel: "参照（ニューヨーク）",
+      referenceButtonLabel: "ニューヨーク基準を見る",
+      referenceDialogTitle: "参照スケジュール",
+      referenceDialogDescription: "ニューヨーク時間の元データと比較できます。",
+      referenceCloseLabel: "閉じる",
+      timezoneDropdownLabel: "別のタイムゾーンで表示",
+      dropdownDescription: "ニューヨーク時間と比較したい地域を選択すると、マップが即座に更新されます。",
+      windowLabelPrefix: "表示中の時間帯:",
+      availableLabel: "空いている時間",
+      unavailableLabel: "通常は空いていません",
+      noAvailabilityLabel: "定期的な空きはありません。",
+      timeColumnLabel: "時間",
+      dayLabels: {
+        sun: { short: "日", long: "日曜日" },
+        mon: { short: "月", long: "月曜日" },
+        tue: { short: "火", long: "火曜日" },
+        wed: { short: "水", long: "水曜日" },
+        thu: { short: "木", long: "木曜日" },
+        fri: { short: "金", long: "金曜日" },
+        sat: { short: "土", long: "土曜日" }
+      },
       timezoneHref: "https://www.timeanddate.com/worldclock/usa/new-york",
       timezoneLabel: "現在のニューヨーク時刻を確認する"
     },
@@ -813,10 +875,33 @@ const zh: AppDictionary = {
     section1subtitle:
       "我通常可以在下列时间段安排一次简短的会面。",
     intro:
-      "绿色区域表示我常见的可用时间（纽约时间，EST/EDT）。如果您需要其他时间段，请发邮件告诉我，我会尽量配合安排。",
+      "使用交互式图表即可自动换算到你的时区。如果你需要图表之外的时间，请发邮件告诉我，我会尽量配合安排。",
     availability: {
-      alt: "显示每周可用时间的日历快照，绿色方块标出可约时间。",
+      alt: "交互式图表展示每周的空档时间，绿色方块标出常见空档。",
       description: "常见可用时间的每周快照。",
+      legend: "绿色区块表示我经常在线的时间段。",
+      primaryLabel: "转换后的时区",
+      referenceLabel: "参考（纽约）",
+      referenceButtonLabel: "查看纽约参考时间",
+      referenceDialogTitle: "纽约参考时间",
+      referenceDialogDescription: "可与原始纽约时间块进行对比。",
+      referenceCloseLabel: "关闭",
+      timezoneDropdownLabel: "以其他时区查看",
+      dropdownDescription: "选择想与纽约时间对比的地区，图表会即时更新。",
+      windowLabelPrefix: "显示区间：",
+      availableLabel: "通常可用",
+      unavailableLabel: "通常不可用",
+      noAvailabilityLabel: "暂无固定空档。",
+      timeColumnLabel: "时间",
+      dayLabels: {
+        sun: { short: "日", long: "星期日" },
+        mon: { short: "一", long: "星期一" },
+        tue: { short: "二", long: "星期二" },
+        wed: { short: "三", long: "星期三" },
+        thu: { short: "四", long: "星期四" },
+        fri: { short: "五", long: "星期五" },
+        sat: { short: "六", long: "星期六" }
+      },
       timezoneHref: "https://www.timeanddate.com/worldclock/usa/new-york",
       timezoneLabel: "查看当前纽约时间"
     },

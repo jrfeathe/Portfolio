@@ -11,15 +11,10 @@ export type QuarterHourMap = Record<QuarterHourKey, boolean>;
 export type AvailabilityDay = Record<HourKey, QuarterHourMap>;
 export type AvailabilityMatrix = Record<Weekday, AvailabilityDay>;
 
-export type VisibleWindow = {
-  start: string;
-  end: string;
-};
-
 export type AvailabilityData = {
   timezone: string;
   intervalMinutes: number;
-  visibleWindow?: VisibleWindow;
+  hiddenHours?: string[];
   days: Partial<Record<Weekday, Partial<AvailabilityDay>>>;
 };
 
@@ -234,56 +229,117 @@ function formatQuarterIndex(index: number) {
   return `${hour}:${minute}`;
 }
 
-export function parseTimeToMinutes(value: string): number {
-  const [hour, minute] = value.split(":").map((part) => Number(part));
-  if (Number.isNaN(hour) || Number.isNaN(minute)) {
-    return 0;
+function normalizeHiddenHours(hidden?: string[]): number[] {
+  if (!hidden || !hidden.length) {
+    return [];
   }
-  return hour * 60 + minute;
+  const numbers = hidden
+    .map((hour) => Number(hour))
+    .filter((value) => Number.isInteger(value) && value >= 0 && value < 24);
+  return Array.from(new Set(numbers)).sort((a, b) => a - b);
 }
 
-export function getVisibleQuarterIndices(data: AvailabilityData = baseAvailability): number[] {
-  const window = data.visibleWindow;
-  if (!window) {
+function hoursToRanges(hours: number[]): Array<[number, number]> {
+  if (!hours.length) {
+    return [];
+  }
+  const ranges: Array<[number, number]> = [];
+  let start = hours[0];
+  let prev = hours[0];
+
+  for (let i = 1; i < hours.length; i += 1) {
+    const current = hours[i];
+    if (current === prev + 1) {
+      prev = current;
+      continue;
+    }
+    ranges.push([start, prev]);
+    start = current;
+    prev = current;
+  }
+  ranges.push([start, prev]);
+  return ranges;
+}
+
+function formatHour(value: number) {
+  return value.toString().padStart(2, "0");
+}
+
+function getHiddenHoursForTimezone(
+  data: AvailabilityData,
+  targetTimezone: string,
+  options?: { reference?: Temporal.ZonedDateTime | Temporal.Instant | string }
+): number[] {
+  const hidden = normalizeHiddenHours(data.hiddenHours);
+  if (!hidden.length) {
+    return [];
+  }
+
+  const referenceStart = getReferenceWeekStart(data.timezone, options?.reference);
+  const converted: number[] = [];
+
+  hidden.forEach((hour) => {
+    const convertedHour = referenceStart
+      .with({ hour, minute: 0, second: 0, millisecond: 0, microsecond: 0, nanosecond: 0 })
+      .withTimeZone(targetTimezone).hour;
+    converted.push(convertedHour);
+  });
+
+  return Array.from(new Set(converted)).sort((a, b) => a - b);
+}
+
+type VisibleOptions = { timezone?: string; reference?: Temporal.ZonedDateTime | Temporal.Instant | string };
+
+export function getVisibleQuarterIndices(
+  data: AvailabilityData = baseAvailability,
+  options?: VisibleOptions
+): number[] {
+  const targetTimezone = options?.timezone ?? data.timezone;
+  const hidden = getHiddenHoursForTimezone(data, targetTimezone, options);
+  if (!hidden.length) {
     return Array.from({ length: QUARTERS_PER_DAY }, (_, index) => index);
   }
 
-  const startMinutes = parseTimeToMinutes(window.start);
-  const endMinutes = parseTimeToMinutes(window.end);
-  const interval = INTERVAL_MINUTES;
-  const startIndex = Math.floor(startMinutes / interval);
-  const endIndex = Math.floor(endMinutes / interval);
+  const hiddenSet = new Set(hidden.map((hour) => hour.toString().padStart(2, "0")));
+  const quartersPerHour = 60 / INTERVAL_MINUTES;
+  const indices: number[] = [];
 
-  if (startMinutes === endMinutes) {
-    return Array.from({ length: QUARTERS_PER_DAY }, (_, index) => index);
+  for (let hour = 0; hour < 24; hour += 1) {
+    const hourKey = hour.toString().padStart(2, "0");
+    if (hiddenSet.has(hourKey)) {
+      continue;
+    }
+    for (let quarter = 0; quarter < quartersPerHour; quarter += 1) {
+      indices.push(hour * quartersPerHour + quarter);
+    }
   }
 
-  if (startMinutes < endMinutes) {
-    return Array.from(
-      { length: endIndex - startIndex },
-      (_, index) => startIndex + index
-    );
-  }
-
-  const firstSegment = Array.from(
-    { length: QUARTERS_PER_DAY - startIndex },
-    (_, index) => startIndex + index
-  );
-  const secondSegment = Array.from({ length: endIndex }, (_, index) => index);
-
-  return [...firstSegment, ...secondSegment];
+  return indices;
 }
 
-export function formatTimeRange(start: string, end: string) {
-  return `${start} – ${end}`;
-}
-
-export function formatVisibleWindowLabel(data: AvailabilityData = baseAvailability) {
-  const window = data.visibleWindow;
-  if (!window) {
+export function formatVisibleWindowLabel(
+  data: AvailabilityData = baseAvailability,
+  options?: VisibleOptions
+): string | null {
+  const targetTimezone = options?.timezone ?? data.timezone;
+  const hidden = getHiddenHoursForTimezone(data, targetTimezone, options);
+  if (!hidden.length) {
     return null;
   }
-  return formatTimeRange(window.start, window.end);
+
+  const ranges = hoursToRanges(hidden);
+  if (!ranges.length) {
+    return null;
+  }
+
+  const formatted = ranges
+    .map(([start, end]) => {
+      const endDisplay = (end + 1) % 24;
+      return `${formatHour(start)}:00 – ${formatHour(endDisplay)}:00`;
+    })
+    .join(", ");
+
+  return `Hidden hours: ${formatted}`;
 }
 
 export function getLocaleDefaultTimezone(locale: Locale) {

@@ -10,7 +10,7 @@ import {
 const fixture: AvailabilityData = {
   timezone: "America/New_York",
   intervalMinutes: 15,
-  visibleWindow: { start: "08:00", end: "00:00" },
+  hiddenHours: ["00", "01", "02", "03", "04", "05", "06", "07"],
   days: {
     sun: {
       "23": { "0": false, "15": false, "30": false, "45": true }
@@ -38,6 +38,15 @@ describe("availability helpers", () => {
     expect(indices[indices.length - 1]).toBe(95); // 23:45
   });
 
+  it("hides the configured hours after converting to the target timezone", () => {
+    const indices = getVisibleQuarterIndices(fixture, {
+      timezone: "America/Los_Angeles",
+      reference: "2025-01-06T00:00:00[America/New_York]"
+    });
+    expect(indices[0]).toBe(20); // 05:00 PT (08:00 ET)
+    expect(indices[indices.length - 1]).toBe(83); // 20:45 PT (23:45 ET)
+  });
+
   it("summarizes continuous availability ranges", () => {
     const matrix = buildAvailabilityMatrix(fixture);
     const summaries = summarizeAvailability(matrix);
@@ -47,6 +56,25 @@ describe("availability helpers", () => {
   });
 
   it("returns a formatted label for the visible window", () => {
-    expect(formatVisibleWindowLabel(fixture)).toBe("08:00 – 00:00");
+    expect(formatVisibleWindowLabel(fixture)).toBe("Hidden hours: 00:00 – 08:00");
+  });
+
+  it("formats the hidden hours label in the target timezone", () => {
+    expect(
+      formatVisibleWindowLabel(fixture, {
+        timezone: "America/Los_Angeles",
+        reference: "2025-01-06T00:00:00[America/New_York]"
+      })
+    ).toBe("Hidden hours: 00:00 – 05:00, 21:00 – 00:00");
+  });
+
+  it("orders wraparound windows from midnight upward", () => {
+    const wrapFixture: AvailabilityData = {
+      ...fixture,
+      hiddenHours: ["01", "02", "03", "04", "05", "06", "07", "08"]
+    };
+    const indices = getVisibleQuarterIndices(wrapFixture);
+    expect(indices[0]).toBe(0); // midnight segment shown first
+    expect(indices[indices.length - 1]).toBe(95); // 23:45
   });
 });

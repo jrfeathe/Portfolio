@@ -7,7 +7,6 @@ import type { ReactNode } from "react";
 import {
   buildAvailabilityMatrix,
   convertAvailabilityMatrix,
-  formatVisibleWindowLabel,
   getAvailabilityData,
   getLocaleDefaultTimezone,
   getOffsetLabel,
@@ -46,6 +45,7 @@ const HEADER_OFFSET_REM = 3;
 
 type QuarterMetadata = {
   index: number;
+  row: number;
   hour: string;
   minute: string;
   label: string;
@@ -58,7 +58,10 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
   const defaultTimezone = getLocaleDefaultTimezone(locale);
   const [selectedTimezone, setSelectedTimezone] = useState(defaultTimezone);
   const [showReference, setShowReference] = useState(false);
-  const visibleIndices = useMemo(() => getVisibleQuarterIndices(data), [data]);
+  const visibleIndices = useMemo(
+    () => getVisibleQuarterIndices(data, { timezone: selectedTimezone, reference: referenceDate }),
+    [data, selectedTimezone, referenceDate]
+  );
   const quarterMeta = useMemo(() => buildQuarterMetadata(visibleIndices), [visibleIndices]);
   const [timezoneOptions, setTimezoneOptions] = useState(() => {
     const options = ensureDefaultTimezone(getTimezoneOptions(true), defaultTimezone);
@@ -85,7 +88,7 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
   const baseLabel = formatTimezoneName(data.timezone);
   const convertedOffset = getOffsetLabel(selectedTimezone);
   const baseOffset = getOffsetLabel(data.timezone);
-  const windowLabel = formatVisibleWindowLabel(data);
+  const windowLabel = null;
   const dropdownLabelId = useId();
   const dialogId = useId();
 
@@ -258,8 +261,8 @@ function AvailabilityGrid({
   copy,
   quarterMeta
 }: AvailabilityGridProps) {
-  const firstVisibleIndex = quarterMeta[0]?.index ?? 0;
-  const labelOffsets = computeLabelOffsets(quarterMeta, firstVisibleIndex);
+  const firstVisibleRow = quarterMeta[0]?.row ?? 0;
+  const labelOffsets = computeLabelOffsets(quarterMeta, firstVisibleRow);
 
   return (
     <div className="overflow-auto">
@@ -291,12 +294,20 @@ function AvailabilityGrid({
               </div>
             );
           })}
-          {quarterMeta.map((meta) => {
-            const needsGap = isHourBreak(meta, firstVisibleIndex);
+          {quarterMeta.map((meta, idx) => {
+            const previous = quarterMeta[idx - 1];
+            const needsGap = isHourBreak(meta, firstVisibleRow);
+            const isHiddenGap =
+              needsGap && previous ? meta.index - previous.index > 1 : false;
+            const gapHeight = HOUR_GAP_REM * (isHiddenGap ? 4 : 1);
             return (
               <Fragment key={meta.index}>
                 {needsGap ? (
-                  <div className="col-span-full h-1" aria-hidden="true" />
+                  <div
+                    className="col-span-full"
+                    style={{ height: `${gapHeight}rem` }}
+                    aria-hidden="true"
+                  />
                 ) : null}
                 {WEEKDAYS.map((day) => {
                   const quarterKey = minuteToQuarterKey[meta.minute];
@@ -329,7 +340,7 @@ function AvailabilityGrid({
 }
 
 function buildQuarterMetadata(indices: number[]): QuarterMetadata[] {
-  return indices.map((index) => {
+  return indices.map((index, row) => {
     const totalMinutes = index * INTERVAL_MINUTES;
     const hour = Math.floor(totalMinutes / MINUTES_PER_HOUR)
       .toString()
@@ -337,6 +348,7 @@ function buildQuarterMetadata(indices: number[]): QuarterMetadata[] {
     const minute = (totalMinutes % MINUTES_PER_HOUR).toString().padStart(2, "0");
     return {
       index,
+      row,
       hour,
       minute,
       label: `${hour}:${minute}`
@@ -384,23 +396,29 @@ function ensureDefaultTimezone(options: string[], defaultTimezone: string) {
   return Array.from(new Set(list));
 }
 
-function isHourBreak(meta: QuarterMetadata, firstVisibleIndex: number) {
+function isHourBreak(meta: QuarterMetadata, firstVisibleRow: number) {
   if (meta.minute !== "00") {
     return false;
   }
-  return meta.index !== firstVisibleIndex;
+  return meta.row !== firstVisibleRow;
 }
 
-function computeLabelOffsets(quarterMeta: QuarterMetadata[], firstVisibleIndex: number) {
-  let gapCount = 0;
-  return quarterMeta.map((meta) => {
+function computeLabelOffsets(quarterMeta: QuarterMetadata[], firstVisibleRow: number) {
+  let gapOffset = 0;
+  return quarterMeta.map((meta, idx) => {
+    let gapHeight = 0;
+    if (isHourBreak(meta, firstVisibleRow)) {
+      const previous = quarterMeta[idx - 1];
+      const isHiddenGap = previous ? meta.index - previous.index > 1 : false;
+      gapHeight = HOUR_GAP_REM * (isHiddenGap ? 4 : 1);
+      gapOffset += gapHeight;
+    }
+
     const offset =
       HEADER_OFFSET_REM +
-      (meta.index - firstVisibleIndex) * ROW_HEIGHT_REM +
-      gapCount * HOUR_GAP_REM;
-    if (isHourBreak(meta, firstVisibleIndex)) {
-      gapCount += 1;
-    }
+      (meta.row - firstVisibleRow) * ROW_HEIGHT_REM +
+      gapOffset;
+
     return { meta, offset };
   });
 }
@@ -416,9 +434,7 @@ function TimeColumnOverlay({ copy, labelOffsets }: TimeColumnOverlayProps) {
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 left-0 w-10"
     >
-      <span className="pointer-events-auto absolute left-0 top-2 text-[0.65rem] font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
-        {copy.timeColumnLabel}
-      </span>
+      <span className="pointer-events-auto absolute left-0 top-1 text-[0.65rem] font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted" />
       {labelOffsets.map(({ meta, offset }) => {
         const label = formatRowLabel(meta.hour, meta.minute);
         if (!label) {

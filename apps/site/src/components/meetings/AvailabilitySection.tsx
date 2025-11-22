@@ -1,7 +1,7 @@
 'use client';
 
 import { Temporal } from "@js-temporal/polyfill";
-import { Fragment, useEffect, useId, useMemo, useState } from "react";
+import { Fragment, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 
 import {
@@ -89,52 +89,151 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
   const baseOffset = getOffsetLabel(data.timezone);
   const windowLabel = null;
   const dropdownLabelId = useId();
+  const dropdownButtonId = useId();
+  const dropdownSearchId = useId();
   const dialogId = useId();
+  const [timezoneSearch, setTimezoneSearch] = useState("");
+  const [isPickerOpen, setIsPickerOpen] = useState(false);
+  const pickerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!isPickerOpen) {
+      setTimezoneSearch("");
+    }
+  }, [isPickerOpen]);
+
+  useEffect(() => {
+    function handleClick(event: MouseEvent) {
+      if (!isPickerOpen) {
+        return;
+      }
+      if (pickerRef.current && !pickerRef.current.contains(event.target as Node)) {
+        setIsPickerOpen(false);
+        setTimezoneSearch("");
+      }
+    }
+
+    function handleKey(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsPickerOpen(false);
+        setTimezoneSearch("");
+      }
+    }
+
+    document.addEventListener("mousedown", handleClick);
+    document.addEventListener("keydown", handleKey);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("keydown", handleKey);
+    };
+  }, [isPickerOpen]);
+
+  const handleTimezoneSelect = (value: string) => {
+    setSelectedTimezone(value);
+    setIsPickerOpen(false);
+    setTimezoneSearch("");
+  };
 
   return (
     <figure className="rounded-3xl border border-border bg-surface p-2 text-sm text-text dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-      <div className="space-y-2 rounded-2xl bg-muted/30 p-1 px-3 dark:bg-dark-muted/30">
+      <div className="space-y-2 rounded-2xl bg-muted/30 p-1 px-3 dark:bg-dark-muted/30" ref={pickerRef}>
         <label
-          htmlFor="availability-timezone"
+          htmlFor={dropdownButtonId}
           id={dropdownLabelId}
           className="text-xs font-medium text-textMuted dark:text-dark-textMuted"
         >
           {copy.timezoneDropdownLabel}
         </label>
-        <select
-          id="availability-timezone"
-          className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm font-medium text-text shadow-sm outline-none transition hover:border-accent focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/30 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:focus-visible:border-dark-accent dark:focus-visible:ring-dark-accent/40"
-          aria-describedby={dropdownLabelId}
-          value={selectedTimezone}
-          onChange={(event) => setSelectedTimezone(event.target.value)}
-        >
-          {(() => {
-            const pinnedOptions = Array.from(
-              new Set([defaultTimezone, ...PINNED_TIMEZONES.filter((tz) => timezoneOptions.includes(tz))])
-            );
-            const remainingOptions = timezoneOptions;
-            return (
-              <>
-                <optgroup label="Pinned">
-                  {pinnedOptions.map((value) => (
-                    <option key={`pinned-${value}`} value={value}>
-                      {formatTimezoneName(value)}
-                    </option>
-                  ))}
-                </optgroup>
-                {remainingOptions.length ? (
-                  <optgroup label="All timezones">
-                    {remainingOptions.map((value) => (
-                      <option key={value} value={value}>
-                        {formatTimezoneName(value)}
-                      </option>
-                    ))}
-                  </optgroup>
-                ) : null}
-              </>
-            );
-          })()}
-        </select>
+        <div className="relative">
+          <button
+            type="button"
+            id={dropdownButtonId}
+            aria-labelledby={`${dropdownLabelId} ${dropdownButtonId}`}
+            aria-haspopup="listbox"
+            aria-expanded={isPickerOpen}
+            aria-controls={`${dropdownButtonId}-listbox`}
+            onClick={() => setIsPickerOpen((open) => !open)}
+            className="flex w-full items-center justify-between rounded-xl border border-border bg-surface px-3 py-2 text-sm font-medium text-text shadow-sm outline-none transition hover:border-accent focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/30 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:focus-visible:border-dark-accent dark:focus-visible:ring-dark-accent/40"
+          >
+            <span className="truncate">{formatTimezoneName(selectedTimezone)}</span>
+            <span aria-hidden="true" className="ml-2 text-xs text-textMuted dark:text-dark-textMuted">
+              ▾
+            </span>
+          </button>
+          {isPickerOpen ? (
+            <div
+              id={`${dropdownButtonId}-listbox`}
+              role="listbox"
+              aria-labelledby={dropdownLabelId}
+              className="absolute z-20 mt-1 w-full rounded-xl border border-border bg-surface shadow-lg dark:border-dark-border dark:bg-dark-surface"
+            >
+              <div className="border-b border-border/50 p-2 dark:border-dark-border/50">
+                <input
+                  id={dropdownSearchId}
+                  type="text"
+                  value={timezoneSearch}
+                  onChange={(event) => setTimezoneSearch(event.target.value)}
+                  placeholder="Search timezones"
+                  aria-label="Search timezones"
+                  className="w-full rounded-lg border border-border bg-muted/60 px-3 py-2 text-sm text-text outline-none transition hover:border-accent focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/30 dark:border-dark-border dark:bg-dark-muted/60 dark:text-dark-text dark:hover:border-dark-accent dark:focus-visible:border-dark-accent dark:focus-visible:ring-dark-accent/40"
+                  autoFocus
+                />
+              </div>
+              {(() => {
+                const pinnedOptions = Array.from(
+                  new Set([defaultTimezone, ...PINNED_TIMEZONES.filter((tz) => timezoneOptions.includes(tz))])
+                );
+                const normalizedQuery = timezoneSearch.trim().toLowerCase();
+                const isSearching = normalizedQuery.length > 0;
+                const remainingOptions = timezoneOptions.filter((tz) =>
+                  formatTimezoneName(tz).toLowerCase().includes(normalizedQuery)
+                );
+
+                const renderOption = (value: string, isPinned: boolean) => {
+                  const isSelected = value === selectedTimezone;
+                  return (
+                    <button
+                      key={`${isPinned ? "pinned" : "all"}-${value}`}
+                      type="button"
+                      role="option"
+                      aria-selected={isSelected}
+                      onClick={() => handleTimezoneSelect(value)}
+                      className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition hover:bg-muted/60 dark:hover:bg-dark-muted/50 ${
+                        isSelected ? "bg-accent/10 text-accent dark:bg-dark-accent/10 dark:text-dark-accent" : ""
+                      }`}
+                    >
+                      <span className="truncate">{formatTimezoneName(value)}</span>
+                      {isSelected ? (
+                        <span className="text-[0.65rem] font-semibold text-accent dark:text-dark-accent">Selected</span>
+                      ) : null}
+                    </button>
+                  );
+                };
+
+                return (
+                  <div className="max-h-64 overflow-y-auto py-1">
+                    {!isSearching ? (
+                      <>
+                        <div className="px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
+                          Pinned
+                        </div>
+                        {pinnedOptions.map((value) => renderOption(value, true))}
+                      </>
+                    ) : null}
+                    <div className="px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
+                      All timezones
+                    </div>
+                    {remainingOptions.length ? (
+                      remainingOptions.map((value) => renderOption(value, false))
+                    ) : (
+                      <div className="px-3 py-2 text-sm text-textMuted dark:text-dark-textMuted">No matches</div>
+                    )}
+                  </div>
+                );
+              })()}
+            </div>
+          ) : null}
+        </div>
       </div>
 
       <div className="mt-1 px-3">

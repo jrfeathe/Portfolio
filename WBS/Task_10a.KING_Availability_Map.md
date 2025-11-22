@@ -125,3 +125,42 @@ Replace the static When2Meet screenshot on `/[locale]/meetings` with an interact
 - **Download/export** — Not required; the visual + textual summaries suffice for now.
 
 Document owner: Jack Featherstone. Update this spec if scope or dependencies change during 10a.KING.
+
+---
+
+### 10a.KING: Timezone Search Performance Fix — lag analysis & options
+
+**Prompt recap:** “Is it possible to change how the math is done? For example it seems like we could generate an intermediate file based on weekly.json. Currently weekly.json is just a simple way for me to assign the dataset. It won't be changed very often. The intermediate file would convert weekly.json into a base anchor point, at New York Sunday 00, and additive references with the true false values. This file would only need to be generated when changing weekly.json and could be done with a script. Then we would save calculations for timezone conversions, only doing one for the anchor point rather than a conversion for every point, then just using addition for the rest. Is this feasible?”
+
+**Response summary:** Feasible with DST caveats. Generate an intermediate artifact from `weekly.json` using a fixed calendar anchor (e.g., a specific Sunday 00:00 in America/New_York) storing quarter indices plus the reference Instant. At runtime, compute a per-timezone offset map for the current week: constant shift when no DST change, piecewise shifts when crossing DST. Cache converted matrices per timezone so conversions are paid once. Pitfalls: need a real calendar date so DST rules are known; handle within-week DST transitions; regenerate the artifact when `weekly.json` changes.
+
+**Options to reduce the lag spike:**
+- Cache per timezone selection: memoize `convertAvailabilityMatrix` + `summarizeAvailability` by timezone/reference so each TZ conversion is paid once per session.
+- Precompute base matrix once: avoid rebuilding the canonical matrix inside `convertAvailabilityMatrix`; build it once on load.
+- Intermediate artifact (build-time): implement the anchored/pre-shifted file described above; on selection, apply a precomputed shift map rather than per-cell Temporal conversions. Include DST-aware piecewise shifts.
+- Reference-week offset detection: for the current reference week, compute offsets only where transitions occur. If no DST change, shift is constant; if a change exists, only pre/post offsets matter.
+- Move heavy work off the main thread: run conversion/summary in a Web Worker to keep the UI responsive even if computation cost persists.
+- Trim render churn: ensure `AvailabilityGrid` props are memoized, keys stable, and state updates minimal; the grid is already windowed to visible quarters.
+
+**Follow-up (approximation allowed):**
+- If DST drift is acceptable, simplify to a single offset per timezone for the reference week: one offset lookup, shift all indices, accept ±1 hour error near DST changes.
+- Precompute the NY matrix once, and cache per-timezone shifted matrices; no per-cell Temporal work after the first selection.
+- Optional: use an intermediate artifact of quarter indices anchored to a fixed NY Sunday; remap via the constant offset at runtime.
+- Guardrails: prefer a non-transition reference week; optionally detect a transition week and fall back to the exact method for that week.
+
+**Follow-up (per-day anchor as middle ground):**
+- Compute a concrete date per day in the reference week (e.g., upcoming Sun–Sat in America/New_York).
+- For each selected timezone, take one offset per day and shift that day’s quarters by that constant offset.
+- Impact: only the day containing a DST change may be off by ~1 hour; other days stay correct.
+- Optional refinement: if a DST change is detected on that day, split into pre/post offsets just for that day.
+
+**Planned implementation (decided approach):**
+- Anchor seven reference instants (one per day, upcoming Sun–Sat in America/New_York) and compute a per-day offset for each selected timezone.
+- Apply a constant shift per day to remap quarter-hour indices; this confines any DST drift to the transition day only.
+- DST refinement: detect if a day has an offset change; when detected, assume the change has already occurred and ignore early-hours drift, effectively biasing the day to the post-change offset for simplicity.
+- Cache shifted matrices per timezone to avoid repeated work; rebuild the cache only when `weekly.json` changes or the reference week rolls forward.
+
+**Implementation status:**
+- Conversion now uses seven per-day offsets (anchored to the reference NY week) with DST detection that biases to the post-change offset on transition days.
+- Canonical base matrix is reused; conversions are cached per timezone/reference.
+- Remaining follow-ups: add a DST-transition unit test to validate the biasing behavior and consider worker offloading if UI jank remains.

@@ -138,50 +138,110 @@ type ConvertOptions = {
   reference?: Temporal.ZonedDateTime | Temporal.Instant | string;
 };
 
+const canonicalMatrix = buildAvailabilityMatrix(baseAvailability);
+const conversionCache = new Map<string, AvailabilityMatrix>();
+
+type DayShift = { day: Weekday; shiftQuarters: number };
+
+function getPerDayShifts(
+  baseTimezone: string,
+  targetTimezone: string,
+  options?: ConvertOptions
+): DayShift[] {
+  const referenceStart = getReferenceWeekStart(baseTimezone, options?.reference);
+
+  return WEEKDAYS.map((day, dayIndex) => {
+    const baseDay = referenceStart.add({ days: dayIndex });
+    const baseOffsetStart = baseDay.offsetNanoseconds;
+    const targetOffsetStart = baseDay.withTimeZone(targetTimezone).offsetNanoseconds;
+
+    // Check midday to detect a DST change on this day; if present, bias to post-change offset.
+    const baseMidday = baseDay.add({ hours: 12 });
+    const baseOffsetMidday = baseMidday.offsetNanoseconds;
+    const targetOffsetMidday = baseMidday.withTimeZone(targetTimezone).offsetNanoseconds;
+
+    const diffStart = targetOffsetStart - baseOffsetStart;
+    const diffMidday = targetOffsetMidday - baseOffsetMidday;
+    const appliedDiff = diffStart !== diffMidday ? diffMidday : diffStart;
+
+    const shiftMinutes = appliedDiff / 60_000_000_000;
+    const shiftQuarters = Math.round(shiftMinutes / INTERVAL_MINUTES);
+
+    return { day, shiftQuarters };
+  });
+}
+
+const WEEK_QUARTERS = QUARTERS_PER_DAY * WEEKDAYS.length;
+
+function getReferenceKey(reference?: Temporal.ZonedDateTime | Temporal.Instant | string) {
+  if (!reference) {
+    return "default";
+  }
+  if (typeof reference === "string") {
+    return reference;
+  }
+  return reference.toString();
+}
+
 export function convertAvailabilityMatrix(
   data: AvailabilityData,
   targetTimezone: string,
   options?: ConvertOptions
 ): AvailabilityMatrix {
   if (targetTimezone === data.timezone) {
-    return buildAvailabilityMatrix(data);
+    return data === baseAvailability ? canonicalMatrix : buildAvailabilityMatrix(data);
   }
 
-  const sourceMatrix = buildAvailabilityMatrix(data);
+  const cacheKey =
+    data === baseAvailability ? `${targetTimezone}|${getReferenceKey(options?.reference)}` : null;
+  if (cacheKey && conversionCache.has(cacheKey)) {
+    return conversionCache.get(cacheKey) as AvailabilityMatrix;
+  }
+
+  const sourceMatrix = data === baseAvailability ? canonicalMatrix : buildAvailabilityMatrix(data);
+  const dayShifts = getPerDayShifts(data.timezone, targetTimezone, options);
   const converted = createEmptyMatrix();
-  const referenceStart = getReferenceWeekStart(data.timezone, options?.reference);
+  const quartersPerHour = 60 / INTERVAL_MINUTES;
 
   WEEKDAYS.forEach((day, dayIndex) => {
-    Object.entries(sourceMatrix[day]).forEach(([hourKey, quarterMap]) => {
-      const hour = Number(hourKey);
-      QUARTER_STRINGS.forEach((quarter) => {
-          if (!quarterMap[quarter]) {
-            return;
-          }
+    const dayShift = dayShifts[dayIndex]?.shiftQuarters ?? 0;
+    const sourceDay = sourceMatrix[day];
 
-          const minute = Number(quarter);
-          const block = referenceStart
-            .add({ days: dayIndex })
-            .with({
-              hour,
-              minute,
-              second: 0,
-              millisecond: 0,
-              microsecond: 0,
-              nanosecond: 0
-            });
-          const target = block.withTimeZone(targetTimezone);
-          const targetDayIndex = target.dayOfWeek % 7;
-          const targetDay = WEEKDAYS[targetDayIndex];
-          const targetHour = target.hour.toString().padStart(2, "0");
-          const targetMinuteKey = toQuarterKey(target.minute);
-          if (!targetMinuteKey) {
-            return;
-          }
-          converted[targetDay][targetHour][targetMinuteKey] = true;
+    Object.entries(sourceDay).forEach(([hourKey, quarterMap]) => {
+      const hour = Number(hourKey);
+      if (Number.isNaN(hour)) {
+        return;
+      }
+      QUARTER_STRINGS.forEach((quarterKey, quarterIndex) => {
+        if (!quarterMap[quarterKey]) {
+          return;
+        }
+
+        const baseQuarterIndex = hour * quartersPerHour + quarterIndex;
+        const totalIndex = dayIndex * QUARTERS_PER_DAY + baseQuarterIndex + dayShift;
+        const normalizedTotal = ((totalIndex % WEEK_QUARTERS) + WEEK_QUARTERS) % WEEK_QUARTERS;
+
+        const targetDayIndex = Math.floor(normalizedTotal / QUARTERS_PER_DAY);
+        const targetQuarterIndex = normalizedTotal % QUARTERS_PER_DAY;
+
+        const targetHour = Math.floor(targetQuarterIndex / quartersPerHour)
+          .toString()
+          .padStart(2, "0");
+        const minute = (targetQuarterIndex % quartersPerHour) * INTERVAL_MINUTES;
+        const targetQuarterKey = toQuarterKey(minute);
+        if (!targetQuarterKey) {
+          return;
+        }
+
+        const targetDay = WEEKDAYS[targetDayIndex];
+        converted[targetDay][targetHour][targetQuarterKey] = true;
       });
     });
   });
+
+  if (cacheKey) {
+    conversionCache.set(cacheKey, converted);
+  }
 
   return converted;
 }

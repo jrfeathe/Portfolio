@@ -23,6 +23,23 @@ const fixture: AvailabilityData = {
 };
 
 describe("availability helpers", () => {
+  it("converts availability with per-day DST bias (day-of change uses post-change offset)", () => {
+    const dstFixture: AvailabilityData = {
+      timezone: "America/New_York",
+      intervalMinutes: 15,
+      days: {
+        sun: { "15": { "0": true, "15": false, "30": false, "45": false } } // 3:00 PM ET on DST start day
+      }
+    };
+
+    const converted = convertAvailabilityMatrix(dstFixture, "Asia/Tokyo", {
+      reference: "2025-03-09T00:00:00[America/New_York]" // DST starts this day
+    });
+
+    // Bias to post-change offset: 15:00 ET (UTC-4) -> 04:00 Monday in Tokyo.
+    expect(converted.mon["04"]["0"]).toBe(true);
+  });
+
   it("converts availability into the requested timezone with DST awareness", () => {
     const converted = convertAvailabilityMatrix(fixture, "Asia/Tokyo", {
       reference: "2025-03-09T00:00:00[America/New_York]"

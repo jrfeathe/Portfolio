@@ -140,7 +140,7 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
         <label
           htmlFor={dropdownButtonId}
           id={dropdownLabelId}
-          className="text-xs font-medium text-textMuted dark:text-dark-textMuted"
+          className="text-xs font-medium px-3 text-textMuted dark:text-dark-textMuted"
         >
           {copy.timezoneDropdownLabel}
         </label>

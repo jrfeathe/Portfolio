@@ -42,6 +42,7 @@ const MINUTES_PER_HOUR = 60;
 const ROW_HEIGHT_REM = 0.5;
 const HOUR_GAP_REM = 0.25;
 const HEADER_OFFSET_REM = 3;
+const PINNED_TIMEZONES = ["America/New_York", "Asia/Tokyo", "Asia/Shanghai"];
 
 type QuarterMetadata = {
   index: number;
@@ -63,18 +64,16 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
     [data, selectedTimezone, referenceDate]
   );
   const quarterMeta = useMemo(() => buildQuarterMetadata(visibleIndices), [visibleIndices]);
-  const [timezoneOptions, setTimezoneOptions] = useState(() => {
-    const options = ensureDefaultTimezone(getTimezoneOptions(true), defaultTimezone);
-    return options;
-  });
+  const [timezoneOptions, setTimezoneOptions] = useState(() =>
+    ensureDefaultTimezone(getTimezoneOptions(true), defaultTimezone)
+  );
 
   useEffect(() => {
     setSelectedTimezone(defaultTimezone);
   }, [defaultTimezone]);
 
   useEffect(() => {
-    const fullList = ensureDefaultTimezone(getTimezoneOptions(), defaultTimezone);
-    setTimezoneOptions(fullList);
+    setTimezoneOptions(ensureDefaultTimezone(getTimezoneOptions(), defaultTimezone));
   }, [defaultTimezone]);
 
   const convertedMatrix = useMemo(
@@ -109,11 +108,32 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
           value={selectedTimezone}
           onChange={(event) => setSelectedTimezone(event.target.value)}
         >
-          {timezoneOptions.map((value) => (
-            <option key={value} value={value}>
-              {formatTimezoneName(value)}
-            </option>
-          ))}
+          {(() => {
+            const pinnedOptions = Array.from(
+              new Set([defaultTimezone, ...PINNED_TIMEZONES.filter((tz) => timezoneOptions.includes(tz))])
+            );
+            const remainingOptions = timezoneOptions;
+            return (
+              <>
+                <optgroup label="Pinned">
+                  {pinnedOptions.map((value) => (
+                    <option key={`pinned-${value}`} value={value}>
+                      {formatTimezoneName(value)}
+                    </option>
+                  ))}
+                </optgroup>
+                {remainingOptions.length ? (
+                  <optgroup label="All timezones">
+                    {remainingOptions.map((value) => (
+                      <option key={value} value={value}>
+                        {formatTimezoneName(value)}
+                      </option>
+                    ))}
+                  </optgroup>
+                ) : null}
+              </>
+            );
+          })()}
         </select>
       </div>
 

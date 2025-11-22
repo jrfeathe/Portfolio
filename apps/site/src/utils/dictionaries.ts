@@ -528,9 +528,9 @@ const en: AppDictionary = {
     title: "Contact",
     subtitle: "I'm open to answering any questions you may have, in any format that works for you.",
     section1title: "Availability",
-    section1subtitle: "I am commonly able to schedule a short meeting during the hours listed below.",
+    section1subtitle: "I am commonly able to schedule a short meeting during the hours listed below. Please let me know if you need another time, and I will try to accommodate you!",
     intro:
-      "Use the interactive map to compare my recurring availability with your timezone. If you need another window, send an email and I will do my best to accommodate you.",
+      "",
     availability: {
       alt: "Interactive availability map showing weekly time blocks with recurring openings.",
       description: "Weekly snapshot of common availability.",
@@ -542,7 +542,7 @@ const en: AppDictionary = {
       referenceDialogDescription: "Compare against the original New York time blocks.",
       referenceCloseLabel: "Close reference",
       timezoneDropdownLabel: "View in another timezone",
-      dropdownDescription: "Select the location you want to compare against Eastern Time. The grid updates instantly.",
+      dropdownDescription: "",
       windowLabelPrefix: "Visible hours:",
       availableLabel: "commonly available",
       unavailableLabel: "typically unavailable",
@@ -700,9 +700,9 @@ const ja: AppDictionary = {
       "ご都合のよい方法であれば、どのようなご質問にも喜んでお答えします。",
     section1title: "面談可能時間",
     section1subtitle:
-      "下記の時間帯であれば、短時間のミーティングを比較的柔軟に調整できます。",
+      "下記の時間帯であれば、短時間のミーティングを比較的柔軟に調整できます。I am commonly able to schedule a short meeting during the hours listed below. Please let me know if you need another time, and I will try to accommodate you!",
     intro:
-      "インタラクティブなマップを使えば、タイムゾーンごとに私のよく空いている時間帯を自動で比較できます。別の時間帯をご希望の場合はメールでご相談ください。",
+      "",
     availability: {
       alt: "週間の空き時間を示すインタラクティブなマップ。緑色のブロックが頻繁に空いている時間帯です。",
       description: "通常の空き時間を示した週次スナップショット。",
@@ -714,7 +714,7 @@ const ja: AppDictionary = {
       referenceDialogDescription: "ニューヨーク時間の元データと比較できます。",
       referenceCloseLabel: "閉じる",
       timezoneDropdownLabel: "別のタイムゾーンで表示",
-      dropdownDescription: "ニューヨーク時間と比較したい地域を選択すると、マップが即座に更新されます。",
+      dropdownDescription: "",
       windowLabelPrefix: "表示中の時間帯:",
       availableLabel: "空いている時間",
       unavailableLabel: "通常は空いていません",
@@ -873,9 +873,9 @@ const zh: AppDictionary = {
       "欢迎通过适合您的任何方式联系我，我很乐意回答您的任何问题。",
     section1title: "可会面时间",
     section1subtitle:
-      "我通常可以在下列时间段安排一次简短的会面。",
+      "我通常可以在下列时间段安排一次简短的会面。I am commonly able to schedule a short meeting during the hours listed below. Please let me know if you need another time, and I will try to accommodate you!",
     intro:
-      "使用交互式图表即可自动换算到你的时区。如果你需要图表之外的时间，请发邮件告诉我，我会尽量配合安排。",
+      "",
     availability: {
       alt: "交互式图表展示每周的空档时间，绿色方块标出常见空档。",
       description: "常见可用时间的每周快照。",
@@ -887,7 +887,7 @@ const zh: AppDictionary = {
       referenceDialogDescription: "可与原始纽约时间块进行对比。",
       referenceCloseLabel: "关闭",
       timezoneDropdownLabel: "以其他时区查看",
-      dropdownDescription: "选择想与纽约时间对比的地区，图表会即时更新。",
+      dropdownDescription: "",
       windowLabelPrefix: "显示区间：",
       availableLabel: "通常可用",
       unavailableLabel: "通常不可用",

@@ -93,8 +93,8 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
   const dialogId = useId();
 
   return (
-    <figure className="rounded-3xl border border-border bg-surface p-4 text-sm text-text dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-      <div className="space-y-3 rounded-2xl bg-muted/30 p-4 dark:bg-dark-muted/30">
+    <figure className="rounded-3xl border border-border bg-surface p-2 text-sm text-text dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
+      <div className="space-y-2 rounded-2xl bg-muted/30 p-1 px-3 dark:bg-dark-muted/30">
         <label
           htmlFor="availability-timezone"
           id={dropdownLabelId}
@@ -102,7 +102,6 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
         >
           {copy.timezoneDropdownLabel}
         </label>
-        <p className="text-xs text-textMuted dark:text-dark-textMuted">{copy.dropdownDescription}</p>
         <select
           id="availability-timezone"
           className="w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm font-medium text-text shadow-sm outline-none transition hover:border-accent focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/30 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:focus-visible:border-dark-accent dark:focus-visible:ring-dark-accent/40"
@@ -118,7 +117,7 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
         </select>
       </div>
 
-      <div className="mt-6">
+      <div className="mt-1 px-3">
         <MatrixCard
           title={`${copy.primaryLabel} · ${convertedLabel}`}
           timezone={selectedTimezone}
@@ -129,7 +128,7 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
           copy={copy}
           quarterMeta={quarterMeta}
         />
-        <div className="mt-4">
+        <div className="mt-3">
           <button
             type="button"
             onClick={() => setShowReference(true)}
@@ -143,7 +142,7 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
         </div>
       </div>
 
-      <figcaption className="mt-6 space-y-2 text-center text-xs text-textMuted dark:text-dark-textMuted">
+      <figcaption className="mt-2 space-y-2 text-center text-xs text-textMuted dark:text-dark-textMuted">
         <p>
           {copy.legend}{" "}
           {copy.timezoneHref ? (
@@ -213,7 +212,7 @@ function MatrixCard({
 
   return (
     <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm dark:border-dark-border dark:bg-dark-surface">
-      <header className="mb-4 space-y-1">
+      <header className="mb-0">
         <h3 className="text-base font-semibold text-text dark:text-dark-text">{title}</h3>
         <p className="text-xs text-textMuted dark:text-dark-textMuted">{timezoneLabel}</p>
       </header>
@@ -299,7 +298,7 @@ function AvailabilityGrid({
             const needsGap = isHourBreak(meta, firstVisibleRow);
             const isHiddenGap =
               needsGap && previous ? meta.index - previous.index > 1 : false;
-            const gapHeight = HOUR_GAP_REM * (isHiddenGap ? 4 : 1);
+            const gapHeight = HOUR_GAP_REM * (isHiddenGap ? 6 : 1);
             return (
               <Fragment key={meta.index}>
                 {needsGap ? (
@@ -410,7 +409,7 @@ function computeLabelOffsets(quarterMeta: QuarterMetadata[], firstVisibleRow: nu
     if (isHourBreak(meta, firstVisibleRow)) {
       const previous = quarterMeta[idx - 1];
       const isHiddenGap = previous ? meta.index - previous.index > 1 : false;
-      gapHeight = HOUR_GAP_REM * (isHiddenGap ? 4 : 1);
+      gapHeight = HOUR_GAP_REM * (isHiddenGap ? 6 : 1);
       gapOffset += gapHeight;
     }
 
@@ -445,7 +444,7 @@ function TimeColumnOverlay({ copy, labelOffsets }: TimeColumnOverlayProps) {
             key={`label-${meta.index}`}
             className="absolute right-2 text-[0.65rem] font-medium text-textMuted dark:text-dark-textMuted"
             style={{
-              top: `calc(${offset}rem)`,
+              top: `calc(${offset}rem - 0.75rem)`,
               transform: "translateY(-50%)"
             }}
           >

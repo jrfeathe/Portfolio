@@ -11,6 +11,7 @@ import {
   ShellLayout,
   StickyCTA
 } from "../../src/components/Shell";
+import { AudioPlayerOverlay } from "../../src/components/AudioPlayer";
 import { headers } from "next/headers";
 import { StructuredData } from "../../src/components/seo/StructuredData";
 import { getResumeProfile } from "../../src/lib/resume/profile";
@@ -231,6 +232,18 @@ export default function HomePage({ params, searchParams }: PageProps) {
               ))}
             </StickyCTA>
           }
+        />
+        <AudioPlayerOverlay
+          src={dictionary.home.audioPlayer.src}
+          title={dictionary.home.audioPlayer.title}
+          description={dictionary.home.audioPlayer.description}
+          playLabel={dictionary.home.audioPlayer.playLabel}
+          pauseLabel={dictionary.home.audioPlayer.pauseLabel}
+          downloadLabel={dictionary.home.audioPlayer.downloadLabel}
+          closeLabel={dictionary.home.audioPlayer.closeLabel}
+          reopenLabel={dictionary.home.audioPlayer.reopenLabel}
+          locale={locale}
+          trackId={dictionary.home.audioPlayer.trackId}
         />
       </div>
     </>

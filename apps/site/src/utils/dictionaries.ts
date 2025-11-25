@@ -87,6 +87,17 @@ export type AppDictionary = {
       home: string;
       workspace: string;
     };
+    audioPlayer: {
+      title: string;
+      description: string;
+      src: string;
+      playLabel: string;
+      pauseLabel: string;
+      downloadLabel: string;
+      closeLabel: string;
+      reopenLabel: string;
+      trackId: string;
+    };
     hero: {
       title: string;
       subtitle: string;
@@ -422,6 +433,17 @@ const en: AppDictionary = {
       home: "Home",
       workspace: "Workspace overview"
     },
+    audioPlayer: {
+      title: "Portfolio background loop",
+      description: "",
+      src: "/media/audio/portfolio-loop.mp3",
+      playLabel: "Play track",
+      pauseLabel: "Pause track",
+      downloadLabel: "Download track",
+      closeLabel: "Hide player",
+      reopenLabel: "Open audio player",
+      trackId: "portfolio-loop"
+    },
     hero: {
       title: "Jack Featherstone",
       subtitle:
@@ -592,6 +614,17 @@ const ja: AppDictionary = {
     breadcrumbs: {
       home: "ホーム",
       workspace: "ワークスペース概要"
+    },
+    audioPlayer: {
+      title: "ポートフォリオのバックグラウンドループ",
+      description: "",
+      src: "/media/audio/portfolio-loop.mp3",
+      playLabel: "再生",
+      pauseLabel: "一時停止",
+      downloadLabel: "トラックをダウンロード",
+      closeLabel: "プレーヤーを隠す",
+      reopenLabel: "オーディオを開く",
+      trackId: "portfolio-loop"
     },
     hero: {
       title: "Jack Featherstone",
@@ -765,6 +798,17 @@ const zh: AppDictionary = {
     breadcrumbs: {
       home: "首页",
       workspace: "工作区总览"
+    },
+    audioPlayer: {
+      title: "作品集背景循环",
+      description: "",
+      src: "/media/audio/portfolio-loop.mp3",
+      playLabel: "播放",
+      pauseLabel: "暂停",
+      downloadLabel: "下载音轨",
+      closeLabel: "隐藏播放器",
+      reopenLabel: "打开音频",
+      trackId: "portfolio-loop"
     },
     hero: {
       title: "Jack Featherstone",

@@ -176,103 +176,109 @@ export function AudioPlayerOverlay({
     return null;
   }
 
-  if (isHidden) {
-    return (
-      <div className="fixed bottom-4 right-4 z-40">
-        <Button
-          variant="secondary"
-          onClick={handleShow}
-          className="shadow-lg"
-        >
-          {reopenLabel}
-        </Button>
-      </div>
-    );
-  }
-
   const formattedCurrent = formatTime(currentTime);
   const formattedDuration = formatTime(duration);
+  const playerVisibilityClass = isHidden
+    ? "pointer-events-none opacity-0"
+    : "";
 
   return (
-    <div
-      className={clsx(
-        "fixed right-0 top-1/2 z-40 w-[min(100px,calc(100%-1.5rem))] max-w-[100px] -translate-y-1/2 rounded-2xl border border-border/60 bg-surface/95 p-2 shadow-2xl backdrop-blur-md dark:border-dark-border/60 dark:bg-dark-surface/95",
-        className
-      )}
-      role="complementary"
-      aria-label={title}
-    >
-      <div className="relative flex flex-col items-center gap-1 text-center">
-        <div className="absolute left-[-24px] top-1/16 -translate-y-1/2">
-          <Button
-            variant="secondary"
-            onClick={handleHide}
-            aria-label={closeLabel}
-            className="h-8 w-8 rounded-xl border border-border dark:border-dark-border shadow-md"
-          >
-            {"X"}
-          </Button>
-        </div>
-
-        <Button
-          onClick={handleToggle}
-          variant="primary"
-          className="h-10 w-10 rounded-full text-base font-bold shadow-lg"
-          aria-label={isPlaying ? pauseLabel : playLabel}
-        >
-          {isPlaying ? "❚❚" : "▶"}
-        </Button>
-
-        <div className="flex items-center text-sm font-medium text-text dark:text-dark-text">
-          <span className="rounded-xl border border-border px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-textMuted dark:border-dark-border dark:text-dark-textMuted">
-            {formattedCurrent} / {formattedDuration}
-          </span>
-        </div>
-        <div className="flex items-center gap-2 text-sm font-medium text-text dark:text-dark-text">
-          <button
-            type="button"
-            onClick={handleVolumeToggle}
-            className="rounded-full border border-border px-2 py-1 text-xs font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
-            aria-label={showVolume ? "Hide volume slider" : "Show volume slider"}
-          >
-            {volume === 0 ? "🔇" : "🔊"}
-          </button>
-          <Button
-            href={src}
-            download
-            variant="secondary"
-            className="w-8 h-7 rounded-full border border-border font-semibold shadow-md hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
-          >
-            ↓
-          </Button>
-        </div>
-        {showVolume ? (
-          <div className="w-full px-1">
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={volume}
-              onChange={handleVolumeChange}
-              className="w-full accent-accent"
-              aria-label="Volume"
-            />
+    <>
+      <div
+        className={clsx(
+          "fixed right-0 top-1/2 z-40 w-[min(100px,calc(100%-1.5rem))] max-w-[100px] -translate-y-1/2 rounded-2xl border border-border/60 bg-surface/95 p-2 shadow-2xl backdrop-blur-md dark:border-dark-border/60 dark:bg-dark-surface/95",
+          playerVisibilityClass,
+          className
+        )}
+        role="complementary"
+        aria-label={title}
+        aria-hidden={isHidden}
+      >
+        <div className="relative flex flex-col items-center gap-1 text-center">
+          <div className="absolute left-[-24px] top-1/16 -translate-y-1/2">
+            <Button
+              variant="secondary"
+              onClick={handleHide}
+              aria-label={closeLabel}
+              className="h-8 w-8 rounded-xl border border-border dark:border-dark-border shadow-md"
+            >
+              {">"}
+            </Button>
           </div>
-        ) : null}
+
+          <Button
+            onClick={handleToggle}
+            variant="primary"
+            className="h-10 w-10 rounded-full text-base font-bold shadow-lg"
+            aria-label={isPlaying ? pauseLabel : playLabel}
+          >
+            {isPlaying ? "❚❚" : "▶"}
+          </Button>
+
+          <div className="flex items-center text-sm font-medium text-text dark:text-dark-text">
+            <span className="rounded-xl border border-border px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-textMuted dark:border-dark-border dark:text-dark-textMuted">
+              {formattedCurrent} / {formattedDuration}
+            </span>
+          </div>
+          <div className="flex items-center gap-2 text-sm font-medium text-text dark:text-dark-text">
+            <button
+              type="button"
+              onClick={handleVolumeToggle}
+              className="rounded-full border border-border px-2 py-1 text-xs font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+              aria-label={showVolume ? "Hide volume slider" : "Show volume slider"}
+            >
+              {volume === 0 ? "🔇" : "🔊"}
+            </button>
+            <Button
+              href={src}
+              download
+              variant="secondary"
+              className="w-8 h-7 rounded-full border border-border font-semibold shadow-md hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+            >
+              ↓
+            </Button>
+          </div>
+          {showVolume ? (
+            <div className="w-full px-1">
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={volume}
+                onChange={handleVolumeChange}
+                className="w-full accent-accent"
+                aria-label="Volume"
+              />
+            </div>
+          ) : null}
+        </div>
+
+        {/* Instrumental loop without spoken content; captions track is not applicable. */}
+        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+        <audio
+          ref={audioRef}
+          src={src}
+          preload="metadata"
+          controls
+          className="sr-only"
+        >
+          {downloadLabel}
+        </audio>
       </div>
 
-      {/* Instrumental loop without spoken content; captions track is not applicable. */}
-      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      <audio
-        ref={audioRef}
-        src={src}
-        preload="metadata"
-        controls
-        className="sr-only"
-      >
-        {downloadLabel}
-      </audio>
-    </div>
+      {isHidden ? (
+        <div className="fixed right-0 top-1/2 z-50 -translate-y-1/2">
+          <Button
+            variant="secondary"
+            onClick={handleShow}
+            aria-label={reopenLabel}
+            className="h-10 w-10 rounded-xl border border-border shadow-lg hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+          >
+            {"<"}
+          </Button>
+        </div>
+      ) : null}
+    </>
   );
 }

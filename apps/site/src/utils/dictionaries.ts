@@ -137,7 +137,7 @@ export type AppDictionary = {
         title: string;
         description: string;
         overview: string;
-        proofChips: Array<{ title: string; details: string }>;
+        proofChips: Array<{ title: string; details: string; href: string }>;
       };
       roadmap: {
         eyebrow: string;
@@ -274,9 +274,12 @@ function localizeTechStackItem(item: LocalizedTechStackEntry, locale: Locale): T
 }
 
 function buildProofChip(project: ProjectContent, locale: Locale, fallbackTitle: string) {
+  const experience = requireExperience(project, project.id);
+
   return {
     title: localizeString(project.names?.proofTitle, locale, fallbackTitle),
-    details: localizeString(project.home?.proofDetails, locale)
+    details: localizeString(project.home?.proofDetails, locale),
+    href: `/${locale}/experience#${experience.id}`
   };
 }
 

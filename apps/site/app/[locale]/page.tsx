@@ -1,5 +1,6 @@
 import { Button } from "@portfolio/ui";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import {
@@ -118,9 +119,10 @@ function buildSections(dictionary: AppDictionary, locale: Locale) {
           <p>{sections.proof.overview}</p>
           <dl className="grid gap-4 sm:grid-cols-2">
             {sections.proof.proofChips.map((chip) => (
-              <div
+              <Link
                 key={chip.title}
-                className="rounded-xl border border-border bg-surface px-4 py-3 shadow-sm dark:border-dark-border dark:bg-dark-surface"
+                href={chip.href}
+                className="block rounded-xl border border-border bg-surface px-4 py-3 shadow-sm transition hover:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 dark:border-dark-border dark:bg-dark-surface dark:hover:border-dark-accent"
               >
                 <dt className="text-sm font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
                   {chip.title}
@@ -128,7 +130,7 @@ function buildSections(dictionary: AppDictionary, locale: Locale) {
                 <dd className="mt-2 text-sm">
                   {chip.details}
                 </dd>
-              </div>
+              </Link>
             ))}
           </dl>
         </>

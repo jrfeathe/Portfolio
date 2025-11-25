@@ -1,0 +1,18 @@
+- 10a.KING:
+  - Redesign Engineering Notes into a writeup.
+    - Detail the creation process, challenges, and results.
+  - Mobile view
+  - Add Codex to Tech Stack
+  - Profile picture
+
+- 10a.REVOLT:
+  - Fix Availability reference page hidden time bug
+  - Localizations
+  - Testing / CI
+  - Refactor remaining WBS
+    - Create a file checking each planned feature and determining if it is still relevant.
+    - Purge the unnecessary (ex: PlantUML may not be needed with new direction)
+  - Test and fix AudioPlayer
+  - Music track
+  - Simplify SVGs to reduce file size?
+  - High Contrast mode fixes

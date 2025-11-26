@@ -14,7 +14,7 @@ import {
 } from "../../../src/utils/i18n";
 import { getNoteSummaries } from "../../../src/lib/mdx";
 import {
-  ShellLayout,
+  ResponsiveShellLayout,
   type ShellSection
 } from "../../../src/components/Shell";
 import { StructuredData } from "../../../src/components/seo/StructuredData";
@@ -146,7 +146,7 @@ export default async function NotesIndexPage({ params }: PageParams) {
   return (
     <>
       <StructuredData data={structuredData} nonce={nonce} />
-      <ShellLayout
+      <ResponsiveShellLayout
         title={dictionary.notes.index.title}
         subtitle={dictionary.notes.index.subtitle}
         breadcrumbs={breadcrumbs}

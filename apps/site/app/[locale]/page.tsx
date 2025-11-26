@@ -9,10 +9,10 @@ import {
 } from "../../src/utils/dictionaries";
 import { isLocale, locales, type Locale } from "../../src/utils/i18n";
 import {
-  ShellLayout,
+  ResponsiveShellLayout,
   StickyCTA
 } from "../../src/components/Shell";
-import { AudioPlayerOverlay } from "../../src/components/AudioPlayer";
+import { ResponsiveAudioPlayer } from "../../src/components/AudioPlayer";
 import { headers } from "next/headers";
 import { StructuredData } from "../../src/components/seo/StructuredData";
 import { getResumeProfile } from "../../src/lib/resume/profile";
@@ -191,7 +191,7 @@ export default function HomePage({ params, searchParams }: PageProps) {
     <>
       <StructuredData data={structuredData} nonce={nonce} />
       <div data-skim-mode={skimModeEnabled ? "true" : "false"}>
-        <ShellLayout
+        <ResponsiveShellLayout
           title={title}
           subtitle={subtitle}
           heroMedia={media}
@@ -235,7 +235,7 @@ export default function HomePage({ params, searchParams }: PageProps) {
             </StickyCTA>
           }
         />
-        <AudioPlayerOverlay
+        <ResponsiveAudioPlayer
           src={dictionary.home.audioPlayer.src}
           title={dictionary.home.audioPlayer.title}
           description={dictionary.home.audioPlayer.description}

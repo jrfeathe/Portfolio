@@ -9,3 +9,8 @@ export type { ShellSection, ShellLayoutProps } from "./Layout";
 export { ShellLayout } from "./Layout";
 export type { StickyCTAProps } from "./StickyCTA";
 export { StickyCTA } from "./StickyCTA";
+export { ResponsiveShellLayout } from "./ResponsiveShellLayout";
+export type { ResponsiveShellLayoutProps } from "./ResponsiveShellLayout";
+export { MobileShellLayout } from "./MobileShellLayout";
+export type { MobileShellLayoutProps } from "./MobileShellLayout";
+export { DEFAULT_MOBILE_BREAKPOINT } from "./constants";

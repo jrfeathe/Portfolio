@@ -14,6 +14,7 @@ export type AnchorNavProps = {
   items: AnchorNavItem[];
   className?: string;
   orientation?: "vertical" | "horizontal";
+  scrollable?: boolean;
 };
 
 const DEFAULT_ROOT_MARGIN = "-45% 0px -45% 0px";
@@ -21,7 +22,8 @@ const DEFAULT_ROOT_MARGIN = "-45% 0px -45% 0px";
 export function AnchorNav({
   items,
   className,
-  orientation = "vertical"
+  orientation = "vertical",
+  scrollable = true
 }: AnchorNavProps) {
   const enableNested = orientation === "vertical";
   const flattenedItems = useMemo(() => {
@@ -198,13 +200,19 @@ export function AnchorNav({
     orientation === "vertical"
       ? "flex-col gap-1"
       : "flex-row gap-2 overflow-x-auto";
+  const containerScrollClasses =
+    orientation === "vertical"
+      ? scrollable
+        ? "max-h-[70vh] overflow-y-auto pr-1"
+        : "pr-1"
+      : "flex overflow-x-auto";
 
   return (
     <nav
       className={clsx(
         "shell-anchor-nav",
         "rounded-2xl border border-border bg-surface/80 p-3 shadow-sm backdrop-blur dark:border-dark-border dark:bg-dark-surface/80",
-        orientation === "horizontal" ? "flex overflow-x-auto" : "max-h-[70vh] overflow-y-auto pr-1",
+        containerScrollClasses,
         className
       )}
       aria-label="On-page navigation"

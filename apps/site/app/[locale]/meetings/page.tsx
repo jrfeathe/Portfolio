@@ -11,7 +11,7 @@ import {
   type Locale
 } from "../../../src/utils/i18n";
 import {
-  ShellLayout,
+  ResponsiveShellLayout,
   type ShellSection
 } from "../../../src/components/Shell";
 import { AvailabilitySection } from "../../../src/components/meetings/AvailabilitySection";
@@ -110,7 +110,7 @@ export default function MeetingsPage({ params }: PageParams) {
   ];
 
   return (
-    <ShellLayout
+    <ResponsiveShellLayout
       title={dictionary.meetings.title}
       subtitle={dictionary.meetings.subtitle}
       breadcrumbs={breadcrumbs}

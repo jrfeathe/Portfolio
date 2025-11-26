@@ -11,7 +11,7 @@ import {
   type Locale
 } from "../../../src/utils/i18n";
 import {
-  ShellLayout,
+  ResponsiveShellLayout,
   type ShellSection,
   type AnchorNavItem
 } from "../../../src/components/Shell";
@@ -164,7 +164,7 @@ export default function ExperiencePage({ params }: PageParams) {
   ];
 
   return (
-    <ShellLayout
+    <ResponsiveShellLayout
       title={dictionary.experience.title}
       subtitle={dictionary.experience.subtitle}
       breadcrumbs={breadcrumbs}

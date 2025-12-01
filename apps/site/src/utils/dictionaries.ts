@@ -504,9 +504,9 @@ const en: AppDictionary = {
         eyebrow: "Roadmap",
         title: "Current projects & plans",
         description:
-          "My current focus is on building some small scale projects that make a difference in my life. G.O.A.T.: Grind, Optimize, Automate, Thrive.",
+          "My current focus is on building some small scale projects that make a difference in my life.",
         overview:
-          "While it is very rewarding to optimize and automate, I also find joy in learning new skills and technologies!",
+          "G.O.A.T.: Grind, Optimize, Automate, Thrive.",
         nextSteps: [
           ...getRoadmapSteps("en"),
           "Social Networking: Find events to meet people in industry. Considering indie games conventions in NYC."
@@ -686,9 +686,9 @@ const ja: AppDictionary = {
         eyebrow: "ロードマップ",
         title: "現在の取り組みと計画",
         description:
-          "現在は、日々の生活に実際の価値をもたらす小規模プロジェクトの構築に注力しています。G.O.A.T.（Grind, Optimize, Automate, Thrive）。",
+          "現在は、日々の生活に実際の価値をもたらす小規模プロジェクトの構築に注力しています。",
         overview:
-          "最適化や自動化は非常に有益ですが、新しい技術やスキルを学ぶ楽しさも大切にしています。",
+          "G.O.A.T.（Grind, Optimize, Automate, Thrive）。",
         nextSteps: [
           ...getRoadmapSteps("ja"),
           "交流活動：業界イベントを探索し、人脈づくりを推進。NYC のインディーゲーム系イベント参加も検討。"
@@ -870,9 +870,9 @@ const zh: AppDictionary = {
         eyebrow: "路线图",
         title: "目前的项目与规划",
         description:
-          "目前专注于构建能为我日常带来实际价值的小型项目。G.O.A.T.（Grind, Optimize, Automate, Thrive）。",
+          "目前专注于构建能为我日常带来实际价值的小型项目。",
         overview:
-          "尽管优化与自动化成效显著，我同样享受学习新技术与新技能的过程。",
+          "G.O.A.T.（Grind, Optimize, Automate, Thrive）。",
         nextSteps: [
           ...getRoadmapSteps("zh"),
           "社交网络：寻找行业交流活动并拓展人脉，考虑参加纽约市的独立游戏展会。"

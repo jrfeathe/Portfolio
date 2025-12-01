@@ -4,6 +4,7 @@
   - Mobile view
   - Add Codex to Tech Stack
   - Profile picture
+  - AI Assistant
 
 - 10a.REVOLT:
   - Fix Availability reference page hidden time bug

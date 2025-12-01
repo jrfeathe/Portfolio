@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
 import type { ShellLayoutProps } from "./Layout";
@@ -64,6 +64,8 @@ export function MobileShellLayout({
       href: `#${section.id}`
     }));
   const [menuOpen, setMenuOpen] = useState(false);
+  const [menuButtonTop, setMenuButtonTop] = useState<number | undefined>(undefined);
+  const languageSwitcherRef = useRef<HTMLDivElement | null>(null);
   const hasNestedAnchors = navItems.some((item) => item.children?.length);
 
   const handleExpandAllNav = () => {
@@ -73,6 +75,24 @@ export function MobileShellLayout({
   const handleCollapseAllNav = () => {
     document.dispatchEvent(new Event("shell-anchor-collapse-all"));
   };
+
+  useEffect(() => {
+    const updateMenuButtonTop = () => {
+      const target = languageSwitcherRef.current;
+      if (!target) {
+        return;
+      }
+      const { top } = target.getBoundingClientRect();
+      setMenuButtonTop(top);
+    };
+
+    updateMenuButtonTop();
+    window.addEventListener("resize", updateMenuButtonTop);
+
+    return () => {
+      window.removeEventListener("resize", updateMenuButtonTop);
+    };
+  }, [languageSwitcherRef]);
 
   return (
     <div
@@ -98,7 +118,7 @@ export function MobileShellLayout({
               </p>
               <button
                 type="button"
-                className="rounded-full border border-border px-2 py-1 text-xs font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
+                className="rounded-full border border-border h-6 w-6 text-xs font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
                 onClick={() => setMenuOpen(false)}
               >
                 X
@@ -155,18 +175,21 @@ export function MobileShellLayout({
           aria-label="Open menu"
           aria-expanded="false"
           aria-controls="mobile-preferences"
-          className="fixed left-4 top-4 z-40 inline-flex h-11 w-11 items-center justify-center rounded-full border border-border bg-surface text-lg font-semibold text-text shadow-lg transition hover:border-accent hover:text-accent dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
+          className="fixed left-4 z-40 inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-lg font-semibold text-text shadow-lg transition hover:border-accent hover:text-accent dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
+          style={{ top: menuButtonTop ?? 16 }}
           onClick={() => setMenuOpen(true)}
         >
           ☰
         </button>
       ) : null}
 
-      <header className="border-b border-border bg-surface pb-8 pt-8 dark:border-dark-border dark:bg-dark-surface">
-        <div className="mx-auto w-full max-w-6xl space-y-6 px-4">
-          <div className="space-y-2">
+      <header className="border-b border-border bg-surface pb-2 pt-4 dark:border-dark-border dark:bg-dark-surface">
+        <div className="mx-auto w-full max-w-6xl pb-2 px-4">
+          <div className="space-y-4 pb-2">
             <div className="flex items-center justify-end gap-3">
-              <LanguageSwitcher className="min-w-[180px]" />
+              <div ref={languageSwitcherRef} className="h-8.5 min-w-[180px]">
+                <LanguageSwitcher className="h-8.5 min-w-[180px]" />
+              </div>
             </div>
             {breadcrumbs.length ? (
               <Breadcrumbs items={breadcrumbs} />
@@ -217,11 +240,11 @@ export function MobileShellLayout({
 
       <div
         className={clsx(
-          "mx-auto w-full max-w-6xl px-4 pb-20 pt-10 space-y-12",
+          "mx-auto w-full max-w-6xl px-4 py-4",
           className
         )}
       >
-        <main className="flex flex-col gap-16">
+        <main className="flex flex-col gap-4">
           {sections.map((section) => (
             <section
               id={section.id}

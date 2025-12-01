@@ -60,12 +60,14 @@ export function AudioPlayerOverlay({
   variant = "floating"
 }: AudioPlayerOverlayProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const playerContainerRef = useRef<HTMLDivElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [isHidden, setIsHidden] = useState(false);
   const [volume, setVolume] = useState(1);
   const [showVolume, setShowVolume] = useState(false);
+  const [playerHeight, setPlayerHeight] = useState(0);
 
   const telemetryPayload = useMemo(
     () => ({ locale, trackId, src }),
@@ -188,6 +190,35 @@ export function AudioPlayerOverlay({
       ? "translate-y-full opacity-0 pointer-events-none"
       : "pointer-events-none opacity-0"
     : "";
+  const spacerHeight = isHidden ? 0 : playerHeight;
+
+  useEffect(() => {
+    if (!isBottomVariant) {
+      return;
+    }
+
+    const container = playerContainerRef.current;
+    if (!container) {
+      return;
+    }
+
+    const updateHeight = () => {
+      setPlayerHeight(container.getBoundingClientRect().height);
+    };
+
+    updateHeight();
+
+    if (typeof ResizeObserver !== "undefined") {
+      const observer = new ResizeObserver(updateHeight);
+      observer.observe(container);
+      return () => observer.disconnect();
+    }
+
+    window.addEventListener("resize", updateHeight);
+    return () => {
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, [isBottomVariant]);
 
   if (isBottomVariant) {
     return (
@@ -198,6 +229,7 @@ export function AudioPlayerOverlay({
             playerVisibilityClass,
             className
           )}
+          ref={playerContainerRef}
           role="complementary"
           aria-label={title}
           aria-hidden={isHidden}
@@ -280,6 +312,14 @@ export function AudioPlayerOverlay({
               {"▴"}
             </Button>
           </div>
+        ) : null}
+
+        {spacerHeight > 0 ? (
+          <div
+            aria-hidden
+            className="block md:hidden"
+            style={{ height: spacerHeight }}
+          />
         ) : null}
       </>
     );

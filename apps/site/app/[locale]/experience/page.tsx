@@ -15,6 +15,7 @@ import {
   type ShellSection,
   type AnchorNavItem
 } from "../../../src/components/Shell";
+import { ChatInlineCard } from "../../../src/components/chat";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -171,6 +172,7 @@ export default function ExperiencePage({ params }: PageParams) {
       sections={sections}
       anchorItems={anchorItems}
       showSkimToggle={false}
+      cta={<ChatInlineCard />}
       locale={locale}
     />
   );

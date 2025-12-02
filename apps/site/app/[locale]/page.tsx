@@ -13,6 +13,7 @@ import {
   StickyCTA
 } from "../../src/components/Shell";
 import { ResponsiveAudioPlayer } from "../../src/components/AudioPlayer";
+import { ChatInlineCard } from "../../src/components/chat";
 import { headers } from "next/headers";
 import { StructuredData } from "../../src/components/seo/StructuredData";
 import { getResumeProfile } from "../../src/lib/resume/profile";
@@ -201,38 +202,41 @@ export default function HomePage({ params, searchParams }: PageProps) {
           locale={locale}
           footerContent={dictionary.home.footer}
           cta={
-            <StickyCTA title={cta.title} description={cta.description}>
-              {cta.actions.map((action) => (
-                action.href ? (
-                  <Button
-                    key={`${action.label}-${action.variant}`}
-                    variant={action.variant}
-                    href={action.href}
-                    className="w-full"
-                    data-variant={action.variant}
-                    download={
-                      action.download ? resumeDownloadFilename : undefined
-                    }
-                    rel={
-                      action.href.startsWith("http")
-                        ? "noreferrer noopener"
-                        : undefined
-                    }
-                  >
-                    {action.label}
-                  </Button>
-                ) : (
-                  <Button
-                    key={`${action.label}-${action.variant}`}
-                    variant={action.variant}
-                    className="w-full"
-                    data-variant={action.variant}
-                  >
-                    {action.label}
-                  </Button>
-                )
-              ))}
-            </StickyCTA>
+            <div className="space-y-4">
+              <StickyCTA title={cta.title} description={cta.description}>
+                {cta.actions.map((action) => (
+                  action.href ? (
+                    <Button
+                      key={`${action.label}-${action.variant}`}
+                      variant={action.variant}
+                      href={action.href}
+                      className="w-full"
+                      data-variant={action.variant}
+                      download={
+                        action.download ? resumeDownloadFilename : undefined
+                      }
+                      rel={
+                        action.href.startsWith("http")
+                          ? "noreferrer noopener"
+                          : undefined
+                      }
+                    >
+                      {action.label}
+                    </Button>
+                  ) : (
+                    <Button
+                      key={`${action.label}-${action.variant}`}
+                      variant={action.variant}
+                      className="w-full"
+                      data-variant={action.variant}
+                    >
+                      {action.label}
+                    </Button>
+                  )
+                ))}
+              </StickyCTA>
+              <ChatInlineCard />
+            </div>
           }
         />
         <ResponsiveAudioPlayer

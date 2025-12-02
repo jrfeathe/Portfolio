@@ -82,6 +82,23 @@ export type AppDictionary = {
     title: string;
     description: string;
   };
+  chatbot: {
+    launcherLabel: string;
+    panelTitle: string;
+    panelSubtitle: string;
+    inputPlaceholder: string;
+    exampleQuestions: string[];
+    inlineTitle: string;
+    inlineBody: string;
+    inlineCta: string;
+    emptyState: string;
+    loggingNotice: string;
+    errorMessage: string;
+    fallbackCtaLabel: string;
+    captchaTitle: string;
+    captchaPrompt: string;
+    sendLabel: string;
+  };
   home: {
     breadcrumbs: {
       home: string;
@@ -431,6 +448,27 @@ const en: AppDictionary = {
     title: "Jack F. Portfolio",
     description: "Personal engineering portfolio and live project playground."
   },
+  chatbot: {
+    launcherLabel: "Open recruiter AI chat",
+    panelTitle: "AI recruiter assistant",
+    panelSubtitle: "Ask about Jack's skills, projects, or impact.",
+    inputPlaceholder: "Ask about React, cost savings, leadership, or a project...",
+    exampleQuestions: [
+      "Can Jack use React?",
+      "Can Jack save my company money?",
+      "Does Jack have leadership experience?"
+    ],
+    inlineTitle: "Ask the AI",
+    inlineBody: "Get quick, grounded answers with links to this portfolio.",
+    inlineCta: "Ask now",
+    emptyState: "Try a quick question or pick a starter prompt.",
+    loggingNotice: "This chat is monitored for quality assurance and clears after 30 days.",
+    errorMessage: "Something went wrong. Try again or open the resume.",
+    fallbackCtaLabel: "Open resume",
+    captchaTitle: "Quick human check",
+    captchaPrompt: "Enter the code below to continue (captcha required after two prompts).",
+    sendLabel: "Send"
+  },
   home: {
     breadcrumbs: {
       home: "Home",
@@ -612,6 +650,27 @@ const ja: AppDictionary = {
   metadata: {
     title: "Jack F. ポートフォリオ",
     description: "エンジニアリングの成果と実験を公開するプロジェクトハブ。"
+  },
+  chatbot: {
+    launcherLabel: "AIチャットを開く",
+    panelTitle: "AIリクルーターアシスタント",
+    panelSubtitle: "Jackのスキルや実績を質問できます。",
+    inputPlaceholder: "Reactやコスト削減、リーダーシップなどを質問してください。",
+    exampleQuestions: [
+      "JackはReactを使えますか？",
+      "Jackはコスト削減を手伝えますか？",
+      "Jackにリーダーシップ経験はありますか？"
+    ],
+    inlineTitle: "AIに質問する",
+    inlineBody: "ポートフォリオへのリンク付きで、素早く回答します。",
+    inlineCta: "質問する",
+    emptyState: "短い質問を入力するか、例を選んでください。",
+    loggingNotice: "品質管理のためログを保存し、30日で削除します。",
+    errorMessage: "問題が発生しました。再試行するか履歴書をご覧ください。",
+    fallbackCtaLabel: "履歴書を開く",
+    captchaTitle: "簡易認証",
+    captchaPrompt: "コードを入力してください（3回目以降は必須です）。",
+    sendLabel: "送信"
   },
   home: {
     breadcrumbs: {
@@ -796,6 +855,27 @@ const zh: AppDictionary = {
   metadata: {
     title: "Jack F. 作品集",
     description: "展示工程成果与实验的个人项目中枢。"
+  },
+  chatbot: {
+    launcherLabel: "打开AI聊天",
+    panelTitle: "AI招聘助手",
+    panelSubtitle: "询问 Jack 的技能、项目或影响。",
+    inputPlaceholder: "可以询问 React、成本优化、领导力或项目…",
+    exampleQuestions: [
+      "Jack会用React吗？",
+      "Jack能帮我省钱吗？",
+      "Jack有领导经验吗？"
+    ],
+    inlineTitle: "向AI提问",
+    inlineBody: "提供带链接的快速、可信回答。",
+    inlineCta: "现在提问",
+    emptyState: "先输入一个问题或选择示例。",
+    loggingNotice: "此聊天用于质量监控，日志会在30天后清除。",
+    errorMessage: "出错了，请重试或查看简历。",
+    fallbackCtaLabel: "查看简历",
+    captchaTitle: "人机验证",
+    captchaPrompt: "输入下面的代码继续（第3次及以后需要）。",
+    sendLabel: "发送"
   },
   home: {
     breadcrumbs: {

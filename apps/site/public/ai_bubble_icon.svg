@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-labelledby="title desc">
+  <title id="title">AI bubble icon</title>
+  <desc id="desc">Hand-drawn circular bubble with AI letters in the center</desc>
+  <defs>
+    <linearGradient id="mintGrad" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#86c9aa" />
+      <stop offset="100%" stop-color="#5fa98b" />
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke-linejoin="round">
+    <path d="M72 8 41 25 23 57l-4 21 3 20 10 32 13 24 14 17 25 12 26 5 26-7 21-12 14-18 14-22 6-11 2-9-4-28-9-21-18-18L130 21l-36 1z" fill="url(#mintGrad)" opacity=".8" />
+    <path d="M69 17 38 34 21 64l-4 22 3 20 11 33 13 24 16 18 28 13 29 5 29-9 24-16 15-22 9-17 3-10v-14l-3-19-11-28-19-23-32-27-65 1z" stroke="#b50000" stroke-width="3.6" />
+    <path d="M69 66 82 56l52 1 6 8-2 71-7 13-64 3 21-18 1-65-7 6z" fill="#fff" stroke="#b50000" stroke-width="3.6" />
+    <path d="M54 96c-3 18 7 36 23 44s40 5 54-8c-4 4-9 9-12 17-8 21 11 31 24 23" stroke="#4f9f7c" stroke-width="16" stroke-linecap="round" opacity=".55" />
+    <path d="M60 77c-6 8-4 25 4 36s19 16 34 16 30-5 38-16-2-28 0-42c1-8 9-12 15-12" stroke="#4f9f7c" stroke-width="14" stroke-linecap="round" opacity=".5" />
+  </g>
+  <g fill="#f48a00" stroke="#d20000" stroke-width="2.4" paint-order="stroke">
+    <path d="M92 130h-8l15-40h6l15 40h-8l-3-9H95zm5-16h10l-5-14z" />
+    <rect x="132" y="94" width="8" height="36" rx="1.2" />
+  </g>
+</svg>

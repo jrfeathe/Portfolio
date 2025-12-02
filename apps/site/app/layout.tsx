@@ -24,6 +24,7 @@ import {
   type ThemePreference
 } from "../src/utils/theme";
 import { OtelBootstrap } from "../src/components/telemetry/OtelBootstrap";
+import { ChatbotProvider } from "../src/components/chat";
 import { CriticalCss } from "./CriticalCss";
 import { extractNonceFromHeaders } from "../src/utils/csp";
 
@@ -128,6 +129,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const cookieStore = cookies();
   const storedLocale = cookieStore.get(localeCookieName)?.value;
   const locale = isLocale(storedLocale) ? storedLocale : defaultLocale;
+  const chatbotCopy = getDictionary(locale).chatbot;
   const headerList = getHeaders();
   const nonce = extractNonceFromHeaders(headerList);
   const storedThemeCookie = cookieStore.get(themeCookieName)?.value;
@@ -192,7 +194,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           />
         ) : null}
         <OtelBootstrap />
-        {children}
+        <ChatbotProvider locale={locale} copy={chatbotCopy}>
+          {children}
+        </ChatbotProvider>
       </body>
     </html>
   );

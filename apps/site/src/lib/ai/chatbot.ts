@@ -9,7 +9,7 @@ export type AnchorEntry = {
   name: string;
   href: string;
   locale: Locale;
-  category: "tech" | "experience" | "resume";
+  category: "tech" | "experience";
   source: string;
 };
 
@@ -51,6 +51,8 @@ const AI_PATH_CANDIDATES = [
   path.join(process.cwd(), "apps", "site", "data", "ai"),
   path.join(process.cwd(), "data", "ai")
 ];
+
+const SUPPORTED_LOCALES: Locale[] = ["en", "ja", "zh"];
 
 let cachedInstructions: string | null = null;
 let cachedAnchors: AnchorEntry[] | null = null;
@@ -97,8 +99,45 @@ async function loadAnchors() {
   }
   const anchorsPath = resolveAiPath("tech-anchors.json");
   const raw = await fs.readFile(anchorsPath, "utf8");
-  const parsed = JSON.parse(raw) as { anchors?: AnchorEntry[] };
-  cachedAnchors = parsed.anchors ?? [];
+  const parsed = JSON.parse(raw) as {
+    anchors?: Array<{
+      id: string;
+      category: AnchorEntry["category"];
+      source: string;
+      locales?: Partial<
+        Record<
+          Locale | string,
+          {
+            name?: string;
+            href?: string;
+          }
+        >
+      >;
+    }>;
+  };
+
+  const flattened: AnchorEntry[] = [];
+  for (const anchor of parsed.anchors ?? []) {
+    const localeEntries = Object.entries(anchor.locales ?? {});
+    for (const [localeKey, localeData] of localeEntries) {
+      if (!localeData?.href || !localeData?.name) {
+        continue;
+      }
+      if (!SUPPORTED_LOCALES.includes(localeKey as Locale)) {
+        continue;
+      }
+      flattened.push({
+        id: anchor.id,
+        name: localeData.name,
+        href: localeData.href,
+        locale: localeKey as Locale,
+        category: anchor.category,
+        source: anchor.source
+      });
+    }
+  }
+
+  cachedAnchors = flattened;
   return cachedAnchors;
 }
 
@@ -108,8 +147,50 @@ async function loadEmbeddingIndex(): Promise<EmbeddingIndex> {
   }
   const indexPath = resolveAiPath("chatbot-embeddings.json");
   const raw = await fs.readFile(indexPath, "utf8");
-  const parsed = JSON.parse(raw) as EmbeddingIndex;
-  cachedIndex = parsed;
+  const parsed = JSON.parse(raw) as {
+    chunks?: Array<{
+      id: string;
+      sourceType: EmbeddingChunk["sourceType"];
+      sourceId: string;
+      locales?: Partial<
+        Record<
+          Locale | string,
+          {
+            title?: string;
+            href?: string;
+            tokens?: string[];
+            text?: string;
+          }
+        >
+      >;
+    }>;
+  };
+
+  const flattened: EmbeddingChunk[] = [];
+
+  for (const entry of parsed.chunks ?? []) {
+    const localeEntries = Object.entries(entry.locales ?? {});
+    for (const [localeKey, localeData] of localeEntries) {
+      if (!localeData?.href || !localeData?.title || !localeData?.tokens || !localeData?.text) {
+        continue;
+      }
+      if (!SUPPORTED_LOCALES.includes(localeKey as Locale)) {
+        continue;
+      }
+      flattened.push({
+        id: `${entry.id}-${localeKey}`,
+        locale: localeKey as Locale,
+        title: localeData.title,
+        href: localeData.href,
+        sourceType: entry.sourceType,
+        sourceId: entry.sourceId,
+        tokens: localeData.tokens,
+        text: localeData.text
+      });
+    }
+  }
+
+  cachedIndex = { chunks: flattened };
   return cachedIndex;
 }
 
@@ -242,15 +323,24 @@ export function buildReferences(
   return references;
 }
 
-export function buildContextBlock(hits: RetrievalHit[]): string {
+export function buildContextBlock(
+  hits: RetrievalHit[],
+  options?: { maxChunkChars?: number; maxItems?: number }
+): string {
   if (!hits.length) {
     return "No retrieved context.";
   }
 
-  return hits
-    .map(
-      (hit, index) =>
-        `${index + 1}. ${hit.chunk.title} — ${hit.chunk.text} (link: ${hit.chunk.href})`
-    )
-    .join("\n");
+  const maxItems = options?.maxItems ?? hits.length;
+  const maxChunkChars = options?.maxChunkChars ?? 320;
+
+  const trimmed = hits.slice(0, maxItems).map((hit, index) => {
+    const text =
+      hit.chunk.text.length > maxChunkChars
+        ? `${hit.chunk.text.slice(0, maxChunkChars)}…`
+        : hit.chunk.text;
+    return `${index + 1}. ${hit.chunk.title} — ${text} (link: ${hit.chunk.href})`;
+  });
+
+  return trimmed.join("\n");
 }

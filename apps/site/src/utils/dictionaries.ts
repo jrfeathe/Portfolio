@@ -466,7 +466,7 @@ const en: AppDictionary = {
     errorMessage: "Something went wrong. Try again or open the resume.",
     fallbackCtaLabel: "Open resume",
     captchaTitle: "Quick human check",
-    captchaPrompt: "Enter the code below to continue (captcha required after two prompts).",
+    captchaPrompt: "Complete the captcha to continue (required after two prompts).",
     sendLabel: "Send"
   },
   home: {
@@ -669,7 +669,7 @@ const ja: AppDictionary = {
     errorMessage: "問題が発生しました。再試行するか履歴書をご覧ください。",
     fallbackCtaLabel: "履歴書を開く",
     captchaTitle: "簡易認証",
-    captchaPrompt: "コードを入力してください（3回目以降は必須です）。",
+    captchaPrompt: "続行するにはキャプチャを完了してください（3回目以降は必須です）。",
     sendLabel: "送信"
   },
   home: {
@@ -874,7 +874,7 @@ const zh: AppDictionary = {
     errorMessage: "出错了，请重试或查看简历。",
     fallbackCtaLabel: "查看简历",
     captchaTitle: "人机验证",
-    captchaPrompt: "输入下面的代码继续（第3次及以后需要）。",
+    captchaPrompt: "请完成验证码以继续（第3次及以后需要）。",
     sendLabel: "发送"
   },
   home: {

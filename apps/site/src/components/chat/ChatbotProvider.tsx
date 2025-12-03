@@ -7,6 +7,29 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 
 import type { Locale } from "../../utils/i18n";
 
+type HCaptchaGlobal = {
+  render: (
+    container: HTMLElement,
+    config: {
+      sitekey: string;
+      callback: (token: string) => void;
+      "expired-callback"?: () => void;
+      "error-callback"?: () => void;
+      theme?: "light" | "dark";
+      size?: "normal" | "compact";
+    }
+  ) => number;
+  reset: (widgetId?: number) => void;
+};
+
+declare global {
+  interface Window {
+    hcaptcha?: HCaptchaGlobal;
+  }
+}
+
+const HCAPTCHA_SCRIPT_SRC = "https://js.hcaptcha.com/1/api.js?render=explicit";
+
 export type ChatbotCopy = {
   launcherLabel: string;
   panelTitle: string;
@@ -44,7 +67,7 @@ type ChatState = {
   usedFallback?: boolean;
   promptCount: number;
   rateLimitRemaining?: number;
-  captchaChallenge?: string;
+  captchaSiteKey?: string;
   pendingMessage?: { id: string; text: string };
 };
 
@@ -215,8 +238,8 @@ export function ChatbotProvider({
           setState((prev) => ({
             ...prev,
             pending: false,
-            captchaChallenge: payload.captchaChallenge ?? "",
-            error: copy.captchaPrompt
+            captchaSiteKey: typeof payload?.captchaSiteKey === "string" ? payload.captchaSiteKey : undefined,
+            error: payload?.message ?? copy.captchaPrompt
           }));
           return;
         }
@@ -248,7 +271,7 @@ export function ChatbotProvider({
           usedFallback: payload.usedFallback ?? prev.usedFallback,
           rateLimitRemaining: payload.rateLimitRemaining ?? prev.rateLimitRemaining,
           promptCount: payload.promptCount ?? prev.promptCount,
-          captchaChallenge: undefined,
+          captchaSiteKey: undefined,
           pendingMessage: undefined
         }));
       } catch {
@@ -260,7 +283,16 @@ export function ChatbotProvider({
         }));
       }
     },
-    [copy.errorMessage, copy.captchaPrompt, hydrated, locale, sessionId, state.messages, state.pending]
+    [
+      copy.errorMessage,
+      copy.captchaPrompt,
+      hydrated,
+      locale,
+      sessionId,
+      state.messages,
+      state.pending,
+      state.pendingMessage
+    ]
   );
 
   const solveCaptcha = useCallback(
@@ -324,10 +356,135 @@ function MessageBubble({ message }: { message: ChatMessage }) {
   );
 }
 
+function loadHCaptchaScript(): Promise<void> {
+  if (typeof window === "undefined") {
+    return Promise.reject(new Error("Window is not available"));
+  }
+
+  if (window.hcaptcha) {
+    return Promise.resolve();
+  }
+
+  let script = document.querySelector<HTMLScriptElement>('script[data-hcaptcha-script="true"]');
+  if (!script) {
+    script = document.createElement("script");
+    script.src = HCAPTCHA_SCRIPT_SRC;
+    script.async = true;
+    script.defer = true;
+    script.dataset.hcaptchaScript = "true";
+    document.body.appendChild(script);
+  }
+
+  return new Promise((resolve, reject) => {
+    const handleLoad = () => {
+      cleanup();
+      resolve();
+    };
+    const handleError = () => {
+      cleanup();
+      reject(new Error("Failed to load hCaptcha script"));
+    };
+    const cleanup = () => {
+      script?.removeEventListener("load", handleLoad);
+      script?.removeEventListener("error", handleError);
+    };
+
+    script.addEventListener("load", handleLoad);
+    script.addEventListener("error", handleError);
+
+    if (window.hcaptcha) {
+      cleanup();
+      resolve();
+    }
+  });
+}
+
+function HCaptchaWidget({
+  siteKey,
+  onVerify,
+  disabled
+}: {
+  siteKey: string;
+  onVerify: (token: string) => void;
+  disabled?: boolean;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const widgetIdRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function setup() {
+      if (!siteKey || typeof window === "undefined") {
+        return;
+      }
+
+      try {
+        await loadHCaptchaScript();
+      } catch (error) {
+        console.error("[chatbot] Failed to load hCaptcha script:", error);
+        return;
+      }
+
+      if (!mounted || !containerRef.current) {
+        return;
+      }
+
+      const hcaptcha = window.hcaptcha;
+      if (!hcaptcha) {
+        return;
+      }
+
+      if (widgetIdRef.current !== null) {
+        hcaptcha.reset(widgetIdRef.current);
+        widgetIdRef.current = null;
+      }
+
+      widgetIdRef.current = hcaptcha.render(containerRef.current, {
+        sitekey: siteKey,
+        callback: (token: string) => {
+          onVerify(token);
+          if (window.hcaptcha && widgetIdRef.current !== null) {
+            window.hcaptcha.reset(widgetIdRef.current);
+          }
+        },
+        "expired-callback": () => {
+          if (widgetIdRef.current !== null) {
+            hcaptcha.reset(widgetIdRef.current);
+          }
+        },
+        "error-callback": () => {
+          if (widgetIdRef.current !== null) {
+            hcaptcha.reset(widgetIdRef.current);
+          }
+        }
+      });
+    }
+
+    setup();
+
+    return () => {
+      mounted = false;
+      if (window.hcaptcha && widgetIdRef.current !== null) {
+        window.hcaptcha.reset(widgetIdRef.current);
+      }
+      widgetIdRef.current = null;
+    };
+  }, [siteKey, onVerify]);
+
+  return (
+    <div className="mt-2">
+      <div
+        ref={containerRef}
+        className={clsx(disabled && "pointer-events-none opacity-60")}
+      />
+    </div>
+  );
+}
+
 function ChatFloatingWidget() {
   const { state, toggle, sendMessage, copy, solveCaptcha } = useChatbot();
   const [input, setInput] = useState("");
-  const [captchaInput, setCaptchaInput] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -348,13 +505,12 @@ function ChatFloatingWidget() {
     [input, sendMessage]
   );
 
-  const handleCaptchaSubmit = useCallback(async () => {
-    if (!captchaInput.trim()) {
-      return;
-    }
-    await solveCaptcha(captchaInput.trim());
-    setCaptchaInput("");
-  }, [captchaInput, solveCaptcha]);
+  const handleCaptchaVerify = useCallback(
+    async (token: string) => {
+      await solveCaptcha(token);
+    },
+    [solveCaptcha]
+  );
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
@@ -426,32 +582,17 @@ function ChatFloatingWidget() {
                 </a>
               </div>
             ) : null}
-            {state.captchaChallenge ? (
+            {state.captchaSiteKey ? (
               <div className="rounded-lg border border-border bg-surface px-3 py-3 text-sm dark:border-dark-border dark:bg-dark-surface">
                 <p className="text-sm font-semibold">{copy.captchaTitle}</p>
                 <p className="mt-1 text-xs text-textMuted dark:text-dark-textMuted">
                   {copy.captchaPrompt}
                 </p>
-                <p className="mt-2 text-xs font-semibold">
-                  Code: <span className="font-mono text-accent">{state.captchaChallenge}</span>
-                </p>
-                <div className="mt-2 flex gap-2">
-                  <input
-                    type="text"
-                    value={captchaInput}
-                    onChange={(event) => setCaptchaInput(event.target.value)}
-                    className="flex-1 rounded-lg border border-border px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-surface"
-                    aria-label="Captcha code"
-                  />
-                  <Button
-                    variant="primary"
-                    onClick={handleCaptchaSubmit}
-                    className="whitespace-nowrap"
-                    disabled={state.pending}
-                  >
-                    Verify
-                  </Button>
-                </div>
+                <HCaptchaWidget
+                  siteKey={state.captchaSiteKey}
+                  onVerify={handleCaptchaVerify}
+                  disabled={state.pending}
+                />
               </div>
             ) : null}
           </div>
@@ -467,7 +608,7 @@ function ChatFloatingWidget() {
               onChange={(event) => setInput(event.target.value)}
               placeholder={copy.inputPlaceholder}
               className="w-full resize-none rounded-xl border border-border bg-background px-3 py-2 text-sm focus:border-accent focus:outline-none dark:border-dark-border dark:bg-dark-background"
-              disabled={state.pending || Boolean(state.captchaChallenge)}
+              disabled={state.pending || Boolean(state.captchaSiteKey)}
             />
             <div className="mt-2 flex items-center justify-between">
               <p className="text-xs text-textMuted dark:text-dark-textMuted">
@@ -476,7 +617,7 @@ function ChatFloatingWidget() {
               <Button
                 variant="primary"
                 onClick={() => handleSend()}
-                disabled={state.pending || Boolean(state.captchaChallenge) || !input.trim()}
+                disabled={state.pending || Boolean(state.captchaSiteKey) || !input.trim()}
               >
                 {state.pending ? "Sending…" : copy.sendLabel}
               </Button>

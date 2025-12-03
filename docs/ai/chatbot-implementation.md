@@ -19,11 +19,17 @@ Scope: Recruiter-facing AI assistant surfaced on key pages with rate limits, cap
 
 ## Backend API (`/api/chat`)
 - Runtime: Node.
-- Flow: sanitize → rate-limit (10 prompts/hour/IP) → captcha gate from 3rd prompt → retrieval (top 5 chunks) → OpenRouter call (low temp) → fallback reply if model unavailable → return references + logging notice.
-- Captcha: returns a 6-char code when required; solves persist for 1 hour; TTL 10 minutes per code.
-- Payload: `{ message, locale?, sessionId?, history?, captchaToken? }` → `{ reply, references, usedFallback, promptCount, rateLimitRemaining, captchaRequired? }`.
+- Flow: sanitize → rate-limit (10 prompts/hour/IP) → hCaptcha gate from 3rd prompt → retrieval (top 5 chunks) → OpenRouter call (low temp) → fallback reply if model unavailable → return references + logging notice.
+- Captcha: hCaptcha tokens required starting on the 3rd prompt; solves persist for 1 hour before re-check.
+- Payload: `{ message, locale?, sessionId?, history?, captchaToken? }` → `{ reply, references, usedFallback, promptCount, rateLimitRemaining, captchaRequired?, captchaSiteKey? }`.
 - Fallback: Uses retrieved evidence/resume link when model missing or API fails.
-- Env: `OPENROUTER_API_KEY` (optional), `OPENROUTER_MODEL` (optional, default `openrouter/anthropic/claude-3-haiku-20240307`).
+- Env: `OPENROUTER_API_KEY` (optional), `OPENROUTER_MODEL` (optional, default `openrouter/auto` to keep costs low), `HCAPTCHA_SITE_KEY`, `HCAPTCHA_SECRET_KEY`.
+- OpenRouter headers: sends `X-Title` + `HTTP-Referer` (from request host or `OPENROUTER_APP_URL`) to satisfy OpenRouter's identification requirement.
+- Link safety: The API passes a locale-filtered list of allowed anchors (from `apps/site/data/ai/tech-anchors.json`) to the model and instructs it to refuse any other URLs. Anchors are stored as a single entry with per-locale href/name to keep the file compact. Update `tech-anchors.json` (rebuilt via `scripts/ai/build-chatbot-index.ts`) to control which links can appear.
+- Response parsing: `callOpenRouter` tolerates OpenRouter message payload shapes where `message.content` may be a string, an array of parts (with `text`), or `message.text`; we extract and trim to avoid empty-response fallbacks.
+- Finish reasons: we log the model + `finish_reason` from OpenRouter and increased `max_tokens` to 800 to reduce length-cutoff fallbacks.
+- Prompt sizing: first pass sends top 3 retrieval hits; retry uses a truncated context block (max 2 items, ~260 chars per item) to further reduce token pressure.
+- Allowed links: prompt now includes only the links derived from the retrieved hits (plus resume) instead of the full anchor map to shrink prompt size.
 
 ## Retrieval Library (`apps/site/src/lib/ai/chatbot.ts`)
 - Loads instruction pack, anchors, and embedding index (cached in-memory).
@@ -33,14 +39,15 @@ Scope: Recruiter-facing AI assistant surfaced on key pages with rate limits, cap
 ## Client UI
 - Provider: `ChatbotProvider` wraps the app in `app/layout.tsx`, using locale-specific copy from dictionaries.
 - Floating launcher: bottom-right circle using `public/ai_bubble_icon.svg`; state stored in `sessionStorage` (clears per session).
-- Panel: intro, example chips, markdown-friendly replies, reference links, captcha entry, error + resume fallback, logging notice.
+- Panel: intro, example chips, markdown-friendly replies, reference links, hCaptcha widget, error + resume fallback, logging notice.
 - Inline CTA: `ChatInlineCard` embedded in home, experience, and meetings sidebars to seed prompts quickly.
 - Accessibility: focus management on open, buttons labeled, minimal motion, respects reduced-motion via global styles.
 
 ## Telemetry and Safety
 - Logging notice always shown: “This chat is monitored for quality assurance purposes.” (aligns with WBS guardrail).
-- Rate limit + captcha enforced server-side; client mirrors prompt count status.
+- Rate limit + hCaptcha enforced server-side; client mirrors prompt count status.
 - PII scrubbing in retrieval corpus (email/phone redaction).
+- Server logs: structured `chat.response` events (hashed session/IP, sanitized message/reply, references, model, rate-limit info) written to stdout and `logs/chatbot/chatbot-YYYY-MM-DD.jsonl` (JSONL per day).
 
 ## Known Gaps / Follow-ups
 - TypeScript type errors currently present (dictionaries/experience types) — not fixed per request.
@@ -49,5 +56,5 @@ Scope: Recruiter-facing AI assistant surfaced on key pages with rate limits, cap
 - Abuse logging/retention: ensure downstream storage honors 30-day deletion; add redaction guardrails if persisting server-side logs.
 
 ## Quick Usage
-- Local smoke: start dev server, open `/en` → use floating launcher; try 3rd prompt to trigger captcha.
+- Local smoke: start dev server, open `/en` → use floating launcher; try 3rd prompt to trigger hCaptcha.
 - Fallback path: remove `OPENROUTER_API_KEY` to verify graceful resume-link response.

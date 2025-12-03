@@ -35,33 +35,21 @@ type ProjectRecord = {
   experienceEntry?: ProjectExperience;
 };
 
-type ResumeJson = {
-  summary?: {
-    scope?: string;
-    positioning?: string;
-    strengths?: string[];
-  };
-  experience?: Array<{
-    role?: string;
-    company?: string;
-    summary?: string;
-    highlights?: string[];
-    stack?: string[];
-  }>;
-  skills?: {
-    languages?: Array<{ name?: string; proficiency?: string }>;
-    frameworks?: Array<{ name?: string; proficiency?: string }>;
-    tools?: Array<{ name?: string; proficiency?: string }>;
-  };
-};
+type AnchorLocales = Partial<
+  Record<
+    Locale,
+    {
+      name: string;
+      href: string;
+    }
+  >
+>;
 
 type AnchorEntry = {
   id: string;
-  name: string;
-  href: string;
-  locale: Locale;
-  category: "tech" | "experience" | "resume";
+  category: "tech" | "experience";
   source: string;
+  locales: AnchorLocales;
 };
 
 type EmbeddingChunk = {
@@ -73,6 +61,23 @@ type EmbeddingChunk = {
   sourceId: string;
   tokens: string[];
   text: string;
+};
+
+type AggregatedEmbedding = {
+  id: string;
+  sourceType: AnchorEntry["category"];
+  sourceId: string;
+  locales: Partial<
+    Record<
+      Locale,
+      {
+        title: string;
+        href: string;
+        tokens: string[];
+        text: string;
+      }
+    >
+  >;
 };
 
 const locales: Locale[] = ["en", "ja", "zh"];
@@ -138,45 +143,37 @@ function buildAnchorEntries(
   techEntries: TechStackEntry[],
   projects: ProjectRecord[]
 ): AnchorEntry[] {
-  const anchors: AnchorEntry[] = [];
+  const anchorMap = new Map<string, AnchorEntry>();
+
+  const addAnchor = (
+    id: string,
+    category: AnchorEntry["category"],
+    source: string,
+    locale: Locale,
+    name: string,
+    href: string
+  ) => {
+    const key = `${id}::${category}`;
+    const existing = anchorMap.get(key) ?? { id, category, source, locales: {} };
+    existing.locales[locale] = { name, href };
+    anchorMap.set(key, existing);
+  };
 
   for (const locale of locales) {
     for (const tech of techEntries) {
       const title = localizeString(tech.title, locale) || tech.id;
-      anchors.push({
-        id: tech.id,
-        name: title,
-        href: `/${locale}/experience#${tech.id}`,
-        locale,
-        category: "tech",
-        source: "tech-stack-details"
-      });
+      addAnchor(tech.id, "tech", "tech-stack-details", locale, title, `/${locale}/experience#${tech.id}`);
     }
 
     for (const project of projects) {
       if (!project.experienceEntry) continue;
       const { id } = project.experienceEntry;
-      anchors.push({
-        id,
-        name: localizeString(project.experienceEntry.company, locale) || id,
-        href: `/${locale}/experience#${id}`,
-        locale,
-        category: "experience",
-        source: project.id
-      });
+      const name = localizeString(project.experienceEntry.company, locale) || id;
+      addAnchor(id, "experience", project.id, locale, name, `/${locale}/experience#${id}`);
     }
-
-    anchors.push({
-      id: "resume",
-      name: "Resume",
-      href: "/resume.pdf",
-      locale,
-      category: "resume",
-      source: "resume-json"
-    });
   }
 
-  return anchors;
+  return Array.from(anchorMap.values());
 }
 
 function buildTechChunks(entry: TechStackEntry, locale: Locale): EmbeddingChunk | null {
@@ -230,48 +227,6 @@ function buildProjectChunks(project: ProjectRecord, locale: Locale): EmbeddingCh
   };
 }
 
-function buildResumeChunks(resume: ResumeJson, locale: Locale): EmbeddingChunk | null {
-  const summaryParts = [
-    resume.summary?.scope,
-    resume.summary?.positioning,
-    ...(resume.summary?.strengths ?? [])
-  ];
-
-  const experienceParts =
-    resume.experience?.slice(0, 3).map((entry) =>
-      [entry.role, entry.company, entry.summary, ...(entry.highlights ?? [])].filter(Boolean).join(" ")
-    ) ?? [];
-
-  const skillParts: string[] = [];
-  for (const group of [resume.skills?.languages, resume.skills?.frameworks, resume.skills?.tools]) {
-    if (!group) continue;
-    for (const item of group) {
-      if (item?.name) {
-        skillParts.push(item.proficiency ? `${item.name} (${item.proficiency})` : item.name);
-      }
-    }
-  }
-
-  const text = sanitizeText(
-    [...summaryParts, ...experienceParts, skillParts.join(", ")].filter(Boolean).join(" ")
-  );
-
-  if (!text) {
-    return null;
-  }
-
-  return {
-    id: `resume-${locale}`,
-    locale,
-    title: "Resume overview",
-    href: "/resume.pdf",
-    sourceType: "resume",
-    sourceId: "resume",
-    tokens: tokenize(text),
-    text
-  };
-}
-
 async function writeJson(filePath: string, payload: unknown) {
   const serialized = JSON.stringify(payload, null, 2);
   await fsPromises.mkdir(path.dirname(filePath), { recursive: true });
@@ -288,43 +243,62 @@ async function main() {
   const projectsDir = path.join(dataDir, "projects");
 
   const techStackPath = path.join(dataDir, "tech-stack-details.json");
-  const resumePath = resolvePath([
-    path.join(root, "content", "resume.json"),
-    path.join(root, "..", "..", "content", "resume.json")
-  ]);
-
   const techEntries = readJson<TechStackEntry[]>(techStackPath);
-  const projectFiles = fs.readdirSync(projectsDir).filter((file) => file.endsWith(".json"));
+  const projectFiles = fs
+    .readdirSync(projectsDir)
+    .filter(
+      (file) =>
+        file.endsWith(".json") &&
+        !file.includes("template-project") &&
+        !file.includes("experience-template-project") &&
+        !file.startsWith("template")
+    );
   const projects: ProjectRecord[] = projectFiles.map((file) =>
     readJson<ProjectRecord>(path.join(projectsDir, file))
   );
-  const resume = readJson<ResumeJson>(resumePath);
 
   const anchors = buildAnchorEntries(techEntries, projects);
-  const chunks: EmbeddingChunk[] = [];
+  const embeddingMap = new Map<string, AggregatedEmbedding>();
+
+  const addEmbedding = (chunk: EmbeddingChunk) => {
+    const key = `${chunk.sourceType}::${chunk.sourceId}`;
+    const existing = embeddingMap.get(key) ?? {
+      id: `${chunk.sourceType}-${chunk.sourceId}`,
+      sourceType: chunk.sourceType,
+      sourceId: chunk.sourceId,
+      locales: {}
+    };
+
+    existing.locales[chunk.locale] = {
+      title: chunk.title,
+      href: chunk.href,
+      tokens: chunk.tokens,
+      text: chunk.text
+    };
+
+    embeddingMap.set(key, existing);
+  };
 
   for (const locale of locales) {
     for (const tech of techEntries) {
+      if (tech.id.includes("template")) continue;
       const chunk = buildTechChunks(tech, locale);
       if (chunk) {
-        chunks.push(chunk);
+        addEmbedding(chunk);
       }
     }
 
     for (const project of projects) {
+      if (!project.experienceEntry || project.experienceEntry.id?.includes("template")) continue;
       const chunk = buildProjectChunks(project, locale);
       if (chunk) {
-        chunks.push(chunk);
+        addEmbedding(chunk);
       }
-    }
-
-    const resumeChunk = buildResumeChunks(resume, locale);
-    if (resumeChunk) {
-      chunks.push(resumeChunk);
     }
   }
 
   const now = new Date().toISOString();
+  const aggregatedChunks = Array.from(embeddingMap.values());
 
   await writeJson(path.join(aiDir, "tech-anchors.json"), {
     generatedAt: now,
@@ -334,12 +308,12 @@ async function main() {
   await writeJson(path.join(aiDir, "chatbot-embeddings.json"), {
     generatedAt: now,
     tokenizer: "bow-v1",
-    hash: crypto.createHash("sha256").update(JSON.stringify(chunks)).digest("hex"),
-    chunks
+    hash: crypto.createHash("sha256").update(JSON.stringify(aggregatedChunks)).digest("hex"),
+    chunks: aggregatedChunks
   });
 
   console.log(
-    `Wrote ${anchors.length} anchors and ${chunks.length} chunks to ${aiDir.replace(
+    `Wrote ${anchors.length} anchors and ${aggregatedChunks.length} aggregated chunks to ${aiDir.replace(
       `${root}/`,
       ""
     )}`

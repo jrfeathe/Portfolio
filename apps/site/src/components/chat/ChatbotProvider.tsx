@@ -69,6 +69,7 @@ type ChatState = {
   rateLimitRemaining?: number;
   captchaSiteKey?: string;
   pendingMessage?: { id: string; text: string };
+  moderation?: "unprofessional";
 };
 
 type ChatContextValue = {
@@ -149,7 +150,8 @@ export function ChatbotProvider({
     isOpen: false,
     messages: [],
     pending: false,
-    promptCount: 0
+    promptCount: 0,
+    moderation: undefined
   });
 
   useEffect(() => {
@@ -206,7 +208,8 @@ export function ChatbotProvider({
         setState((prev) => ({
           ...prev,
           messages: [...prev.messages, userMessage],
-          error: undefined
+          error: undefined,
+          moderation: undefined
         }));
       }
 
@@ -214,6 +217,7 @@ export function ChatbotProvider({
         ...prev,
         pending: true,
         error: undefined,
+        moderation: undefined,
         pendingMessage: { id: messageId, text }
       }));
 
@@ -239,7 +243,8 @@ export function ChatbotProvider({
             ...prev,
             pending: false,
             captchaSiteKey: typeof payload?.captchaSiteKey === "string" ? payload.captchaSiteKey : undefined,
-            error: payload?.message ?? copy.captchaPrompt
+            error: payload?.message ?? copy.captchaPrompt,
+            moderation: undefined
           }));
           return;
         }
@@ -249,7 +254,8 @@ export function ChatbotProvider({
             ...prev,
             pending: false,
             error: payload?.message ?? copy.errorMessage,
-            pendingMessage: undefined
+            pendingMessage: undefined,
+            moderation: undefined
           }));
           return;
         }
@@ -262,6 +268,22 @@ export function ChatbotProvider({
           createdAt: Date.now()
         };
 
+        if (payload.unprofessional) {
+          setState((prev) => ({
+            ...prev,
+            pending: false,
+            error: undefined,
+            notice: payload.notice ?? prev.notice,
+            usedFallback: payload.usedFallback ?? prev.usedFallback,
+            rateLimitRemaining: payload.rateLimitRemaining ?? prev.rateLimitRemaining,
+            promptCount: payload.promptCount ?? prev.promptCount,
+            captchaSiteKey: undefined,
+            pendingMessage: undefined,
+            moderation: "unprofessional"
+          }));
+          return;
+        }
+
         setState((prev) => ({
           ...prev,
           messages: [...prev.messages, assistantMessage],
@@ -272,14 +294,16 @@ export function ChatbotProvider({
           rateLimitRemaining: payload.rateLimitRemaining ?? prev.rateLimitRemaining,
           promptCount: payload.promptCount ?? prev.promptCount,
           captchaSiteKey: undefined,
-          pendingMessage: undefined
+          pendingMessage: undefined,
+          moderation: payload.unprofessional ? "unprofessional" : undefined
         }));
       } catch {
         setState((prev) => ({
           ...prev,
           pending: false,
           error: copy.errorMessage,
-          pendingMessage: undefined
+          pendingMessage: undefined,
+          moderation: undefined
         }));
       }
     },
@@ -592,6 +616,28 @@ function ChatFloatingWidget() {
               <p className="text-xs text-textMuted dark:text-dark-textMuted">
                 {state.notice}
               </p>
+            ) : null}
+            {state.moderation === "unprofessional" ? (
+              <div className="flex flex-col gap-3 rounded-lg border border-border bg-surface px-3 py-3 text-sm dark:border-dark-border dark:bg-dark-surface">
+                <div className="flex items-center gap-3">
+                  <div className="overflow-hidden rounded-md border border-border/70 dark:border-dark-border/70">
+                    <Image
+                      src="/no_fun.jpg"
+                      alt="No Fun Allowed sign"
+                      width={180}
+                      height={190}
+                      className="h-auto w-[180px] max-w-full object-contain"
+                    />
+                  </div>
+                  <div>
+                    <p className="font-semibold">Let&apos;s keep it professional.</p>
+                    <p className="mt-1 text-xs text-textMuted dark:text-dark-textMuted">
+                      I can help with Jack&apos;s roles, skills, and experience—ask me about projects, tech stack,
+                      or availability.
+                    </p>
+                  </div>
+                </div>
+              </div>
             ) : null}
             {state.error ? (
               <div className="rounded-lg border border-danger/70 bg-danger/10 px-3 py-2 text-xs text-danger">

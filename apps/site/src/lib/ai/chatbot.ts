@@ -9,7 +9,7 @@ export type AnchorEntry = {
   name: string;
   href: string;
   locale: Locale;
-  category: "tech" | "experience";
+  category: "tech" | "experience" | "education";
   source: string;
 };
 
@@ -308,16 +308,32 @@ export function buildReferences(
   const seen = new Set<string>();
   const anchorByLocale = new Map(anchors.map((anchor) => [`${anchor.id}-${anchor.locale}`, anchor]));
 
+  const resumeRef = { title: "Resume", href: "/resume.pdf" };
+  let resumeAdded = false;
+
   for (const hit of hits) {
     const { chunk } = hit;
     const anchor = anchorByLocale.get(`${chunk.sourceId}-${chunk.locale}`);
     const href = anchor?.href ?? chunk.href;
     const title = anchor?.name ?? chunk.title;
+
+    if (href === "/resume.pdf") {
+      if (!resumeAdded) {
+        references.push(resumeRef);
+        resumeAdded = true;
+      }
+      continue;
+    }
+
     if (seen.has(href)) {
       continue;
     }
     seen.add(href);
     references.push({ title, href });
+  }
+
+  if (!resumeAdded) {
+    references.push(resumeRef);
   }
 
   return references;

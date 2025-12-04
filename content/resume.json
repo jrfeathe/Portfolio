@@ -1,20 +1,6 @@
 {
-  "version": "2025-10-23",
-  "source_file": "content/Resume2025_v5_AMD.pdf",
   "basics": {
-    "name": "Jack R. Featherstone",
-    "headline": "Fullstack software engineer shipping resilient web and automation systems.",
-    "location": {
-      "street": "PLACEHOLDER",
-      "city": "Scotia",
-      "region": "NY",
-      "postal_code": "12302",
-      "country": "USA"
-    },
-    "contact": {
-      "email": "PLACEHOLDER",
-      "phone": "PLACEHOLDER"
-    },
+    "name": "Jack Featherstone",
     "profiles": [
       {
         "label": "LinkedIn",
@@ -26,75 +12,10 @@
       }
     ]
   },
-  "summary": {
-    "scope": "Fullstack engineer delivering modern web apps, automation tools, and distributed systems from brief to steady-state operations.",
-    "positioning": "Finish the rows I start; own delivery end to end, keep systems reliable, and back claims with live artifacts.",
-    "strengths": [
-      "Translate ambiguous requirements into production-ready fullstack solutions.",
-      "Keep repositories orderly with disciplined branching, reviews, and documentation.",
-      "Mentor peers through distributed systems challenges while modeling reliable operations."
-    ]
-  },
-  "skills": {
-    "languages": [
-      { "name": "C++", "proficiency": "expert", "years": 7 },
-      { "name": "Java", "proficiency": "expert", "years": 7 },
-      { "name": "JavaScript", "proficiency": "advanced", "years": 3 },
-      { "name": "TypeScript", "proficiency": "intermediate", "years": 1 },
-      { "name": "C", "proficiency": "advanced", "years": 3 },
-      { "name": "Python", "proficiency": "intermediate", "years": 2 },
-      { "name": "SQL", "proficiency": "intermediate", "years": 2 },
-      { "name": "Lua", "proficiency": "intermediate", "years": 2 }
-    ],
-    "frameworks": [
-      { "name": "React", "proficiency": "intermediate", "years": 2 },
-      { "name": "Node.js", "proficiency": "intermediate", "years": 2 },
-      { "name": "Prisma", "proficiency": "intermediate", "years": 2 },
-      { "name": "Express", "proficiency": "intermediate", "years": 2 },
-      { "name": "PyTorch", "proficiency": "beginner", "years": 1 },
-      { "name": "TensorFlow", "proficiency": "beginner", "years": 1 }
-    ],
-    "tools": [
-      "GitHub Actions",
-      "Docker",
-      "KVM/QEMU",
-      "Oracle Cloud",
-      "AWS",
-      "Vercel",
-      "Bash",
-      "Figma"
-    ],
-    "languages_spoken": [
-      { "language": "English", "proficiency": "native" },
-      { "language": "Japanese 日本語", "proficiency": "JLPT N5" },
-      { "language": "Chinese (Simplified) 中文（简体）", "proficiency": "HSK1" }
-    ]
-  },
-  "domains": [
-    {
-      "name": "Logistics workflow automation",
-      "proof": "content/proof/capstone-nda.md",
-      "status": "in-progress",
-      "note": "Sanitized architecture diagram and testimonial pending for public share."
-    },
-    {
-      "name": "Distributed systems education",
-      "proof": "content/proof/ser321-ta.md",
-      "status": "in-progress",
-      "note": "Faculty confirmation letter requested to finalize evidence."
-    },
-    {
-      "name": "Self-hosted infrastructure",
-      "proof": "self-hosted",
-      "status": "ready",
-      "note": "Private documentation available covering Nextcloud and game server operations."
-    },
-    {
-      "name": "Digital fabrication tooling",
-      "proof": "resume",
-      "status": "ready",
-      "note": "Backed by BAM Logistics internship output."
-    }
+  "languages_spoken": [
+    { "language": "English", "proficiency": "native" },
+    { "language": "Japanese 日本語", "proficiency": "JLPT N5" },
+    { "language": "Chinese (Simplified) 中文（简体）", "proficiency": "HSK1" }
   ],
   "experience": [
     {
@@ -102,119 +23,54 @@
       "company": "Arizona State University",
       "location": "Remote",
       "start": "2024-03",
-      "end": "2024-05",
-      "summary": "Led distributed systems lab content, authored Java client-server assignment on AWS, and coached cohorts through debugging complex network architectures.",
-      "highlights": [
-        "Designed and shipped a graded Java client-server assignment adopted by course faculty.",
-        "Hosted support sessions covering AWS deployment, concurrency, and interface design.",
-        "Maintained alignment with faculty and graduate TAs via Slack triage and weekly syncs."
-      ],
-      "proof": "content/proof/ser321-ta.md"
+      "end": "2024-05"
     },
     {
       "role": "Industrial Technician",
       "company": "Captech Logistics",
       "location": "Scotia, NY",
       "start": "2020-06",
-      "end": "present",
-      "summary": "Improve packaging operations and maintain production hardware in a high-throughput logistics environment.",
-      "highlights": [
-        "Implemented workflow adjustments that increased packaging throughput.",
-        "Troubleshoot and maintain industrial systems to minimize downtime."
-      ]
+      "end": "present"
     },
     {
       "role": "Digital Fabrication Intern",
       "company": "BAM Logistics",
       "location": "Cobleskill, NY",
       "start": "2022-06",
-      "end": "2022-08",
-      "summary": "Produced signage and prototypes via CNC laser cutter, converting digital designs into physical deliverables.",
-      "highlights": [
-        "Developed designs in Inkscape to support fabrication requests.",
-        "Managed end-to-end fabrication process ensuring accuracy and safety."
-      ]
-    }
-  ],
-  "projects": [
-    {
-      "name": "Rollodex Web App (Capstone)",
-      "role": "Co-lead & Git master",
-      "period": "2024-08 to 2025-04",
-      "stack": [
-        "React",
-        "Node.js",
-        "Prisma",
-        "PostgreSQL",
-        "JavaScript"
-      ],
-      "summary": "Delivered a production-grade operations web app under NDA, managing repo hygiene, documentation, and CI while driving backend performance improvements.",
-      "highlights": [
-        "Reduced query latency from 5s to 200ms through backend optimizations.",
-        "Enforced documentation and review standards that stabilized release quality.",
-        "Aligned stakeholder feedback with sprint execution under NDA constraints."
-      ],
-      "proof": "content/proof/capstone-nda.md"
-    },
-    {
-      "name": "VM Setup with GPU Passthrough",
-      "period": "2023",
-      "summary": "Deployed Windows 10 VMs using KVM/QEMU with GPU passthrough, tuning VFIO and kernel parameters to isolate GPUs for reliable performance."
-    },
-    {
-      "name": "Stellaris & Minecraft Modding",
-      "period": "2017-2025",
-      "summary": "Extended game mechanics and UIs via Java and Lua scripting, including backporting a crash fix for a private modpack."
-    },
-    {
-      "name": "Self-hosted Infrastructure",
-      "period": "2015-2024",
-      "summary": "Designed and maintained Nextcloud, game servers, and automation workflows across home lab hardware."
+      "end": "2022-08"
     }
   ],
   "education": [
     {
       "institution": "Arizona State University, Ira A. Fulton Schools of Engineering",
       "credential": "Bachelor of Science in Software Engineering",
-      "status": "in-progress",
+      "status": "completed",
       "graduation": "2025",
       "gpa": 3.59,
       "notes": [
         "Undergraduate Teaching Assistant for SER 321 (Distributed Software Systems)."
-      ],
-      "proof": "content/proof/asu-bse.md"
+      ]
     },
     {
       "institution": "Schenectady County Community College",
       "credential": "Associate of Applied Science in Computer Science",
       "status": "completed",
       "graduation": "2020"
+    },
+    {
+      "institution": "Scotia-Glenville High School",
+      "credential": "High School Diploma",
+      "status": "completed",
+      "graduation": "2018"
     }
   ],
   "eligibility": {
     "us_status": {
-      "value": "Citizen with valid SSN",
-      "note": "Add citizenship or work authorization statement for recruiter visibility."
-    }
-  },
-  "availability": {
-    "timezone": {
-      "label": "Eastern Time (US)",
-      "iana": "America/New_York",
-      "utc_offset_hours": -5,
-      "collaboration_window": "13:00-22:00 UTC (08:00-17:00 ET)"
-    },
-    "start_date": {
-      "value": "Now",
-      "note": "Populate with earliest start date or notice period once confirmed."
+      "value": "Citizen with valid SSN"
     }
   },
   "meta": {
-    "last_modified": "2025-10-23",
-    "author": "Jack Featherstone, Codex CLI agent",
-    "notes": [
-      "Replace TBD fields once work authorization and availability are confirmed.",
-      "Ensure proof artifacts referenced here are kept in sync as evidence matures."
-    ]
+    "last_modified": "2025-12-04",
+    "author": "Jack Featherstone, Codex CLI agent"
   }
 }

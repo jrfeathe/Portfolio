@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2025-12-03T17:53:57.943Z",
+  "generatedAt": "2025-12-04T18:28:40.532Z",
   "tokenizer": "bow-v1",
-  "hash": "86f49771c9fbff41cf1f4eb009bc5b65270cbdcd401b2dbd7d8c3867072ced32",
+  "hash": "0c816e4bc610004c31421238eb2050fc973c6f6a2a159ac29474a3146c79bf5d",
   "chunks": [
     {
       "id": "tech-react",
@@ -1977,6 +1977,366 @@
             "servers"
           ],
           "text": "Freelance / Mods Mod developer (Stellaris & Minecraft) Maintain a handful of Minecraft and Stellaris mods, plus high performance heavily modded private servers."
+        }
+      }
+    },
+    {
+      "id": "experience-arizona-state-university",
+      "sourceType": "experience",
+      "sourceId": "arizona-state-university",
+      "locales": {
+        "en": {
+          "title": "Arizona State University",
+          "href": "/resume.pdf",
+          "tokens": [
+            "arizona",
+            "state",
+            "university",
+            "undergraduate",
+            "teaching",
+            "assistant",
+            "ser",
+            "321",
+            "distributed",
+            "software",
+            "systems",
+            "remote",
+            "2024"
+          ],
+          "text": "Arizona State University Undergraduate Teaching Assistant, SER 321 (Distributed Software Systems) Remote 2024-03 – 2024-05"
+        },
+        "ja": {
+          "title": "Arizona State University",
+          "href": "/resume.pdf",
+          "tokens": [
+            "arizona",
+            "state",
+            "university",
+            "undergraduate",
+            "teaching",
+            "assistant",
+            "ser",
+            "321",
+            "distributed",
+            "software",
+            "systems",
+            "remote",
+            "2024"
+          ],
+          "text": "Arizona State University Undergraduate Teaching Assistant, SER 321 (Distributed Software Systems) Remote 2024-03 – 2024-05"
+        },
+        "zh": {
+          "title": "Arizona State University",
+          "href": "/resume.pdf",
+          "tokens": [
+            "arizona",
+            "state",
+            "university",
+            "undergraduate",
+            "teaching",
+            "assistant",
+            "ser",
+            "321",
+            "distributed",
+            "software",
+            "systems",
+            "remote",
+            "2024"
+          ],
+          "text": "Arizona State University Undergraduate Teaching Assistant, SER 321 (Distributed Software Systems) Remote 2024-03 – 2024-05"
+        }
+      }
+    },
+    {
+      "id": "experience-captech-logistics",
+      "sourceType": "experience",
+      "sourceId": "captech-logistics",
+      "locales": {
+        "en": {
+          "title": "Captech Logistics",
+          "href": "/resume.pdf",
+          "tokens": [
+            "captech",
+            "logistics",
+            "industrial",
+            "technician",
+            "scotia",
+            "2020",
+            "present"
+          ],
+          "text": "Captech Logistics Industrial Technician Scotia, NY 2020-06 – present"
+        },
+        "ja": {
+          "title": "Captech Logistics",
+          "href": "/resume.pdf",
+          "tokens": [
+            "captech",
+            "logistics",
+            "industrial",
+            "technician",
+            "scotia",
+            "2020",
+            "present"
+          ],
+          "text": "Captech Logistics Industrial Technician Scotia, NY 2020-06 – present"
+        },
+        "zh": {
+          "title": "Captech Logistics",
+          "href": "/resume.pdf",
+          "tokens": [
+            "captech",
+            "logistics",
+            "industrial",
+            "technician",
+            "scotia",
+            "2020",
+            "present"
+          ],
+          "text": "Captech Logistics Industrial Technician Scotia, NY 2020-06 – present"
+        }
+      }
+    },
+    {
+      "id": "experience-bam-logistics",
+      "sourceType": "experience",
+      "sourceId": "bam-logistics",
+      "locales": {
+        "en": {
+          "title": "BAM Logistics",
+          "href": "/resume.pdf",
+          "tokens": [
+            "bam",
+            "logistics",
+            "digital",
+            "fabrication",
+            "intern",
+            "cobleskill",
+            "2022"
+          ],
+          "text": "BAM Logistics Digital Fabrication Intern Cobleskill, NY 2022-06 – 2022-08"
+        },
+        "ja": {
+          "title": "BAM Logistics",
+          "href": "/resume.pdf",
+          "tokens": [
+            "bam",
+            "logistics",
+            "digital",
+            "fabrication",
+            "intern",
+            "cobleskill",
+            "2022"
+          ],
+          "text": "BAM Logistics Digital Fabrication Intern Cobleskill, NY 2022-06 – 2022-08"
+        },
+        "zh": {
+          "title": "BAM Logistics",
+          "href": "/resume.pdf",
+          "tokens": [
+            "bam",
+            "logistics",
+            "digital",
+            "fabrication",
+            "intern",
+            "cobleskill",
+            "2022"
+          ],
+          "text": "BAM Logistics Digital Fabrication Intern Cobleskill, NY 2022-06 – 2022-08"
+        }
+      }
+    },
+    {
+      "id": "education-arizona-state-university-ira-a-fulton-schools-of-engineering",
+      "sourceType": "education",
+      "sourceId": "arizona-state-university-ira-a-fulton-schools-of-engineering",
+      "locales": {
+        "en": {
+          "title": "Arizona State University, Ira A. Fulton Schools of Engineering",
+          "href": "/resume.pdf",
+          "tokens": [
+            "arizona",
+            "state",
+            "university",
+            "ira",
+            "fulton",
+            "schools",
+            "engineering",
+            "bachelor",
+            "science",
+            "software",
+            "completed",
+            "2025",
+            "gpa",
+            "undergraduate",
+            "teaching",
+            "assistant",
+            "ser",
+            "321",
+            "distributed",
+            "systems"
+          ],
+          "text": "Arizona State University, Ira A. Fulton Schools of Engineering Bachelor of Science in Software Engineering, completed, 2025, GPA 3.59 Undergraduate Teaching Assistant for SER 321 (Distributed Software Systems)."
+        },
+        "ja": {
+          "title": "Arizona State University, Ira A. Fulton Schools of Engineering",
+          "href": "/resume.pdf",
+          "tokens": [
+            "arizona",
+            "state",
+            "university",
+            "ira",
+            "fulton",
+            "schools",
+            "engineering",
+            "bachelor",
+            "science",
+            "software",
+            "completed",
+            "2025",
+            "gpa",
+            "undergraduate",
+            "teaching",
+            "assistant",
+            "ser",
+            "321",
+            "distributed",
+            "systems"
+          ],
+          "text": "Arizona State University, Ira A. Fulton Schools of Engineering Bachelor of Science in Software Engineering, completed, 2025, GPA 3.59 Undergraduate Teaching Assistant for SER 321 (Distributed Software Systems)."
+        },
+        "zh": {
+          "title": "Arizona State University, Ira A. Fulton Schools of Engineering",
+          "href": "/resume.pdf",
+          "tokens": [
+            "arizona",
+            "state",
+            "university",
+            "ira",
+            "fulton",
+            "schools",
+            "engineering",
+            "bachelor",
+            "science",
+            "software",
+            "completed",
+            "2025",
+            "gpa",
+            "undergraduate",
+            "teaching",
+            "assistant",
+            "ser",
+            "321",
+            "distributed",
+            "systems"
+          ],
+          "text": "Arizona State University, Ira A. Fulton Schools of Engineering Bachelor of Science in Software Engineering, completed, 2025, GPA 3.59 Undergraduate Teaching Assistant for SER 321 (Distributed Software Systems)."
+        }
+      }
+    },
+    {
+      "id": "education-schenectady-county-community-college",
+      "sourceType": "education",
+      "sourceId": "schenectady-county-community-college",
+      "locales": {
+        "en": {
+          "title": "Schenectady County Community College",
+          "href": "/resume.pdf",
+          "tokens": [
+            "schenectady",
+            "county",
+            "community",
+            "college",
+            "associate",
+            "applied",
+            "science",
+            "computer",
+            "completed",
+            "2020"
+          ],
+          "text": "Schenectady County Community College Associate of Applied Science in Computer Science, completed, 2020"
+        },
+        "ja": {
+          "title": "Schenectady County Community College",
+          "href": "/resume.pdf",
+          "tokens": [
+            "schenectady",
+            "county",
+            "community",
+            "college",
+            "associate",
+            "applied",
+            "science",
+            "computer",
+            "completed",
+            "2020"
+          ],
+          "text": "Schenectady County Community College Associate of Applied Science in Computer Science, completed, 2020"
+        },
+        "zh": {
+          "title": "Schenectady County Community College",
+          "href": "/resume.pdf",
+          "tokens": [
+            "schenectady",
+            "county",
+            "community",
+            "college",
+            "associate",
+            "applied",
+            "science",
+            "computer",
+            "completed",
+            "2020"
+          ],
+          "text": "Schenectady County Community College Associate of Applied Science in Computer Science, completed, 2020"
+        }
+      }
+    },
+    {
+      "id": "education-scotia-glenville-high-school",
+      "sourceType": "education",
+      "sourceId": "scotia-glenville-high-school",
+      "locales": {
+        "en": {
+          "title": "Scotia-Glenville High School",
+          "href": "/resume.pdf",
+          "tokens": [
+            "scotia",
+            "glenville",
+            "high",
+            "school",
+            "diploma",
+            "completed",
+            "2018"
+          ],
+          "text": "Scotia-Glenville High School High School Diploma, completed, 2018"
+        },
+        "ja": {
+          "title": "Scotia-Glenville High School",
+          "href": "/resume.pdf",
+          "tokens": [
+            "scotia",
+            "glenville",
+            "high",
+            "school",
+            "diploma",
+            "completed",
+            "2018"
+          ],
+          "text": "Scotia-Glenville High School High School Diploma, completed, 2018"
+        },
+        "zh": {
+          "title": "Scotia-Glenville High School",
+          "href": "/resume.pdf",
+          "tokens": [
+            "scotia",
+            "glenville",
+            "high",
+            "school",
+            "diploma",
+            "completed",
+            "2018"
+          ],
+          "text": "Scotia-Glenville High School High School Diploma, completed, 2018"
         }
       }
     }

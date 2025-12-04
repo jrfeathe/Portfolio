@@ -410,6 +410,30 @@ function HCaptchaWidget({
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<number | null>(null);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const resolveTheme = () =>
+      document.documentElement.classList.contains("dark") ? "dark" : "light";
+
+    setTheme(resolveTheme());
+
+    const observer = new MutationObserver(() => {
+      const next = resolveTheme();
+      setTheme((prev) => (prev === next ? prev : next));
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class", "data-theme"]
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     let mounted = true;
@@ -442,11 +466,9 @@ function HCaptchaWidget({
 
       widgetIdRef.current = hcaptcha.render(containerRef.current, {
         sitekey: siteKey,
+        theme,
         callback: (token: string) => {
           onVerify(token);
-          if (window.hcaptcha && widgetIdRef.current !== null) {
-            window.hcaptcha.reset(widgetIdRef.current);
-          }
         },
         "expired-callback": () => {
           if (widgetIdRef.current !== null) {
@@ -470,7 +492,7 @@ function HCaptchaWidget({
       }
       widgetIdRef.current = null;
     };
-  }, [siteKey, onVerify]);
+  }, [siteKey, onVerify, theme]);
 
   return (
     <div className="mt-2">

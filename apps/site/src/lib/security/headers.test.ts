@@ -26,6 +26,20 @@ function runWithNodeEnv(env: string, callback: () => void) {
   }
 }
 
+function withEnv(key: string, value: string, callback: () => void) {
+  const original = process.env[key];
+  process.env[key] = value;
+  try {
+    callback();
+  } finally {
+    if (original === undefined) {
+      delete process.env[key];
+    } else {
+      process.env[key] = original;
+    }
+  }
+}
+
 beforeAll(() => {
   Object.defineProperty(globalThis, "crypto", {
     configurable: true,
@@ -44,8 +58,12 @@ describe("security headers helpers", () => {
   it("builds a CSP containing the provided nonce", () => {
     const nonce = "testnonce";
     const csp = buildContentSecurityPolicy(nonce);
+    const frameSrc = process.env.HCAPTCHA_SITE_KEY
+      ? "frame-src 'self' https://hcaptcha.com https://*.hcaptcha.com"
+      : "frame-src 'none'";
 
     expect(csp).toContain(`script-src 'self' 'nonce-${nonce}'`);
+    expect(csp).toContain(frameSrc);
     if (process.env.NODE_ENV === "production") {
       expect(csp).toContain(`style-src 'self' 'nonce-${nonce}'`);
     } else {
@@ -64,6 +82,14 @@ describe("security headers helpers", () => {
       expect(csp).not.toContain("'unsafe-eval'");
       expect(csp).not.toContain("'unsafe-inline'");
       expect(csp).toContain("style-src 'self' 'nonce-prod'");
+    });
+  });
+
+  it("allows hCaptcha hosts when configured", () => {
+    withEnv("HCAPTCHA_SITE_KEY", "test-key", () => {
+      const csp = buildContentSecurityPolicy("nonce");
+      expect(csp).toContain("https://js.hcaptcha.com");
+      expect(csp).toContain("frame-src 'self' https://hcaptcha.com https://*.hcaptcha.com");
     });
   });
 

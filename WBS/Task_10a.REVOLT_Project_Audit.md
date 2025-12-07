@@ -133,3 +133,60 @@
 | 26.1 Final perf hardening                                   | I don't see the point. Give me a good reason or delete. I'm going to try to do a security audit and ask my CyberSec friend for help.                                                                                                                                                                                                                                                                          |
 | 26.2 Announcement + backup test                             | Not needed.                                                                                                                                                                                                                                                                                                                                                                                                   |
 | 26.3 “Why an Onion Mirror” post                             | Throw this in the notes writeup. Refer to 13.0 Notes.                                                                                                                                                                                                                                                                                                                                                         |
+
+## Takeaways & Path Forward
+- Trim boldly: ADR gallery (14.x), micro-demos (15.x), trade-off explorer (19.x), release automation/roadmap (17.x), contact page/CLI (18.x), perf badge novelty (20.x), and extra content backlog (24.x) are candidates to archive. Proof chips mapping (1.1) is intentionally skipped for security.
+- Merge redundancy: absorb 10b.0 into shipped hero work; merge 16.x SLO/health into 12a uptime (ping + simple health tile).
+- Refocus skim mode: implement skim renderer/layout (1.2/11.x) that prioritizes experience and tech stack, hides intro/roadmap/audio, keeps nav, resume/need-proof cues, and Chatbot.
+- Launch-critical set: hosting + domain (12a.0–12a.1), skim mode, localization fill/tone checks (22.0), high-contrast/chatbot/mobile polish (10a.2/10a.3), manual a11y audit (25.1), SEO/sitemap (26.0), and restoring CI/coverage under 10a.REVOLT.
+- Reliability lite: add ping/uptime check and a small health tile (12a.2–12a.3 + 16.x merged). Decide whether existing telemetry is sufficient or if a cookieless toggle is needed (23.0).
+- Content pivot: replace the engineering-notes list (13.x) with a single build/lessons writeup that can also house the “Why an Onion Mirror” note; drop the bulk-post requirements.
+- Tor mirror (optional): if prioritized, deliver secure hosting + NoScript-first render + header parity; Onion-Location header waits until mirror exists.
+- New WBS outline: (a) Launch Readiness (host, domain, skim mode, localization, UI polish, a11y audit, SEO, CI green), (b) Reliability & Health (ping + tile, analytics stance), (c) Tor Mirror, (d) Icebox/Archived (all deprioritized items). Capture this in the next Essential_WBS revision.
+
+## Draft of Features for FINAL_WBS
+- **REVOLT**
+  - Fix availability hidden-time bug; verify meetings/availability UI.
+  - UI/accessibility polish: high-contrast fixes, chatbot UI cleanup, mobile checks (hero/tech stack/audio/skim/chat), simplify heavy SVGs, manual a11y audit.
+  - Media/audio: add portrait + Codex logo, finalize tech-stack assets, test/fix AudioPlayer, add music track.
+  - CI/SEO: restore green CI/coverage/budgets; sitemap/robots/canonicals/meta sanity; structured data spot-check post-copy changes.
+  - WBS reset:
+    - Archive/deprecate unused tracks (ADR gallery, micro-demos, trade-offs, extra content sets, perf badge, contact/CLI).
+    - Publish a fresh Essential WBS focused on launch & reliability.
+- **Skim mode**
+  - Skim mode MVP: apply 1.2/11.x rules (experience + tech stack; hide intro/roadmap/audio; keep nav/resume/“need proof” cues; Chatbot OK).
+- **Localization**
+  - Localization pass: complete EN/JA/ZH copy, tone-check, localization of chatbot.
+- **Reliability**
+  - Add minimal ping/uptime check and small health tile; Use cookieless toggle idea.
+- **Engineering Writeup**
+  - Replace engineering-notes list with one “build/lessons” writeup that also covers “Why an Onion Mirror.”
+- **Tor mirror**
+  - Secure hosting, NoScript-first render, header/CSP parity, onion address; add Onion-Location on clear site when mirror is live.
+
+## Technology fit check
+- MDX: keep for the single “build/lessons” writeup; drop list/filter/RSS ambitions unless revived later.
+- Mermaid/PlantUML: not needed if no diagrams in the new writeup. Prefer to drop PlantUML (proxy + dependency) first; keep Mermaid only if one diagram adds value, otherwise remove both to simplify CSP and attack surface.
+- Diagram proxy (/api/plantuml): remove if PlantUML goes; revisit only if Tor/NoScript needs static SVG diagrams.
+- OpenTelemetry: keep (uptime/perf debugging); ensure prod env vars wired.
+- Chatbot: keep; polish UI/rate-limit/captcha posture for launch.
+
+## TECH TO BE REMOVED
+- Mermaid/PlantUML: not needed if no diagrams in the new writeup. Prefer to drop PlantUML (proxy + dependency) first; keep Mermaid only if one diagram adds value, otherwise remove both to simplify CSP and attack surface.
+  - No diagrams will be used.
+- Diagram proxy (/api/plantuml): remove if PlantUML goes; revisit only if Tor/NoScript needs static SVG diagrams.
+  - We do not need diagrams.
+
+## Inventory before FINAL_WBS rewrite
+- Current sections: repository snapshot, experience/AI/observability/testing summaries, gaps/risks, derived plan draft, outstanding tasks list, human judgements table, takeaways/path forward, draft FINAL_WBS features, technology fit, and removal list.
+- Decisions so far: keep MDX for one lessons writeup; drop diagrams (Mermaid/PlantUML + proxy); archive ADR/micro-demos/trade-offs/extra content/perf badge/contact/CLI tracks; keep chatbot/OTEL; pivot engineering notes into a single build/lessons + Onion rationale; skim mode becomes experience + tech stack only.
+- Pending to codify in FINAL_WBS: REVOLT sprint scope, skim mode MVP, localization, reliability (ping + tile + analytics stance), single writeup, Tor mirror, and the archived/icebox list.
+- Answered questions:
+  - Host choices (Oracle primary? Vercel fallback)
+    - Let's just get Oracle Cloud up for now.
+  - Cookieless toggle vs. current telemetry
+    - Let's ask for permission before using cookies / telemetry. Only track if given consent.
+  - Where the health tile lives in skim vs. full mode.
+    - I think a decent location we can try is in the intro section (also known as Hero). There is some negative space along the left bottom / center bottom on desktop. On mobile put it at the bottom of the intro section. Let's put it in the footer on skim mode.
+  - Whether Tor mirror is in-scope for launch or post-launch
+    - I think immediately post launch. We want to deploy publicly, then get the mirror up quickly.

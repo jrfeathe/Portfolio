@@ -59,11 +59,22 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
   const defaultTimezone = getLocaleDefaultTimezone(locale);
   const [selectedTimezone, setSelectedTimezone] = useState(defaultTimezone);
   const [showReference, setShowReference] = useState(false);
-  const visibleIndices = useMemo(
+  const convertedVisibleIndices = useMemo(
     () => getVisibleQuarterIndices(data, { timezone: selectedTimezone, reference: referenceDate }),
     [data, selectedTimezone, referenceDate]
   );
-  const quarterMeta = useMemo(() => buildQuarterMetadata(visibleIndices), [visibleIndices]);
+  const convertedQuarterMeta = useMemo(
+    () => buildQuarterMetadata(convertedVisibleIndices),
+    [convertedVisibleIndices]
+  );
+  const referenceVisibleIndices = useMemo(
+    () => getVisibleQuarterIndices(data, { timezone: data.timezone, reference: referenceDate }),
+    [data, referenceDate]
+  );
+  const referenceQuarterMeta = useMemo(
+    () => buildQuarterMetadata(referenceVisibleIndices),
+    [referenceVisibleIndices]
+  );
   const [timezoneOptions, setTimezoneOptions] = useState(() =>
     ensureDefaultTimezone(getTimezoneOptions(true), defaultTimezone)
   );
@@ -245,7 +256,7 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
           dayLabels={copy.dayLabels}
           summaries={convertedSummary}
           copy={copy}
-          quarterMeta={quarterMeta}
+          quarterMeta={convertedQuarterMeta}
         />
         <div className="mt-3">
           <button
@@ -298,7 +309,7 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
           dayLabels={copy.dayLabels}
           summaries={canonicalSummary}
           copy={copy}
-          quarterMeta={quarterMeta}
+          quarterMeta={referenceQuarterMeta}
         />
       </ReferenceDialog>
     </figure>

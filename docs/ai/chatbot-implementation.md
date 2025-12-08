@@ -40,7 +40,6 @@ Scope: Recruiter-facing AI assistant surfaced on key pages with rate limits, cap
 - Provider: `ChatbotProvider` wraps the app in `app/layout.tsx`, using locale-specific copy from dictionaries.
 - Floating launcher: bottom-right circle using `public/ai_bubble_icon.svg`; state stored in `sessionStorage` (clears per session).
 - Panel: intro, example chips, markdown-friendly replies, reference links, hCaptcha widget, error + resume fallback, logging notice.
-- Inline CTA: `ChatInlineCard` embedded in home, experience, and meetings sidebars to seed prompts quickly.
 - Accessibility: focus management on open, buttons labeled, minimal motion, respects reduced-motion via global styles.
 
 ## Telemetry and Safety

@@ -13,7 +13,6 @@ import {
   StickyCTA
 } from "../../src/components/Shell";
 import { ResponsiveAudioPlayer } from "../../src/components/AudioPlayer";
-import { ChatInlineCard } from "../../src/components/chat";
 import { headers } from "next/headers";
 import { StructuredData } from "../../src/components/seo/StructuredData";
 import { getResumeProfile } from "../../src/lib/resume/profile";
@@ -203,11 +202,11 @@ export default function HomePage({ params, searchParams }: PageProps) {
           footerContent={dictionary.home.footer}
           cta={
             <div className="space-y-4">
-              <StickyCTA title={cta.title} description={cta.description}>
-                {cta.actions.map((action) => (
-                  action.href ? (
-                    <Button
-                      key={`${action.label}-${action.variant}`}
+          <StickyCTA title={cta.title} description={cta.description}>
+            {cta.actions.map((action) => (
+              action.href ? (
+                <Button
+                  key={`${action.label}-${action.variant}`}
                       variant={action.variant}
                       href={action.href}
                       className="w-full"
@@ -230,15 +229,14 @@ export default function HomePage({ params, searchParams }: PageProps) {
                       className="w-full"
                       data-variant={action.variant}
                     >
-                      {action.label}
-                    </Button>
-                  )
-                ))}
-              </StickyCTA>
-              <ChatInlineCard />
-            </div>
-          }
-        />
+                  {action.label}
+                </Button>
+              )
+            ))}
+          </StickyCTA>
+        </div>
+      }
+    />
         <ResponsiveAudioPlayer
           src={dictionary.home.audioPlayer.src}
           title={dictionary.home.audioPlayer.title}

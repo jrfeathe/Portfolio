@@ -15,7 +15,6 @@ import {
   type ShellSection
 } from "../../../src/components/Shell";
 import { AvailabilitySection } from "../../../src/components/meetings/AvailabilitySection";
-import { ChatInlineCard } from "../../../src/components/chat";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -117,7 +116,6 @@ export default function MeetingsPage({ params }: PageParams) {
       breadcrumbs={breadcrumbs}
       sections={sections}
       showSkimToggle={false}
-      cta={<ChatInlineCard />}
       locale={locale}
     />
   );

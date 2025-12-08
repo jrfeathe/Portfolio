@@ -36,9 +36,6 @@ export type ChatbotCopy = {
   panelSubtitle: string;
   inputPlaceholder: string;
   exampleQuestions: string[];
-  inlineTitle: string;
-  inlineBody: string;
-  inlineCta: string;
   emptyState: string;
   loggingNotice: string;
   errorMessage: string;
@@ -697,8 +694,9 @@ function ChatFloatingWidget() {
       <button
         type="button"
         onClick={toggle}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accentOn shadow-lg transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accentOn shadow-lg transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 contrast-more:bg-[#1d4ed8] contrast-more:text-white contrast-more:border contrast-more:border-[#1d4ed8] dark:bg-[#22c55e] dark:text-[#020617] dark:hover:bg-[#16a34a] dark:focus-visible:ring-offset-2 dark:contrast-more:bg-[#38bdf8] dark:contrast-more:text-[#020617] dark:contrast-more:border dark:contrast-more:border-[#38bdf8]"
         aria-label={copy.launcherLabel}
+        data-chat-launcher="true"
       >
         <Image
           src="/ai_bubble_icon.svg"
@@ -709,53 +707,6 @@ function ChatFloatingWidget() {
           priority={false}
         />
       </button>
-    </div>
-  );
-}
-
-export function ChatInlineCard() {
-  const { copy, state, open, sendMessage } = useChatbot();
-  const [preset, setPreset] = useState(copy.exampleQuestions[0] ?? "");
-  const statusLabel = state.promptCount >= 2 ? copy.captchaTitle : copy.inlineCta;
-
-  const handleAsk = useCallback(async () => {
-    if (preset) {
-      await sendMessage(preset);
-    }
-    open();
-  }, [open, preset, sendMessage]);
-
-  return (
-    <div className="space-y-3 rounded-2xl border border-border bg-surface p-4 shadow-sm dark:border-dark-border dark:bg-dark-surface">
-      <div className="flex items-start justify-between gap-2">
-        <div>
-          <p className="text-sm font-semibold text-text dark:text-dark-text">
-            {copy.inlineTitle}
-          </p>
-          <p className="mt-1 text-xs text-textMuted dark:text-dark-textMuted">
-            {copy.inlineBody}
-          </p>
-        </div>
-        <span className="rounded-full bg-surfaceMuted px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-textMuted dark:bg-dark-surfaceMuted dark:text-dark-textMuted">
-          {statusLabel}
-        </span>
-      </div>
-      <div className="flex flex-wrap items-center gap-2">
-        <select
-          className="flex-1 rounded-lg border border-border bg-background px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-background"
-          value={preset}
-          onChange={(event) => setPreset(event.target.value)}
-        >
-          {copy.exampleQuestions.map((question) => (
-            <option key={question} value={question}>
-              {question}
-            </option>
-          ))}
-        </select>
-        <Button variant="primary" onClick={handleAsk} className="whitespace-nowrap">
-          {copy.inlineCta}
-        </Button>
-      </div>
     </div>
   );
 }

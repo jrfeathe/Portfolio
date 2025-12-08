@@ -88,9 +88,6 @@ export type AppDictionary = {
     panelSubtitle: string;
     inputPlaceholder: string;
     exampleQuestions: string[];
-    inlineTitle: string;
-    inlineBody: string;
-    inlineCta: string;
     emptyState: string;
     loggingNotice: string;
     errorMessage: string;
@@ -458,9 +455,6 @@ const en: AppDictionary = {
       "Can Jack save my company money?",
       "Does Jack have leadership experience?"
     ],
-    inlineTitle: "Ask the AI",
-    inlineBody: "Get quick, grounded answers with links to this portfolio.",
-    inlineCta: "Ask now",
     emptyState: "Try a quick question or pick a starter prompt.",
     loggingNotice: "This chat is monitored for quality assurance and clears after 30 days.",
     errorMessage: "Something went wrong. Try again or open the resume.",
@@ -661,9 +655,6 @@ const ja: AppDictionary = {
       "Jackはコスト削減を手伝えますか？",
       "Jackにリーダーシップ経験はありますか？"
     ],
-    inlineTitle: "AIに質問する",
-    inlineBody: "ポートフォリオへのリンク付きで、素早く回答します。",
-    inlineCta: "質問する",
     emptyState: "短い質問を入力するか、例を選んでください。",
     loggingNotice: "品質管理のためログを保存し、30日で削除します。",
     errorMessage: "問題が発生しました。再試行するか履歴書をご覧ください。",
@@ -866,9 +857,6 @@ const zh: AppDictionary = {
       "Jack能帮我省钱吗？",
       "Jack有领导经验吗？"
     ],
-    inlineTitle: "向AI提问",
-    inlineBody: "提供带链接的快速、可信回答。",
-    inlineCta: "现在提问",
     emptyState: "先输入一个问题或选择示例。",
     loggingNotice: "此聊天用于质量监控，日志会在30天后清除。",
     errorMessage: "出错了，请重试或查看简历。",

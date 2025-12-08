@@ -19,7 +19,7 @@ This folder holds the chatbot instruction pack and retrieval artifacts.
 ## API and UI behavior
 - API: `/api/chat` loads the instruction pack, retrieves top chunks, and calls OpenRouter when `OPENROUTER_API_KEY` is set (fallback templated replies otherwise). Reply length is capped to a short, affirmative 2–5 sentences with resume fallback on errors.
 - Guardrails: rate limit 10 prompts/hour per IP; hCaptcha required from the 3rd prompt onward. Logging notice is always included: “This chat is monitored for quality assurance purposes.”
-- Client: floating launcher (icon at `public/ai_bubble_icon.svg`) plus inline CTA on home/experience/meetings. State persists in `sessionStorage` per session and clears on a new tab/session.
+- Client: floating launcher (icon at `public/ai_bubble_icon.svg`). State persists in `sessionStorage` per session and clears on a new tab/session.
 
 ## Usage notes
 - Tone: confident, concise, affirmative; bridge adjacent skills when exact tech isn’t listed.

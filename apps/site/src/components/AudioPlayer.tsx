@@ -230,6 +230,8 @@ export function AudioPlayerOverlay({
             className
           )}
           ref={playerContainerRef}
+          data-audio-player="true"
+          data-variant="bottom"
           role="complementary"
           aria-label={title}
           aria-hidden={isHidden}
@@ -239,7 +241,7 @@ export function AudioPlayerOverlay({
               <Button
                 onClick={handleToggle}
                 variant="primary"
-                className="h-11 w-11 rounded-full text-base font-bold shadow-lg"
+                className="h-10 w-10 rounded-full border-2 border-border text-base font-black leading-none shadow-lg dark:border-dark-border"
                 aria-label={isPlaying ? pauseLabel : playLabel}
               >
                 {isPlaying ? "❚❚" : "▶"}
@@ -248,11 +250,14 @@ export function AudioPlayerOverlay({
                 variant="secondary"
                 onClick={handleHide}
                 aria-label={closeLabel}
-                className="h-9 w-9 rounded-full border border-border text-base shadow-md hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+                className="h-9 w-9 rounded-full border-2 border-border text-base shadow-md hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
               >
                 {"▾"}
               </Button>
-              <span className="rounded-xl border border-border px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-textMuted dark:border-dark-border dark:text-dark-textMuted">
+              <span
+                className="rounded-xl border-2 border-border px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-textMuted shadow-sm dark:border-dark-border dark:text-dark-textMuted"
+                data-time-chip="true"
+              >
                 {formattedCurrent} / {formattedDuration}
               </span>
               <button
@@ -272,7 +277,7 @@ export function AudioPlayerOverlay({
                     step="0.01"
                     value={volume}
                     onChange={handleVolumeChange}
-                    className="w-full accent-accent"
+                    className="w-full accent-accent dark:accent-dark-accent contrast-more:accent-[#1d4ed8] dark:contrast-more:accent-[#38bdf8]"
                     aria-label="Volume"
                   />
                 </div>
@@ -333,6 +338,8 @@ export function AudioPlayerOverlay({
           playerVisibilityClass,
           className
         )}
+        data-audio-player="true"
+        data-variant="floating"
         role="complementary"
         aria-label={title}
         aria-hidden={isHidden}
@@ -343,23 +350,26 @@ export function AudioPlayerOverlay({
               variant="secondary"
               onClick={handleHide}
               aria-label={closeLabel}
-              className="h-8 w-8 rounded-xl border border-border dark:border-dark-border shadow-md"
+              className="h-8 w-8 rounded-xl border-2 border-border dark:border-dark-border shadow-md"
             >
               {">"}
             </Button>
           </div>
 
-          <Button
-            onClick={handleToggle}
-            variant="primary"
-            className="h-10 w-10 rounded-full text-base font-bold shadow-lg"
-            aria-label={isPlaying ? pauseLabel : playLabel}
-          >
-            {isPlaying ? "❚❚" : "▶"}
-          </Button>
+              <Button
+                onClick={handleToggle}
+                variant="primary"
+                className="h-10 w-10 rounded-full border-2 border-border text-base font-black leading-none shadow-lg dark:border-dark-border"
+                aria-label={isPlaying ? pauseLabel : playLabel}
+              >
+                {isPlaying ? "❚❚" : "▶"}
+              </Button>
 
           <div className="flex items-center text-sm font-medium text-text dark:text-dark-text">
-            <span className="rounded-xl border border-border px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-textMuted dark:border-dark-border dark:text-dark-textMuted">
+            <span
+              className="rounded-xl border-2 border-border px-1.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-textMuted shadow-sm dark:border-dark-border dark:text-dark-textMuted"
+              data-time-chip="true"
+            >
               {formattedCurrent} / {formattedDuration}
             </span>
           </div>
@@ -367,7 +377,7 @@ export function AudioPlayerOverlay({
             <button
               type="button"
               onClick={handleVolumeToggle}
-              className="rounded-full border border-border px-2 py-1 text-xs font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+              className="rounded-full border-2 border-border px-2 py-1 text-xs font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
               aria-label={showVolume ? "Hide volume slider" : "Show volume slider"}
             >
               {volume === 0 ? "🔇" : "🔊"}
@@ -376,7 +386,7 @@ export function AudioPlayerOverlay({
               href={src}
               download
               variant="secondary"
-              className="w-8 h-7 rounded-full border border-border font-semibold shadow-md hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+              className="w-8 h-7 rounded-full border-2 border-border font-semibold shadow-md hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
             >
               ↓
             </Button>
@@ -390,7 +400,7 @@ export function AudioPlayerOverlay({
                 step="0.01"
                 value={volume}
                 onChange={handleVolumeChange}
-                className="w-full accent-accent"
+                className="w-full accent-accent dark:accent-dark-accent contrast-more:accent-[#1d4ed8] dark:contrast-more:accent-[#38bdf8]"
                 aria-label="Volume"
               />
             </div>
@@ -416,7 +426,7 @@ export function AudioPlayerOverlay({
             variant="secondary"
             onClick={handleShow}
             aria-label={reopenLabel}
-            className="h-10 w-10 rounded-xl border border-border shadow-lg hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+            className="h-10 w-10 rounded-xl border-2 border-border shadow-lg hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
           >
             {"<"}
           </Button>

@@ -10,7 +10,7 @@
 
 ## Product Experience
 - Routing & localization: middleware normalizes to `/[locale]` (default `en`), sets nonce + locale cookies, and applies CSP/security headers globally. Dictionaries provide EN/JA/ZH content; locale-aware metadata and breadcrumbs on all pages.
-- Shell/layout: `ResponsiveShellLayout` with anchor nav, sticky CTA grid, skim-mode toggle, theme/contrast sliders, and chatbot inline card. `layout.tsx` bootstraps Ubuntu fonts, CSP nonces, theme/contrast init script, OTEL bootstrap, and chatbot provider.
+- Shell/layout: `ResponsiveShellLayout` with anchor nav, sticky CTA grid, skim-mode toggle, theme/contrast sliders, and the floating chatbot launcher. `layout.tsx` bootstraps Ubuntu fonts, CSP nonces, theme/contrast init script, OTEL bootstrap, and chatbot provider.
 - Home (`/[locale]`): Personalized hero copy from 10a.1, portrait placeholder media, tech stack carousel (logos in `apps/site/public/tech-stack`), proof chip grid (Rollodex, Quester2000, SER321 TA, Stellaris modding), roadmap list, sticky CTAs (resume download filename derived from resume version), skim mode via `?skim`, audio player, JSON-LD structured data, and OTEL web vitals hook.
 - Experience (`/[locale]/experience`): Data-driven cards for engagements and tech-stack deep dives with anchor navigation. Uses dictionary-backed summaries/highlights.
 - Meetings (`/[locale]/meetings`): Availability grid via `apps/site/data/availability/weekly.json`, slot blurbs, and contact mailto CTA; surfaced as sections inside shell layout. Redirect shim from `/meetings`.
@@ -19,7 +19,7 @@
 - Media/performance: Self-hosted fonts, responsive image helper, critical CSS manifest (`app/critical-css.manifest.json`), inline CSS budget (16 KB), AVIF/WebP outputs, print stylesheet for recruiter exports.
 
 ## AI Assistant
-- Frontend: `ChatbotProvider` with floating widget + inline card, session persistence, rate limit display, moderation handling, optional hCaptcha solve flow (script injected client-side), and reference links in replies.
+- Frontend: `ChatbotProvider` with floating widget, session persistence, rate limit display, moderation handling, optional hCaptcha solve flow (script injected client-side), and reference links in replies.
 - Backend: `/api/chat` (Node runtime) sanitizes input, caps history/length, rate-limits per IP/session, enforces professional-topic rules, optionally requires hCaptcha after two prompts, logs to `logs/chatbot/*.jsonl`. Retrieval uses local embeddings/anchors from `apps/site/data/ai/{chatbot-embeddings.json,tech-anchors.json}` with simple token scoring and bridge hints (e.g., Kubernetes adjacency). Model calls go to OpenRouter when `OPENROUTER_API_KEY` is set; replies are forced to use allowed links (anchors/resume), otherwise fall back to a canned professional response. PlantUML proxy API remains for MDX diagrams.
 
 ## Observability, Security, Performance

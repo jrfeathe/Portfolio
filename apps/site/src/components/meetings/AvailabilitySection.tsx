@@ -99,6 +99,7 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
   const convertedOffset = getOffsetLabel(selectedTimezone);
   const baseOffset = getOffsetLabel(data.timezone);
   const windowLabel = null;
+  const selectedTimezoneLabel = `${convertedLabel} (${convertedOffset})`;
   const dropdownLabelId = useId();
   const dropdownButtonId = useId();
   const dropdownSearchId = useId();
@@ -146,15 +147,11 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
   };
 
   return (
-    <figure className="rounded-3xl border border-border bg-surface p-2 text-sm text-text dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
-      <div className="space-y-2 rounded-2xl bg-muted/30 p-1 px-3 dark:bg-dark-muted/30" ref={pickerRef}>
-        <label
-          htmlFor={dropdownButtonId}
-          id={dropdownLabelId}
-          className="text-xs font-medium px-3 text-textMuted dark:text-dark-textMuted"
-        >
-          {copy.timezoneDropdownLabel}
-        </label>
+    <figure
+      data-availability-section="true"
+      className="rounded-3xl border border-border bg-surface text-sm text-text dark:border-dark-border dark:bg-dark-surface dark:text-dark-text"
+    >
+      <div className="space-y-1 rounded-2xl bg-muted/30 mx-3 mt-3 dark:bg-dark-muted/30" ref={pickerRef}>
         <div className="relative">
           <button
             type="button"
@@ -166,10 +163,10 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
             onClick={() => setIsPickerOpen((open) => !open)}
             className="flex w-full items-center justify-between rounded-xl border border-border bg-surface px-3 py-2 text-sm font-medium text-text shadow-sm outline-none transition hover:border-accent focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/30 dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:focus-visible:border-dark-accent dark:focus-visible:ring-dark-accent/40"
           >
-            <span className="truncate">{formatTimezoneName(selectedTimezone)}</span>
+            <span className="truncate">{selectedTimezoneLabel}</span>
             <span aria-hidden="true" className="ml-2 text-xs text-textMuted dark:text-dark-textMuted">
-              ▾
-            </span>
+            ▾
+          </span>
           </button>
           {isPickerOpen ? (
             <div
@@ -186,7 +183,7 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
                   onChange={(event) => setTimezoneSearch(event.target.value)}
                   placeholder="Search timezones"
                   aria-label="Search timezones"
-                  className="w-full rounded-lg border border-border bg-muted/60 px-3 py-2 text-sm text-text outline-none transition hover:border-accent focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-accent/30 dark:border-dark-border dark:bg-dark-muted/60 dark:text-dark-text dark:hover:border-dark-accent dark:focus-visible:border-dark-accent dark:focus-visible:ring-dark-accent/40"
+                  className="w-full rounded-lg border-0 bg-surface px-3 py-2 text-sm text-text outline-none transition focus-visible:ring-2 focus-visible:ring-accent/30 dark:bg-dark-surface dark:text-dark-text dark:focus-visible:ring-dark-accent/40"
                   autoFocus
                 />
               </div>
@@ -196,12 +193,13 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
                 );
                 const normalizedQuery = timezoneSearch.trim().toLowerCase();
                 const isSearching = normalizedQuery.length > 0;
-                const remainingOptions = timezoneOptions.filter((tz) =>
-                  formatTimezoneName(tz).toLowerCase().includes(normalizedQuery)
-                );
+                const optionMatchesQuery = (tz: string) =>
+                  `${formatTimezoneName(tz)} (${getOffsetLabel(tz)})`.toLowerCase().includes(normalizedQuery);
+                const remainingOptions = timezoneOptions.filter(optionMatchesQuery);
 
                 const renderOption = (value: string, isPinned: boolean) => {
                   const isSelected = value === selectedTimezone;
+                  const optionLabel = `${formatTimezoneName(value)} (${getOffsetLabel(value)})`;
                   return (
                     <button
                       key={`${isPinned ? "pinned" : "all"}-${value}`}
@@ -213,7 +211,7 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
                         isSelected ? "bg-accent/10 text-accent dark:bg-dark-accent/10 dark:text-dark-accent" : ""
                       }`}
                     >
-                      <span className="truncate">{formatTimezoneName(value)}</span>
+                      <span className="truncate">{optionLabel}</span>
                       {isSelected ? (
                         <span className="text-[0.65rem] font-semibold text-accent dark:text-dark-accent">Selected</span>
                       ) : null}
@@ -247,18 +245,19 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
         </div>
       </div>
 
-      <div className="mt-1 px-3">
+      <div className="-mt-6 px-0">
         <MatrixCard
-          title={`${copy.primaryLabel} · ${convertedLabel}`}
+          title=""
           timezone={selectedTimezone}
-          timezoneLabel={`${convertedLabel} (${convertedOffset})`}
+          timezoneLabel=""
+          className="border-none shadow-none"
           matrix={convertedMatrix}
           dayLabels={copy.dayLabels}
           summaries={convertedSummary}
           copy={copy}
           quarterMeta={convertedQuarterMeta}
         />
-        <div className="mt-3">
+        <div className="-mt-1 flex justify-center">
           <button
             type="button"
             onClick={() => setShowReference(true)}
@@ -296,15 +295,15 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
       <ReferenceDialog
         open={showReference}
         onClose={() => setShowReference(false)}
-        title={`${copy.referenceDialogTitle} · ${baseLabel}`}
-        description={copy.referenceDialogDescription}
+        title={`${copy.referenceDialogTitle}`}
+        description=""
         closeLabel={copy.referenceCloseLabel}
         dialogId={dialogId}
       >
         <MatrixCard
-          title={`${copy.referenceLabel} · ${baseLabel}`}
+          title={`${baseLabel} (${baseOffset})`}
           timezone={data.timezone}
-          timezoneLabel={`${baseLabel} (${baseOffset})`}
+          timezoneLabel=""
           matrix={baseMatrix}
           dayLabels={copy.dayLabels}
           summaries={canonicalSummary}
@@ -320,6 +319,7 @@ type MatrixCardProps = {
   title: string;
   timezone: string;
   timezoneLabel: string;
+  className?: string;
   matrix: AvailabilityMatrix;
   dayLabels: AvailabilityCopy["dayLabels"];
   summaries: DaySummary[];
@@ -328,20 +328,30 @@ type MatrixCardProps = {
 };
 
 function MatrixCard({
-  title,
-  timezone,
-  timezoneLabel,
-  matrix,
-  dayLabels,
-  summaries,
-  quarterMeta,
-  copy
-}: MatrixCardProps) {
+                      title,
+                      timezone,
+                      timezoneLabel,
+                      className,
+                      matrix,
+                      dayLabels,
+                      summaries,
+                      quarterMeta,
+                      copy
+                    }: MatrixCardProps) {
   const gridId = useId();
   const descriptionId = useId();
+  const hasCustomBorder = typeof className === "string" && /\bborder(?:-[^\s]+)?\b/.test(className);
+  const hasCustomShadow = typeof className === "string" && /\bshadow(?:-[^\s]+)?\b/.test(className);
+  const baseClasses = "rounded-2xl bg-surface p-4 dark:bg-dark-surface";
+  const borderClasses = hasCustomBorder ? "" : "border border-border dark:border-dark-border";
+  const shadowClasses = hasCustomShadow ? "" : "shadow-sm";
+  const classNames = [baseClasses, borderClasses, shadowClasses, className].filter(Boolean).join(" ");
 
   return (
-    <section className="rounded-2xl border border-border bg-surface p-4 shadow-sm dark:border-dark-border dark:bg-dark-surface">
+    <section
+      className={classNames}
+      data-availability-matrix-card="true"
+    >
       <header className="mb-0">
         <h3 className="text-base font-semibold text-text dark:text-dark-text">{title}</h3>
         <p className="text-xs text-textMuted dark:text-dark-textMuted">{timezoneLabel}</p>
@@ -382,14 +392,14 @@ type AvailabilityGridProps = {
 };
 
 function AvailabilityGrid({
-  id,
-  ariaLabel,
-  descriptionId,
-  matrix,
-  dayLabels,
-  copy,
-  quarterMeta
-}: AvailabilityGridProps) {
+                            id,
+                            ariaLabel,
+                            descriptionId,
+                            matrix,
+                            dayLabels,
+                            copy,
+                            quarterMeta
+                          }: AvailabilityGridProps) {
   const firstVisibleRow = quarterMeta[0]?.row ?? 0;
   const labelOffsets = computeLabelOffsets(quarterMeta, firstVisibleRow);
 

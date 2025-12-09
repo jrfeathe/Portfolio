@@ -456,7 +456,7 @@ const en: AppDictionary = {
       "Does Jack have leadership experience?"
     ],
     emptyState: "Try a quick question or pick a starter prompt.",
-    loggingNotice: "This chat is monitored for quality assurance and clears after 30 days.",
+    loggingNotice: "This chat is monitored for quality assurance.",
     errorMessage: "Something went wrong. Try again or open the resume.",
     fallbackCtaLabel: "Open resume",
     captchaTitle: "Quick human check",
@@ -591,7 +591,7 @@ const en: AppDictionary = {
     availability: {
       alt: "Interactive availability map showing weekly time blocks with recurring openings.",
       description: "Weekly snapshot of common availability.",
-      legend: "Green blocks highlight recurring availability.",
+      legend: "",
       primaryLabel: "Converted timezone",
       referenceLabel: "Reference (New York)",
       referenceButtonLabel: "View New York reference",
@@ -656,7 +656,7 @@ const ja: AppDictionary = {
       "Jackにリーダーシップ経験はありますか？"
     ],
     emptyState: "短い質問を入力するか、例を選んでください。",
-    loggingNotice: "品質管理のためログを保存し、30日で削除します。",
+    loggingNotice: "品質管理のためログを保存し。",
     errorMessage: "問題が発生しました。再試行するか履歴書をご覧ください。",
     fallbackCtaLabel: "履歴書を開く",
     captchaTitle: "簡易認証",
@@ -792,7 +792,7 @@ const ja: AppDictionary = {
     availability: {
       alt: "週間の空き時間を示すインタラクティブなマップ。緑色のブロックが頻繁に空いている時間帯です。",
       description: "通常の空き時間を示した週次スナップショット。",
-      legend: "緑のブロックが柔軟に対応できる時間帯です。",
+      legend: "",
       primaryLabel: "変換後のタイムゾーン",
       referenceLabel: "参照（ニューヨーク）",
       referenceButtonLabel: "ニューヨーク基準を見る",
@@ -858,7 +858,7 @@ const zh: AppDictionary = {
       "Jack有领导经验吗？"
     ],
     emptyState: "先输入一个问题或选择示例。",
-    loggingNotice: "此聊天用于质量监控，日志会在30天后清除。",
+    loggingNotice: "此聊天用于质量监控。",
     errorMessage: "出错了，请重试或查看简历。",
     fallbackCtaLabel: "查看简历",
     captchaTitle: "人机验证",
@@ -994,7 +994,7 @@ const zh: AppDictionary = {
     availability: {
       alt: "交互式图表展示每周的空档时间，绿色方块标出常见空档。",
       description: "常见可用时间的每周快照。",
-      legend: "绿色区块表示我经常在线的时间段。",
+      legend: "",
       primaryLabel: "转换后的时区",
       referenceLabel: "参考（纽约）",
       referenceButtonLabel: "查看纽约参考时间",

@@ -48,6 +48,7 @@ function buildSections(dictionary: AppDictionary, locale: Locale): ShellSection[
               <li
                 key={slot.title}
                 className="rounded-2xl border border-border bg-surface p-5 dark:border-dark-border dark:bg-dark-surface"
+                data-meeting-slot="true"
               >
                 <h2 className="text-lg font-semibold text-text dark:text-dark-text">
                   {slot.title}

@@ -558,9 +558,15 @@ function ChatFloatingWidget() {
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
       {state.isOpen ? (
-        <div className="w-[min(440px,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-border bg-background shadow-2xl ring-1 ring-border/50 dark:border-dark-border dark:bg-dark-background dark:ring-dark-border/50">
+        <div
+          className="w-[min(440px,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-border bg-background shadow-2xl ring-1 ring-border/50 dark:border-dark-border dark:bg-dark-background dark:ring-dark-border/50"
+          data-chat-window="true"
+        >
           <div className="flex items-start gap-3 border-b border-border bg-surface px-4 py-3 dark:border-dark-border dark:bg-dark-surface">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-surfaceMuted dark:bg-dark-surfaceMuted">
+            <div
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accentOn contrast-more:bg-[#1d4ed8] contrast-more:text-white contrast-more:border contrast-more:border-[#1d4ed8] dark:bg-[#22c55e] dark:text-[#020617] dark:contrast-more:bg-[#38bdf8] dark:contrast-more:text-[#020617] dark:contrast-more:border dark:contrast-more:border-[#38bdf8]"
+              data-chat-icon="true"
+            >
               <Image
                 src="/ai_bubble_icon.svg"
                 alt=""
@@ -682,6 +688,7 @@ function ChatFloatingWidget() {
               <Button
                 variant="primary"
                 onClick={() => handleSend()}
+                data-chat-send-button="true"
                 disabled={state.pending || Boolean(state.captchaSiteKey) || !input.trim()}
               >
                 {state.pending ? "Sending…" : copy.sendLabel}

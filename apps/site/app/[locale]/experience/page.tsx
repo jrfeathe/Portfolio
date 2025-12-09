@@ -45,6 +45,7 @@ function buildSections(dictionary: AppDictionary): ShellSection[] {
             <article
               key={`${entry.company}-${entry.role}`}
               id={entry.id}
+              data-experience-card="project"
               className="rounded-2xl border border-border bg-surface p-6 shadow-sm transition hover:border-accent dark:border-dark-border dark:bg-dark-surface dark:hover:border-dark-accent"
             >
               <div className="flex flex-col gap-1">
@@ -81,6 +82,7 @@ function buildSections(dictionary: AppDictionary): ShellSection[] {
             <article
               key={tech.id}
               id={tech.id}
+              data-experience-card="tech"
               className="rounded-2xl border border-border bg-surface p-6 shadow-sm transition hover:border-accent dark:border-dark-border dark:bg-dark-surface dark:hover:border-dark-accent"
             >
               <div className="flex flex-col gap-1">

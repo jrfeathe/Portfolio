@@ -42,6 +42,12 @@ export type ChatbotCopy = {
   fallbackCtaLabel: string;
   captchaTitle: string;
   captchaPrompt: string;
+  rateLimitTitle: string;
+  rateLimitMessage: string;
+  rateLimitTryAfter: string;
+  thinkingLabel: string;
+  moderationTitle: string;
+  moderationBody: string;
   sendLabel: string;
 };
 
@@ -64,6 +70,7 @@ type ChatState = {
   usedFallback?: boolean;
   promptCount: number;
   rateLimitRemaining?: number;
+  rateLimit?: { message?: string; retryAfterMs?: number; retryAt?: number; remaining?: number };
   captchaSiteKey?: string;
   pendingMessage?: { id: string; text: string };
   moderation?: "unprofessional";
@@ -124,6 +131,16 @@ function buildHistory(messages: ChatMessage[]) {
   return trimmed.map((msg) => ({ role: msg.role, content: msg.content }));
 }
 
+function isRateLimitActive(rateLimit?: { retryAt?: number }) {
+  if (!rateLimit) {
+    return false;
+  }
+  if (typeof rateLimit.retryAt !== "number") {
+    return true;
+  }
+  return rateLimit.retryAt > Date.now();
+}
+
 export function useChatbot() {
   const ctx = useContext(ChatbotContext);
   if (!ctx) {
@@ -172,6 +189,22 @@ export function ChatbotProvider({
     persistSession(state, sessionId);
   }, [state, sessionId, hydrated]);
 
+  useEffect(() => {
+    const retryAt = state.rateLimit?.retryAt;
+    if (!retryAt) {
+      return;
+    }
+    const now = Date.now();
+    if (retryAt <= now) {
+      setState((prev) => ({ ...prev, rateLimit: undefined }));
+      return;
+    }
+    const timeout = setTimeout(() => {
+      setState((prev) => ({ ...prev, rateLimit: undefined }));
+    }, retryAt - now);
+    return () => clearTimeout(timeout);
+  }, [state.rateLimit?.retryAt]);
+
   const open = useCallback(() => {
     setState((prev) => ({ ...prev, isOpen: true }));
   }, []);
@@ -187,7 +220,14 @@ export function ChatbotProvider({
   const sendMessage = useCallback(
     async (content: string, options?: { captchaToken?: string; reuseLast?: boolean }) => {
       const text = content.trim();
-      if (!text || state.pending || !hydrated) {
+      const rateLimited = isRateLimitActive(state.rateLimit);
+      if (!text || state.pending || !hydrated || rateLimited) {
+        if (rateLimited) {
+          setState((prev) => ({
+            ...prev,
+            error: prev.rateLimit?.message ?? copy.rateLimitMessage
+          }));
+        }
         return;
       }
 
@@ -235,6 +275,33 @@ export function ChatbotProvider({
 
         const payload = await response.json().catch(() => ({}));
 
+        if (response.status === 429) {
+          const retryAfterSeconds = Number(response.headers.get("Retry-After"));
+          const retryAfterMs =
+            typeof payload?.retryAfterMs === "number"
+              ? payload.retryAfterMs
+              : Number.isFinite(retryAfterSeconds)
+                ? retryAfterSeconds * 1000
+                : undefined;
+
+          setState((prev) => ({
+            ...prev,
+            pending: false,
+            rateLimit: {
+              message: payload?.message ?? copy.rateLimitMessage,
+              retryAfterMs,
+              retryAt: retryAfterMs ? Date.now() + retryAfterMs : undefined,
+              remaining:
+                typeof payload?.rateLimitRemaining === "number" ? payload.rateLimitRemaining : undefined
+            },
+            pendingMessage: undefined,
+            captchaSiteKey: undefined,
+            error: undefined,
+            moderation: undefined
+          }));
+          return;
+        }
+
         if (response.status === 403 && payload?.captchaRequired) {
           setState((prev) => ({
             ...prev,
@@ -251,6 +318,7 @@ export function ChatbotProvider({
             ...prev,
             pending: false,
             error: payload?.message ?? copy.errorMessage,
+            rateLimit: undefined,
             pendingMessage: undefined,
             moderation: undefined
           }));
@@ -276,6 +344,7 @@ export function ChatbotProvider({
             promptCount: payload.promptCount ?? prev.promptCount,
             captchaSiteKey: undefined,
             pendingMessage: undefined,
+            rateLimit: undefined,
             moderation: "unprofessional"
           }));
           return;
@@ -292,6 +361,7 @@ export function ChatbotProvider({
           promptCount: payload.promptCount ?? prev.promptCount,
           captchaSiteKey: undefined,
           pendingMessage: undefined,
+          rateLimit: undefined,
           moderation: payload.unprofessional ? "unprofessional" : undefined
         }));
       } catch {
@@ -299,6 +369,7 @@ export function ChatbotProvider({
           ...prev,
           pending: false,
           error: copy.errorMessage,
+          rateLimit: undefined,
           pendingMessage: undefined,
           moderation: undefined
         }));
@@ -307,12 +378,14 @@ export function ChatbotProvider({
     [
       copy.errorMessage,
       copy.captchaPrompt,
+      copy.rateLimitMessage,
       hydrated,
       locale,
       sessionId,
       state.messages,
       state.pending,
-      state.pendingMessage
+      state.pendingMessage,
+      state.rateLimit
     ]
   );
 
@@ -529,6 +602,16 @@ function ChatFloatingWidget() {
   const { state, toggle, sendMessage, copy, solveCaptcha } = useChatbot();
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const rateLimitActive = isRateLimitActive(state.rateLimit);
+  const retryAfterMinutes = state.rateLimit?.retryAfterMs
+    ? Math.max(1, Math.ceil(state.rateLimit.retryAfterMs / 60000))
+    : null;
+  const rateLimitHint =
+    retryAfterMinutes && copy.rateLimitTryAfter.includes("{minutes}")
+      ? copy.rateLimitTryAfter.replace("{minutes}", String(retryAfterMinutes))
+      : retryAfterMinutes
+        ? `${copy.rateLimitTryAfter} ${retryAfterMinutes}m`
+        : null;
 
   useEffect(() => {
     if (state.isOpen) {
@@ -539,13 +622,13 @@ function ChatFloatingWidget() {
   const handleSend = useCallback(
     async (value?: string) => {
       const text = (value ?? input).trim();
-      if (!text) {
+      if (!text || rateLimitActive) {
         return;
       }
       await sendMessage(text);
       setInput("");
     },
-    [input, sendMessage]
+    [input, rateLimitActive, sendMessage]
   );
 
   const handleCaptchaVerify = useCallback(
@@ -559,10 +642,10 @@ function ChatFloatingWidget() {
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
       {state.isOpen ? (
         <div
-          className="w-[min(440px,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-border bg-background shadow-2xl ring-1 ring-border/50 dark:border-dark-border dark:bg-dark-background dark:ring-dark-border/50"
+          className="flex w-[min(440px,calc(100vw-2rem))] max-h-[calc(100vh-4rem)] flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-2xl ring-1 ring-border/50 dark:border-dark-border dark:bg-dark-background dark:ring-dark-border/50 sm:max-h-[80vh]"
           data-chat-window="true"
         >
-          <div className="flex items-start gap-3 border-b border-border bg-surface px-4 py-3 dark:border-dark-border dark:bg-dark-surface">
+          <div className="flex items-center gap-2.5 border-b border-border bg-surface px-4 py-2.5 dark:border-dark-border dark:bg-dark-surface">
             <div
               className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accentOn contrast-more:bg-[#1d4ed8] contrast-more:text-white contrast-more:border contrast-more:border-[#1d4ed8] dark:bg-[#22c55e] dark:text-[#020617] dark:contrast-more:bg-[#38bdf8] dark:contrast-more:text-[#020617] dark:contrast-more:border dark:contrast-more:border-[#38bdf8]"
               data-chat-icon="true"
@@ -578,20 +661,17 @@ function ChatFloatingWidget() {
             </div>
             <div className="flex-1">
               <p className="text-sm font-semibold">{copy.panelTitle}</p>
-              <p className="text-xs text-textMuted dark:text-dark-textMuted">
-                {copy.panelSubtitle}
-              </p>
             </div>
             <button
               type="button"
               onClick={toggle}
-              className="rounded-full p-2 text-textMuted transition hover:bg-surfaceMuted hover:text-text dark:hover:bg-dark-surfaceMuted"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-textMuted transition hover:bg-surfaceMuted hover:text-text dark:border-dark-border dark:hover:bg-dark-surfaceMuted"
               aria-label="Close chat"
             >
               ✕
             </button>
           </div>
-          <div className="flex max-h-[60vh] flex-col gap-3 overflow-y-auto px-4 py-3">
+          <div className="flex flex-1 flex-col gap-3 overflow-y-auto px-4 py-3">
             {state.messages.length === 0 ? (
               <div className="space-y-3 rounded-xl border border-border bg-surfaceMuted/50 p-4 text-sm text-textMuted dark:border-dark-border dark:bg-dark-surfaceMuted/50 dark:text-dark-textMuted">
                 <p>{copy.emptyState}</p>
@@ -620,6 +700,21 @@ function ChatFloatingWidget() {
                 {state.notice}
               </p>
             ) : null}
+            {rateLimitActive && (
+              <div className="rounded-lg border border-accent/60 bg-accent/10 px-3 py-2 text-xs text-text dark:text-dark-text">
+                <p className="text-sm font-semibold text-accent dark:text-dark-accent">
+                  {copy.rateLimitTitle}
+                </p>
+                <p className="mt-1 text-sm text-text dark:text-dark-text">
+                  {state.rateLimit?.message ?? copy.rateLimitMessage}
+                </p>
+                {rateLimitHint ? (
+                  <p className="mt-1 text-[11px] text-textMuted dark:text-dark-textMuted">
+                    {rateLimitHint}
+                  </p>
+                ) : null}
+              </div>
+            )}
             {state.moderation === "unprofessional" ? (
               <div className="flex flex-col gap-3 rounded-lg border border-border bg-surface px-3 py-3 text-sm dark:border-dark-border dark:bg-dark-surface">
                 <div className="flex items-center gap-3">
@@ -633,10 +728,9 @@ function ChatFloatingWidget() {
                     />
                   </div>
                   <div>
-                    <p className="font-semibold">Let&apos;s keep it professional.</p>
+                    <p className="font-semibold">{copy.moderationTitle}</p>
                     <p className="mt-1 text-xs text-textMuted dark:text-dark-textMuted">
-                      I can help with Jack&apos;s roles, skills, and experience—ask me about projects, tech stack,
-                      or availability.
+                      {copy.moderationBody}
                     </p>
                   </div>
                 </div>
@@ -654,8 +748,8 @@ function ChatFloatingWidget() {
               </div>
             ) : null}
             {state.captchaSiteKey ? (
-              <div className="rounded-lg border border-border bg-surface px-3 py-3 text-sm dark:border-dark-border dark:bg-dark-surface">
-                <p className="text-sm font-semibold">{copy.captchaTitle}</p>
+              <div className="rounded-lg border border-border/70 bg-background px-3 py-3 text-sm shadow-sm dark:border-dark-border/70 dark:bg-dark-background">
+                <p className="text-sm font-semibold text-text dark:text-dark-text">{copy.captchaTitle}</p>
                 <p className="mt-1 text-xs text-textMuted dark:text-dark-textMuted">
                   {copy.captchaPrompt}
                 </p>
@@ -671,16 +765,23 @@ function ChatFloatingWidget() {
             <label className="sr-only" htmlFor="chatbot-input">
               {copy.sendLabel}
             </label>
-            <textarea
-              id="chatbot-input"
-              ref={inputRef}
-              rows={state.isOpen ? 2 : 1}
-              value={input}
-              onChange={(event) => setInput(event.target.value)}
-              placeholder={copy.inputPlaceholder}
-              className="w-full resize-none rounded-xl border border-border bg-background px-3 py-2 text-sm focus:border-accent focus:outline-none dark:border-dark-border dark:bg-dark-background"
-              disabled={state.pending || Boolean(state.captchaSiteKey)}
-            />
+            {state.pending ? (
+              <div className="flex items-center gap-3 rounded-xl border border-border bg-background px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-background">
+                <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-accent" aria-hidden="true" />
+                <span>{copy.thinkingLabel}</span>
+              </div>
+            ) : (
+              <textarea
+                id="chatbot-input"
+                ref={inputRef}
+                rows={state.isOpen ? 2 : 1}
+                value={input}
+                onChange={(event) => setInput(event.target.value)}
+                placeholder={rateLimitActive ? copy.rateLimitMessage : copy.panelSubtitle}
+                className="w-full resize-none rounded-xl border border-border bg-background px-3 py-2 text-sm focus:border-accent focus:outline-none dark:border-dark-border dark:bg-dark-background"
+                disabled={state.pending || Boolean(state.captchaSiteKey) || rateLimitActive}
+              />
+            )}
             <div className="mt-2 flex items-center justify-between">
               <p className="text-xs text-textMuted dark:text-dark-textMuted">
                 {copy.loggingNotice}
@@ -689,9 +790,11 @@ function ChatFloatingWidget() {
                 variant="primary"
                 onClick={() => handleSend()}
                 data-chat-send-button="true"
-                disabled={state.pending || Boolean(state.captchaSiteKey) || !input.trim()}
+                disabled={
+                  state.pending || Boolean(state.captchaSiteKey) || rateLimitActive || !input.trim()
+                }
               >
-                {state.pending ? "Sending…" : copy.sendLabel}
+                {state.pending ? copy.thinkingLabel : copy.sendLabel}
               </Button>
             </div>
           </div>

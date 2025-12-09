@@ -461,6 +461,12 @@ const en: AppDictionary = {
     fallbackCtaLabel: "Open resume",
     captchaTitle: "Quick human check",
     captchaPrompt: "Complete the captcha to continue (required after two prompts).",
+    rateLimitTitle: "Rate limit reached",
+    rateLimitMessage: "You've hit the chat limit for now.",
+    rateLimitTryAfter: "Try again in about {minutes} minutes.",
+    thinkingLabel: "Thinking…",
+    moderationTitle: "Let's keep it professional.",
+    moderationBody: "I can help with Jack's roles, skills, projects, and availability.",
     sendLabel: "Send"
   },
   home: {
@@ -661,6 +667,12 @@ const ja: AppDictionary = {
     fallbackCtaLabel: "履歴書を開く",
     captchaTitle: "簡易認証",
     captchaPrompt: "続行するにはキャプチャを完了してください（3回目以降は必須です）。",
+    rateLimitTitle: "レート制限に達しました",
+    rateLimitMessage: "現在のチャット上限に達しました。",
+    rateLimitTryAfter: "約 {minutes} 分後に再試行してください。",
+    thinkingLabel: "考えています…",
+    moderationTitle: "プロフェッショナルな内容でお願いします。",
+    moderationBody: "Jack の役割、スキル、プロジェクト、稼働状況についてお答えします。",
     sendLabel: "送信"
   },
   home: {
@@ -863,6 +875,12 @@ const zh: AppDictionary = {
     fallbackCtaLabel: "查看简历",
     captchaTitle: "人机验证",
     captchaPrompt: "请完成验证码以继续（第3次及以后需要）。",
+    rateLimitTitle: "已达到频率限制",
+    rateLimitMessage: "当前聊天次数已用完。",
+    rateLimitTryAfter: "大约 {minutes} 分后再试。",
+    thinkingLabel: "思考中…",
+    moderationTitle: "请保持专业。",
+    moderationBody: "我可以提供 Jack 的角色、技能、项目和时间安排信息。",
     sendLabel: "发送"
   },
   home: {

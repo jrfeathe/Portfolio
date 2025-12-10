@@ -8,6 +8,7 @@ import {
   buildReferences,
   loadChatResources,
   retrieveContext,
+  buildWorkEducationFacts,
   sanitizeText,
   type RetrievalHit,
   type AnchorEntry
@@ -68,7 +69,20 @@ const PERSONAL_TOPICS = [
   /\bfacebook\b/i,
   /\bdiscord\b/i,
   /\breligion\b/i,
-  /\bpolitics?\b/i
+  /\bpolitics?\b/i,
+  /\bvaseline\b/i,
+  /\bbum\b/i,
+  /\bbutt\b/i,
+  /\bass(es)?\b/i,
+  /\banus\b/i,
+  /\brectum\b/i,
+  /\bhemorrhoid(s)?\b/i,
+  /\bpreparation\s*h\b/i,
+  /\bointment\b/i,
+  /\bpermanent\s*marker\b/i,
+  /sun\s+doesn['’]?t\s+shine/i,
+  /\bshove\b/i,
+  /\bexplicit\b/i
 ];
 const WORK_EDU_PATTERNS = [
   /\beducation\b/i,
@@ -224,6 +238,25 @@ function stripNoFunFlag(text: string): { text: string; flagged: boolean } {
 
 function applyBrandCorrections(text: string): string {
   return BRAND_CORRECTIONS.reduce((current, rule) => current.replace(rule.pattern, rule.replacement), text);
+}
+
+function ensureLinkSpacing(text: string): string {
+  // Insert a space before markdown links that are jammed against the previous word.
+  return text.replace(/([A-Za-z0-9])(\[([^\]]+)\]\([^)]+\))/g, "$1 $2");
+}
+
+function stripMarkdownLinks(text: string): string {
+  return text
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // [text](url) -> text
+    .replace(/\[([^\]]+)\]\s*\[[^\]]*\]/g, "$1"); // [text][ref] -> text
+}
+
+function stripBracketedUrls(text: string): string {
+  return text.replace(/\s*\[[^\]]*(?:https?:\/\/|\/)[^\]]*\]/g, "");
+}
+
+function normalizeParens(text: string): string {
+  return text.replace(/\)\s*\)/g, ")").trim();
 }
 
 function isWorkEducationQuestion(message: string): boolean {
@@ -593,21 +626,20 @@ export async function POST(request: Request) {
   const resources = await loadChatResources();
   const hits = await retrieveContext(trimmedMessage, locale, 3);
   const history = summarizeHistory(body.history ?? []);
+  const workEduQuestion = isWorkEducationQuestion(trimmedMessage);
+  const workEducationFacts = workEduQuestion
+    ? buildWorkEducationFacts(trimmedMessage, locale, resources.index, 5)
+    : [];
 
   const hasOpenRouterKey = Boolean(process.env.OPENROUTER_API_KEY);
   const selectedModel = process.env.OPENROUTER_MODEL ?? "openrouter/auto";
 
-  const workEduQuestion = isWorkEducationQuestion(trimmedMessage);
   const filteredHits =
     workEduQuestion && hits.some((hit) => hit.chunk.href.startsWith("/resume.pdf"))
       ? hits.filter((hit) => hit.chunk.href.startsWith("/resume.pdf"))
       : hits;
 
   const references = buildReferences(filteredHits, resources.anchors);
-  const finalReferences =
-    workEduQuestion && !filteredHits.length
-      ? [{ title: "Resume", href: "/resume.pdf" }]
-      : references;
 
   let repromptAttempted = false;
   let modelReply = await callOpenRouter(
@@ -639,7 +671,9 @@ export async function POST(request: Request) {
     ? stripNoFunFlag(rawReplyText)
     : { text: rawReplyText, flagged: false };
   const resolvedReplyText =
-    cleanedReply && cleanedReply.trim().length > 0 ? applyBrandCorrections(cleanedReply) : null;
+    cleanedReply && cleanedReply.trim().length > 0
+      ? normalizeParens(stripBracketedUrls(ensureLinkSpacing(applyBrandCorrections(cleanedReply))))
+      : null;
   const shouldEnforceNoFun = noFunFlagFromModel;
   const reply =
     resolvedReplyText && !shouldEnforceNoFun
@@ -662,12 +696,14 @@ export async function POST(request: Request) {
     rateLimitRemaining: rate.remaining,
     message: trimmedMessage,
     reply,
-    references
+    references,
+    contextFacts: workEducationFacts
   });
 
   const responsePayload = {
     reply,
     references,
+    contextFacts: workEducationFacts,
     usedFallback,
     promptCount: promptCount + 1,
     rateLimitRemaining: rate.remaining,

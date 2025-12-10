@@ -1,43 +1,59 @@
 {
   "basics": {
-    "name": "Jack Featherstone",
+    "name": "Jack R. Featherstone",
+    "headline": "Upstate NY engineer focused on fullstack development, reliable services, and accessibility",
     "profiles": [
-      {
-        "label": "LinkedIn",
-        "url": "https://linkedin.com/in/jrfeathe"
-      },
-      {
-        "label": "GitHub",
-        "url": "https://github.com/jrfeathe"
-      }
+      { "label": "LinkedIn", "url": "https://linkedin.com/in/jrfeathe" },
+      { "label": "GitHub", "url": "https://github.com/jrfeathe" }
     ]
   },
-  "languages_spoken": [
-    { "language": "English", "proficiency": "native" },
-    { "language": "Japanese 日本語", "proficiency": "JLPT N5" },
-    { "language": "Chinese (Simplified) 中文（简体）", "proficiency": "HSK1" }
-  ],
+  "skills": {
+    "languages_spoken": [
+      { "language": "English", "proficiency": "native" },
+      { "language": "Japanese", "proficiency": "JLPT N5" },
+      { "language": "Chinese (Simplified)", "proficiency": "HSK1" }
+    ]
+  },
   "experience": [
-    {
-      "role": "Undergraduate Teaching Assistant, SER 321 (Distributed Software Systems)",
-      "company": "Arizona State University",
-      "location": "Remote",
-      "start": "2024-03",
-      "end": "2024-05"
-    },
     {
       "role": "Industrial Technician",
       "company": "Captech Logistics",
       "location": "Scotia, NY",
       "start": "2020-06",
-      "end": "present"
+      "end": "present",
+      "summary": "Operate, maintain, and improve industrial equipment and packaging workflows.",
+      "highlights": [
+        "Operated automatic beverage packaging systems.",
+        "Diagnosed conveyor, pneumatic, and electrical faults to reduce unplanned downtime during peak production windows.",
+        "Created repeatable service checklists and parts inspection that cut maintenance turnaround and onboarding time.",
+        "Collaborated with mechanics to tune processes for safety and throughput."
+      ]
     },
     {
       "role": "Digital Fabrication Intern",
       "company": "BAM Logistics",
       "location": "Cobleskill, NY",
       "start": "2022-06",
-      "end": "2022-08"
+      "end": "2022-08",
+      "summary": "Prototyped and documented fabrication requests, pairing CAD work with light automation to deliver high quality designs.",
+      "highlights": [
+        "Delivered small-batch signs on a two-week cadence by coordinating requirements with shop staff.",
+        "Used technical skills to reverse-image-search blurry drafts, find original copies, and deliver clean SVGs.",
+        "Operated CNC plasma cutter and replaced consumable components.",
+        "Experimented with new technologies to automate the creation of designs."
+      ]
+    },
+    {
+      "role": "Undergraduate Teaching Assistant, SER 321 (Distributed Software Systems)",
+      "company": "Arizona State University",
+      "location": "Remote",
+      "start": "2024-03",
+      "end": "2024-05",
+      "summary": "Supplemental context not in the project anchors: supported distributed systems labs and documented debugging steps for students (no grading duties).",
+      "highlights": [
+        "Published troubleshooting instructions for Linux & Java networking/threading labs so students could self-serve fixes.",
+        "Coordinated Slack Q&A and live office hours to keep students engaged and productive."
+      ]
     }
   ],
   "education": [
@@ -48,7 +64,8 @@
       "graduation": "2025",
       "gpa": 3.59,
       "notes": [
-        "Undergraduate Teaching Assistant for SER 321 (Distributed Software Systems)."
+        "Undergraduate Teaching Assistant for SER 321 (Distributed Software Systems).",
+        "Coursework in fullstack development, distributed systems, CAD, arduino, databases, and operating systems."
       ]
     },
     {
@@ -61,7 +78,11 @@
       "institution": "Scotia-Glenville High School",
       "credential": "High School Diploma",
       "status": "completed",
-      "graduation": "2018"
+      "graduation": "2018",
+      "notes": [
+        "Graduated with Honors in Mathematics and Science.",
+        "SAT score: 1360."
+      ]
     }
   ],
   "eligibility": {
@@ -69,8 +90,13 @@
       "value": "Citizen with valid SSN"
     }
   },
-  "meta": {
-    "last_modified": "2025-12-04",
-    "author": "Jack Featherstone, Codex CLI agent"
+  "availability": {
+    "start_date": {
+      "value": "Two weeks notice / Immediate"
+    },
+    "timezone": {
+      "label": "UTC-5 (ET)",
+      "collaboration_window": "Visit /[locale]/meetings for the interactive availability map."
+    }
   }
 }

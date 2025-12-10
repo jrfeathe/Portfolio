@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-12-04T18:28:40.532Z",
+  "generatedAt": "2025-12-10T17:31:09.297Z",
   "anchors": [
     {
       "id": "react",
@@ -511,6 +511,44 @@
         "zh": {
           "name": "Freelance / Mods",
           "href": "/zh/experience#stellaris-mods-project"
+        }
+      }
+    },
+    {
+      "id": "availability-weekly",
+      "category": "availability",
+      "source": "availability-weekly",
+      "locales": {
+        "en": {
+          "name": "Availability & meetings",
+          "href": "/en/meetings"
+        },
+        "ja": {
+          "name": "面談可能時間",
+          "href": "/ja/meetings"
+        },
+        "zh": {
+          "name": "可会面时间",
+          "href": "/zh/meetings"
+        }
+      }
+    },
+    {
+      "id": "resume",
+      "category": "resume",
+      "source": "resume-json",
+      "locales": {
+        "en": {
+          "name": "Resume",
+          "href": "/resume.pdf"
+        },
+        "ja": {
+          "name": "Resume",
+          "href": "/resume.pdf"
+        },
+        "zh": {
+          "name": "Resume",
+          "href": "/resume.pdf"
         }
       }
     }

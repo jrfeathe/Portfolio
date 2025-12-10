@@ -4,12 +4,14 @@ import path from "node:path";
 
 import { defaultLocale, type Locale } from "../../utils/i18n";
 
+export type AnchorCategory = "tech" | "experience" | "education" | "availability" | "resume";
+
 export type AnchorEntry = {
   id: string;
   name: string;
   href: string;
   locale: Locale;
-  category: "tech" | "experience" | "education";
+  category: AnchorCategory;
   source: string;
 };
 
@@ -18,7 +20,7 @@ export type EmbeddingChunk = {
   locale: Locale;
   title: string;
   href: string;
-  sourceType: AnchorEntry["category"];
+  sourceType: AnchorCategory;
   sourceId: string;
   tokens: string[];
   text: string;
@@ -39,12 +41,20 @@ type Resources = {
   index: EmbeddingIndex;
 };
 
+export type ContextFact = {
+  title: string;
+  detail: string;
+  href: string;
+  sourceType: AnchorCategory;
+  sourceId: string;
+};
+
 const STOP_WORDS = new Set([
   "the", "and", "for", "with", "that", "this", "are", "was", "were", "have", "has",
   "had", "from", "into", "about", "while", "without", "can", "will", "would", "could",
   "a", "an", "of", "to", "in", "on", "by", "at", "as", "is", "it", "be", "or", "but",
   "not", "than", "then", "so", "if", "when", "what", "which", "who", "whom", "how",
-  "do", "did", "done", "just", "also"
+  "do", "did", "done", "does", "just", "also", "experience"
 ]);
 
 const AI_PATH_CANDIDATES = [
@@ -82,6 +92,42 @@ export function tokenize(text: string): string[] {
     .split(/\s+/)
     .filter((token) => token.length > 2 && !STOP_WORDS.has(token));
   return Array.from(new Set(tokens));
+}
+
+function expandTokens(tokens: string[]): string[] {
+  const expanded = new Set(tokens);
+  const addAll = (values: string[]) => values.forEach((value) => expanded.add(value));
+
+  for (const token of tokens) {
+    if (token.endsWith("ship")) {
+      expanded.add(token.replace(/ship$/, ""));
+    }
+    if (token.endsWith("ing")) {
+      expanded.add(token.replace(/ing$/, ""));
+    }
+    if (token.endsWith("ed")) {
+      expanded.add(token.replace(/ed$/, ""));
+    }
+
+    switch (token) {
+      case "leadership":
+        addAll(["lead", "leader", "mentoring", "mentor", "team"]);
+        break;
+      case "mentor":
+      case "mentoring":
+        addAll(["mentor", "mentored", "mentoring", "ta", "assistant"]);
+        break;
+      case "teaching":
+      case "assistant":
+      case "ta":
+        addAll(["ta", "teaching", "assistant", "mentor", "mentoring"]);
+        break;
+      default:
+        break;
+    }
+  }
+
+  return Array.from(expanded);
 }
 
 async function loadInstructions() {
@@ -234,6 +280,182 @@ function pickLocaleChunks(index: EmbeddingIndex, locale: Locale): EmbeddingChunk
   return index.chunks.filter((chunk) => chunk.locale === defaultLocale);
 }
 
+function stripLeadingTitle(title: string, text: string): string {
+  const cleanText = sanitizeText(text);
+  const cleanTitle = sanitizeText(title);
+  if (!cleanTitle) {
+    return cleanText;
+  }
+
+  let working = cleanText;
+  const titleLower = cleanTitle.toLowerCase();
+
+  while (
+    working.toLowerCase().startsWith(titleLower) ||
+    working.toLowerCase().startsWith(`${titleLower} `)
+  ) {
+    working = working.slice(cleanTitle.length).trimStart();
+    // Avoid infinite loop if the string is only the title.
+    if (!working.length) {
+      break;
+    }
+  }
+
+  return working.trim() || cleanText;
+}
+
+function extractDateRange(text: string): string | null {
+  const normalized = sanitizeText(text);
+  const datePatterns = [
+    /\b(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+(?:19|20)\d{2}\s*[–-]\s*(?:present|now|(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+(?:19|20)\d{2})\b/i,
+    /\b(?:19|20)\d{2}(?:-\d{2})?\s*[–-]\s*(?:present|now|(?:19|20)\d{2}(?:-\d{2})?)\b/i,
+    /\b(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)\s+(?:19|20)\d{2}\b/i,
+    /\b(?:19|20)\d{2}\b/
+  ];
+
+  for (const pattern of datePatterns) {
+    const match = normalized.match(pattern);
+    if (match?.[0]) {
+      return match[0].trim();
+    }
+  }
+
+  return null;
+}
+
+function summarizeTimelineDetail(title: string, text: string, dateOnly: boolean): string {
+  const collapsed = stripLeadingTitle(title, text);
+  const dateRange = dateOnly ? extractDateRange(collapsed) : null;
+  if (dateOnly && dateRange) {
+    return dateRange;
+  }
+  return collapsed.length > 220 ? `${collapsed.slice(0, 220)}...` : collapsed;
+}
+
+export function buildWorkEducationFacts(
+  question: string,
+  locale: Locale,
+  index: EmbeddingIndex,
+  limit = 4
+): ContextFact[] {
+  const cleaned = sanitizeText(question);
+  const queryTokens = tokenize(cleaned);
+  const localeChunks = pickLocaleChunks(index, locale);
+
+  const WORK_SOURCE_IDS = new Set([
+    "captech-logistics",
+    "bam-logistics",
+    "ser321",
+    "arizona-state-university"
+  ]);
+
+  const workCandidates = localeChunks.filter(
+    (chunk) => chunk.sourceType === "experience" && WORK_SOURCE_IDS.has(chunk.sourceId)
+  );
+  const educationCandidates = localeChunks.filter((chunk) => chunk.sourceType === "education");
+
+  const scoreAndSort = (chunks: EmbeddingChunk[]) =>
+    chunks
+      .map((chunk) => ({ chunk, score: scoreChunk(queryTokens, chunk.tokens) }))
+      .sort((a, b) => b.score - a.score);
+
+  const workScored = scoreAndSort(workCandidates);
+  const educationScored = scoreAndSort(educationCandidates);
+  const EDUCATION_PRIORITY = [
+    "arizona-state-university-ira-a-fulton-schools-of-engineering"
+  ];
+  const workDedupKey = (sourceId: string) => {
+    if (sourceId === "ser321" || sourceId === "arizona-state-university") {
+      return "ta-asu";
+    }
+    return sourceId;
+  };
+  const TITLE_OVERRIDES: Record<string, string> = {
+    ser321: "Teaching Assistant for Distributed Software Systems (SER 321)",
+    "arizona-state-university": "Teaching Assistant for Distributed Software Systems (SER 321)"
+  };
+
+  const results: ContextFact[] = [];
+  const seenWorkKeys = new Set<string>();
+  const pushFact = (chunk: EmbeddingChunk, dateOnly: boolean) => {
+    const displayTitle = TITLE_OVERRIDES[chunk.sourceId] ?? chunk.title;
+    results.push({
+      title: displayTitle,
+      detail: summarizeTimelineDetail(displayTitle, chunk.text, dateOnly),
+      href: chunk.href,
+      sourceType: chunk.sourceType,
+      sourceId: chunk.sourceId
+    });
+  };
+
+  const WORK_TOKENS = new Set([
+    "work", "worked", "employment", "employed", "job", "jobs", "intern", "internship", "ta",
+    "teaching", "assistant", "captech", "bam"
+  ]);
+  const EDUCATION_TOKENS = new Set([
+    "school", "college", "university", "education", "degree", "bachelor", "bs", "gpa"
+  ]);
+  const DATE_QUERY_TOKENS = new Set([
+    "when", "date", "dates", "year", "years", "duration", "tenure", "time", "timeline", "period", "range",
+    "start", "end", "since", "until", "during", "long"
+  ]);
+
+  const wantsWork = queryTokens.some((token) => WORK_TOKENS.has(token));
+  const wantsEducation = queryTokens.some((token) => EDUCATION_TOKENS.has(token));
+  const loweredQuestion = cleaned.toLowerCase();
+  const wantsDates =
+    loweredQuestion.includes("how long") ||
+    loweredQuestion.includes("when") ||
+    loweredQuestion.includes("since") ||
+    loweredQuestion.includes("until") ||
+    queryTokens.some((token) => DATE_QUERY_TOKENS.has(token));
+
+  const workBudget = wantsWork ? (wantsEducation ? Math.max(1, limit - 1) : limit) : 0;
+
+  if (wantsWork) {
+    const bestWorkByKey = new Map<
+      string,
+      { chunk: EmbeddingChunk; score: number; hasDate: boolean }
+    >();
+
+    for (const item of workScored) {
+      const key = workDedupKey(item.chunk.sourceId);
+      const hasDate = Boolean(extractDateRange(item.chunk.text));
+      const existing = bestWorkByKey.get(key);
+      if (
+        !existing ||
+        item.score > existing.score ||
+        (!existing.hasDate && hasDate)
+      ) {
+        bestWorkByKey.set(key, { chunk: item.chunk, score: item.score, hasDate });
+      }
+    }
+
+    const dedupedWork = Array.from(bestWorkByKey.values()).sort((a, b) => b.score - a.score);
+
+    for (const item of dedupedWork) {
+      if (results.length >= workBudget) break;
+      const key = workDedupKey(item.chunk.sourceId);
+      if (seenWorkKeys.has(key)) {
+        continue;
+      }
+      seenWorkKeys.add(key);
+      pushFact(item.chunk, wantsDates);
+    }
+  }
+
+  if (wantsEducation && results.length < limit) {
+    const prioritizedEducation =
+      educationScored.find((item) => EDUCATION_PRIORITY.includes(item.chunk.sourceId)) ??
+      educationScored[0];
+    if (prioritizedEducation) {
+      pushFact(prioritizedEducation.chunk, wantsDates);
+    }
+  }
+
+  return results.slice(0, limit);
+}
+
 function buildBridgeHints(
   queryTokens: string[],
   locale: Locale,
@@ -244,6 +466,9 @@ function buildBridgeHints(
 
   const kubernetesMatch = queryTokens.some((token) =>
     ["kubernetes", "k8s", "kube"].includes(token)
+  );
+  const leadershipMatch = queryTokens.some((token) =>
+    ["leadership", "leader", "lead", "mentor", "mentoring", "ta", "teaching", "assistant", "team"].includes(token)
   );
 
   if (kubernetesMatch) {
@@ -272,6 +497,49 @@ function buildBridgeHints(
     });
   }
 
+  if (leadershipMatch) {
+    const rollodexAnchor =
+      anchorById.get(`rollodex-${locale}`) ??
+      anchorById.get(`rollodex-${defaultLocale}`);
+    const taAnchor =
+      anchorById.get(`ser321-${locale}`) ??
+      anchorById.get(`ser321-${defaultLocale}`);
+
+    if (rollodexAnchor) {
+      hits.push({
+        chunk: {
+          id: `bridge-leadership-rollodex-${locale}`,
+          locale,
+          title: "Team leadership — Rollodex",
+          href: rollodexAnchor.href,
+          sourceType: "experience",
+          sourceId: "rollodex",
+          tokens: ["leadership", "lead", "team", "co-lead", "mentor", "sprints"],
+          text:
+            "Co-led a remote fullstack team for the Rollodex product, owning API/data integrations and accessibility while running Git workflow and two-week sprints."
+        },
+        score: 0.38
+      });
+    }
+
+    if (taAnchor) {
+      hits.push({
+        chunk: {
+          id: `bridge-leadership-ta-${locale}`,
+          locale,
+          title: "Teaching assistant mentoring",
+          href: taAnchor.href,
+          sourceType: "experience",
+          sourceId: "ser321",
+          tokens: ["teaching", "assistant", "mentor", "mentoring", "leadership", "ta"],
+          text:
+            "Teaching Assistant for Distributed Software Systems (SER 321), supporting students, labs, and assignment design."
+        },
+        score: 0.34
+      });
+    }
+  }
+
   return hits;
 }
 
@@ -282,7 +550,7 @@ export async function retrieveContext(
 ): Promise<RetrievalHit[]> {
   const { anchors, index } = await loadChatResources();
   const cleaned = sanitizeText(question);
-  const queryTokens = tokenize(cleaned);
+  const queryTokens = expandTokens(tokenize(cleaned));
 
   const candidates = pickLocaleChunks(index, locale);
   const scored: RetrievalHit[] = [];

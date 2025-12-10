@@ -1,4 +1,4 @@
-import { getPublicResume } from "../public";
+import { getPublicResume } from "../lib/public";
 
 describe("getPublicResume", () => {
   it("returns a sanitized public resume without placeholders", () => {

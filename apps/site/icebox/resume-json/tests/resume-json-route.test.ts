@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 import { GET } from "../../app/resume.json/route";
-import { getPublicResume } from "../lib/resume/public";
+import { getPublicResume } from "../lib/public";
 
 describe("/resume.json route", () => {
   it("returns the sanitized resume payload with caching headers", async () => {

@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 
 import { NextResponse } from "next/server";
 
-import { getPublicResume } from "../../src/lib/resume/public";
+import { getPublicResume } from "../../lib/public";
 
 const CACHE_CONTROL = "public, max-age=3600, stale-while-revalidate=86400";
 

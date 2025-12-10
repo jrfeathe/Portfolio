@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { getPublicResume } from "../../../src/lib/resume/public";
+import { getPublicResume } from "../../../lib/public";
 
 export const metadata: Metadata = {
   title: "Resume — Jack R. Featherstone",

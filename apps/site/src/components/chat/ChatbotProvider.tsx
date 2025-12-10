@@ -4,6 +4,9 @@ import { Button } from "@portfolio/ui";
 import clsx from "clsx";
 import Image from "next/image";
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import rehypeSanitize from "rehype-sanitize";
+import remarkGfm from "remark-gfm";
 
 import type { Locale } from "../../utils/i18n";
 
@@ -52,6 +55,7 @@ export type ChatbotCopy = {
 };
 
 type Reference = { title: string; href: string };
+type ContextFact = { title: string; detail: string; href: string };
 
 type ChatMessage = {
   id: string;
@@ -59,6 +63,7 @@ type ChatMessage = {
   content: string;
   createdAt: number;
   references?: Reference[];
+  contextFacts?: ContextFact[];
 };
 
 type ChatState = {
@@ -330,6 +335,7 @@ export function ChatbotProvider({
           role: "assistant",
           content: payload.reply ?? "",
           references: payload.references ?? [],
+          contextFacts: Array.isArray(payload.contextFacts) ? payload.contextFacts : [],
           createdAt: Date.now()
         };
 
@@ -421,6 +427,52 @@ export function ChatbotProvider({
   );
 }
 
+function MarkdownMessage({ text, className }: { text: string; className?: string }) {
+  return (
+    <div className={clsx("space-y-2 break-words text-sm leading-relaxed", className)}>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeSanitize]}
+        components={{
+          p: ({ children }) => <p className="whitespace-pre-wrap leading-relaxed">{children}</p>,
+          ul: ({ children }) => <ul className="ml-4 list-disc space-y-1">{children}</ul>,
+          ol: ({ children }) => <ol className="ml-4 list-decimal space-y-1">{children}</ol>,
+          li: ({ children }) => <li className="leading-relaxed">{children}</li>,
+          a: ({ children }) => <>{children}</>
+        }}
+      >
+        {text}
+      </ReactMarkdown>
+    </div>
+  );
+}
+
+function ContextFactsPanel({ facts }: { facts: ContextFact[] }) {
+  if (!facts.length) {
+    return null;
+  }
+
+  return (
+    <details className="mt-2 rounded-lg border border-slate-200 bg-white/80 px-3 py-2 text-xs text-text shadow-sm transition dark:border-slate-700 dark:bg-dark-surface dark:text-dark-text">
+      <summary className="cursor-pointer select-none font-semibold text-text dark:text-dark-text">
+        Context facts ({facts.length})
+      </summary>
+      <div className="mt-2 space-y-2">
+        {facts.map((fact, index) => (
+          <a
+            key={`${fact.title}-${index}`}
+            href={fact.href}
+            className="flex items-start justify-between gap-3 rounded-md px-2 py-1 text-text transition hover:bg-slate-100 hover:no-underline dark:text-dark-text dark:hover:bg-slate-800"
+          >
+            <span className="font-semibold">{fact.title}</span>
+            <span className="text-[11px] text-textMuted dark:text-dark-textMuted">{fact.detail}</span>
+          </a>
+        ))}
+      </div>
+    </details>
+  );
+}
+
 function MessageBubble({ message }: { message: ChatMessage }) {
   const isUser = message.role === "user";
   return (
@@ -432,18 +484,23 @@ function MessageBubble({ message }: { message: ChatMessage }) {
           : "self-start bg-surface text-text dark:bg-dark-surface dark:text-dark-text"
       )}
     >
-      <p className="whitespace-pre-wrap leading-relaxed">{message.content}</p>
+      <MarkdownMessage
+        text={message.content}
+        className={clsx(isUser ? "text-accentOn" : "text-text dark:text-dark-text")}
+      />
+      {!isUser && message.contextFacts?.length ? <ContextFactsPanel facts={message.contextFacts} /> : null}
       {message.references?.length ? (
-        <div className="mt-1 space-y-1 text-xs text-textMuted dark:text-dark-textMuted">
-          {message.references.map((ref) => (
-            <a
-              key={`${message.id}-${ref.href}`}
-              href={ref.href}
-              className="underline-offset-2 hover:underline"
-            >
-              {ref.title}
-            </a>
-          ))}
+        <div className="mt-2 space-y-1 text-xs text-textMuted dark:text-dark-textMuted">
+          <div className="font-semibold text-text dark:text-dark-text">References</div>
+          <ul className="ml-3 list-disc space-y-1">
+            {message.references.map((ref) => (
+              <li key={`${message.id}-${ref.href}`}>
+                <a href={ref.href} className="underline-offset-2 hover:underline">
+                  {ref.title}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       ) : null}
     </div>

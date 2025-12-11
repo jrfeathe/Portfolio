@@ -135,6 +135,27 @@ function anchorToReference(anchor: AnchorEntry): { title: string; href: string }
   return { title: anchor.name, href: anchor.href };
 }
 
+function findAnchorByHref(anchors: AnchorEntry[], href: string, locale: Locale): AnchorEntry | undefined {
+  return (
+    anchors.find((anchor) => anchor.href === href && anchor.locale === locale) ??
+    anchors.find((anchor) => anchor.href === href && anchor.locale === defaultLocale)
+  );
+}
+
+function extractInlineLinks(markdown: string | null): Array<{ text: string; href: string }> {
+  if (!markdown) return [];
+  const matches: Array<{ text: string; href: string }> = [];
+  const linkPattern = /\[([^\]]+)\]\(\s*([^)]+)\)/g;
+  let match: RegExpExecArray | null;
+  while ((match = linkPattern.exec(markdown)) !== null) {
+    const text = match[1]?.trim();
+    const href = match[2]?.trim();
+    if (!href || !href.startsWith("/")) continue;
+    matches.push({ text, href });
+  }
+  return matches;
+}
+
 function buildSkillSummary(
   techRefs: AnchorEntry[],
   resumeHref: string | null
@@ -271,7 +292,7 @@ function buildChatLogPayload(params: {
   rateLimitRemaining: number;
   message: string;
   reply: string;
-  references: AnchorEntry[];
+  references: Array<{ title: string; href: string }>;
   contextFacts?: unknown[];
   model?: string;
   modelReplyRaw?: string | null;
@@ -1113,15 +1134,18 @@ export async function POST(request: Request) {
   }
 
   let references = buildReferences(filteredHits, resources.anchors);
+  const referenceHrefs = new Set(references.map((ref) => ref.href));
   const availabilityAnchor = findAnchorByCategory(resources.anchors, "availability", locale);
   const resumeAnchor = findAnchorByCategory(resources.anchors, "resume", locale);
   if (availabilityQuestion) {
     if (availabilityAnchor && !references.some((ref) => ref.href === availabilityAnchor.href)) {
       references = [anchorToReference(availabilityAnchor), ...references];
+      referenceHrefs.add(availabilityAnchor.href);
     }
   }
   if (skillStrengthQuestion && resumeAnchor && !references.some((ref) => ref.href === resumeAnchor.href)) {
     references = [anchorToReference(resumeAnchor), ...references];
+    referenceHrefs.add(resumeAnchor.href);
   }
 
   let repromptAttempted = false;
@@ -1157,7 +1181,6 @@ export async function POST(request: Request) {
     cleanedReply && cleanedReply.trim().length > 0
       ? normalizeParens(stripBracketedUrls(ensureLinkSpacing(applyBrandCorrections(cleanedReply))))
       : null;
-  const referenceHrefs = new Set(references.map((ref) => ref.href));
   const meetingHref = resources.anchors.find((anchor) => anchor.category === "availability" && anchor.locale === locale)?.href;
   const driftedPersona =
     resolvedReplyText && WRONG_PERSONA_PATTERNS.some((pattern) => pattern.test(resolvedReplyText));
@@ -1183,6 +1206,27 @@ export async function POST(request: Request) {
       referenceHrefs.add(resumeAnchor.href);
     }
   }
+
+  const inlineLinks = extractInlineLinks(resolvedReplyText);
+  for (const link of inlineLinks) {
+    if (referenceHrefs.has(link.href)) {
+      continue;
+    }
+    const anchor = findAnchorByHref(resources.anchors, link.href, locale);
+    const title = anchor?.name ?? (link.text?.trim() || link.href);
+    references = [{ title, href: link.href }, ...references];
+    referenceHrefs.add(link.href);
+  }
+
+  references = references
+    .map((ref) => {
+      const href = typeof ref?.href === "string" ? ref.href : "";
+      if (!href) return null;
+      const title =
+        typeof ref?.title === "string" && ref.title.trim().length > 0 ? ref.title.trim() : href;
+      return { title, href };
+    })
+    .filter((ref): ref is { title: string; href: string } => Boolean(ref));
 
   const shouldForceSkills = false;
   const shouldEnforceNoFun = noFunFlagFromModel;

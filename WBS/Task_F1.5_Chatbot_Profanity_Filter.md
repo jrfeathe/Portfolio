@@ -36,6 +36,13 @@
 - Logging/observability: log pass/fail, label, language, allowlist hits, and which detector fired (`glin`, `OpenRouter`). Strip or hash PII-like substrings when storing logs; keep retention short.
 - QA: craft JA/ZH/EN test cases for profanity, innuendo, trolling, and near-miss words. Capture refusal UX and clean-pass UX. Track false positives/negatives and tune allowlist.
 
+## FINAL TWEAKS
+- Captcha fix: Ensure trolling prompts receive captcha at correct time
+- Color. Bubble and x
+- Scroll to No Fun Allowed
+- Wider, possibly corner drag?
+- Verify that JavaScript can be injected to References without also injecting Java
+
 ## Owner / status
 - Owner: Jack
 - Status: Planned — flow/design accepted; implementation pending.

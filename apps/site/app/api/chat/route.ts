@@ -13,7 +13,14 @@ import {
   type RetrievalHit,
   type AnchorEntry
 } from "../../../src/lib/ai/chatbot";
-import { runLocalModeration } from "../../../src/lib/ai/moderation";
+import { isBenignLocationQuestion, isBenignStructuralPrompt, runLocalModeration } from "../../../src/lib/ai/moderation";
+import {
+  clampConfidence,
+  computeModerationOutcome,
+  normalizeModerationLabel,
+  type ModerationDecision,
+  type ModerationLabel
+} from "../../../src/lib/ai/moderationOutcome";
 import { defaultLocale, isLocale, type Locale } from "../../../src/utils/i18n";
 
 export const runtime = "nodejs";
@@ -36,6 +43,116 @@ type ModelResult = {
   model?: string;
   finishReason?: string;
 };
+
+function isAvailabilityQuestion(text: string): boolean {
+  return /\b(availability|available|schedule|time\s*zone|timezone|hours?|meeting|meetings|book\s+a\s+call|book\s+a\s+meeting|when\s+can\s+we\s+meet)\b/i.test(
+    text
+  );
+}
+
+const WRONG_PERSONA_PATTERNS = [/jack\s+tyler\s+engineering/i];
+const TOP_SKILL_ANCHOR_IDS = ["react", "typescript", "javascript", "cpp", "java", "linux", "c"];
+const SKILL_EXCLUDE_PATTERNS = [/fabrication/i, /\bbam\b/i, /\bplasma\b/i, /\bsigns?\b/i];
+const SKILL_INCLUDE_EXPERIENCE_PATTERNS = [/rollodex/i, /\bta\b/i, /teaching/i, /mentor/i, /ser\s*321/i];
+
+function isSkillStrengthQuestion(text: string): boolean {
+  return /\b(best|top|strong(est)?|core)\s+skills?\b/i.test(text) || /\bstrengths?\b/i.test(text);
+}
+
+function findAnchorByCategory(anchors: AnchorEntry[], category: AnchorCategory, locale: Locale): AnchorEntry | undefined {
+  return anchors.find((anchor) => anchor.category === category && anchor.locale === locale);
+}
+
+function findTechAnchorsForKeywords(
+  reply: string | null,
+  anchors: AnchorEntry[],
+  locale: Locale,
+  existingHrefs: Set<string>
+): AnchorEntry[] {
+  if (!reply) return [];
+  const lowered = reply.toLowerCase();
+  const KEYWORDS = [
+    "react",
+    "typescript",
+    "javascript",
+    "next.js",
+    "nextjs",
+    "node",
+    "node.js",
+    "fullstack",
+    "frontend",
+    "backend",
+    "accessibility",
+    "performance",
+    "reliability",
+    "c++",
+    "cpp",
+    "java",
+    "linux",
+    "ta",
+    "teaching assistant",
+    "teaching"
+  ];
+  const matches = KEYWORDS.filter((keyword) => lowered.includes(keyword));
+
+  if (matches.length === 0) return [];
+
+  const techAnchors = anchors.filter((anchor) => anchor.category === "tech" && anchor.locale === locale);
+  const results: AnchorEntry[] = [];
+
+  for (const anchor of techAnchors) {
+    const anchorName = anchor.name.toLowerCase();
+    const anchorId = anchor.id.toLowerCase();
+    if (matches.some((keyword) => anchorName.includes(keyword) || anchorId.includes(keyword))) {
+      if (!existingHrefs.has(anchor.href)) {
+        existingHrefs.add(anchor.href);
+        results.push(anchor);
+      }
+    }
+  }
+
+  return results;
+}
+
+function findAnchorsByIds(
+  anchors: AnchorEntry[],
+  ids: string[],
+  locale: Locale,
+  existingHrefs: Set<string>
+): AnchorEntry[] {
+  const matches: AnchorEntry[] = [];
+  for (const id of ids) {
+    const anchor = anchors.find((entry) => entry.id === id && entry.locale === locale);
+    if (anchor && !existingHrefs.has(anchor.href)) {
+      existingHrefs.add(anchor.href);
+      matches.push(anchor);
+    }
+  }
+  return matches;
+}
+
+function anchorToReference(anchor: AnchorEntry): { title: string; href: string } {
+  return { title: anchor.name, href: anchor.href };
+}
+
+function buildSkillSummary(
+  techRefs: AnchorEntry[],
+  resumeHref: string | null
+): { reply: string; usedFallback: boolean } {
+  const names = techRefs.slice(0, 4).map((ref) => ref.name);
+  const links = techRefs.slice(0, 3).map((ref) => `${ref.name} (${ref.href})`);
+  const summary =
+    names.length > 0
+      ? `Jack's strongest areas include ${names.join(", ")}. `
+      : "Jack's strongest areas are highlighted in his tech stack. ";
+  const linkLine =
+    links.length > 0
+      ? `See details: ${links.join(", ")}${resumeHref ? `, and resume (${resumeHref}).` : "."}`
+      : resumeHref
+      ? `See details in his resume (${resumeHref}).`
+      : "";
+  return { reply: applyBrandCorrections(`${summary}${linkLine}`.trim()), usedFallback: true };
+}
 
 const MAX_INPUT_LENGTH = 1200;
 const MAX_HISTORY = 6;
@@ -144,6 +261,46 @@ async function logChatEvent(event: string, payload: Record<string, unknown>) {
     // Swallow logging errors
   }
   await writeChatLog(entry);
+}
+
+function buildChatLogPayload(params: {
+  session: string;
+  ip: string;
+  promptCount: number;
+  locale: Locale;
+  rateLimitRemaining: number;
+  message: string;
+  reply: string;
+  references: AnchorEntry[];
+  contextFacts?: unknown[];
+  model?: string;
+  modelReplyRaw?: string | null;
+  finishReason?: string;
+  usedFallback: boolean;
+  unprofessional: boolean;
+  moderation: Record<string, unknown>;
+  extras?: Record<string, unknown>;
+}) {
+  return {
+    session: params.session,
+    ip: params.ip,
+    locale: params.locale,
+    counts: { prompt: params.promptCount },
+    usage: { rateLimitRemaining: params.rateLimitRemaining },
+    request: { message: params.message },
+    response: {
+      reply: params.reply,
+      references: params.references,
+      contextFacts: params.contextFacts ?? [],
+      model: params.model,
+      modelReplyRaw: params.modelReplyRaw ?? undefined,
+      finishReason: params.finishReason,
+      usedFallback: params.usedFallback,
+      unprofessional: params.unprofessional
+    },
+    moderation: params.moderation,
+    ...(params.extras ?? {})
+  };
 }
 
 function hasValidCaptcha(sessionId: string): boolean {
@@ -328,8 +485,13 @@ async function callOpenRouter(
     process.env.OPENROUTER_MODEL ??
     "openrouter/auto"; // Prefer OpenRouter's cheapest/auto routing when no model is set.
 
-  const contextBlock = buildContextBlock(hits);
-  const shortContextBlock = buildContextBlock(hits, { maxChunkChars: 260, maxItems: 2 });
+  const availabilityQuestion = isAvailabilityQuestion(question);
+  const skillStrengthQuestion = isSkillStrengthQuestion(question);
+
+  const contextItems = skillStrengthQuestion || availabilityQuestion ? 8 : 5;
+  const contextChars = skillStrengthQuestion || availabilityQuestion ? 800 : 400;
+  const contextBlock = buildContextBlock(hits, { maxItems: contextItems, maxChunkChars: contextChars });
+  const shortContextBlock = buildContextBlock(hits, { maxChunkChars: 320, maxItems: 3 });
   const trimmedHistory = summarizeHistory(history);
   const referer = resolveReferer(request);
   const anchorByLocale = new Map(anchors.map((anchor) => [`${anchor.id}-${anchor.locale}`, anchor]));
@@ -356,6 +518,17 @@ async function callOpenRouter(
     allowedLinkSet.set("/resume.pdf", "Resume");
   }
 
+  if (skillStrengthQuestion) {
+    for (const id of TOP_SKILL_ANCHOR_IDS.concat(["rollodex", "ser321"])) {
+      const anchor =
+        anchors.find((entry) => entry.id === id && entry.locale === locale) ??
+        anchors.find((entry) => entry.id === id && entry.locale === defaultLocale);
+      if (anchor && !allowedLinkSet.has(anchor.href)) {
+        allowedLinkSet.set(anchor.href, anchor.name);
+      }
+    }
+  }
+
   const allowedLinks = Array.from(allowedLinkSet.entries())
     .map(([href, title]) => `- ${title}: ${href}`)
     .join("\n");
@@ -375,6 +548,9 @@ async function callOpenRouter(
   ];
 
   const retryNote = retryHint ? `\n\nRetry note: ${retryHint}` : "";
+  const skillHint = skillStrengthQuestion
+    ? "Focus on Jack's core software strengths: React, TypeScript, JavaScript, Node/Next.js, accessibility, performance/reliability, plus leadership/mentoring (Rollodex project and TA/mentorship work). Ignore fabrication or BAM logistics unless explicitly asked."
+    : "";
 
   messages.push(
     ...trimmedHistory,
@@ -385,6 +561,7 @@ async function callOpenRouter(
         `Retrieved context:\n${retryHint ? shortContextBlock : contextBlock}\n\n` +
         `Allowed links (use only these URLs, or none):\n${allowedLinks || "- none"}\n\n` +
         `Answer ONLY using the retrieved context above and allowed links. If the answer is not in that context, say it is not available in the provided materials and point to the resume link if present; do not guess or rely on any outside knowledge. ` +
+        (skillHint ? `${skillHint} ` : "") +
         `If the request is unprofessional or personal (e.g., harassment, slurs, NSFW, threats, fringe/anonymous boards like 4chan, personal traits like gender/sexual orientation/age/location/salary/birth date, or seems about a different "Jack"), return exactly FLAG_NO_FUN and nothing else.\n\n` +
         `Question: ${question}${retryNote}`
     }
@@ -409,7 +586,7 @@ async function callOpenRouter(
         messages,
         temperature: 0.3,
         top_p: 0.9,
-        max_tokens: 800
+        max_tokens: 1600
       })
     });
 
@@ -446,54 +623,12 @@ async function callOpenRouter(
   }
 }
 
-type ModerationLabel =
-  | "safe"
-  | "profanity"
-  | "harassment_or_trolling"
-  | "sexual_innuendo"
-  | "doxxing_or_privacy"
-  | "self_harm_or_violence"
-  | "other";
-
-type ModerationDecision = {
-  label: ModerationLabel;
-  confidence?: number;
-  model?: string;
-  finishReason?: string;
-  raw?: string;
-  reason?: string;
-};
-
-function normalizeModerationLabel(value?: string): ModerationLabel {
-  const normalized = (value ?? "").toLowerCase().replace(/[^a-z]+/g, "_");
-  if (normalized.includes("safe")) return "safe";
-  if (normalized.includes("profan")) return "profanity";
-  if (normalized.includes("harass") || normalized.includes("troll")) return "harassment_or_trolling";
-  if (normalized.includes("sexual") || normalized.includes("nsfw") || normalized.includes("innuendo")) {
-    return "sexual_innuendo";
-  }
-  if (normalized.includes("dox") || normalized.includes("privacy")) return "doxxing_or_privacy";
-  if (normalized.includes("self") || normalized.includes("harm") || normalized.includes("violence")) {
-    return "self_harm_or_violence";
-  }
-  return "other";
-}
-
-function clampConfidence(value: unknown): number | undefined {
-  if (typeof value === "number" && Number.isFinite(value)) {
-    return Math.min(1, Math.max(0, value));
-  }
-  const parsed = Number(value);
-  if (!Number.isFinite(parsed)) {
-    return undefined;
-  }
-  return Math.min(1, Math.max(0, parsed));
-}
-
 async function moderateWithOpenRouter(
   request: Request,
   normalizedMessage: string,
-  reasons: string[]
+  reasons: string[],
+  professionalIntent: boolean,
+  suspicionScore: number
 ): Promise<ModerationDecision | null> {
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
@@ -506,16 +641,22 @@ async function moderateWithOpenRouter(
     process.env.OPENROUTER_MODEL ??
     "openrouter/auto";
   const referer = resolveReferer(request);
+  const intentHint = professionalIntent
+    ? '{ "intent": "professional/tech Q&A about Jack\'s skills" }'
+    : '{ "intent": "unspecified" }';
   const systemPrompt =
-    "You are a content safety classifier. Given ONE user message, return JSON only with fields " +
-    '"label" (one of: SAFE, PROFANITY, HARASSMENT_OR_TROLLING, SEXUAL_INNUENDO, DOXXING_OR_PRIVACY, SELF_HARM_OR_VIOLENCE, OTHER_UNSAFE), "confidence" (0-1), and "reason" (short string). ' +
-    "Label DOXXING_OR_PRIVACY only when the user asks for non-public personal data (addresses, phone numbers, IDs, GPS coordinates) or shows harmful intent to expose someone. " +
-    "Treat normal portfolio questions about public work history, school, employer, tech stack, location/timezone, or schedule as SAFE. " +
-    "Do not return advice or free text—return JSON only.";
+    "Portfolio chatbot safety check. Safe topics: Jack's skills, tech stack, experience, availability. " +
+    "Block only harassment/trolling, profanity/slurs, sexual innuendo or explicit body parts, requests to expose non-public personal data (addresses/IDs/phone/coordinates), or self-harm/violence encouragement. " +
+    "Be lenient with neutral professional words like \"broad experience\" or \"love working with React\" when not sexual. " +
+    'Return strict JSON only with fields {"label": LABEL, "confidence": 0-1, "reason": "short"}. ' +
+    "Labels: SAFE, PROFANITY, HARASSMENT_OR_TROLLING, SEXUAL_INNUENDO, PRIVACY/DOXXING, SELF_HARM/VIOLENCE, OTHER_UNSAFE. " +
+    "If uncertain, lower the confidence instead of blocking. Never include extra text.";
 
   const userContent =
-    `User message:\n${normalizedMessage}\n\n` +
-    `Hints: ${reasons.join(", ") || "none"}\n` +
+    `User message (normalized): ${normalizedMessage.slice(0, 600)}\n` +
+    `Intent hint: ${intentHint}\n` +
+    `Local cues: ${reasons.join(", ") || "none"}\n` +
+    `Suspicion score: ${suspicionScore.toFixed(2)}\n` +
     "Return only the JSON payload.";
 
   const headers: Record<string, string> = {
@@ -615,12 +756,6 @@ export async function POST(request: Request) {
   const ip = getClientIp(request);
 
   const trimmedMessage = sanitizeText(body.message).slice(0, MAX_INPUT_LENGTH);
-  if (!trimmedMessage) {
-    return NextResponse.json(
-      { error: "Empty message" },
-      { status: 400 }
-    );
-  }
 
   const sessionHash = hashValue(sessionId);
   const ipHash = hashValue(ip);
@@ -642,39 +777,218 @@ export async function POST(request: Request) {
     );
   }
 
+  const hasOpenRouterKey = Boolean(process.env.OPENROUTER_API_KEY);
   const promptCount = sessionPromptCounts.get(sessionId) ?? 0;
-  const localModeration = runLocalModeration(trimmedMessage);
-  let moderationDecision: ModerationDecision | null = null;
+  const structuralBenign = isBenignStructuralPrompt(trimmedMessage);
+  const availabilityQuestion = isAvailabilityQuestion(trimmedMessage);
+  const skillStrengthQuestion = isSkillStrengthQuestion(trimmedMessage);
+  if (structuralBenign) {
+    const reply = "I can help with Jack's roles, skills, projects, and availability.";
+    sessionPromptCounts.set(sessionId, promptCount + 1);
 
-  if (localModeration.flagged) {
-    moderationDecision = await moderateWithOpenRouter(request, localModeration.normalized, localModeration.reasons);
-    const unsafe = !moderationDecision || moderationDecision.label !== "safe";
-
-    if (unsafe) {
-      const reply = "Let's keep this chat professional. I can share Jack's skills, projects, and availability.";
-      sessionPromptCounts.set(sessionId, promptCount + 1);
-
-      await logChatEvent("chat.response", {
+    await logChatEvent(
+      "chat.response",
+      buildChatLogPayload({
         session: sessionHash,
         ip: ipHash,
         promptCount: promptCount + 1,
         locale,
-        usedFallback: true,
-        unprofessional: true,
-        modelReplyRaw: moderationDecision?.raw ?? "FLAG_NO_FUN (moderation-block)",
-        model: moderationDecision?.model ?? "moderation-block",
-        finishReason: moderationDecision?.finishReason ?? "blocked",
         rateLimitRemaining: rate.remaining,
         message: trimmedMessage,
         reply,
         references: [],
-        moderationLabel: moderationDecision?.label ?? "blocked",
-        moderationConfidence: moderationDecision?.confidence,
-        moderationReason: moderationDecision?.reason,
-        moderationLocalReasons: localModeration.reasons,
-        moderationGlinMatches: localModeration.glinMatches,
-        moderationLanguages: localModeration.languagesTried
-      });
+        usedFallback: true,
+        unprofessional: false,
+        moderation: {
+          label: "safe",
+          reason: "structural_bypass",
+          localReasons: ["structural_bypass"],
+          glinMatches: [],
+          languages: [],
+          downgraded: false,
+          professionalIntent: false,
+          suspicionScore: 0,
+          usedOpenRouter: false
+        }
+      })
+    );
+
+    return NextResponse.json(
+      {
+        reply,
+        references: [],
+        usedFallback: true,
+        promptCount: promptCount + 1,
+        rateLimitRemaining: rate.remaining,
+        captchaRequired: false,
+        unprofessional: false,
+        notice: "This chat is monitored for quality assurance purposes."
+      },
+      {
+        status: 200,
+        headers: {
+          "Cache-Control": "no-store"
+        }
+      }
+    );
+  }
+
+  if (!trimmedMessage) {
+    return NextResponse.json(
+      { error: "Empty message" },
+      { status: 400 }
+    );
+  }
+
+  const localModeration = runLocalModeration(trimmedMessage);
+  let moderationDecision: ModerationDecision | null = null;
+  let moderationEffectiveLabel: ModerationLabel = "safe";
+  let moderationDowngraded = false;
+  let shouldBlockModeration = false;
+  let moderationModelLabel: ModerationLabel | undefined;
+  const shouldModerate = hasOpenRouterKey && !structuralBenign;
+  const offTopic = !localModeration.professionalIntent;
+
+  if (shouldModerate) {
+    moderationDecision = await moderateWithOpenRouter(
+      request,
+      localModeration.normalized,
+      localModeration.reasons,
+      localModeration.professionalIntent,
+      localModeration.suspicionScore
+    );
+
+    const outcome = computeModerationOutcome(moderationDecision, localModeration, localModeration.suspicionScore);
+    moderationEffectiveLabel = outcome.effectiveLabel;
+    shouldBlockModeration = outcome.shouldBlock;
+    moderationDowngraded = outcome.downgraded;
+    moderationModelLabel = outcome.decisionLabel ?? moderationDecision?.label;
+
+    if (
+      !shouldBlockModeration &&
+      !localModeration.professionalIntent &&
+      moderationEffectiveLabel === "safe" &&
+      localModeration.suspicionScore >= 0.15
+    ) {
+      moderationEffectiveLabel = "other_unsafe";
+      shouldBlockModeration = true;
+    }
+
+    if (
+      shouldBlockModeration &&
+      moderationEffectiveLabel === "privacy_or_doxxing" &&
+      localModeration.professionalIntent &&
+      isBenignLocationQuestion(localModeration.normalized)
+    ) {
+      moderationEffectiveLabel = "safe";
+      shouldBlockModeration = false;
+      moderationDowngraded = true;
+    }
+
+    if (shouldBlockModeration) {
+      const reply = "Let's keep this chat professional. I can share Jack's skills, projects, and availability.";
+      sessionPromptCounts.set(sessionId, promptCount + 1);
+
+      await logChatEvent(
+        "chat.response",
+        buildChatLogPayload({
+          session: sessionHash,
+          ip: ipHash,
+          promptCount: promptCount + 1,
+          locale,
+          rateLimitRemaining: rate.remaining,
+          message: trimmedMessage,
+          reply,
+          references: [],
+          usedFallback: true,
+          unprofessional: true,
+          model: moderationDecision?.model ?? "moderation-block",
+          modelReplyRaw: moderationDecision?.raw ?? "FLAG_NO_FUN (moderation-block)",
+          finishReason: moderationDecision?.finishReason ?? "blocked",
+          moderation: {
+            label: moderationEffectiveLabel ?? "blocked",
+            modelLabel: moderationModelLabel,
+            confidence: moderationDecision?.confidence,
+            reason: moderationDecision?.reason,
+            localReasons: localModeration.reasons,
+            glinMatches: localModeration.glinMatches,
+            languages: localModeration.languagesTried,
+            downgraded: moderationDowngraded,
+            suspicionScore: localModeration.suspicionScore,
+            usedOpenRouter: true
+          }
+        })
+      );
+
+      return NextResponse.json(
+        {
+          reply,
+          references: [],
+          usedFallback: true,
+          promptCount: promptCount + 1,
+          rateLimitRemaining: rate.remaining,
+          captchaRequired: false,
+          unprofessional: true,
+          notice: "This chat is monitored for quality assurance purposes."
+        },
+        {
+          status: 200,
+          headers: {
+            "Cache-Control": "no-store"
+          }
+        }
+      );
+    }
+  } else {
+    const deriveLocalLabel = (): ModerationLabel => {
+      if (localModeration.selfHarmCue) return "self_harm_or_violence";
+      if (localModeration.reasons.includes("doxxing")) return "privacy_or_doxxing";
+      if (localModeration.reasons.includes("sexual_body")) return "sexual_innuendo";
+      if (localModeration.reasons.includes("harassment")) return "harassment_or_trolling";
+      if (localModeration.reasons.includes("glin")) return "profanity";
+      return "safe";
+    };
+
+    moderationEffectiveLabel = deriveLocalLabel();
+    const severeLocal =
+      localModeration.selfHarmCue ||
+      localModeration.reasons.includes("doxxing") ||
+      localModeration.reasons.includes("sexual_body");
+    shouldBlockModeration = severeLocal;
+
+    if (shouldBlockModeration) {
+      const reply = "Let's keep this chat professional. I can share Jack's skills, projects, and availability.";
+      sessionPromptCounts.set(sessionId, promptCount + 1);
+
+      await logChatEvent(
+        "chat.response",
+        buildChatLogPayload({
+          session: sessionHash,
+          ip: ipHash,
+          promptCount: promptCount + 1,
+          locale,
+          rateLimitRemaining: rate.remaining,
+          message: trimmedMessage,
+          reply,
+          references: [],
+          usedFallback: true,
+          unprofessional: true,
+          model: "moderation-block",
+          modelReplyRaw: "FLAG_NO_FUN (local-moderation)",
+          finishReason: "blocked",
+          moderation: {
+            label: moderationEffectiveLabel ?? "blocked",
+            modelLabel: moderationModelLabel,
+            reason: "local_fallback_block",
+            localReasons: localModeration.reasons,
+            glinMatches: localModeration.glinMatches,
+            languages: localModeration.languagesTried,
+            downgraded: moderationDowngraded,
+            suspicionScore: localModeration.suspicionScore,
+            usedOpenRouter: false
+          }
+        })
+      );
 
       return NextResponse.json(
         {
@@ -697,17 +1011,20 @@ export async function POST(request: Request) {
     }
   }
 
-  const moderationMeta = localModeration.flagged
-    ? {
-        moderationLabel: moderationDecision?.label ?? "safe",
-        moderationConfidence: moderationDecision?.confidence,
-        moderationReason: moderationDecision?.reason,
-        moderationLocalReasons: localModeration.reasons,
-        moderationGlinMatches: localModeration.glinMatches,
-        moderationLanguages: localModeration.languagesTried,
-        moderationRaw: moderationDecision?.raw
-      }
-    : undefined;
+  const moderationMeta = {
+    label: moderationEffectiveLabel,
+    modelLabel: moderationModelLabel,
+    confidence: moderationDecision?.confidence,
+    reason: moderationDecision?.reason,
+    localReasons: localModeration.reasons,
+    glinMatches: localModeration.glinMatches,
+    languages: localModeration.languagesTried,
+    raw: moderationDecision?.raw,
+    downgraded: moderationDowngraded,
+    professionalIntent: localModeration.professionalIntent,
+    suspicionScore: localModeration.suspicionScore,
+    usedOpenRouter: shouldModerate
+  };
 
   const requireCaptcha = shouldRequireCaptcha(sessionId, promptCount);
   const captchaSiteKey = process.env.HCAPTCHA_SITE_KEY ?? "";
@@ -759,22 +1076,53 @@ export async function POST(request: Request) {
     captchaSolved.set(sessionId, Date.now() + CAPTCHA_SOLVED_TTL_MS);
   }
   const resources = await loadChatResources();
-  const hits = await retrieveContext(trimmedMessage, locale, 3);
+  const retrievalLimit = skillStrengthQuestion ? 10 : availabilityQuestion ? 8 : 6;
+  const hits = await retrieveContext(trimmedMessage, locale, retrievalLimit);
   const history = summarizeHistory(body.history ?? []);
   const workEduQuestion = isWorkEducationQuestion(trimmedMessage);
   const workEducationFacts = workEduQuestion
     ? buildWorkEducationFacts(trimmedMessage, locale, resources.index, 5)
     : [];
 
-  const hasOpenRouterKey = Boolean(process.env.OPENROUTER_API_KEY);
   const selectedModel = process.env.OPENROUTER_MODEL ?? "openrouter/auto";
 
-  const filteredHits =
+  let filteredHits =
     workEduQuestion && hits.some((hit) => hit.chunk.href.startsWith("/resume.pdf"))
       ? hits.filter((hit) => hit.chunk.href.startsWith("/resume.pdf"))
       : hits;
 
-  const references = buildReferences(filteredHits, resources.anchors);
+  if (skillStrengthQuestion) {
+    let narrowed = filteredHits.filter((hit) => hit.chunk.sourceType === "tech" || hit.chunk.sourceType === "resume");
+    const experienceAdds = filteredHits.filter(
+      (hit) =>
+        hit.chunk.sourceType === "experience" &&
+        SKILL_INCLUDE_EXPERIENCE_PATTERNS.some((pattern) => pattern.test(hit.chunk.title) || pattern.test(hit.chunk.text))
+    );
+    narrowed = [...narrowed, ...experienceAdds].filter(
+      (hit, index, arr) => arr.findIndex((h) => h.chunk.id === hit.chunk.id) === index
+    );
+    narrowed = narrowed.filter((hit) => !SKILL_EXCLUDE_PATTERNS.some((pattern) => pattern.test(hit.chunk.text)));
+    if (narrowed.length > 0) {
+      filteredHits = narrowed;
+    } else {
+      const resumeChunk = resources.index.chunks.find((chunk) => chunk.id === "resume-resume-profile");
+      if (resumeChunk) {
+        filteredHits = [{ chunk: resumeChunk, score: 1 }];
+      }
+    }
+  }
+
+  let references = buildReferences(filteredHits, resources.anchors);
+  const availabilityAnchor = findAnchorByCategory(resources.anchors, "availability", locale);
+  const resumeAnchor = findAnchorByCategory(resources.anchors, "resume", locale);
+  if (availabilityQuestion) {
+    if (availabilityAnchor && !references.some((ref) => ref.href === availabilityAnchor.href)) {
+      references = [anchorToReference(availabilityAnchor), ...references];
+    }
+  }
+  if (skillStrengthQuestion && resumeAnchor && !references.some((ref) => ref.href === resumeAnchor.href)) {
+    references = [anchorToReference(resumeAnchor), ...references];
+  }
 
   let repromptAttempted = false;
   let modelReply = await callOpenRouter(
@@ -809,32 +1157,76 @@ export async function POST(request: Request) {
     cleanedReply && cleanedReply.trim().length > 0
       ? normalizeParens(stripBracketedUrls(ensureLinkSpacing(applyBrandCorrections(cleanedReply))))
       : null;
+  const referenceHrefs = new Set(references.map((ref) => ref.href));
+  const meetingHref = resources.anchors.find((anchor) => anchor.category === "availability" && anchor.locale === locale)?.href;
+  const driftedPersona =
+    resolvedReplyText && WRONG_PERSONA_PATTERNS.some((pattern) => pattern.test(resolvedReplyText));
+  const shouldForceMeetings =
+    availabilityQuestion &&
+    meetingHref &&
+    (!resolvedReplyText || !resolvedReplyText.toLowerCase().includes("/meetings"));
+  const techAnchorAdds = findTechAnchorsForKeywords(resolvedReplyText, resources.anchors, locale, referenceHrefs);
+  if (techAnchorAdds.length > 0) {
+    references = [...techAnchorAdds.map(anchorToReference), ...references];
+  } else if (skillStrengthQuestion) {
+    const fallbackRefs = findAnchorsByIds(
+      resources.anchors,
+      ["react", "typescript", "javascript"],
+      locale,
+      referenceHrefs
+    );
+    if (fallbackRefs.length > 0) {
+      references = [...fallbackRefs.map(anchorToReference), ...references];
+    }
+    if (resumeAnchor && !referenceHrefs.has(resumeAnchor.href)) {
+      references = [anchorToReference(resumeAnchor), ...references];
+      referenceHrefs.add(resumeAnchor.href);
+    }
+  }
+
+  const shouldForceSkills = false;
   const shouldEnforceNoFun = noFunFlagFromModel;
-  const reply =
-    resolvedReplyText && !shouldEnforceNoFun
-      ? resolvedReplyText
-      : applyBrandCorrections("Let's keep this chat professional. I can share Jack's skills, projects, and availability.");
-  const usedFallback = resolvedReplyText === null || shouldEnforceNoFun;
+  const driftedSkill = false;
+
+  let reply: string;
+  let usedFallback =
+    resolvedReplyText === null || shouldEnforceNoFun || driftedPersona || shouldForceMeetings || shouldForceSkills;
+
+  if (!usedFallback) {
+    reply = resolvedReplyText!;
+  } else if (shouldForceMeetings && meetingHref) {
+    reply = applyBrandCorrections(`You can view Jack's current availability and book a time here: ${meetingHref}`);
+  } else {
+    reply = applyBrandCorrections(
+      "Let's keep this chat professional. I can share Jack's skills, projects, and availability."
+    );
+  }
 
   sessionPromptCounts.set(sessionId, promptCount + 1);
 
-  await logChatEvent("chat.response", {
-    session: sessionHash,
-    ip: ipHash,
-    promptCount: promptCount + 1,
-    locale,
-    usedFallback,
-    unprofessional: shouldEnforceNoFun,
-    modelReplyRaw: rawReplyText,
-    model: modelReply?.model ?? selectedModel,
-    finishReason: modelReply?.finishReason,
-    rateLimitRemaining: rate.remaining,
-    message: trimmedMessage,
-    reply,
-    references,
-    contextFacts: workEducationFacts,
-    ...(moderationMeta ?? {})
-  });
+  await logChatEvent(
+    "chat.response",
+    buildChatLogPayload({
+      session: sessionHash,
+      ip: ipHash,
+      promptCount: promptCount + 1,
+      locale,
+      rateLimitRemaining: rate.remaining,
+      message: trimmedMessage,
+      reply,
+      references,
+      contextFacts: workEducationFacts,
+      usedFallback,
+      unprofessional: shouldEnforceNoFun,
+      model: modelReply?.model ?? selectedModel,
+      modelReplyRaw: rawReplyText,
+      finishReason: modelReply?.finishReason,
+      moderation: moderationMeta,
+      extras: {
+        contextFacts: workEducationFacts
+      }
+    })
+  );
 
   const responsePayload = {
     reply,

@@ -26,6 +26,7 @@
 - Lean on the moderation model with richer intent cues.
 - Include a “professional intent” hint: pass a short descriptor (e.g., { intent: "professional/tech Q&A about Jack's skills" }) so the model understands expected safe usage.
 - Add a small allowlist check for tech terms (React, TypeScript, skills, experience) that can downgrade low-confidence unsafe labels to SAFE when the text is otherwise professional.
+- Always send non-structural prompts (anything beyond empty/URL-only/system markers) to the OpenRouter moderation pass. Use local cues to compute a lightweight “suspicion score” (self-harm/doxxing +0.4, harassment/profanity/sexual-body +0.25, personal-sensitive +0.2, unprofessional intent +0.1; cap at 1). Block when label != SAFE and (confidence ≥ 0.7 **or** suspicion ≥ 0.5); otherwise allow and log. If OpenRouter is unavailable, fall back to blocking only severe local cues (self-harm/doxxing/explicit sexual), allow the rest, and log suspicion.
 
 ## Implementation notes
 - `glin-profanity` setup: enable stemming/inflection where possible; add aliases for leetspeak; keep an allowlist to avoid collisions (e.g., Scunthorpe-style issues, “assess”) and to permit portfolio-context questions about school/tech/experience/employer/location/schedule. Store the list/version so hits can be reproduced.

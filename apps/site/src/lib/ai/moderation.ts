@@ -1,5 +1,6 @@
 import { Filter, type CheckProfanityResult, type Language } from "glin-profanity";
 import { loadLdnoobwWords } from "./ldnoobw";
+import { loadSafePhrases } from "./safePhrases";
 
 export type LocalModerationResult = {
   flagged: boolean;
@@ -7,6 +8,12 @@ export type LocalModerationResult = {
   reasons: string[];
   glinMatches: string[];
   languagesTried: Language[];
+  professionalIntent: boolean;
+  techIntent: boolean;
+  harassmentCue: boolean;
+  selfHarmCue: boolean;
+  personalSensitiveCue: boolean;
+  suspicionScore: number;
 };
 
 const ZERO_WIDTH_CHARS = /[\u200B-\u200D\uFEFF]/g;
@@ -48,6 +55,7 @@ const PORTFOLIO_ALLOWLIST_WORDS = new Set(
     "skills",
     "experience",
     "availability",
+    "available",
     "schedule",
     "timezone",
     "time",
@@ -57,6 +65,16 @@ const PORTFOLIO_ALLOWLIST_WORDS = new Set(
     "location",
     "city",
     "based",
+    "strength",
+    "strengths",
+    "weakness",
+    "weaknesses",
+    "industry",
+    "industries",
+    "sector",
+    "sectors",
+    "domain",
+    "domains",
     // Japanese (portfolio-safe terms)
     "履歴書",
     "職務経歴書",
@@ -121,8 +139,11 @@ const PORTFOLIO_INTENT_PATTERNS = [
   /\b(work|works|working|job|jobs|employ(er|ment)?|company|role|roles|team|office|remote|hybrid)\b/i,
   /\b(school|college|university|degree|education|class|classes|course|courses|major|gpa)\b/i,
   /\b(project|projects|tech|stack|skills?)\b/i,
-  /\b(availability|schedule|timezone|time\s*zone|hours?)\b/i,
-  /\bwork\s+(location|city|office)\b/i
+  /\b(availability|available|schedule|timezone|time\s*zone|hours?)\b/i,
+  /\bwork\s+(location|city|office)\b/i,
+  /\b(strengths?|weaknesses?)\b/i,
+  /\b(based\s+in|where\s+is\s+\w+\s+based|location|city)\b/i,
+  /\b(industry|industries|sector|sectors|domain|domains)\b/i
 ];
 
 const DOXXING_PATTERNS = [
@@ -145,32 +166,6 @@ const DOXXING_PATTERNS = [
   /住址|家庭住址|家庭地址|家里地址|邮编|联系电话|电话号码|手机号|身份证号?|护照号?|精准定位|坐标|追踪|追蹤|住在哪里/i
 ];
 
-const TROLLING_PATTERNS = [
-  /\b4chan\b/i,
-  /\bkys\b/i,
-  /\bkill\s+yourself\b/i,
-  /\byou\s+suck\b/i,
-  /\btroll(ing)?\b/i
-];
-
-const PERSONAL_PATTERNS = [
-  // Personal traits we flag even if not profane
-  /sexual\s*orientation/i,
-  /\bstraight\b/i,
-  /\bgay\b/i,
-  /\bqueer\b/i,
-  /\bbi(sexual)?\b/i,
-  /\btrans(gender)?\b/i,
-  /\bage\b/i,
-  /\bhow\s+old\b/i,
-  /\bborn\b/i,
-  /\bbirth(day)?\b/i,
-  /date\s+of\s+birth/i,
-  /\bwhen\s+was\s+\w+\s+born\b/i,
-  /\breligion\b/i,
-  /\bpolitics?\b/i
-];
-
 const TECH_INTENT_PATTERNS = [
   /\breact\b/i,
   /\bjavascript\b/i,
@@ -185,20 +180,40 @@ const TECH_INTENT_PATTERNS = [
   /\bai\b/i
 ];
 
-const INNUENDO_PATTERNS = [
-  /\bvaseline\b/i,
-  /\bgapefruit\b/i,
-  /\bointment\b/i,
-  /\bbugger(y|ing)?\b/i,
-  /\blad(y|ies)\b/i,
-  /\bbroads?\b/i,
-  /\bwomen\b/i,
-  /\bwoman\b/i,
-  /\bmen\b/i,
-  /\bman\b/i,
-  /\bboys?\b/i,
-  /\bgirls?\b/i,
-  /\bgirlies\b/i
+// Keep CJK explicit-body fallbacks; English sexual terms rely on glin/LDNOOBW.
+const SEXUAL_BODY_PATTERNS = [
+  /(陰茎|阴茎|阴道|陰道|陰部|阴部|乳房|乳头|乳交|肛門|肛门|阴蒂|陰核|裤裆)/i,
+  /(ちんこ|ちんちん|まんこ|おっぱい|巨乳|性器)/i
+];
+
+const HARASSMENT_PATTERNS = [
+  /\bkys\b/i,
+  /\bkill\s+yourself\b/i,
+  /\byou\s+suck\b/i,
+  /\byou\s+(are\s+)?(an?\s+)?(idiot|loser|stupid|dumb)\b/i,
+  /\bshut\s+up\b/i,
+  /\bgo\s+away\b/i,
+  /\bgo\s+(die|jump)\b/i,
+  /\b4chan\b/i,
+  /\btroll(ing)?\b/i
+];
+
+const SELF_HARM_PATTERNS = [
+  /\bi\s+(want|need)\s+to\s+die\b/i,
+  /\b(end|ending)\s+my\s+life\b/i,
+  /\bkill\s+myself\b/i,
+  /\bsuicide\b/i,
+  /\bhurt\s+myself\b/i,
+  /\bself[-\s]?harm\b/i
+];
+
+const PERSONAL_SENSITIVE_PATTERNS = [
+  /\b(age|how\s+old|birth\s*date|date\s+of\s+birth)\b/i,
+  /\b(phone|mobile|cell)\s*(number)?\b/i,
+  /\bcontact\s+(number|info)\b/i,
+  /\b(address|exact\s+location|exact\s+city)\b/i,
+  /\bsalary\b/i,
+  /\b(relationship|girlfriend|boyfriend|partner)\b/i
 ];
 
 export function normalizeForModeration(text: string): string {
@@ -233,8 +248,33 @@ function hasAllowlistedPortfolioIntent(text: string): boolean {
   );
 }
 
+export function isBenignStructuralPrompt(text: string): boolean {
+  const trimmed = text.trim();
+  if (!trimmed) return true;
+  const urlOnly =
+    /^(https?:\/\/\S+|www\.[^\s]+|\S+\.(com|net|org|io|dev|app|ai)(\/\S*)?)$/i.test(trimmed) &&
+    !/\s/.test(trimmed.replace(/https?:\/\/|www\./gi, ""));
+  if (urlOnly) return true;
+  const systemLike = /^(system\s*:|\[?system\]?[:\s])/i.test(trimmed);
+  return systemLike;
+}
+
+const BENIGN_LOCATION_PATTERNS = [
+  /\bwhere\s+is\s+(he|jack)\s+(based|located)\b/i,
+  /\b(where|what)\s+(city|location)\b/i,
+  /\b(time\s*zone|timezone)\b/i,
+  /\bbased\s+in\b/i,
+  /\bwhich\s+city\b/i
+];
+
+export function isBenignLocationQuestion(normalized: string): boolean {
+  return BENIGN_LOCATION_PATTERNS.some((pattern) => pattern.test(normalized));
+}
+
 export function runLocalModeration(message: string): LocalModerationResult {
   const normalized = normalizeForModeration(message);
+  const safePhrases = loadSafePhrases();
+  const safePhraseHit = safePhrases.some((phrase) => phrase && normalized.includes(phrase));
   const glinText = normalized
     .replace(/[^\p{L}\p{N}\s]/gu, " ")
     .replace(/\bpenises\b/g, "penis")
@@ -286,34 +326,67 @@ export function runLocalModeration(message: string): LocalModerationResult {
   const glinFlagged = Boolean(glinResult?.containsProfanity || (glinMatches?.length ?? 0) > 0);
 
   const portfolioIntent = hasAllowlistedPortfolioIntent(normalized);
-  const doxxing = !portfolioIntent && DOXXING_PATTERNS.some((pattern) => pattern.test(normalized));
-  const trolling = TROLLING_PATTERNS.some((pattern) => pattern.test(normalized));
-  const grossPersonal = PERSONAL_PATTERNS.some((pattern) => pattern.test(normalized));
-  const innuendo = INNUENDO_PATTERNS.some((pattern) => pattern.test(normalized));
   const techIntent = TECH_INTENT_PATTERNS.some((pattern) => pattern.test(normalized));
+  const professionalIntent = portfolioIntent || techIntent;
+  const doxxing = !portfolioIntent && DOXXING_PATTERNS.some((pattern) => pattern.test(normalized));
+  const sexualBody = SEXUAL_BODY_PATTERNS.some((pattern) => pattern.test(normalized));
+  const harassmentCue = HARASSMENT_PATTERNS.some((pattern) => pattern.test(normalized));
+  const selfHarmCue = SELF_HARM_PATTERNS.some((pattern) => pattern.test(normalized));
+  const personalSensitiveCue = !portfolioIntent && PERSONAL_SENSITIVE_PATTERNS.some((pattern) => pattern.test(normalized));
+  const unprofessionalCue = !professionalIntent;
 
   const reasons: string[] = [];
   if (glinFlagged) reasons.push("glin");
-  if (trolling) reasons.push("troll");
-  if (grossPersonal) reasons.push("gross_personal");
   if (doxxing) reasons.push("doxxing");
-  if (innuendo) reasons.push("innuendo");
+  if (sexualBody) reasons.push("sexual_body");
+  if (harassmentCue) reasons.push("harassment");
+  if (selfHarmCue) reasons.push("self_harm");
+  if (personalSensitiveCue) reasons.push("personal_sensitive");
+  if (unprofessionalCue) reasons.push("off_topic");
 
-  const flagged = glinFlagged || trolling || grossPersonal || doxxing || innuendo;
-  const shouldRelaxForTech =
-    flagged &&
-    techIntent &&
-    !doxxing &&
-    !trolling &&
-    !grossPersonal &&
-    !glinFlagged &&
-    glinMatches.length === 0;
+  const safePhraseOnly =
+    safePhraseHit && !glinFlagged && !doxxing && !sexualBody && !harassmentCue && !selfHarmCue && !personalSensitiveCue;
+
+  let suspicionScore = 0;
+  const addSuspicion = (value: number) => {
+    suspicionScore = Math.min(1, suspicionScore + value);
+  };
+
+  if (safePhraseOnly) {
+    return {
+      flagged: false,
+      normalized,
+      reasons: ["safe_phrase"],
+      glinMatches,
+      languagesTried: languages,
+      professionalIntent: true,
+      techIntent,
+      harassmentCue: false,
+      selfHarmCue: false,
+      personalSensitiveCue: false,
+      suspicionScore: 0
+    };
+  }
+
+  if (selfHarmCue) addSuspicion(0.4);
+  if (doxxing) addSuspicion(0.4);
+  if (sexualBody) addSuspicion(0.25);
+  if (glinFlagged) addSuspicion(0.25);
+  if (harassmentCue) addSuspicion(0.25);
+  if (personalSensitiveCue) addSuspicion(0.2);
+  if (unprofessionalCue) addSuspicion(0.15);
 
   return {
-    flagged: shouldRelaxForTech ? false : flagged,
+    flagged: glinFlagged || doxxing || sexualBody || harassmentCue || selfHarmCue || personalSensitiveCue,
     normalized,
-    reasons: shouldRelaxForTech ? [] : reasons,
-    glinMatches: shouldRelaxForTech ? [] : glinMatches,
-    languagesTried: languages
+    reasons,
+    glinMatches,
+    languagesTried: languages,
+    professionalIntent,
+    techIntent,
+    harassmentCue,
+    selfHarmCue,
+    personalSensitiveCue,
+    suspicionScore
   };
 }

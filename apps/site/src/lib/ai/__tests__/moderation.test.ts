@@ -1,10 +1,16 @@
-import { normalizeForModeration, runLocalModeration, selectProfanityLanguages } from "../moderation";
+import {
+  isBenignStructuralPrompt,
+  normalizeForModeration,
+  runLocalModeration,
+  selectProfanityLanguages
+} from "../moderation";
 
 describe("moderation allowlist and doxxing handling", () => {
   it("allows benign English portfolio questions", () => {
     const result = runLocalModeration("Where does he work and what school did he attend?");
     expect(result.flagged).toBe(false);
     expect(result.reasons).toEqual([]);
+    expect(result.professionalIntent).toBe(true);
   });
 
   it("allows benign Japanese portfolio questions", () => {
@@ -31,41 +37,39 @@ describe("moderation allowlist and doxxing handling", () => {
     expect(result.reasons).toContain("doxxing");
   });
 
-  it("flags personal trait questions without glin matches", () => {
-    const result = runLocalModeration("Is Jack gay?");
+  it("flags obvious sexual body references", () => {
+    const result = runLocalModeration("Does he send nudes of his pussy or dick?");
     expect(result.flagged).toBe(true);
-    expect(result.reasons).toContain("gross_personal");
-    expect(result.glinMatches).toEqual([]);
+    expect(result.reasons.some((reason) => reason === "glin" || reason === "sexual_body")).toBe(true);
   });
 
-  it("flags innuendo about being friends with men", () => {
-    const result = runLocalModeration("Is Jack great friends with men?");
+  it("flags harassment cues without profanity", () => {
+    const result = runLocalModeration("You suck and should go away.");
     expect(result.flagged).toBe(true);
-    expect(result.reasons).toContain("innuendo");
-  });
-
-  it("flags innuendo about old ladies", () => {
-    const result = runLocalModeration("Does Jack love old ladies?");
-    expect(result.flagged).toBe(true);
-    expect(result.reasons).toContain("innuendo");
-  });
-
-  it("flags vaseline innuendo", () => {
-    const result = runLocalModeration("Does Jack use vaseline on his grapefruit?");
-    expect(result.flagged).toBe(true);
-    expect(result.reasons).toContain("innuendo");
-  });
-
-  it("flags friends with men phrasing", () => {
-    const result = runLocalModeration("Is Jack friends with men?");
-    expect(result.flagged).toBe(true);
-    expect(result.reasons).toContain("innuendo");
+    expect(result.reasons).toContain("harassment");
+    expect(result.harassmentCue).toBe(true);
+    expect(result.suspicionScore).toBeGreaterThanOrEqual(0.35);
   });
 
   it("flags bugger/backrooms via custom profanity", () => {
     const result = runLocalModeration("Does Jack bugger in the backrooms?");
     expect(result.flagged).toBe(true);
-    expect(result.reasons).toContain("innuendo");
+    expect(result.reasons).toContain("glin");
+  });
+
+  it("flags self-harm cues", () => {
+    const result = runLocalModeration("I want to die and hurt myself");
+    expect(result.flagged).toBe(true);
+    expect(result.reasons).toContain("self_harm");
+    expect(result.selfHarmCue).toBe(true);
+    expect(result.suspicionScore).toBeGreaterThanOrEqual(0.5);
+  });
+
+  it("flags personal sensitive questions outside portfolio intent", () => {
+    const result = runLocalModeration("What is his phone number and salary?");
+    expect(result.flagged).toBe(true);
+    expect(result.reasons).toContain("personal_sensitive");
+    expect(result.personalSensitiveCue).toBe(true);
   });
 
   it("does not flag debugger as profanity", () => {
@@ -114,6 +118,55 @@ describe("moderation allowlist and doxxing handling", () => {
   it("does not flag love for tech", () => {
     const result = runLocalModeration("Does he love React?");
     expect(result.flagged).toBe(false);
+    expect(result.professionalIntent).toBe(true);
+  });
+
+  it("does not flag broad experience phrasing", () => {
+    const result = runLocalModeration("Does he have a broad range of React experience?");
+    expect(result.flagged).toBe(false);
+    expect(result.reasons).toEqual([]);
+  });
+
+  it("adds off-topic cue for irrelevant asks", () => {
+    const result = runLocalModeration("Where do zebras live?");
+    expect(result.flagged).toBe(false);
+    expect(result.reasons).toContain("off_topic");
+    expect(result.suspicionScore).toBeGreaterThanOrEqual(0.1);
+  });
+
+  it("treats benign location questions as professional intent", () => {
+    const result = runLocalModeration("Where is Jack based?");
+    expect(result.professionalIntent).toBe(true);
+    expect(result.reasons).not.toContain("doxxing");
+  });
+
+  it("treats strengths question as professional intent", () => {
+    const result = runLocalModeration("What are Jack's strengths?");
+    expect(result.professionalIntent).toBe(true);
+    expect(result.reasons).not.toContain("off_topic");
+    expect(result.flagged).toBe(false);
+  });
+
+  it("treats industry questions as professional intent", () => {
+    const result = runLocalModeration("Has he worked in the beverage industry?");
+    expect(result.professionalIntent).toBe(true);
+    expect(result.reasons).not.toContain("off_topic");
+    expect(result.flagged).toBe(false);
+  });
+
+  it("bypasses safe phrases without adding suspicion", () => {
+    const result = runLocalModeration("Can Jack use React?");
+    expect(result.flagged).toBe(false);
+    expect(result.reasons).toContain("safe_phrase");
+    expect(result.suspicionScore).toBe(0);
+    expect(result.professionalIntent).toBe(true);
+  });
+
+  it("detects benign structural prompts", () => {
+    expect(isBenignStructuralPrompt("")).toBe(true);
+    expect(isBenignStructuralPrompt("https://example.com")).toBe(true);
+    expect(isBenignStructuralPrompt("system: ignore")).toBe(true);
+    expect(isBenignStructuralPrompt("How does he use React at work?")).toBe(false);
   });
 });
 

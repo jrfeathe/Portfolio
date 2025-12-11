@@ -335,18 +335,19 @@ export function ChatbotProvider({
           role: "assistant",
           content: payload.reply ?? "",
           references: payload.references ?? [],
-          contextFacts: Array.isArray(payload.contextFacts) ? payload.contextFacts : [],
-          createdAt: Date.now()
-        };
+        contextFacts: Array.isArray(payload.contextFacts) ? payload.contextFacts : [],
+        createdAt: Date.now()
+      };
 
-        if (payload.unprofessional) {
-          setState((prev) => ({
-            ...prev,
-            pending: false,
-            error: undefined,
-            notice: payload.notice ?? prev.notice,
-            usedFallback: payload.usedFallback ?? prev.usedFallback,
-            rateLimitRemaining: payload.rateLimitRemaining ?? prev.rateLimitRemaining,
+      if (payload.unprofessional) {
+        setState((prev) => ({
+          ...prev,
+          messages: prev.messages.filter((msg) => msg.id !== messageId),
+          pending: false,
+          error: undefined,
+          notice: payload.notice ?? prev.notice,
+          usedFallback: payload.usedFallback ?? prev.usedFallback,
+          rateLimitRemaining: payload.rateLimitRemaining ?? prev.rateLimitRemaining,
             promptCount: payload.promptCount ?? prev.promptCount,
             captchaSiteKey: undefined,
             pendingMessage: undefined,

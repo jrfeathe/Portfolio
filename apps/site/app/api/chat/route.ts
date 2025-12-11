@@ -13,6 +13,7 @@ import {
   type RetrievalHit,
   type AnchorEntry
 } from "../../../src/lib/ai/chatbot";
+import { runLocalModeration } from "../../../src/lib/ai/moderation";
 import { defaultLocale, isLocale, type Locale } from "../../../src/utils/i18n";
 
 export const runtime = "nodejs";
@@ -50,39 +51,6 @@ const sessionPromptCounts = new Map<string, number>();
 const captchaSolved = new Map<string, number>();
 const BRAND_CORRECTIONS: Array<{ pattern: RegExp; replacement: string }> = [
   { pattern: /\bRolodex\b/gi, replacement: "Rollodex" }
-];
-const PERSONAL_TOPICS = [
-  /sexual\s*orientation/i,
-  /\bstraight\b/i,
-  /\bgay\b/i,
-  /\bqueer\b/i,
-  /\bbi(sexual)?\b/i,
-  /\btrans(gender)?\b/i,
-  /\bage\b/i,
-  /\bhow\s+old\b/i,
-  /\bborn\b/i,
-  /\bbirth(day)?\b/i,
-  /date\s+of\s+birth/i,
-  /\bwhen\s+was\s+\w+\s+born\b/i,
-  /\b4chan\b/i,
-  /\breddit\b/i,
-  /\bfacebook\b/i,
-  /\bdiscord\b/i,
-  /\breligion\b/i,
-  /\bpolitics?\b/i,
-  /\bvaseline\b/i,
-  /\bbum\b/i,
-  /\bbutt\b/i,
-  /\bass(es)?\b/i,
-  /\banus\b/i,
-  /\brectum\b/i,
-  /\bhemorrhoid(s)?\b/i,
-  /\bpreparation\s*h\b/i,
-  /\bointment\b/i,
-  /\bpermanent\s*marker\b/i,
-  /sun\s+doesn['’]?t\s+shine/i,
-  /\bshove\b/i,
-  /\bexplicit\b/i
 ];
 const WORK_EDU_PATTERNS = [
   /\beducation\b/i,
@@ -181,10 +149,6 @@ async function logChatEvent(event: string, payload: Record<string, unknown>) {
 function hasValidCaptcha(sessionId: string): boolean {
   const solvedUntil = captchaSolved.get(sessionId);
   return Boolean(solvedUntil && solvedUntil > Date.now());
-}
-
-function isPersonalTopic(message: string): boolean {
-  return PERSONAL_TOPICS.some((pattern) => pattern.test(message));
 }
 
 function shouldRequireCaptcha(sessionId: string, promptCount: number): boolean {
@@ -482,6 +446,152 @@ async function callOpenRouter(
   }
 }
 
+type ModerationLabel =
+  | "safe"
+  | "profanity"
+  | "harassment_or_trolling"
+  | "sexual_innuendo"
+  | "doxxing_or_privacy"
+  | "self_harm_or_violence"
+  | "other";
+
+type ModerationDecision = {
+  label: ModerationLabel;
+  confidence?: number;
+  model?: string;
+  finishReason?: string;
+  raw?: string;
+  reason?: string;
+};
+
+function normalizeModerationLabel(value?: string): ModerationLabel {
+  const normalized = (value ?? "").toLowerCase().replace(/[^a-z]+/g, "_");
+  if (normalized.includes("safe")) return "safe";
+  if (normalized.includes("profan")) return "profanity";
+  if (normalized.includes("harass") || normalized.includes("troll")) return "harassment_or_trolling";
+  if (normalized.includes("sexual") || normalized.includes("nsfw") || normalized.includes("innuendo")) {
+    return "sexual_innuendo";
+  }
+  if (normalized.includes("dox") || normalized.includes("privacy")) return "doxxing_or_privacy";
+  if (normalized.includes("self") || normalized.includes("harm") || normalized.includes("violence")) {
+    return "self_harm_or_violence";
+  }
+  return "other";
+}
+
+function clampConfidence(value: unknown): number | undefined {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return Math.min(1, Math.max(0, value));
+  }
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) {
+    return undefined;
+  }
+  return Math.min(1, Math.max(0, parsed));
+}
+
+async function moderateWithOpenRouter(
+  request: Request,
+  normalizedMessage: string,
+  reasons: string[]
+): Promise<ModerationDecision | null> {
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  if (!apiKey) {
+    console.warn("[chatbot] Missing OPENROUTER_API_KEY; moderation unavailable.");
+    return null;
+  }
+
+  const model =
+    process.env.OPENROUTER_MODERATION_MODEL ??
+    process.env.OPENROUTER_MODEL ??
+    "openrouter/auto";
+  const referer = resolveReferer(request);
+  const systemPrompt =
+    "You are a content safety classifier. Given ONE user message, return JSON only with fields " +
+    '"label" (one of: SAFE, PROFANITY, HARASSMENT_OR_TROLLING, SEXUAL_INNUENDO, DOXXING_OR_PRIVACY, SELF_HARM_OR_VIOLENCE, OTHER_UNSAFE), "confidence" (0-1), and "reason" (short string). ' +
+    "Label DOXXING_OR_PRIVACY only when the user asks for non-public personal data (addresses, phone numbers, IDs, GPS coordinates) or shows harmful intent to expose someone. " +
+    "Treat normal portfolio questions about public work history, school, employer, tech stack, location/timezone, or schedule as SAFE. " +
+    "Do not return advice or free text—return JSON only.";
+
+  const userContent =
+    `User message:\n${normalizedMessage}\n\n` +
+    `Hints: ${reasons.join(", ") || "none"}\n` +
+    "Return only the JSON payload.";
+
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${apiKey}`,
+    "Content-Type": "application/json",
+    "X-Title": "Portfolio Chatbot Moderation"
+  };
+
+  if (referer) {
+    headers["HTTP-Referer"] = referer;
+  }
+
+  try {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        model,
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: userContent.slice(0, 1500) }
+        ],
+        temperature: 0,
+        top_p: 0.1,
+        max_tokens: 120
+      })
+    });
+
+    if (!response.ok) {
+      const errorBody = await response.text().catch(() => "");
+      console.error(
+        "[chatbot] OpenRouter moderation failed",
+        response.status,
+        response.statusText,
+        errorBody?.slice(0, 200)
+      );
+      return null;
+    }
+
+    const payload = await response.json();
+    const choice = payload?.choices?.[0];
+    const content = extractMessageContent(choice);
+    const trimmed = content?.trim();
+
+    if (!trimmed) {
+      console.warn("[chatbot] Empty moderation response");
+      return null;
+    }
+
+    let parsed: any;
+    try {
+      parsed = JSON.parse(trimmed);
+    } catch {
+      parsed = null;
+    }
+
+    const label = normalizeModerationLabel(parsed?.label ?? trimmed);
+    const confidence = clampConfidence(parsed?.confidence ?? parsed?.score ?? parsed?.probability);
+    const reason = typeof parsed?.reason === "string" ? parsed.reason : undefined;
+    const finishReason = typeof choice?.finish_reason === "string" ? choice.finish_reason : undefined;
+    const actualModel = typeof payload?.model === "string" ? payload.model : undefined;
+
+    return {
+      label,
+      confidence,
+      model: actualModel,
+      finishReason,
+      raw: trimmed,
+      reason
+    };
+  } catch (error) {
+    console.error("[chatbot] OpenRouter moderation request threw:", error);
+    return null;
+  }
+}
+
 async function parseBody(request: Request): Promise<ChatRequestBody | null> {
   try {
     const payload = await request.json();
@@ -533,46 +643,71 @@ export async function POST(request: Request) {
   }
 
   const promptCount = sessionPromptCounts.get(sessionId) ?? 0;
-  const personalTopic = isPersonalTopic(trimmedMessage);
-  if (personalTopic) {
-    const reply = "Let's keep this chat professional. I can share Jack's skills, projects, and availability.";
-    sessionPromptCounts.set(sessionId, promptCount + 1);
+  const localModeration = runLocalModeration(trimmedMessage);
+  let moderationDecision: ModerationDecision | null = null;
 
-    await logChatEvent("chat.response", {
-      session: sessionHash,
-      ip: ipHash,
-      promptCount: promptCount + 1,
-      locale,
-      usedFallback: true,
-      unprofessional: true,
-      modelReplyRaw: "FLAG_NO_FUN (local-backstop)",
-      model: "blocked-local",
-      finishReason: "blocked",
-      rateLimitRemaining: rate.remaining,
-      message: trimmedMessage,
-      reply,
-      references: []
-    });
+  if (localModeration.flagged) {
+    moderationDecision = await moderateWithOpenRouter(request, localModeration.normalized, localModeration.reasons);
+    const unsafe = !moderationDecision || moderationDecision.label !== "safe";
 
-    return NextResponse.json(
-      {
+    if (unsafe) {
+      const reply = "Let's keep this chat professional. I can share Jack's skills, projects, and availability.";
+      sessionPromptCounts.set(sessionId, promptCount + 1);
+
+      await logChatEvent("chat.response", {
+        session: sessionHash,
+        ip: ipHash,
+        promptCount: promptCount + 1,
+        locale,
+        usedFallback: true,
+        unprofessional: true,
+        modelReplyRaw: moderationDecision?.raw ?? "FLAG_NO_FUN (moderation-block)",
+        model: moderationDecision?.model ?? "moderation-block",
+        finishReason: moderationDecision?.finishReason ?? "blocked",
+        rateLimitRemaining: rate.remaining,
+        message: trimmedMessage,
         reply,
         references: [],
-        usedFallback: true,
-        promptCount: promptCount + 1,
-        rateLimitRemaining: rate.remaining,
-        captchaRequired: false,
-        unprofessional: true,
-        notice: "This chat is monitored for quality assurance purposes."
-      },
-      {
-        status: 200,
-        headers: {
-          "Cache-Control": "no-store"
+        moderationLabel: moderationDecision?.label ?? "blocked",
+        moderationConfidence: moderationDecision?.confidence,
+        moderationReason: moderationDecision?.reason,
+        moderationLocalReasons: localModeration.reasons,
+        moderationGlinMatches: localModeration.glinMatches,
+        moderationLanguages: localModeration.languagesTried
+      });
+
+      return NextResponse.json(
+        {
+          reply,
+          references: [],
+          usedFallback: true,
+          promptCount: promptCount + 1,
+          rateLimitRemaining: rate.remaining,
+          captchaRequired: false,
+          unprofessional: true,
+          notice: "This chat is monitored for quality assurance purposes."
+        },
+        {
+          status: 200,
+          headers: {
+            "Cache-Control": "no-store"
+          }
         }
-      }
-    );
+      );
+    }
   }
+
+  const moderationMeta = localModeration.flagged
+    ? {
+        moderationLabel: moderationDecision?.label ?? "safe",
+        moderationConfidence: moderationDecision?.confidence,
+        moderationReason: moderationDecision?.reason,
+        moderationLocalReasons: localModeration.reasons,
+        moderationGlinMatches: localModeration.glinMatches,
+        moderationLanguages: localModeration.languagesTried,
+        moderationRaw: moderationDecision?.raw
+      }
+    : undefined;
 
   const requireCaptcha = shouldRequireCaptcha(sessionId, promptCount);
   const captchaSiteKey = process.env.HCAPTCHA_SITE_KEY ?? "";
@@ -697,7 +832,8 @@ export async function POST(request: Request) {
     message: trimmedMessage,
     reply,
     references,
-    contextFacts: workEducationFacts
+    contextFacts: workEducationFacts,
+    ...(moderationMeta ?? {})
   });
 
   const responsePayload = {
@@ -716,7 +852,8 @@ export async function POST(request: Request) {
             openRouterApiKeyPresent: hasOpenRouterKey,
             model: selectedModel,
             usedFallback,
-            repromptAttempted
+            repromptAttempted,
+            moderation: moderationMeta
           }
         }
       : {})

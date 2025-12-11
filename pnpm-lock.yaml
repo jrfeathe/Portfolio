@@ -83,6 +83,9 @@ importers:
       critters:
         specifier: ^0.0.25
         version: 0.0.25
+      glin-profanity:
+        specifier: ^2.3.8
+        version: 2.3.8
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -2471,6 +2474,9 @@ packages:
 
   github-slugger@2.0.0:
     resolution: {integrity: sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw==}
+
+  glin-profanity@2.3.8:
+    resolution: {integrity: sha512-AXGIPoT/z4TJtxKlCh3Uxd/NNSuPVgJCVwBgI5FS3OtFmIUiPPPYwSFnfB4FuFDLL0uS5xXCWM+/aRYIC0sp1w==}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -7392,6 +7398,8 @@ snapshots:
       - supports-color
 
   github-slugger@2.0.0: {}
+
+  glin-profanity@2.3.8: {}
 
   glob-parent@5.1.2:
     dependencies:

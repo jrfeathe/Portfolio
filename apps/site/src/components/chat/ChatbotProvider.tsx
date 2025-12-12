@@ -3,7 +3,16 @@
 import { Button } from "@portfolio/ui";
 import clsx from "clsx";
 import Image from "next/image";
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type CSSProperties
+} from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
@@ -428,17 +437,43 @@ export function ChatbotProvider({
   );
 }
 
-function MarkdownMessage({ text, className }: { text: string; className?: string }) {
+function MarkdownMessage({
+  text,
+  className,
+  style,
+  contentStyle
+}: {
+  text: string;
+  className?: string;
+  style?: CSSProperties;
+  contentStyle?: CSSProperties;
+}) {
   return (
-    <div className={clsx("space-y-2 break-words text-sm leading-relaxed", className)}>
+    <div className={clsx("space-y-2 break-words text-sm leading-relaxed", className)} style={style}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeSanitize]}
         components={{
-          p: ({ children }) => <p className="whitespace-pre-wrap leading-relaxed">{children}</p>,
-          ul: ({ children }) => <ul className="ml-4 list-disc space-y-1">{children}</ul>,
-          ol: ({ children }) => <ol className="ml-4 list-decimal space-y-1">{children}</ol>,
-          li: ({ children }) => <li className="leading-relaxed">{children}</li>,
+          p: ({ children }) => (
+            <p className="whitespace-pre-wrap leading-relaxed" style={contentStyle}>
+              {children}
+            </p>
+          ),
+          ul: ({ children }) => (
+            <ul className="ml-4 list-disc space-y-1" style={contentStyle}>
+              {children}
+            </ul>
+          ),
+          ol: ({ children }) => (
+            <ol className="ml-4 list-decimal space-y-1" style={contentStyle}>
+              {children}
+            </ol>
+          ),
+          li: ({ children }) => (
+            <li className="leading-relaxed" style={contentStyle}>
+              {children}
+            </li>
+          ),
           a: ({ children }) => <>{children}</>
         }}
       >
@@ -474,20 +509,54 @@ function ContextFactsPanel({ facts }: { facts: ContextFact[] }) {
   );
 }
 
-function MessageBubble({ message }: { message: ChatMessage }) {
+function MessageBubble({
+  message,
+  forcedColors,
+  highContrast,
+  isDark
+}: {
+  message: ChatMessage;
+  forcedColors?: boolean;
+  highContrast?: boolean;
+  isDark?: boolean;
+}) {
   const isUser = message.role === "user";
+  const hcBg = isDark ? "#38bdf8" : "#1d4ed8";
+  const hcText = isDark ? "#000000" : "#ffffff";
+  const userForcedStyle =
+    (forcedColors || highContrast) && isUser
+      ? {
+          backgroundColor: hcBg,
+          color: hcText,
+          borderColor: hcBg,
+          forcedColorAdjust: "none" as const,
+          msHighContrastAdjust: "none" as const
+        }
+      : undefined;
+  const userForcedTextStyle =
+    (forcedColors || highContrast) && isUser
+      ? { color: hcText, forcedColorAdjust: "none" as const, msHighContrastAdjust: "none" as const }
+      : undefined;
   return (
     <div
       className={clsx(
         "flex max-w-[85%] flex-col gap-1 rounded-2xl px-4 py-3 text-sm shadow-sm",
         isUser
-          ? "self-end bg-accent text-accentOn"
+          ? "self-end bg-accent text-accentOn contrast-more:bg-[#1d4ed8] contrast-more:text-white dark:bg-dark-accent dark:text-black dark:contrast-more:bg-[#38bdf8] dark:contrast-more:text-[#020617]"
           : "self-start bg-surface text-text dark:bg-dark-surface dark:text-dark-text"
       )}
+      style={userForcedStyle}
+      data-user-bubble={isUser ? "true" : undefined}
     >
       <MarkdownMessage
         text={message.content}
-        className={clsx(isUser ? "text-accentOn" : "text-text dark:text-dark-text")}
+        className={clsx(
+          isUser
+            ? "text-accentOn contrast-more:text-white dark:text-black contrast-more:text-white"
+            : "text-text dark:text-dark-text"
+        )}
+        style={userForcedTextStyle}
+        contentStyle={userForcedTextStyle}
       />
       {!isUser && message.contextFacts?.length ? <ContextFactsPanel facts={message.contextFacts} /> : null}
       {message.references?.length ? (
@@ -660,6 +729,50 @@ function ChatFloatingWidget() {
   const { state, toggle, sendMessage, copy, solveCaptcha } = useChatbot();
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const [chatSize, setChatSize] = useState<{ width: number; height: number }>({ width: 420, height: 520 });
+  const chatSizeRef = useRef(chatSize);
+  const dragRef = useRef<{
+    startX: number;
+    startY: number;
+    startWidth: number;
+    startHeight: number;
+  } | null>(null);
+  const dragHandlersRef = useRef<{ onMove: (event: MouseEvent) => void; onEnd: () => void } | null>(null);
+  const [isDraggingResize, setIsDraggingResize] = useState(false);
+  const [isCloseHover, setIsCloseHover] = useState(false);
+  const [isForcedColors, setIsForcedColors] = useState(false);
+  const [isHighContrast, setIsHighContrast] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const closeButtonStyle = useMemo(() => {
+    if (isForcedColors) {
+      const hoverStyle = isCloseHover
+        ? {
+            backgroundColor: "Highlight",
+            color: "HighlightText",
+            borderColor: "Highlight",
+            boxShadow: "inset 0 0 0 999px Highlight"
+          }
+        : {
+            backgroundColor: "Canvas",
+            color: "ButtonText",
+            borderColor: "ButtonText",
+            boxShadow: "inset 0 0 0 1px ButtonText"
+          };
+      return { ...hoverStyle, forcedColorAdjust: "none" as const };
+    }
+
+    const baseColor = "#ef4444";
+    const hover = isCloseHover;
+    return {
+      backgroundColor: hover ? baseColor : "transparent",
+      color: hover ? "#ffffff" : baseColor,
+      borderColor: baseColor,
+      boxShadow: hover ? `inset 0 0 0 999px ${baseColor}` : undefined,
+      forcedColorAdjust: "none" as const
+    };
+  }, [isCloseHover, isForcedColors]);
+  const MIN_CHAT_WIDTH = 320;
+  const MIN_CHAT_HEIGHT = 360;
   const rateLimitActive = isRateLimitActive(state.rateLimit);
   const retryAfterMinutes = state.rateLimit?.retryAfterMs
     ? Math.max(1, Math.ceil(state.rateLimit.retryAfterMs / 60000))
@@ -670,6 +783,71 @@ function ChatFloatingWidget() {
       : retryAfterMinutes
         ? `${copy.rateLimitTryAfter} ${retryAfterMinutes}m`
         : null;
+
+  useEffect(() => {
+    chatSizeRef.current = chatSize;
+  }, [chatSize]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const forcedColors = window.matchMedia("(forced-colors: active)");
+    const prefersContrast = window.matchMedia("(prefers-contrast: more)");
+    const root = document.documentElement;
+    const readClassContrast = () => root.classList.contains("contrast-high");
+    const readDarkMode = () => root.classList.contains("dark");
+    const handleForced = () => setIsForcedColors(forcedColors.matches);
+    const handleContrast = () => setIsHighContrast(prefersContrast.matches || readClassContrast());
+    const handleDark = () => setIsDarkMode(readDarkMode());
+    handleForced();
+    handleContrast();
+    handleDark();
+    forcedColors.addEventListener("change", handleForced);
+    prefersContrast.addEventListener("change", handleContrast);
+    const observer = new MutationObserver(() => {
+      handleContrast();
+      handleDark();
+    });
+    observer.observe(root, { attributes: true, attributeFilter: ["class", "data-contrast"] });
+
+    const clampSize = (width: number, height: number) => {
+      const maxWidth = Math.max(MIN_CHAT_WIDTH, window.innerWidth - 48); // leave margins around the widget
+      const maxHeight = Math.max(MIN_CHAT_HEIGHT, window.innerHeight - 96); // avoid covering the whole viewport
+      return {
+        width: Math.min(Math.max(width, MIN_CHAT_WIDTH), maxWidth),
+        height: Math.min(Math.max(height, MIN_CHAT_HEIGHT), maxHeight)
+      };
+    };
+
+    setChatSize((prev) => clampSize(prev.width, prev.height));
+
+    const handleResize = () => {
+      setChatSize((prev) => clampSize(prev.width, prev.height));
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      forcedColors.removeEventListener("change", handleForced);
+      prefersContrast.removeEventListener("change", handleContrast);
+        observer.disconnect();
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const effectiveHighContrast =
+    isForcedColors ||
+    isHighContrast ||
+    (typeof document !== "undefined" && document.documentElement.classList.contains("contrast-high"));
+
+  useEffect(() => {
+    return () => {
+      const handlers = dragHandlersRef.current;
+      if (handlers) {
+        window.removeEventListener("mousemove", handlers.onMove);
+        window.removeEventListener("mouseup", handlers.onEnd);
+        window.removeEventListener("mouseleave", handlers.onEnd);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (state.isOpen) {
@@ -696,12 +874,109 @@ function ChatFloatingWidget() {
     [solveCaptcha]
   );
 
+  const handleResizeStart = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setIsDraggingResize(true);
+    dragRef.current = {
+      startX: event.clientX,
+      startY: event.clientY,
+      startWidth: chatSizeRef.current.width,
+      startHeight: chatSizeRef.current.height
+    };
+
+    const onMove = (moveEvent: MouseEvent) => {
+      const drag = dragRef.current;
+      if (!drag) return;
+      const deltaX = drag.startX - moveEvent.clientX;
+      const deltaY = drag.startY - moveEvent.clientY; // invert vertical drag: pulling down shrinks, up expands
+      const nextWidth = drag.startWidth + deltaX;
+      const nextHeight = drag.startHeight + deltaY;
+
+      if (typeof window !== "undefined") {
+        const maxWidth = Math.max(MIN_CHAT_WIDTH, window.innerWidth - 48);
+        const maxHeight = Math.max(MIN_CHAT_HEIGHT, window.innerHeight - 96);
+        setChatSize({
+          width: Math.min(Math.max(nextWidth, MIN_CHAT_WIDTH), maxWidth),
+          height: Math.min(Math.max(nextHeight, MIN_CHAT_HEIGHT), maxHeight)
+        });
+      } else {
+        setChatSize({
+          width: Math.max(nextWidth, MIN_CHAT_WIDTH),
+          height: Math.max(nextHeight, MIN_CHAT_HEIGHT)
+        });
+      }
+    };
+
+    const onEnd = () => {
+      dragRef.current = null;
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseup", onEnd);
+      window.removeEventListener("mouseleave", onEnd);
+      dragHandlersRef.current = null;
+      setIsDraggingResize(false);
+    };
+
+    dragHandlersRef.current = { onMove, onEnd };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onEnd);
+    window.addEventListener("mouseleave", onEnd);
+  }, []);
+
+  const moderationRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!state.isOpen || state.moderation !== "unprofessional") return;
+    const target = moderationRef.current;
+    if (!target) return;
+    requestAnimationFrame(() => {
+      target.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  }, [state.isOpen, state.moderation]);
+
+  const noticeText = state.notice?.trim() ?? "";
+  const hideServerNotice = noticeText
+    ? /monitored\s+for\s+quality\s+assurance/i.test(noticeText)
+    : false;
+
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+      <style jsx global>{`
+        html.contrast-high [data-user-bubble="true"] {
+          background-color: #1d4ed8 !important;
+          color: #ffffff !important;
+          border-color: #1d4ed8 !important;
+          forced-color-adjust: none !important;
+          -ms-high-contrast-adjust: none !important;
+        }
+        html.contrast-high.dark [data-user-bubble="true"] {
+          background-color: #38bdf8 !important;
+          color: #000000 !important;
+          border-color: #38bdf8 !important;
+          forced-color-adjust: none !important;
+          -ms-high-contrast-adjust: none !important;
+        }
+        html.contrast-high [data-user-bubble="true"] p,
+        html.contrast-high [data-user-bubble="true"] li,
+        html.contrast-high [data-user-bubble="true"] ul,
+        html.contrast-high [data-user-bubble="true"] ol {
+          color: inherit !important;
+          forced-color-adjust: none !important;
+          -ms-high-contrast-adjust: none !important;
+        }
+      `}</style>
       {state.isOpen ? (
         <div
-          className="flex w-[min(440px,calc(100vw-2rem))] max-h-[calc(100vh-4rem)] flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-2xl ring-1 ring-border/50 dark:border-dark-border dark:bg-dark-background dark:ring-dark-border/50 sm:max-h-[80vh]"
+          className="relative flex max-h-[calc(100vh-4rem)] flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-2xl ring-1 ring-border/50 dark:border-dark-border dark:bg-dark-background dark:ring-dark-border/50 sm:max-h-[80vh]"
           data-chat-window="true"
+          style={{
+            width: chatSize.width,
+            height: chatSize.height,
+            minWidth: MIN_CHAT_WIDTH,
+            minHeight: MIN_CHAT_HEIGHT,
+            maxWidth: "calc(100vw - 2rem)",
+            maxHeight: "calc(100vh - 4rem)"
+          }}
         >
           <div className="flex items-center gap-2.5 border-b border-border bg-surface px-4 py-2.5 dark:border-dark-border dark:bg-dark-surface">
             <div
@@ -723,8 +998,11 @@ function ChatFloatingWidget() {
             <button
               type="button"
               onClick={toggle}
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-border text-textMuted transition hover:bg-surfaceMuted hover:text-text dark:border-dark-border dark:hover:bg-dark-surfaceMuted"
+              className="flex h-9 w-9 items-center justify-center rounded-full border text-danger transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-danger dark:text-danger"
               aria-label="Close chat"
+              onMouseEnter={() => setIsCloseHover(true)}
+              onMouseLeave={() => setIsCloseHover(false)}
+              style={closeButtonStyle}
             >
               ✕
             </button>
@@ -749,15 +1027,16 @@ function ChatFloatingWidget() {
             ) : (
               <div className="flex flex-col gap-3">
                 {state.messages.map((message) => (
-                  <MessageBubble key={message.id} message={message} />
+                  <MessageBubble
+                    key={message.id}
+                    message={message}
+                    forcedColors={isForcedColors}
+                    highContrast={effectiveHighContrast}
+                    isDark={isDarkMode}
+                  />
                 ))}
               </div>
             )}
-            {state.notice ? (
-              <p className="text-xs text-textMuted dark:text-dark-textMuted">
-                {state.notice}
-              </p>
-            ) : null}
             {rateLimitActive && (
               <div className="rounded-lg border border-accent/60 bg-accent/10 px-3 py-2 text-xs text-text dark:text-dark-text">
                 <p className="text-sm font-semibold text-accent dark:text-dark-accent">
@@ -774,7 +1053,10 @@ function ChatFloatingWidget() {
               </div>
             )}
             {state.moderation === "unprofessional" ? (
-              <div className="flex flex-col gap-3 rounded-lg border border-border bg-surface px-3 py-3 text-sm dark:border-dark-border dark:bg-dark-surface">
+              <div
+                className="flex flex-col gap-3 rounded-lg border border-border bg-surface px-3 py-3 text-sm dark:border-dark-border dark:bg-dark-surface"
+                ref={moderationRef}
+              >
                 <div className="flex items-center gap-3">
                   <div className="overflow-hidden rounded-md border border-border/70 dark:border-dark-border/70">
                     <Image
@@ -819,7 +1101,7 @@ function ChatFloatingWidget() {
               </div>
             ) : null}
           </div>
-          <div className="border-t border-border bg-surface px-4 py-3 dark:border-dark-border dark:bg-dark-surface">
+          <div className="relative border-t border-border bg-surface px-4 py-3 pb-4 dark:border-dark-border dark:bg-dark-surface">
             <label className="sr-only" htmlFor="chatbot-input">
               {copy.sendLabel}
             </label>
@@ -840,10 +1122,25 @@ function ChatFloatingWidget() {
                 disabled={state.pending || Boolean(state.captchaSiteKey) || rateLimitActive}
               />
             )}
-            <div className="mt-2 flex items-center justify-between">
-              <p className="text-xs text-textMuted dark:text-dark-textMuted">
-                {copy.loggingNotice}
-              </p>
+            <div className="mt-0 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  className="group relative flex h-5 w-5 cursor-sw-resize items-center justify-center rounded border border-accent bg-surface/80 text-accent shadow-sm transition hover:bg-surface hover:text-accent contrast-more:border-accent dark:border-dark-accent dark:bg-dark-surface/80 dark:text-dark-accent dark:hover:text-dark-accent"
+                  onMouseDown={handleResizeStart}
+                  aria-label="Resize chat"
+                >
+                  <span className="pointer-events-none text-[12px] leading-none">↙</span>
+                  {!isDraggingResize ? (
+                    <span className="pointer-events-none absolute -top-8 left-0 z-10 hidden translate-y-1 whitespace-nowrap rounded bg-surface px-2 py-1 text-[11px] text-text shadow-sm ring-1 ring-border group-hover:block dark:bg-dark-surface dark:text-dark-text dark:ring-dark-border">
+                      Resize
+                    </span>
+                  ) : null}
+                </button>
+                <p className="text-left text-xs text-textMuted dark:text-dark-textMuted">
+                  {copy.loggingNotice}
+                </p>
+              </div>
               <Button
                 variant="primary"
                 onClick={() => handleSend()}
@@ -851,11 +1148,18 @@ function ChatFloatingWidget() {
                 disabled={
                   state.pending || Boolean(state.captchaSiteKey) || rateLimitActive || !input.trim()
                 }
+                className="cursor-pointer"
               >
                 {state.pending ? copy.thinkingLabel : copy.sendLabel}
               </Button>
             </div>
+            {noticeText && !hideServerNotice ? (
+              <p className="mt-2 text-left text-xs text-textMuted dark:text-dark-textMuted">
+                {noticeText}
+              </p>
+            ) : null}
           </div>
+          {/* Resize handle lives in the footer row now */}
         </div>
       ) : null}
 

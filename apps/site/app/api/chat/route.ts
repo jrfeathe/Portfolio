@@ -56,7 +56,14 @@ const SKILL_EXCLUDE_PATTERNS = [/fabrication/i, /\bbam\b/i, /\bplasma\b/i, /\bsi
 const SKILL_INCLUDE_EXPERIENCE_PATTERNS = [/rollodex/i, /\bta\b/i, /teaching/i, /mentor/i, /ser\s*321/i];
 
 function isSkillStrengthQuestion(text: string): boolean {
-  return /\b(best|top|strong(est)?|core)\s+skills?\b/i.test(text) || /\bstrengths?\b/i.test(text);
+  const patterns = [
+    /\b(best|top|strong(est)?|core)\s+skills?\b/i,
+    /\bstrengths?\b/i,
+    /\b(good|great|strong)\s+(coder|developer|engineer|programmer)\b/i,
+    /\b(good|great)\s+at\s+(coding|programming|writing\s+code|software\s+development)\b/i,
+    /\bhow\s+(good|strong)\s+(is|are)\s+(jack|he)\s+(as\s+a\s+)?(coder|developer|programmer|engineer)\b/i
+  ];
+  return patterns.some((pattern) => pattern.test(text));
 }
 
 function findAnchorByCategory(anchors: AnchorEntry[], category: AnchorCategory, locale: Locale): AnchorEntry | undefined {
@@ -559,6 +566,7 @@ async function callOpenRouter(
     "Operate as Jack's recruiter-facing assistant. Keep replies concise (2–5 sentences), " +
     "lead with a confident yes/solution, ground claims in the provided context, include links, " +
     "stay professional, avoid salary/PII, and mention the logging notice when relevant. " +
+    "For subjective asks (e.g., whether Jack is a good coder/engineer or how strong he is), cite only evidence from the provided materials (projects, tech stack, resume) or state that the materials do not say; never speculate. " +
     "Jack/He always refers to Jack Featherstone (software engineer, subject of this portfolio). Never answer about any other Jack. " +
     "Use ONLY the retrieved context snippets and the allowed-link list; if the answer is not in the provided context, say it is not available in the provided materials and point to the resume link if available. Do NOT use world knowledge, training data, or guess missing facts. " +
     "Link policy: ONLY use links from the provided allowed-link list; if nothing fits, omit the link instead of inventing one. " +
@@ -800,6 +808,56 @@ export async function POST(request: Request) {
 
   const hasOpenRouterKey = Boolean(process.env.OPENROUTER_API_KEY);
   const promptCount = sessionPromptCounts.get(sessionId) ?? 0;
+  const requireCaptcha = shouldRequireCaptcha(sessionId, promptCount);
+  const captchaSiteKey = process.env.HCAPTCHA_SITE_KEY ?? "";
+
+  if (requireCaptcha) {
+    if (!captchaSiteKey || !process.env.HCAPTCHA_SECRET_KEY) {
+      console.error("[chatbot] Captcha required but hCaptcha keys are not configured.");
+      return NextResponse.json(
+        {
+          error: "captcha_unavailable",
+          message: "Captcha is not configured. Please try again later."
+        },
+        { status: 500 }
+      );
+    }
+
+    if (!body.captchaToken) {
+      return NextResponse.json(
+        {
+          error: "captcha_required",
+          message: "Please complete the captcha to continue.",
+          captchaRequired: true,
+          captchaSiteKey,
+          promptCount
+        },
+        { status: 403 }
+      );
+    }
+
+    const validation = await verifyHCaptchaToken(body.captchaToken, ip);
+    if (!validation.success) {
+      const isProviderDown =
+        validation.reason === "captcha_network_error" || validation.reason === "captcha_verify_failed";
+
+      return NextResponse.json(
+        {
+          error: validation.reason ?? "captcha_invalid",
+          message: isProviderDown
+            ? "Captcha service is unavailable right now. Please try again later."
+            : "Captcha validation failed. Please try again.",
+          captchaRequired: !isProviderDown,
+          captchaSiteKey: isProviderDown ? undefined : captchaSiteKey,
+          promptCount
+        },
+        { status: isProviderDown ? 503 : 403 }
+      );
+    }
+
+    captchaSolved.set(sessionId, Date.now() + CAPTCHA_SOLVED_TTL_MS);
+  }
+
   const structuralBenign = isBenignStructuralPrompt(trimmedMessage);
   const availabilityQuestion = isAvailabilityQuestion(trimmedMessage);
   const skillStrengthQuestion = isSkillStrengthQuestion(trimmedMessage);
@@ -1047,55 +1105,6 @@ export async function POST(request: Request) {
     usedOpenRouter: shouldModerate
   };
 
-  const requireCaptcha = shouldRequireCaptcha(sessionId, promptCount);
-  const captchaSiteKey = process.env.HCAPTCHA_SITE_KEY ?? "";
-
-  if (requireCaptcha) {
-    if (!captchaSiteKey || !process.env.HCAPTCHA_SECRET_KEY) {
-      console.error("[chatbot] Captcha required but hCaptcha keys are not configured.");
-      return NextResponse.json(
-        {
-          error: "captcha_unavailable",
-          message: "Captcha is not configured. Please try again later."
-        },
-        { status: 500 }
-      );
-    }
-
-    if (!body.captchaToken) {
-      return NextResponse.json(
-        {
-          error: "captcha_required",
-          message: "Please complete the captcha to continue.",
-          captchaRequired: true,
-          captchaSiteKey,
-          promptCount
-        },
-        { status: 403 }
-      );
-    }
-
-    const validation = await verifyHCaptchaToken(body.captchaToken, ip);
-    if (!validation.success) {
-      const isProviderDown =
-        validation.reason === "captcha_network_error" || validation.reason === "captcha_verify_failed";
-
-      return NextResponse.json(
-        {
-          error: validation.reason ?? "captcha_invalid",
-          message: isProviderDown
-            ? "Captcha service is unavailable right now. Please try again later."
-            : "Captcha validation failed. Please try again.",
-          captchaRequired: !isProviderDown,
-          captchaSiteKey: isProviderDown ? undefined : captchaSiteKey,
-          promptCount
-        },
-        { status: isProviderDown ? 503 : 403 }
-      );
-    }
-
-    captchaSolved.set(sessionId, Date.now() + CAPTCHA_SOLVED_TTL_MS);
-  }
   const resources = await loadChatResources();
   const retrievalLimit = skillStrengthQuestion ? 10 : availabilityQuestion ? 8 : 6;
   const hits = await retrieveContext(trimmedMessage, locale, retrievalLimit);

@@ -172,6 +172,13 @@ const TECH_INTENT_PATTERNS = [
   /\btypescript\b/i,
   /\bnext\.?js\b/i,
   /\bnode\.?js\b/i,
+  /\bcode\b/i,
+  /\bcoding\b/i,
+  /\bcoder\b/i,
+  /\bprogram(mer|ming)?\b/i,
+  /\bsoftware\s+engineer\b/i,
+  /\bdeveloper\b/i,
+  /\bdevs?\b/i,
   /\b(frontend|backend|full\s*stack)\b/i,
   /\bskills?\b/i,
   /\bscope\s+of\s+skills?\b/i,
@@ -374,7 +381,7 @@ export function runLocalModeration(message: string): LocalModerationResult {
   if (glinFlagged) addSuspicion(0.25);
   if (harassmentCue) addSuspicion(0.25);
   if (personalSensitiveCue) addSuspicion(0.2);
-  if (unprofessionalCue) addSuspicion(0.15);
+  if (unprofessionalCue) addSuspicion(0.05);
 
   return {
     flagged: glinFlagged || doxxing || sexualBody || harassmentCue || selfHarmCue || personalSensitiveCue,

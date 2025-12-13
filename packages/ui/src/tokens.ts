@@ -11,6 +11,15 @@ type ModeColors = {
   accentHover: string;
   accentOn: string;
   danger: string;
+  focus: string;
+  borderSubtle?: string;
+  primaryRing?: string;
+  primaryGlow?: string;
+  contrastAccent?: string;
+  contrastOn?: string;
+  contrastOnStrong?: string;
+  attention?: string;
+  divider?: string;
 };
 
 type TypographyTokens = {
@@ -24,12 +33,15 @@ type TypographyTokens = {
   letterSpacing: Record<string, string>;
 };
 
+type ColorAliases = Record<string, string>;
+
 type DesignTokens = {
   colors: {
     light: ModeColors;
     dark: ModeColors;
     print: ModeColors;
   };
+  colorAliases?: ColorAliases;
   typography: TypographyTokens;
   spacing: Record<string, string>;
   radius: Record<string, string>;
@@ -44,5 +56,6 @@ export const typography = baseTokens.typography;
 export const spacing = baseTokens.spacing;
 export const radius = baseTokens.radius;
 export const shadows = baseTokens.shadows;
+export const colorAliases: ColorAliases = baseTokens.colorAliases || {};
 
 export type Tokens = DesignTokens;

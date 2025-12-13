@@ -277,7 +277,7 @@ export function AudioPlayerOverlay({
                     step="0.01"
                     value={volume}
                     onChange={handleVolumeChange}
-                    className="w-full accent-accent dark:accent-dark-accent contrast-more:accent-[#1d4ed8] dark:contrast-more:accent-[#38bdf8]"
+                    className="w-full accent-accent dark:accent-dark-accent contrast-more:accent-contrast-primary dark:contrast-more:accent-contrast-primary-dark"
                     aria-label="Volume"
                   />
                 </div>
@@ -400,7 +400,7 @@ export function AudioPlayerOverlay({
                 step="0.01"
                 value={volume}
                 onChange={handleVolumeChange}
-                className="w-full accent-accent dark:accent-dark-accent contrast-more:accent-[#1d4ed8] dark:contrast-more:accent-[#38bdf8]"
+                className="w-full accent-accent dark:accent-dark-accent contrast-more:accent-contrast-primary dark:contrast-more:accent-contrast-primary-dark"
                 aria-label="Volume"
               />
             </div>

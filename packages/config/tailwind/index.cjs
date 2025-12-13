@@ -4,6 +4,13 @@ const { colors, typography, spacing, radius, shadows } = tokens;
 const light = colors.light;
 const dark = colors.dark;
 const print = colors.print;
+const contrastPrimary = light.contrastAccent;
+const contrastPrimaryDark = dark.contrastAccent;
+const contrastOnPrimary = light.contrastOn;
+const contrastOnPrimaryDark = dark.contrastOn;
+const contrastOnPrimaryStrong = dark.contrastOnStrong ?? contrastOnPrimaryDark;
+const attentionSurface = light.attention;
+const printDivider = print.divider;
 
 module.exports = {
   darkMode: "class",
@@ -21,11 +28,20 @@ module.exports = {
         accentOn: light.accentOn,
         danger: light.danger,
         focus: light.focus,
+        attention: attentionSurface,
+        contrast: {
+          primary: contrastPrimary,
+          "primary-dark": contrastPrimaryDark,
+          "on-primary": contrastOnPrimary,
+          "on-primary-dark": contrastOnPrimaryDark,
+          "on-primary-strong": contrastOnPrimaryStrong
+        },
         print: {
           background: print.background,
           surface: print.surface,
           surfaceMuted: print.surfaceMuted,
           border: print.border,
+          divider: printDivider,
           text: print.text,
           textMuted: print.textMuted,
           accent: print.accent,

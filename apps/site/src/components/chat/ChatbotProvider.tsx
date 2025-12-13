@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@portfolio/ui";
+import { Button, colors as designColors } from "@portfolio/ui";
 import clsx from "clsx";
 import Image from "next/image";
 import {
@@ -41,6 +41,12 @@ declare global {
 }
 
 const HCAPTCHA_SCRIPT_SRC = "https://js.hcaptcha.com/1/api.js?render=explicit";
+const CONTRAST_PRIMARY = designColors.light.contrastAccent;
+const CONTRAST_PRIMARY_DARK = designColors.dark.contrastAccent;
+const CONTRAST_ON_PRIMARY = designColors.light.contrastOn;
+const CONTRAST_ON_PRIMARY_DARK = designColors.dark.contrastOn;
+const CONTRAST_ON_PRIMARY_STRONG = designColors.dark.contrastOnStrong ?? CONTRAST_ON_PRIMARY_DARK;
+const ATTENTION_SURFACE = designColors.light.attention;
 
 export type ChatbotCopy = {
   launcherLabel: string;
@@ -521,8 +527,8 @@ function MessageBubble({
   isDark?: boolean;
 }) {
   const isUser = message.role === "user";
-  const hcBg = isDark ? "#38bdf8" : "#1d4ed8";
-  const hcText = isDark ? "#000000" : "#ffffff";
+  const hcBg = isDark ? CONTRAST_PRIMARY_DARK : CONTRAST_PRIMARY;
+  const hcText = isDark ? CONTRAST_ON_PRIMARY_STRONG : CONTRAST_ON_PRIMARY;
   const userForcedStyle =
     (forcedColors || highContrast) && isUser
       ? {
@@ -542,7 +548,7 @@ function MessageBubble({
       className={clsx(
         "flex max-w-[85%] flex-col gap-1 rounded-2xl px-4 py-3 text-sm shadow-sm",
         isUser
-          ? "self-end bg-accent text-accentOn contrast-more:bg-[#1d4ed8] contrast-more:text-white dark:bg-dark-accent dark:text-black dark:contrast-more:bg-[#38bdf8] dark:contrast-more:text-[#020617]"
+          ? "self-end bg-accent text-accentOn contrast-more:bg-contrast-primary contrast-more:text-contrast-on-primary dark:bg-dark-accent dark:text-dark-accentOn dark:contrast-more:bg-contrast-primary-dark dark:contrast-more:text-contrast-on-primary-dark"
           : "self-start bg-surface text-text dark:bg-dark-surface dark:text-dark-text"
       )}
       style={userForcedStyle}
@@ -552,7 +558,7 @@ function MessageBubble({
         text={message.content}
         className={clsx(
           isUser
-            ? "text-accentOn contrast-more:text-white dark:text-black contrast-more:text-white"
+            ? "text-accentOn contrast-more:text-contrast-on-primary dark:text-dark-accentOn dark:contrast-more:text-contrast-on-primary-dark"
             : "text-text dark:text-dark-text"
         )}
         style={userForcedTextStyle}
@@ -761,11 +767,11 @@ function ChatFloatingWidget() {
       return { ...hoverStyle, forcedColorAdjust: "none" as const };
     }
 
-    const baseColor = "#ef4444";
+    const baseColor = ATTENTION_SURFACE;
     const hover = isCloseHover;
     return {
       backgroundColor: hover ? baseColor : "transparent",
-      color: hover ? "#ffffff" : baseColor,
+      color: hover ? CONTRAST_ON_PRIMARY : baseColor,
       borderColor: baseColor,
       boxShadow: hover ? `inset 0 0 0 999px ${baseColor}` : undefined,
       forcedColorAdjust: "none" as const
@@ -943,16 +949,16 @@ function ChatFloatingWidget() {
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
       <style jsx global>{`
         html.contrast-high [data-user-bubble="true"] {
-          background-color: #1d4ed8 !important;
-          color: #ffffff !important;
-          border-color: #1d4ed8 !important;
+          background-color: var(--contrast-primary) !important;
+          color: var(--contrast-on-primary) !important;
+          border-color: var(--contrast-primary) !important;
           forced-color-adjust: none !important;
           -ms-high-contrast-adjust: none !important;
         }
         html.contrast-high.dark [data-user-bubble="true"] {
-          background-color: #38bdf8 !important;
-          color: #000000 !important;
-          border-color: #38bdf8 !important;
+          background-color: var(--contrast-primary-dark) !important;
+          color: var(--contrast-on-primary-strong) !important;
+          border-color: var(--contrast-primary-dark) !important;
           forced-color-adjust: none !important;
           -ms-high-contrast-adjust: none !important;
         }
@@ -980,7 +986,7 @@ function ChatFloatingWidget() {
         >
           <div className="flex items-center gap-2.5 border-b border-border bg-surface px-4 py-2.5 dark:border-dark-border dark:bg-dark-surface">
             <div
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accentOn contrast-more:bg-[#1d4ed8] contrast-more:text-white contrast-more:border contrast-more:border-[#1d4ed8] dark:bg-[#22c55e] dark:text-[#020617] dark:contrast-more:bg-[#38bdf8] dark:contrast-more:text-[#020617] dark:contrast-more:border dark:contrast-more:border-[#38bdf8]"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accentOn contrast-more:bg-contrast-primary contrast-more:text-contrast-on-primary contrast-more:border contrast-more:border-contrast-primary dark:bg-dark-accent dark:text-contrast-on-primary-dark dark:contrast-more:bg-contrast-primary-dark dark:contrast-more:text-contrast-on-primary-dark dark:contrast-more:border dark:contrast-more:border-contrast-primary-dark"
               data-chat-icon="true"
             >
               <Image
@@ -1166,7 +1172,7 @@ function ChatFloatingWidget() {
       <button
         type="button"
         onClick={toggle}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accentOn shadow-lg transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 contrast-more:bg-[#1d4ed8] contrast-more:text-white contrast-more:border contrast-more:border-[#1d4ed8] dark:bg-[#22c55e] dark:text-[#020617] dark:hover:bg-[#16a34a] dark:focus-visible:ring-offset-2 dark:contrast-more:bg-[#38bdf8] dark:contrast-more:text-[#020617] dark:contrast-more:border dark:contrast-more:border-[#38bdf8]"
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accentOn shadow-lg transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 contrast-more:bg-contrast-primary contrast-more:text-contrast-on-primary contrast-more:border contrast-more:border-contrast-primary dark:bg-dark-accent dark:text-contrast-on-primary-dark dark:hover:bg-dark-accentHover dark:focus-visible:ring-offset-2 dark:contrast-more:bg-contrast-primary-dark dark:contrast-more:text-contrast-on-primary-dark dark:contrast-more:border dark:contrast-more:border-contrast-primary-dark"
         aria-label={copy.launcherLabel}
         data-chat-launcher="true"
       >

@@ -1,0 +1,107 @@
+/* Generated from packages/ui/tokens.json via scripts/generate-tokens-css.mjs. Do not edit by hand. */
+:root {
+  color-scheme: light dark;
+
+  --light-background: #f8fafc;
+  --light-surface: #ffffff;
+  --light-surfaceMuted: #e2e8f0;
+  --light-border: #cbd5f5;
+  --light-text: #0f172a;
+  --light-textMuted: #475569;
+  --light-accent: #0f766e;
+  --light-accentHover: #0d9488;
+  --light-accentOn: #ecfdf5;
+  --light-danger: #dc2626;
+  --light-focus: #2563eb;
+  --light-borderSubtle: rgba(15, 23, 42, 0.2);
+  --light-contrastAccent: #1d4ed8;
+  --light-contrastOn: #ffffff;
+  --light-attention: #ef4444;
+
+  --light-hc-background: #ffffff;
+  --light-hc-surface: #ffffff;
+  --light-hc-surfaceMuted: #f1f5f9;
+  --light-hc-border: #94a3b8;
+  --light-hc-text: #0f172a;
+  --light-hc-textMuted: #334155;
+  --light-hc-accent: #0f766e;
+  --light-hc-accentHover: #0e938a;
+  --light-hc-accentOn: #ffffff;
+  --light-hc-danger: #b91c1c;
+  --light-hc-focus: #0f4c81;
+  --light-hc-divider: #e2e8f0;
+  --light-hc-primaryRing: rgba(29, 78, 216, 0.3);
+  --light-hc-primaryGlow: rgba(29, 78, 216, 0.35);
+
+  --dark-background: #020617;
+  --dark-surface: #0f172a;
+  --dark-surfaceMuted: #1e293b;
+  --dark-border: #334155;
+  --dark-text: #e2e8f0;
+  --dark-textMuted: #94a3b8;
+  --dark-accent: #22c55e;
+  --dark-accentHover: #16a34a;
+  --dark-accentOn: #052e16;
+  --dark-danger: #f87171;
+  --dark-focus: #38bdf8;
+  --dark-borderSubtle: rgba(248, 250, 252, 0.2);
+  --dark-primaryRing: rgba(56, 189, 248, 0.35);
+  --dark-primaryGlow: rgba(56, 189, 248, 0.35);
+  --dark-contrastAccent: #38bdf8;
+  --dark-contrastOn: #020617;
+  --dark-contrastOnStrong: #000000;
+  --dark-attention: #ef4444;
+
+  --dark-hc-background: #020617;
+  --dark-hc-surface: #0f172a;
+  --dark-hc-surfaceMuted: #1e293b;
+  --dark-hc-border: #334155;
+  --dark-hc-text: #e2e8f0;
+  --dark-hc-textMuted: #94a3b8;
+  --dark-hc-accent: #22c55e;
+  --dark-hc-accentHover: #16a34a;
+  --dark-hc-accentOn: #052e16;
+  --dark-hc-danger: #f87171;
+  --dark-hc-focus: #38bdf8;
+  --dark-hc-borderSubtle: rgba(248, 250, 252, 0.2);
+  --dark-hc-primaryRing: rgba(56, 189, 248, 0.35);
+  --dark-hc-primaryGlow: rgba(56, 189, 248, 0.35);
+  --dark-hc-contrastAccent: #38bdf8;
+  --dark-hc-contrastOn: #020617;
+  --dark-hc-contrastOnStrong: #000000;
+  --dark-hc-attention: #ef4444;
+
+  /* Aliases for globals.css overrides */
+  --light-normal-primary: var(--light-accent);
+  --light-normal-secondary: var(--light-text);
+  --light-normal-surface: var(--light-surface);
+  --light-border-subtle: var(--light-borderSubtle);
+  --light-hc-primary: var(--light-focus);
+  --light-hc-primary-strong: var(--light-focus);
+  --light-hc-primary-stronger: var(--light-focus);
+  --light-hc-secondary: var(--light-hc-text);
+  --light-hc-muted-surface: var(--light-hc-surfaceMuted);
+  --light-hc-ink-strong: var(--light-hc-text);
+  --light-hc-primary-ring: var(--light-hc-primaryRing);
+  --light-hc-primary-glow: var(--light-hc-primaryGlow);
+  --dark-normal-primary: var(--dark-accent);
+  --dark-normal-secondary: var(--dark-text);
+  --dark-normal-surface: var(--dark-surface);
+  --dark-normal-muted-surface: var(--dark-surfaceMuted);
+  --dark-border-subtle: var(--dark-borderSubtle);
+  --dark-hc-primary: var(--dark-focus);
+  --dark-hc-primary-strong: var(--dark-focus);
+  --dark-hc-secondary: var(--dark-text);
+  --dark-hc-on-primary: var(--dark-contrastOnStrong);
+  --dark-hc-muted-surface: var(--dark-surfaceMuted);
+  --dark-hc-deep-surface: var(--dark-background);
+  --dark-hc-primary-ring: var(--dark-hc-primaryRing);
+  --dark-hc-primary-glow: var(--dark-hc-primaryGlow);
+  --contrast-primary: var(--light-contrastAccent);
+  --contrast-primary-dark: var(--dark-contrastAccent);
+  --contrast-on-primary: var(--light-contrastOn);
+  --contrast-on-primary-dark: var(--dark-contrastOn);
+  --contrast-on-primary-strong: var(--dark-contrastOnStrong);
+  --attention-surface: var(--light-attention);
+  --print-divider: var(--light-hc-divider);
+}

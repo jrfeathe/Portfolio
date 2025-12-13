@@ -55,8 +55,9 @@
 - README updated with the regeneration command (`node scripts/generate-tokens-css.mjs`) to keep tokens CSS in sync with JSON changes.
 - Moved remaining RGBA and contrast colors out of aliases into the core palettes (light/dark/print) so Tailwind and app code read directly from tokens instead of literals.
 - Next change candidates: drop unused `light/dark-normal-*` aliases; retarget `globals.css` to palette vars (`--light-hc-*`, `--light-borderSubtle`, etc.) and remove matching aliases; decide whether to keep convenience helpers (`contrast-*`, `attention-surface`, `print-divider`) or swap call sites to palette vars.
+- Removed contrast aliases; only `attention-surface` and `print-divider` remain as convenience hooks.
 
-## Open questions before the next cleanup
+## Answered questions for commit "Task F1.5: Centralize color aliases to main palette"
 - Are there any external consumers (outside this repo) relying on the `colorAliases` shape, or can we slim it down freely?
   - Not at all. The repo is standalone.
 - For contrast helpers, do we want to keep the `contrast-*` alias block as a stable API for `contrast-more`/forced-colors classes, or is using palette vars acceptable?
@@ -65,3 +66,43 @@
   - Let's leave this one as attention-surface.
 - Is `print-divider` intended to stay as a semantic hook for print borders, or can print CSS read `--light-hc-divider` directly?
   - print.css can read light-hc-divider directly.
+
+## Answered questions for cleaning up the four modes
+- Can we redefine high-contrast to use dedicated `*-hc-accent` (and related) per mode and drop `contrastAccent/contrastOn` from normal palettes?
+  - Yes we need to do this. Downstream too; we need to ensure all references point to *-hc-accent correctly.
+- Is it acceptable to repurpose `--dark-hc-accent` as the single high-contrast primary (currently `dark-hc-focus/contrastAccent` share the same color) and update downstream selectors accordingly?
+  - Yes we need to do this. Focus colors across all four modes are simply the high contrast accent colors. Our palette is a mess right now. For example:
+    - I am pretty sure that the following section of light is only used by light-hc:
+      -   --light-focus: #2563eb;
+          --light-borderSubtle: rgba(15, 23, 42, 0.2);
+          --light-contrastAccent: #1d4ed8;
+          --light-contrastOn: #ffffff;
+    - I am pretty sure that the following section of light-hc is unused:
+      -   --light-hc-accent: #0f766e;
+          --light-hc-accentHover: #0e938a;
+    - I am pretty sure that the following section of dark is only used by dark-hc:
+      -   --dark-focus: #38bdf8;
+          --dark-borderSubtle: rgba(248, 250, 252, 0.2);
+          --dark-primaryRing: rgba(56, 189, 248, 0.35);
+          --dark-primaryGlow: rgba(56, 189, 248, 0.35);
+          --dark-contrastAccent: #38bdf8;
+          --dark-contrastOn: #020617;
+          --dark-contrastOnStrong: #000000;
+    - I am pretty sure that the following section of dark-hc is unused:
+      -   --dark-hc-accent: #22c55e;
+          --dark-hc-accentHover: #16a34a;
+          --dark-hc-accentOn: #052e16;
+- Should `focus` stay per-mode (for non-HC) while HC modes get their own `hcFocus` token, or do we unify on the HC accent for outlines in HC?
+  - We do not need a focus mode for any mode. This is an artifact of the creation of high contrast modes. Current focus colors refer to HC mode accents.
+- Any external consumers depending on the current `contrastAccent` keys in the normal light/dark palettes (e.g., docs, tooling), or can we move HC-only values under the `*-hc` blocks?
+  - Not likely. We are only concerned about the tokens.json -> tokens.css -> globals.css -> {components} pipeline right now.
+
+## Completed steps for the four mode cleanup. Commit: "Task F1.5: Simplify the four themes"
+1) Add explicit `light-hc` and `dark-hc` palettes in `packages/ui/tokens.json` with the true HC accent/focus/on values; move HC-only fields (current focus/contrast*, primaryRing/Glow) into those HC palettes.
+2) Trim base `light`/`dark` palettes to normal-mode colors only (drop `contrastAccent/contrastOn` and other HC-only focus values).
+3) Update generator/types/Tailwind configs to read the new HC palettes for focus/accents instead of the base palettes.
+4) Rewire consumers (globals, chat, audio, contrast-more utilities) to the `*-hc-*` vars; remove lingering references to the old contrast fields.
+5) Keep `attention-surface` and **retain** `print-divider` (skipping removal); still consider pointing print CSS directly to `--light-hc-divider` later if desired.
+6) Sweep for removed fields (`contrastAccent`, `contrastOn`, old focus vars) to ensure everything points at the new palette structure.
+
+

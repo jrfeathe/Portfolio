@@ -41,11 +41,11 @@ declare global {
 }
 
 const HCAPTCHA_SCRIPT_SRC = "https://js.hcaptcha.com/1/api.js?render=explicit";
-const CONTRAST_PRIMARY = designColors.light.contrastAccent;
-const CONTRAST_PRIMARY_DARK = designColors.dark.contrastAccent;
-const CONTRAST_ON_PRIMARY = designColors.light.contrastOn;
-const CONTRAST_ON_PRIMARY_DARK = designColors.dark.contrastOn;
-const CONTRAST_ON_PRIMARY_STRONG = designColors.dark.contrastOnStrong ?? CONTRAST_ON_PRIMARY_DARK;
+const CONTRAST_PRIMARY = designColors["light-hc"]?.accent;
+const CONTRAST_PRIMARY_DARK = designColors["dark-hc"]?.accent;
+const CONTRAST_ON_PRIMARY = designColors["light-hc"]?.accentOn;
+const CONTRAST_ON_PRIMARY_DARK = designColors["dark-hc"]?.accentOn;
+const CONTRAST_ON_PRIMARY_STRONG = designColors["dark-hc"]?.accentOn ?? CONTRAST_ON_PRIMARY_DARK;
 const ATTENTION_SURFACE = designColors.light.attention;
 
 export type ChatbotCopy = {
@@ -548,7 +548,7 @@ function MessageBubble({
         className={clsx(
           "flex max-w-[85%] flex-col gap-1 rounded-2xl px-4 py-3 text-sm shadow-sm",
           isUser
-            ? "self-end bg-accent text-accentOn contrast-more:bg-[var(--light-contrastAccent)] contrast-more:text-[var(--light-contrastOn)] dark:bg-dark-accent dark:text-dark-accentOn dark:contrast-more:bg-[var(--dark-contrastAccent)] dark:contrast-more:text-[var(--dark-contrastOn)]"
+          ? "self-end bg-accent text-accentOn contrast-more:bg-[var(--light-hc-accent)] contrast-more:text-[var(--light-hc-accentOn)] dark:bg-dark-accent dark:text-dark-accentOn dark:contrast-more:bg-[var(--dark-hc-accent)] dark:contrast-more:text-[var(--dark-hc-accentOn)]"
             : "self-start bg-surface text-text dark:bg-dark-surface dark:text-dark-text"
         )}
       style={userForcedStyle}
@@ -558,7 +558,7 @@ function MessageBubble({
         text={message.content}
         className={clsx(
           isUser
-            ? "text-accentOn contrast-more:text-[var(--light-contrastOn)] dark:text-dark-accentOn dark:contrast-more:text-[var(--dark-contrastOn)]"
+            ? "text-accentOn contrast-more:text-[var(--light-hc-accentOn)] dark:text-dark-accentOn dark:contrast-more:text-[var(--dark-hc-accentOn)]"
             : "text-text dark:text-dark-text"
         )}
         style={userForcedTextStyle}
@@ -949,16 +949,16 @@ function ChatFloatingWidget() {
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
       <style jsx global>{`
         html.contrast-high [data-user-bubble="true"] {
-          background-color: var(--light-contrastAccent) !important;
-          color: var(--light-contrastOn) !important;
-          border-color: var(--light-contrastAccent) !important;
+          background-color: var(--light-hc-accent) !important;
+          color: var(--light-hc-accentOn) !important;
+          border-color: var(--light-hc-accent) !important;
           forced-color-adjust: none !important;
           -ms-high-contrast-adjust: none !important;
         }
         html.contrast-high.dark [data-user-bubble="true"] {
-          background-color: var(--dark-contrastAccent) !important;
-          color: var(--dark-contrastOnStrong) !important;
-          border-color: var(--dark-contrastAccent) !important;
+          background-color: var(--dark-hc-accent) !important;
+          color: var(--dark-hc-accentOn) !important;
+          border-color: var(--dark-hc-accent) !important;
           forced-color-adjust: none !important;
           -ms-high-contrast-adjust: none !important;
         }
@@ -986,7 +986,7 @@ function ChatFloatingWidget() {
         >
           <div className="flex items-center gap-2.5 border-b border-border bg-surface px-4 py-2.5 dark:border-dark-border dark:bg-dark-surface">
             <div
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accentOn contrast-more:bg-[var(--light-contrastAccent)] contrast-more:text-[var(--light-contrastOn)] contrast-more:border contrast-more:border-[var(--light-contrastAccent)] dark:bg-dark-accent dark:text-contrast-on-primary-dark dark:contrast-more:bg-[var(--dark-contrastAccent)] dark:contrast-more:text-[var(--dark-contrastOn)] dark:contrast-more:border dark:contrast-more:border-[var(--dark-contrastAccent)]"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accentOn contrast-more:bg-[var(--light-hc-accent)] contrast-more:text-[var(--light-hc-accentOn)] contrast-more:border contrast-more:border-[var(--light-hc-accent)] dark:bg-dark-accent dark:text-contrast-on-primary-dark dark:contrast-more:bg-[var(--dark-hc-accent)] dark:contrast-more:text-[var(--dark-hc-accentOn)] dark:contrast-more:border dark:contrast-more:border-[var(--dark-hc-accent)]"
               data-chat-icon="true"
             >
               <Image
@@ -1172,7 +1172,7 @@ function ChatFloatingWidget() {
       <button
         type="button"
         onClick={toggle}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accentOn shadow-lg transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 contrast-more:bg-[var(--light-contrastAccent)] contrast-more:text-[var(--light-contrastOn)] contrast-more:border contrast-more:border-[var(--light-contrastAccent)] dark:bg-dark-accent dark:text-contrast-on-primary-dark dark:hover:bg-dark-accentHover dark:focus-visible:ring-offset-2 dark:contrast-more:bg-[var(--dark-contrastAccent)] dark:contrast-more:text-[var(--dark-contrastOn)] dark:contrast-more:border dark:contrast-more:border-[var(--dark-contrastAccent)]"
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accentOn shadow-lg transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 contrast-more:bg-[var(--light-hc-accent)] contrast-more:text-[var(--light-hc-accentOn)] contrast-more:border contrast-more:border-[var(--light-hc-accent)] dark:bg-dark-accent dark:text-contrast-on-primary-dark dark:hover:bg-dark-accentHover dark:focus-visible:ring-offset-2 dark:contrast-more:bg-[var(--dark-hc-accent)] dark:contrast-more:text-[var(--dark-hc-accentOn)] dark:contrast-more:border dark:contrast-more:border-[var(--dark-hc-accent)]"
         aria-label={copy.launcherLabel}
         data-chat-launcher="true"
       >

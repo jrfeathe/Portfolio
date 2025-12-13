@@ -14,9 +14,10 @@ const colorAliases = raw.colorAliases || {};
 
 const sections = [
   ["light", colors.light],
-  ["light-hc", colors.print || {}],
+  ["light-hc", colors["light-hc"] || {}],
   ["dark", colors.dark],
-  ["dark-hc", colors.dark]
+  ["dark-hc", colors["dark-hc"] || {}],
+  ["print", colors.print]
 ];
 
 const lines = [

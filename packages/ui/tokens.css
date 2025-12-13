@@ -12,10 +12,7 @@
   --light-accentHover: #0d9488;
   --light-accentOn: #ecfdf5;
   --light-danger: #dc2626;
-  --light-focus: #2563eb;
   --light-borderSubtle: rgba(15, 23, 42, 0.2);
-  --light-contrastAccent: #1d4ed8;
-  --light-contrastOn: #ffffff;
   --light-attention: #ef4444;
 
   --light-hc-background: #ffffff;
@@ -24,12 +21,10 @@
   --light-hc-border: #94a3b8;
   --light-hc-text: #0f172a;
   --light-hc-textMuted: #334155;
-  --light-hc-accent: #0f766e;
-  --light-hc-accentHover: #0e938a;
+  --light-hc-accent: #1d4ed8;
+  --light-hc-accentHover: #1d4ed8;
   --light-hc-accentOn: #ffffff;
   --light-hc-danger: #b91c1c;
-  --light-hc-focus: #0f4c81;
-  --light-hc-divider: #e2e8f0;
   --light-hc-primaryRing: rgba(29, 78, 216, 0.3);
   --light-hc-primaryGlow: rgba(29, 78, 216, 0.35);
 
@@ -43,13 +38,7 @@
   --dark-accentHover: #16a34a;
   --dark-accentOn: #052e16;
   --dark-danger: #f87171;
-  --dark-focus: #38bdf8;
   --dark-borderSubtle: rgba(248, 250, 252, 0.2);
-  --dark-primaryRing: rgba(56, 189, 248, 0.35);
-  --dark-primaryGlow: rgba(56, 189, 248, 0.35);
-  --dark-contrastAccent: #38bdf8;
-  --dark-contrastOn: #020617;
-  --dark-contrastOnStrong: #000000;
   --dark-attention: #ef4444;
 
   --dark-hc-background: #020617;
@@ -58,20 +47,29 @@
   --dark-hc-border: #334155;
   --dark-hc-text: #e2e8f0;
   --dark-hc-textMuted: #94a3b8;
-  --dark-hc-accent: #22c55e;
-  --dark-hc-accentHover: #16a34a;
-  --dark-hc-accentOn: #052e16;
+  --dark-hc-accent: #38bdf8;
+  --dark-hc-accentHover: #38bdf8;
+  --dark-hc-accentOn: #000000;
   --dark-hc-danger: #f87171;
-  --dark-hc-focus: #38bdf8;
   --dark-hc-borderSubtle: rgba(248, 250, 252, 0.2);
   --dark-hc-primaryRing: rgba(56, 189, 248, 0.35);
   --dark-hc-primaryGlow: rgba(56, 189, 248, 0.35);
-  --dark-hc-contrastAccent: #38bdf8;
-  --dark-hc-contrastOn: #020617;
-  --dark-hc-contrastOnStrong: #000000;
-  --dark-hc-attention: #ef4444;
+
+  --print-background: #ffffff;
+  --print-surface: #ffffff;
+  --print-surfaceMuted: #f1f5f9;
+  --print-border: #94a3b8;
+  --print-text: #0f172a;
+  --print-textMuted: #334155;
+  --print-accent: #0f766e;
+  --print-accentHover: #0e938a;
+  --print-accentOn: #ffffff;
+  --print-danger: #b91c1c;
+  --print-focus: #0f4c81;
+  --print-divider: #e2e8f0;
+  --print-primaryRing: rgba(29, 78, 216, 0.3);
+  --print-primaryGlow: rgba(29, 78, 216, 0.35);
 
   /* Aliases for globals.css overrides */
   --attention-surface: var(--light-attention);
-  --print-divider: var(--light-hc-divider);
 }

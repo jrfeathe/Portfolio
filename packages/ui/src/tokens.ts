@@ -11,13 +11,10 @@ type ModeColors = {
   accentHover: string;
   accentOn: string;
   danger: string;
-  focus: string;
+  focus?: string;
   borderSubtle?: string;
   primaryRing?: string;
   primaryGlow?: string;
-  contrastAccent?: string;
-  contrastOn?: string;
-  contrastOnStrong?: string;
   attention?: string;
   divider?: string;
 };
@@ -40,6 +37,8 @@ type DesignTokens = {
     light: ModeColors;
     dark: ModeColors;
     print: ModeColors;
+    "light-hc"?: ModeColors;
+    "dark-hc"?: ModeColors;
   };
   colorAliases?: ColorAliases;
   typography: TypographyTokens;

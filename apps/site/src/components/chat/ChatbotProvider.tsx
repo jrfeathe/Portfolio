@@ -545,12 +545,12 @@ function MessageBubble({
       : undefined;
   return (
     <div
-      className={clsx(
-        "flex max-w-[85%] flex-col gap-1 rounded-2xl px-4 py-3 text-sm shadow-sm",
-        isUser
-          ? "self-end bg-accent text-accentOn contrast-more:bg-contrast-primary contrast-more:text-contrast-on-primary dark:bg-dark-accent dark:text-dark-accentOn dark:contrast-more:bg-contrast-primary-dark dark:contrast-more:text-contrast-on-primary-dark"
-          : "self-start bg-surface text-text dark:bg-dark-surface dark:text-dark-text"
-      )}
+        className={clsx(
+          "flex max-w-[85%] flex-col gap-1 rounded-2xl px-4 py-3 text-sm shadow-sm",
+          isUser
+            ? "self-end bg-accent text-accentOn contrast-more:bg-[var(--light-contrastAccent)] contrast-more:text-[var(--light-contrastOn)] dark:bg-dark-accent dark:text-dark-accentOn dark:contrast-more:bg-[var(--dark-contrastAccent)] dark:contrast-more:text-[var(--dark-contrastOn)]"
+            : "self-start bg-surface text-text dark:bg-dark-surface dark:text-dark-text"
+        )}
       style={userForcedStyle}
       data-user-bubble={isUser ? "true" : undefined}
     >
@@ -558,7 +558,7 @@ function MessageBubble({
         text={message.content}
         className={clsx(
           isUser
-            ? "text-accentOn contrast-more:text-contrast-on-primary dark:text-dark-accentOn dark:contrast-more:text-contrast-on-primary-dark"
+            ? "text-accentOn contrast-more:text-[var(--light-contrastOn)] dark:text-dark-accentOn dark:contrast-more:text-[var(--dark-contrastOn)]"
             : "text-text dark:text-dark-text"
         )}
         style={userForcedTextStyle}
@@ -949,16 +949,16 @@ function ChatFloatingWidget() {
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
       <style jsx global>{`
         html.contrast-high [data-user-bubble="true"] {
-          background-color: var(--contrast-primary) !important;
-          color: var(--contrast-on-primary) !important;
-          border-color: var(--contrast-primary) !important;
+          background-color: var(--light-contrastAccent) !important;
+          color: var(--light-contrastOn) !important;
+          border-color: var(--light-contrastAccent) !important;
           forced-color-adjust: none !important;
           -ms-high-contrast-adjust: none !important;
         }
         html.contrast-high.dark [data-user-bubble="true"] {
-          background-color: var(--contrast-primary-dark) !important;
-          color: var(--contrast-on-primary-strong) !important;
-          border-color: var(--contrast-primary-dark) !important;
+          background-color: var(--dark-contrastAccent) !important;
+          color: var(--dark-contrastOnStrong) !important;
+          border-color: var(--dark-contrastAccent) !important;
           forced-color-adjust: none !important;
           -ms-high-contrast-adjust: none !important;
         }
@@ -986,7 +986,7 @@ function ChatFloatingWidget() {
         >
           <div className="flex items-center gap-2.5 border-b border-border bg-surface px-4 py-2.5 dark:border-dark-border dark:bg-dark-surface">
             <div
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accentOn contrast-more:bg-contrast-primary contrast-more:text-contrast-on-primary contrast-more:border contrast-more:border-contrast-primary dark:bg-dark-accent dark:text-contrast-on-primary-dark dark:contrast-more:bg-contrast-primary-dark dark:contrast-more:text-contrast-on-primary-dark dark:contrast-more:border dark:contrast-more:border-contrast-primary-dark"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-accent text-accentOn contrast-more:bg-[var(--light-contrastAccent)] contrast-more:text-[var(--light-contrastOn)] contrast-more:border contrast-more:border-[var(--light-contrastAccent)] dark:bg-dark-accent dark:text-contrast-on-primary-dark dark:contrast-more:bg-[var(--dark-contrastAccent)] dark:contrast-more:text-[var(--dark-contrastOn)] dark:contrast-more:border dark:contrast-more:border-[var(--dark-contrastAccent)]"
               data-chat-icon="true"
             >
               <Image
@@ -1172,7 +1172,7 @@ function ChatFloatingWidget() {
       <button
         type="button"
         onClick={toggle}
-        className="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accentOn shadow-lg transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 contrast-more:bg-contrast-primary contrast-more:text-contrast-on-primary contrast-more:border contrast-more:border-contrast-primary dark:bg-dark-accent dark:text-contrast-on-primary-dark dark:hover:bg-dark-accentHover dark:focus-visible:ring-offset-2 dark:contrast-more:bg-contrast-primary-dark dark:contrast-more:text-contrast-on-primary-dark dark:contrast-more:border dark:contrast-more:border-contrast-primary-dark"
+        className="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accentOn shadow-lg transition hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 contrast-more:bg-[var(--light-contrastAccent)] contrast-more:text-[var(--light-contrastOn)] contrast-more:border contrast-more:border-[var(--light-contrastAccent)] dark:bg-dark-accent dark:text-contrast-on-primary-dark dark:hover:bg-dark-accentHover dark:focus-visible:ring-offset-2 dark:contrast-more:bg-[var(--dark-contrastAccent)] dark:contrast-more:text-[var(--dark-contrastOn)] dark:contrast-more:border dark:contrast-more:border-[var(--dark-contrastAccent)]"
         aria-label={copy.launcherLabel}
         data-chat-launcher="true"
       >

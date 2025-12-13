@@ -43,19 +43,19 @@ body {
   @media (prefers-contrast: more) {
     :is(button, a, input, select, textarea):focus-visible {
       box-shadow: none !important;
-      outline: 3px solid var(--light-hc-primary) !important;
+      outline: 3px solid var(--light-focus) !important;
       outline-offset: 4px;
     }
 
     .dark :is(button, a, input, select, textarea):focus-visible {
-      outline-color: var(--dark-hc-primary) !important;
+      outline-color: var(--dark-focus) !important;
     }
   }
 
   .contrast-high :is(button, a, input, select, textarea) {
-    border-color: var(--light-hc-primary) !important;
-    color: var(--contrast-override-text, var(--light-normal-secondary)) !important;
-    background-color: var(--contrast-override-bg, var(--light-normal-surface)) !important;
+    border-color: var(--light-focus) !important;
+    color: var(--contrast-override-text, var(--light-text)) !important;
+    background-color: var(--contrast-override-bg, var(--light-surface)) !important;
   }
 
   .contrast-high [data-tech-stack-item] {
@@ -65,9 +65,9 @@ body {
   }
 
   .contrast-high.dark :is(button, a, input, select, textarea) {
-    border-color: var(--dark-hc-primary) !important;
-    color: var(--dark-hc-secondary) !important;
-    background-color: var(--dark-normal-surface) !important;
+    border-color: var(--dark-focus) !important;
+    color: var(--dark-text) !important;
+    background-color: var(--dark-surface) !important;
   }
 
   .contrast-high.dark [data-tech-stack-item] {
@@ -77,25 +77,25 @@ body {
   }
 
   .contrast-high [data-tech-stack-icon] {
-    border: 3px solid var(--light-hc-primary-strong) !important;
-    background-color: var(--light-normal-surface) !important;
-    box-shadow: 0 0 0 3px var(--light-hc-primary-ring) !important;
+    border: 3px solid var(--light-focus) !important;
+    background-color: var(--light-surface) !important;
+    box-shadow: 0 0 0 3px var(--light-hc-primaryRing) !important;
   }
 
   .contrast-high.dark [data-tech-stack-icon] {
-    border: 3px solid var(--dark-hc-primary) !important;
-    background-color: var(--dark-normal-surface) !important;
-    box-shadow: 0 0 0 3px var(--dark-hc-primary-ring) !important;
+    border: 3px solid var(--dark-focus) !important;
+    background-color: var(--dark-surface) !important;
+    box-shadow: 0 0 0 3px var(--dark-hc-primaryRing) !important;
   }
 
   .contrast-high [data-chat-send-button="true"] {
-    --contrast-override-bg: var(--light-hc-primary) !important;
-    --contrast-override-text: var(--light-normal-surface) !important;
-    background-color: var(--light-hc-primary) !important;
-    color: var(--light-normal-surface) !important;
-    -webkit-text-fill-color: var(--light-normal-surface) !important;
+    --contrast-override-bg: var(--light-focus) !important;
+    --contrast-override-text: var(--light-surface) !important;
+    background-color: var(--light-focus) !important;
+    color: var(--light-surface) !important;
+    -webkit-text-fill-color: var(--light-surface) !important;
     /* Ensure nested elements inherit the forced white text */
-    border-color: var(--light-hc-primary-strong) !important;
+    border-color: var(--light-focus) !important;
   }
 
   .contrast-high [data-chat-send-button="true"] * {
@@ -103,66 +103,66 @@ body {
   }
 
   .contrast-high [data-chat-send-button="true"]:hover {
-    --contrast-override-bg: var(--light-hc-primary-stronger) !important;
-    background-color: var(--light-hc-primary-stronger) !important;
-    border-color: var(--light-hc-primary-stronger) !important;
+    --contrast-override-bg: var(--light-focus) !important;
+    background-color: var(--light-focus) !important;
+    border-color: var(--light-focus) !important;
   }
 
   .contrast-high.dark [data-chat-send-button="true"] {
-    --contrast-override-bg: var(--dark-hc-primary) !important;
-    --contrast-override-text: var(--dark-hc-on-primary) !important;
-    background-color: var(--dark-hc-primary) !important;
-    color: var(--dark-hc-on-primary) !important;
-    -webkit-text-fill-color: var(--dark-hc-on-primary) !important;
-    border-color: var(--dark-hc-primary) !important;
+    --contrast-override-bg: var(--dark-focus) !important;
+    --contrast-override-text: var(--dark-contrastOnStrong) !important;
+    background-color: var(--dark-focus) !important;
+    color: var(--dark-contrastOnStrong) !important;
+    -webkit-text-fill-color: var(--dark-contrastOnStrong) !important;
+    border-color: var(--dark-focus) !important;
   }
 
   .contrast-high.dark [data-chat-send-button="true"]:hover {
-    --contrast-override-bg: var(--dark-hc-primary-strong) !important;
-    background-color: var(--dark-hc-primary-strong) !important;
-    border-color: var(--dark-hc-primary-strong) !important;
+    --contrast-override-bg: var(--dark-focus) !important;
+    background-color: var(--dark-focus) !important;
+    border-color: var(--dark-focus) !important;
   }
 
   .contrast-high [data-chat-window="true"] {
-    border: 1px solid var(--light-hc-ink-strong) !important;
-    outline: 1px solid var(--light-hc-ink-strong) !important;
+    border: 1px solid var(--light-hc-text) !important;
+    outline: 1px solid var(--light-hc-text) !important;
     outline-offset: 0px !important;
     box-shadow: none !important;
-    --tw-ring-color: var(--light-hc-ink-strong) !important;
+    --tw-ring-color: var(--light-hc-text) !important;
     --tw-ring-offset-width: 0px !important;
-    --tw-ring-shadow: 0 0 0 0 var(--light-hc-ink-strong) !important;
-    --tw-shadow: 0 0 0 0 var(--light-hc-ink-strong) !important;
+    --tw-ring-shadow: 0 0 0 0 var(--light-hc-text) !important;
+    --tw-shadow: 0 0 0 0 var(--light-hc-text) !important;
   }
 
   .contrast-high.dark [data-chat-window="true"] {
-    border: 1px solid var(--dark-hc-secondary) !important;
-    outline: 1px solid var(--dark-hc-secondary) !important;
+    border: 1px solid var(--dark-text) !important;
+    outline: 1px solid var(--dark-text) !important;
     outline-offset: 0px !important;
     box-shadow: none !important;
-    --tw-ring-color: var(--dark-hc-secondary) !important;
+    --tw-ring-color: var(--dark-text) !important;
     --tw-ring-offset-width: 0px !important;
-    --tw-ring-shadow: 0 0 0 0 var(--dark-hc-secondary) !important;
-    --tw-shadow: 0 0 0 0 var(--dark-hc-secondary) !important;
+    --tw-ring-shadow: 0 0 0 0 var(--dark-text) !important;
+    --tw-shadow: 0 0 0 0 var(--dark-text) !important;
   }
 
   .contrast-high [data-chat-icon="true"] {
-    background-color: var(--light-hc-primary-strong) !important;
-    color: var(--light-normal-surface) !important;
-    border: 1px solid var(--light-hc-primary-strong) !important;
-    -webkit-text-fill-color: var(--light-normal-surface) !important;
+    background-color: var(--light-focus) !important;
+    color: var(--light-surface) !important;
+    border: 1px solid var(--light-focus) !important;
+    -webkit-text-fill-color: var(--light-surface) !important;
   }
 
   .contrast-high.dark [data-chat-icon="true"] {
-    background-color: var(--dark-hc-primary) !important;
-    color: var(--dark-hc-on-primary) !important;
-    border: 1px solid var(--dark-hc-primary) !important;
-    -webkit-text-fill-color: var(--dark-hc-on-primary) !important;
+    background-color: var(--dark-focus) !important;
+    color: var(--dark-contrastOnStrong) !important;
+    border: 1px solid var(--dark-focus) !important;
+    -webkit-text-fill-color: var(--dark-contrastOnStrong) !important;
   }
 
   .contrast-high [data-meeting-slot="true"] {
-    border: 2px solid var(--light-hc-primary-strong) !important;
-    background-color: var(--light-normal-surface) !important;
-    color: var(--light-normal-secondary) !important;
+    border: 2px solid var(--light-focus) !important;
+    background-color: var(--light-surface) !important;
+    color: var(--light-text) !important;
   }
 
   .contrast-high [data-meeting-slot="true"] :is(h2, p) {
@@ -170,9 +170,9 @@ body {
   }
 
   .contrast-high.dark [data-meeting-slot="true"] {
-    border: 2px solid var(--dark-hc-primary) !important;
-    background-color: var(--dark-normal-muted-surface) !important;
-    color: var(--dark-hc-secondary) !important;
+    border: 2px solid var(--dark-focus) !important;
+    background-color: var(--dark-surfaceMuted) !important;
+    color: var(--dark-text) !important;
   }
 
   [data-tech-stack-icon="stellaris-mods"] img {
@@ -180,71 +180,71 @@ body {
   }
 
   .contrast-high .shell-anchor-nav [aria-current="location"] {
-    background-color: var(--light-hc-primary) !important;
-    color: var(--light-normal-surface) !important;
+    background-color: var(--light-focus) !important;
+    color: var(--light-surface) !important;
   }
 
   .contrast-high.dark .shell-anchor-nav [aria-current="location"] {
-    background-color: var(--dark-hc-primary) !important;
-    color: var(--dark-normal-surface) !important;
+    background-color: var(--dark-focus) !important;
+    color: var(--dark-surface) !important;
   }
 
   .contrast-high [data-segmented="true"] {
-    border: 2px solid var(--light-hc-primary-strong) !important;
-    background-color: var(--light-normal-surface) !important;
+    border: 2px solid var(--light-focus) !important;
+    background-color: var(--light-surface) !important;
   }
 
   .contrast-high.dark [data-segmented="true"] {
-    border: 2px solid var(--dark-hc-primary) !important;
-    background-color: var(--dark-normal-surface) !important;
+    border: 2px solid var(--dark-focus) !important;
+    background-color: var(--dark-surface) !important;
   }
 
   .contrast-high [data-segmented="true"] button {
-    border: 2px solid var(--light-hc-primary-strong) !important;
-    background-color: var(--light-normal-surface) !important;
-    color: var(--light-normal-secondary) !important;
+    border: 2px solid var(--light-focus) !important;
+    background-color: var(--light-surface) !important;
+    color: var(--light-text) !important;
   }
 
   .contrast-high.dark [data-segmented="true"] button {
-    border: 2px solid var(--dark-hc-primary) !important;
-    background-color: var(--dark-normal-surface) !important;
-    color: var(--dark-hc-secondary) !important;
+    border: 2px solid var(--dark-focus) !important;
+    background-color: var(--dark-surface) !important;
+    color: var(--dark-text) !important;
   }
 
   .contrast-high [data-segmented="true"] button[aria-checked="true"] {
-    background-color: var(--light-hc-primary-strong) !important;
-    color: var(--light-normal-surface) !important;
+    background-color: var(--light-focus) !important;
+    color: var(--light-surface) !important;
   }
 
   .contrast-high [data-segmented="true"] button[aria-checked="true"] * {
-    color: var(--light-normal-surface) !important;
+    color: var(--light-surface) !important;
   }
 
   .contrast-high.dark [data-segmented="true"] button[aria-checked="true"] {
-    background-color: var(--dark-hc-primary) !important;
-    color: var(--dark-hc-on-primary) !important;
+    background-color: var(--dark-focus) !important;
+    color: var(--dark-contrastOnStrong) !important;
   }
 
   .contrast-high.dark [data-segmented="true"] button[aria-checked="true"] * {
-    color: var(--dark-hc-on-primary) !important;
+    color: var(--dark-contrastOnStrong) !important;
   }
 
   .contrast-high [data-experience-card] {
-    border: 2px solid var(--light-hc-primary-strong) !important;
+    border: 2px solid var(--light-focus) !important;
   }
 
   .contrast-high.dark [data-experience-card] {
-    border: 2px solid var(--dark-hc-primary) !important;
-    background-color: var(--dark-hc-deep-surface) !important;
+    border: 2px solid var(--dark-focus) !important;
+    background-color: var(--dark-background) !important;
   }
 
   .contrast-high [data-availability-section] {
-    border: 2px solid var(--light-hc-primary-strong) !important;
+    border: 2px solid var(--light-focus) !important;
   }
 
   .contrast-high.dark [data-availability-section] {
-    border: 2px solid var(--dark-hc-primary) !important;
-    background-color: var(--dark-hc-deep-surface) !important;
+    border: 2px solid var(--dark-focus) !important;
+    background-color: var(--dark-background) !important;
     overflow: hidden !important;
   }
 
@@ -254,105 +254,105 @@ body {
 
   .contrast-high.dark [data-availability-matrix-card] {
     border: 0 !important;
-    background-color: var(--dark-hc-deep-surface) !important;
+    background-color: var(--dark-background) !important;
   }
 
   .contrast-high.dark [data-availability-section] [role="listbox"] {
-    border-color: var(--dark-hc-secondary) !important;
+    border-color: var(--dark-text) !important;
     overflow: hidden !important;
   }
 
   .contrast-high:not(.dark) [data-availability-section] [role="listbox"] {
-    border-color: var(--light-hc-ink-strong) !important;
+    border-color: var(--light-hc-text) !important;
     overflow: hidden !important;
   }
 
   .contrast-high.dark [data-availability-section] [role="option"] {
-    border-bottom: 1px solid var(--dark-hc-primary) !important;
+    border-bottom: 1px solid var(--dark-focus) !important;
   }
 
   .contrast-high:not(.dark) [data-availability-section] [role="option"] {
-    border-bottom: 1px solid var(--light-hc-primary-strong) !important;
+    border-bottom: 1px solid var(--light-focus) !important;
   }
 
   .contrast-high:not(.dark) [data-availability-section] [role="option"][aria-selected="true"] {
-    background-color: var(--light-hc-primary-strong) !important;
-    color: var(--light-normal-surface) !important;
+    background-color: var(--light-focus) !important;
+    color: var(--light-surface) !important;
   }
 
   .contrast-high:not(.dark) [data-availability-section] [role="option"][aria-selected="true"] * {
-    color: var(--light-normal-surface) !important;
+    color: var(--light-surface) !important;
   }
 
   .contrast-high.dark [data-availability-section] [role="option"][aria-selected="true"] {
-    background-color: var(--dark-hc-primary) !important;
-    color: var(--dark-hc-on-primary) !important;
+    background-color: var(--dark-focus) !important;
+    color: var(--dark-contrastOnStrong) !important;
   }
 
   .contrast-high.dark [data-availability-section] [role="option"][aria-selected="true"] * {
-    color: var(--dark-hc-on-primary) !important;
+    color: var(--dark-contrastOnStrong) !important;
   }
 
   .contrast-high [data-skim-status-group="true"] {
-    border: 2px solid var(--light-hc-primary-strong) !important;
-    background-color: var(--light-normal-surface) !important;
+    border: 2px solid var(--light-focus) !important;
+    background-color: var(--light-surface) !important;
   }
 
   .contrast-high.dark [data-skim-status-group="true"] {
-    border: 2px solid var(--dark-hc-primary) !important;
-    background-color: var(--dark-normal-surface) !important;
+    border: 2px solid var(--dark-focus) !important;
+    background-color: var(--dark-surface) !important;
   }
 
   .contrast-high [data-skim-status-group="true"] span {
     border: 2px solid transparent;
-    color: var(--light-normal-secondary) !important;
+    color: var(--light-text) !important;
   }
 
   .contrast-high.dark [data-skim-status-group="true"] span {
-    color: var(--dark-hc-secondary) !important;
+    color: var(--dark-text) !important;
   }
 
   .contrast-high [data-skim-status-group="true"] span[data-active="true"] {
-    background-color: var(--light-hc-primary-strong) !important;
-    color: var(--light-normal-surface) !important;
+    background-color: var(--light-focus) !important;
+    color: var(--light-surface) !important;
   }
 
   .contrast-high.dark [data-skim-status-group="true"] span[data-active="true"] {
-    background-color: var(--dark-hc-primary) !important;
-    color: var(--dark-normal-surface) !important;
+    background-color: var(--dark-focus) !important;
+    color: var(--dark-surface) !important;
   }
 
   .contrast-high [data-hero-portrait="true"] {
-    border: 3px solid var(--light-hc-primary-strong) !important;
-    box-shadow: 0 0 0 4px var(--light-hc-primary-glow) !important;
+    border: 3px solid var(--light-focus) !important;
+    box-shadow: 0 0 0 4px var(--light-hc-primaryGlow) !important;
     ring: none !important;
   }
 
   .contrast-high.dark [data-hero-portrait="true"] {
-    border-color: var(--dark-hc-primary) !important;
-    box-shadow: 0 0 0 4px var(--dark-hc-primary-glow) !important;
+    border-color: var(--dark-focus) !important;
+    box-shadow: 0 0 0 4px var(--dark-hc-primaryGlow) !important;
   }
 
   .shell-sticky-cta :is(a, button) {
     border-width: 1px;
     border-style: solid;
-    border-color: var(--light-border-subtle);
+    border-color: var(--light-borderSubtle);
   }
 
   .dark .shell-sticky-cta :is(a, button) {
-    border-color: var(--dark-border-subtle);
+    border-color: var(--dark-borderSubtle);
   }
 
   .contrast-high .shell-sticky-cta [data-variant="primary"] {
-    background-color: var(--light-hc-primary-strong) !important;
-    color: var(--light-normal-surface) !important;
-    border-color: var(--light-hc-primary-strong) !important;
+    background-color: var(--light-focus) !important;
+    color: var(--light-surface) !important;
+    border-color: var(--light-focus) !important;
   }
 
   .contrast-high.dark .shell-sticky-cta [data-variant="primary"] {
-    background-color: var(--dark-hc-primary) !important;
-    color: var(--dark-normal-surface) !important;
-    border-color: var(--dark-hc-primary) !important;
+    background-color: var(--dark-focus) !important;
+    color: var(--dark-surface) !important;
+    border-color: var(--dark-focus) !important;
   }
 
   .contrast-high .shell-sticky-cta {
@@ -364,158 +364,158 @@ body {
   }
 
   .contrast-high .shell-anchor-nav {
-    border: 2px solid var(--light-hc-primary-strong) !important;
-    background-color: var(--light-normal-surface) !important;
+    border: 2px solid var(--light-focus) !important;
+    background-color: var(--light-surface) !important;
   }
 
   .contrast-high.dark .shell-anchor-nav {
-    border: 2px solid var(--dark-hc-primary) !important;
-    background-color: var(--dark-normal-surface) !important;
+    border: 2px solid var(--dark-focus) !important;
+    background-color: var(--dark-surface) !important;
   }
 
   .contrast-high .shell-anchor-nav a {
-    border: 2px solid var(--light-hc-primary-strong) !important;
-    background-color: var(--light-normal-surface) !important;
-    color: var(--light-normal-secondary) !important;
+    border: 2px solid var(--light-focus) !important;
+    background-color: var(--light-surface) !important;
+    color: var(--light-text) !important;
   }
 
   .contrast-high .shell-anchor-nav a:not([aria-current="location"]) {
-    background-color: var(--light-hc-muted-surface) !important;
+    background-color: var(--light-hc-surfaceMuted) !important;
   }
 
   .contrast-high.dark .shell-anchor-nav a {
-    border: 2px solid var(--dark-hc-primary) !important;
-    background-color: var(--dark-normal-surface) !important;
-    color: var(--dark-hc-secondary) !important;
+    border: 2px solid var(--dark-focus) !important;
+    background-color: var(--dark-surface) !important;
+    color: var(--dark-text) !important;
   }
 
   .contrast-high.dark .shell-anchor-nav a:not([aria-current="location"]) {
-    background-color: var(--dark-normal-muted-surface) !important;
+    background-color: var(--dark-surfaceMuted) !important;
   }
 
   .contrast-high .shell-sidebar > * {
-    border: 2px solid var(--light-hc-primary-strong) !important;
-    background-color: var(--light-normal-surface) !important;
-    color: var(--light-normal-secondary) !important;
+    border: 2px solid var(--light-focus) !important;
+    background-color: var(--light-surface) !important;
+    color: var(--light-text) !important;
     box-shadow: none !important;
     border-radius: 1rem !important;
   }
 
   .contrast-high .shell-sidebar > * :is(a, button) {
     color: inherit !important;
-    border: 2px solid var(--light-hc-primary-strong) !important;
-    background-color: var(--light-normal-surface) !important;
+    border: 2px solid var(--light-focus) !important;
+    background-color: var(--light-surface) !important;
     box-shadow: none !important;
   }
 
   .contrast-high.dark .shell-sidebar > * {
-    border: 2px solid var(--dark-hc-primary) !important;
-    background-color: var(--dark-normal-surface) !important;
-    color: var(--dark-hc-secondary) !important;
+    border: 2px solid var(--dark-focus) !important;
+    background-color: var(--dark-surface) !important;
+    color: var(--dark-text) !important;
     box-shadow: none !important;
     border-radius: 1rem !important;
   }
 
   .contrast-high.dark .shell-sidebar > * :is(a, button) {
-    border: 2px solid var(--dark-hc-primary) !important;
-    background-color: var(--dark-normal-surface) !important;
+    border: 2px solid var(--dark-focus) !important;
+    background-color: var(--dark-surface) !important;
     color: inherit !important;
     box-shadow: none !important;
   }
 
   .contrast-high .grid.gap-4.sm\:grid-cols-2 > * {
-    border: 2px solid var(--light-hc-primary-strong) !important;
-    background-color: var(--light-normal-surface) !important;
-    color: var(--light-normal-secondary) !important;
+    border: 2px solid var(--light-focus) !important;
+    background-color: var(--light-surface) !important;
+    color: var(--light-text) !important;
     box-shadow: none !important;
   }
 
   .contrast-high.dark .grid.gap-4.sm\:grid-cols-2 > * {
-    border: 2px solid var(--dark-hc-primary) !important;
-    background-color: var(--dark-normal-muted-surface) !important;
-    color: var(--dark-hc-secondary) !important;
+    border: 2px solid var(--dark-focus) !important;
+    background-color: var(--dark-surfaceMuted) !important;
+    color: var(--dark-text) !important;
   }
 
   .contrast-high :is(button, a, input, select, textarea):focus-visible {
     box-shadow: none !important;
-    outline: 3px solid var(--light-hc-primary) !important;
+    outline: 3px solid var(--light-focus) !important;
     outline-offset: 4px;
   }
 
   .contrast-high.dark :is(button, a, input, select, textarea):focus-visible {
-    outline-color: var(--dark-hc-primary) !important;
+    outline-color: var(--dark-focus) !important;
   }
 
   .contrast-high [data-audio-player="true"] {
-    border: 2px solid var(--light-hc-primary-strong) !important;
-    background-color: var(--light-normal-surface) !important;
+    border: 2px solid var(--light-focus) !important;
+    background-color: var(--light-surface) !important;
     box-shadow: none !important;
   }
 
   .contrast-high.dark [data-audio-player="true"] {
-    border: 2px solid var(--dark-hc-primary) !important;
-    background-color: var(--dark-normal-surface) !important;
+    border: 2px solid var(--dark-focus) !important;
+    background-color: var(--dark-surface) !important;
     box-shadow: none !important;
   }
 
   .contrast-high [data-audio-player="true"] [data-time-chip="true"],
   .contrast-high.dark [data-audio-player="true"] [data-time-chip="true"] {
-    border: 2px solid var(--light-hc-primary-strong) !important;
-    background-color: var(--light-normal-surface) !important;
-    color: var(--light-normal-secondary) !important;
+    border: 2px solid var(--light-focus) !important;
+    background-color: var(--light-surface) !important;
+    color: var(--light-text) !important;
     box-shadow: none !important;
   }
 
   .contrast-high.dark [data-audio-player="true"] [data-time-chip="true"] {
-    border-color: var(--dark-hc-primary) !important;
-    background-color: var(--dark-normal-surface) !important;
-    color: var(--dark-hc-secondary) !important;
+    border-color: var(--dark-focus) !important;
+    background-color: var(--dark-surface) !important;
+    color: var(--dark-text) !important;
   }
 
   .contrast-high [data-chat-launcher="true"] {
-    background-color: var(--light-hc-primary-strong) !important;
-    border: 2px solid var(--light-hc-primary-strong) !important;
-    color: var(--light-normal-surface) !important;
+    background-color: var(--light-focus) !important;
+    border: 2px solid var(--light-focus) !important;
+    color: var(--light-surface) !important;
   }
 
   .contrast-high.dark [data-chat-launcher="true"] {
-    background-color: var(--dark-hc-primary) !important;
-    border: 2px solid var(--dark-hc-primary) !important;
-    color: var(--dark-normal-surface) !important;
+    background-color: var(--dark-focus) !important;
+    border: 2px solid var(--dark-focus) !important;
+    color: var(--dark-surface) !important;
   }
 
   .contrast-high.dark,
   .contrast-high.dark body {
-    color: var(--dark-hc-secondary) !important;
+    color: var(--dark-text) !important;
   }
 
   .contrast-high.dark
     :where(p, span, div, li, dt, dd, label, input, select, textarea, button, a, h1, h2, h3, h4, h5, h6, small) {
-    color: var(--dark-hc-secondary) !important;
+    color: var(--dark-text) !important;
   }
 
   .contrast-high:not(.dark),
   .contrast-high:not(.dark) body {
-    color: var(--light-hc-ink-strong) !important;
+    color: var(--light-hc-text) !important;
   }
 
   .contrast-high:not(.dark)
     :where(p, span, div, li, dt, dd, label, input, select, textarea, button, a, h1, h2, h3, h4, h5, h6, small) {
-    color: var(--light-hc-ink-strong) !important;
+    color: var(--light-hc-text) !important;
   }
 
   .contrast-high:not(.dark) header .text-white,
   .contrast-high:not(.dark) header .text-slate-50,
   .contrast-high:not(.dark) header .text-gray-50 {
-    color: var(--light-normal-surface) !important;
+    color: var(--light-surface) !important;
   }
 
   .contrast-high [data-audio-player="true"] input[type="range"] {
-    accent-color: var(--light-hc-primary-strong) !important;
+    accent-color: var(--light-focus) !important;
   }
 
   .contrast-high.dark [data-audio-player="true"] input[type="range"] {
-    accent-color: var(--dark-hc-primary) !important;
+    accent-color: var(--dark-focus) !important;
   }
 
 

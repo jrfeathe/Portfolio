@@ -54,3 +54,14 @@
 - RGBA helpers (rings/glows, subtle borders) are defined alongside tokens and consumed via variables; remaining overrides pull from the shared palette.
 - README updated with the regeneration command (`node scripts/generate-tokens-css.mjs`) to keep tokens CSS in sync with JSON changes.
 - Moved remaining RGBA and contrast colors out of aliases into the core palettes (light/dark/print) so Tailwind and app code read directly from tokens instead of literals.
+- Next change candidates: drop unused `light/dark-normal-*` aliases; retarget `globals.css` to palette vars (`--light-hc-*`, `--light-borderSubtle`, etc.) and remove matching aliases; decide whether to keep convenience helpers (`contrast-*`, `attention-surface`, `print-divider`) or swap call sites to palette vars.
+
+## Open questions before the next cleanup
+- Are there any external consumers (outside this repo) relying on the `colorAliases` shape, or can we slim it down freely?
+  - Not at all. The repo is standalone.
+- For contrast helpers, do we want to keep the `contrast-*` alias block as a stable API for `contrast-more`/forced-colors classes, or is using palette vars acceptable?
+  - We should always use palette vars, derived from the main tokens.json file. We want to have total control over all colors from this file. Any exterior forced colors or overrides are a mistake, and should promptly be stored as an upstream reference in tokens.json.
+- Should `attention-surface` remain a dedicated hook for alert/CTA accents, or should components pull directly from `colors.light.attention`?
+  - Let's leave this one as attention-surface.
+- Is `print-divider` intended to stay as a semantic hook for print borders, or can print CSS read `--light-hc-divider` directly?
+  - print.css can read light-hc-divider directly.

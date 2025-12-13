@@ -105,4 +105,10 @@
 5) Keep `attention-surface` and **retain** `print-divider` (skipping removal); still consider pointing print CSS directly to `--light-hc-divider` later if desired.
 6) Sweep for removed fields (`contrastAccent`, `contrastOn`, old focus vars) to ensure everything points at the new palette structure.
 
-
+## Latest changes (pre-commit summary)
+- Moved all high-contrast rules in `apps/site/app/globals.css` from the base layer into `@layer utilities` so they win by layer order instead of `!important`.
+- Removed every `!important` in `globals.css`, relying on utilities-layer precedence and token variables for borders/backgrounds/text/outlines in HC and forced-colors.
+- Confirmed `globals.css` no longer uses `:not(.dark)` selectors; light vs dark HC handled via `.contrast-high` and `.contrast-high.dark`.
+- High-contrast colors across chat/availability/shell/audio/controls now source directly from the `*-hc-*` tokens generated from `tokens.json`; no contrast aliases or override vars remain.
+- Forced-colors media block retains semantic styling but without `!important`; verify in Windows HC to ensure UA precedence is sufficient.
+- Next suggested cleanup: consolidate repeated `.contrast-high` selectors into reusable HC utilities/Tailwind variants and move any inline component colors to token-driven classes to keep globals lean.

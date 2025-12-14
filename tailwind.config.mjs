@@ -4,6 +4,12 @@ const { colors, typography, spacing, radius, shadows } = tokens;
 const light = colors.light;
 const dark = colors.dark;
 const print = colors.print;
+const lightHc = colors["light-hc"] || {};
+const darkHc = colors["dark-hc"] || {};
+const focusLight = lightHc.accent;
+const focusDark = darkHc.accent;
+const attentionSurface = light.attention;
+const printDivider = print.divider;
 
 export default {
   darkMode: "class",
@@ -25,16 +31,20 @@ export default {
         accentHover: light.accentHover,
         accentOn: light.accentOn,
         danger: light.danger,
+        focus: focusLight,
+        attention: attentionSurface,
         print: {
           background: print.background,
           surface: print.surface,
           surfaceMuted: print.surfaceMuted,
           border: print.border,
+          divider: printDivider,
           text: print.text,
           textMuted: print.textMuted,
           accent: print.accent,
           accentOn: print.accentOn,
-          danger: print.danger
+          danger: print.danger,
+          focus: print.focus
         },
         dark: {
           background: dark.background,
@@ -46,7 +56,8 @@ export default {
           accent: dark.accent,
           accentHover: dark.accentHover,
           accentOn: dark.accentOn,
-          danger: dark.danger
+          danger: dark.danger,
+          focus: focusDark
         }
       },
       fontFamily: {

@@ -1,8 +1,6 @@
 "use client";
 
-import { FOCUS_VISIBLE_RING } from "@portfolio/ui";
-import clsx from "clsx";
-import { useTransition } from "react";
+import { useMemo, useTransition } from "react";
 import type { Route } from "next";
 import {
   useParams,
@@ -17,13 +15,18 @@ import {
   getLocaleLabel,
   isLocale,
   localeCookieName,
-  locales,
   type Locale
 } from "../utils/i18n";
+import {
+  SegmentedControl,
+  type SegmentedControlOption
+} from "./controls/SegmentedControl";
 
 type LanguageSwitcherProps = {
   className?: string;
 };
+
+const LANGUAGE_ORDER: Locale[] = ["ja", "en", "zh"];
 
 export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   const router = useRouter();
@@ -40,6 +43,16 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
       : defaultLocale;
 
   const label = getLanguageSwitcherLabel(activeLocale);
+  const options = useMemo<SegmentedControlOption<Locale>[]>(() => {
+    return LANGUAGE_ORDER.map((locale) => {
+      const { label, nativeLabel } = getLocaleLabel(locale);
+      return {
+        value: locale,
+        label: nativeLabel,
+        ariaLabel: `${nativeLabel} · ${label}`
+      };
+    });
+  }, []);
 
   const handleSelect = (nextLocale: Locale) => {
     if (nextLocale === activeLocale) {
@@ -60,30 +73,13 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
   };
 
   return (
-    <label className={className}>
-      <span className="sr-only">
-        {label}
-      </span>
-      <select
-        className={clsx(
-          "rounded-md border border-border bg-surface px-3 py-2 text-sm font-medium text-text transition hover:border-textMuted dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-textMuted",
-          "focus-visible:border-focus dark:focus-visible:border-dark-focus",
-          FOCUS_VISIBLE_RING
-        )}
-        value={activeLocale}
-        onChange={(event) => handleSelect(event.target.value as Locale)}
-        disabled={isPending}
-        aria-label={label}
-      >
-        {locales.map((locale) => {
-          const { label, nativeLabel } = getLocaleLabel(locale);
-          return (
-            <option key={locale} value={locale}>
-              {`${nativeLabel} · ${label}`}
-            </option>
-          );
-        })}
-      </select>
-    </label>
+    <SegmentedControl
+      label={label}
+      value={activeLocale}
+      options={options}
+      onChange={handleSelect}
+      disabled={isPending}
+      className={className}
+    />
   );
 }

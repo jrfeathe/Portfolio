@@ -42,7 +42,7 @@ export const Button = forwardRef<
   ButtonProps
 >((props, ref) => {
   const baseClassName = clsx(
-    "inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition",
+    "inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition cursor-pointer motion-reduce:transition-none motion-reduce:duration-0 motion-reduce:transform-none",
     FOCUS_VISIBLE_RING
   );
 
@@ -52,6 +52,7 @@ export const Button = forwardRef<
       variant = "primary",
       href,
       type: _ignoredType,
+      style,
       ...anchorProps
     } = props;
     return (
@@ -59,12 +60,14 @@ export const Button = forwardRef<
         ref={ref as ForwardedRef<HTMLAnchorElement>}
         href={href}
         className={clsx(baseClassName, VARIANT_STYLES[variant], className)}
+        style={{ cursor: "pointer", ...(style ?? {}) }}
         {...anchorProps}
       />
     );
   }
 
-  const { className, variant = "primary", type, ...buttonProps } = props;
+  const { className, variant = "primary", type, style, disabled, ...buttonProps } =
+    props;
   const buttonType: ButtonHTMLAttributes<HTMLButtonElement>["type"] =
     type ?? "button";
 
@@ -73,6 +76,8 @@ export const Button = forwardRef<
       ref={ref as ForwardedRef<HTMLButtonElement>}
       type={buttonType}
       className={clsx(baseClassName, VARIANT_STYLES[variant], className)}
+      style={{ cursor: disabled ? "not-allowed" : "pointer", ...(style ?? {}) }}
+      disabled={disabled}
       {...buttonProps}
     />
   );

@@ -46,8 +46,12 @@ export function generateNonce(byteLength = 16) {
   return arrayBufferToBase64(array.buffer);
 }
 
-function buildScriptSrcDirective(nonce: string) {
+function buildScriptSrcDirective(nonce: string, allowHCaptcha: boolean) {
   const directives = [`'self'`, `'nonce-${nonce}'`];
+
+  if (allowHCaptcha) {
+    directives.push("https://js.hcaptcha.com");
+  }
 
   if (process.env.NODE_ENV !== "production") {
     directives.push("'unsafe-eval'");
@@ -65,19 +69,22 @@ function buildStyleSrcDirective(nonce: string) {
 }
 
 export function buildContentSecurityPolicy(nonce: string) {
+  const allowHCaptcha = Boolean(process.env.HCAPTCHA_SITE_KEY);
   const directives = [
     "default-src 'self'",
     "base-uri 'self'",
     "form-action 'self'",
     "frame-ancestors 'none'",
     "object-src 'none'",
-    "frame-src 'none'",
+    allowHCaptcha
+      ? "frame-src 'self' https://hcaptcha.com https://*.hcaptcha.com"
+      : "frame-src 'none'",
     "manifest-src 'self'",
     "media-src 'self'",
     "font-src 'self' data:",
     "img-src 'self' data: blob: https:",
     "worker-src 'self' blob:",
-    buildScriptSrcDirective(nonce),
+    buildScriptSrcDirective(nonce, allowHCaptcha),
     buildStyleSrcDirective(nonce),
     "connect-src 'self' https: wss:",
     "upgrade-insecure-requests"

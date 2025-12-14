@@ -1,0 +1,516 @@
+[
+  {
+    "id": "react",
+    "title": {
+      "en": "React",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Frontend design for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Rollodex - Implemented various components to build templated forms and redesign search/filter UI.",
+        "Portfolio - Implemented a wide suite of custom UI components."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "html",
+    "title": {
+      "en": "HTML",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "5 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Web design for Web Development & Design Foundations coursework, Software Portfolio (this website), Rollodex Capstone, Quester2000.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Built legacy style websites using HTML and CSS to display information and navigate between pages.",
+        "Integrated with JavaScript, TypeScript, and React to build complex web apps."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "css",
+    "title": {
+      "en": "CSS",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "5 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "UI design for Software Portfolio (this website), Rollodex Capstone, Quester2000, Various courses.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Created themes for web applications to customize and improve accessibility."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "javascript",
+    "title": {
+      "en": "JavaScript",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "3 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Backend logic for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Built client/server logic to power complex features, such as menu interfaces, search filtering, and form templates."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "typescript",
+    "title": {
+      "en": "TypeScript",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "6 months of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Backend logic for Software Portfolio (this website), Quester2000.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Built web apps meant to run on cloud services."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "c",
+    "title": {
+      "en": "C",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "3 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Coursework for various courses.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "SER334 - Built a Loadable Kernel Module that uses Linux data structures to display details about the processes executing in the kernel.",
+        "Applied scripting for various topics such as thread/compiler optimization, page replacement, image processing, and scheduling algorithms."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "cpp",
+    "title": {
+      "en": "C++",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "7 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Core language foundation. Used for custom game engine and many small projects.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Developed a custom game engine for a current project. (Limited information disclosure)",
+        "The language that I first learned and my top preference."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "java",
+    "title": {
+      "en": "Java",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "7 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Distributed systems teaching, Minecraft modding, Various courses/projects.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Built a Wheel of Fortune Java client/server assignment for students.",
+        "Decompiled code to patch a crash and reassemble."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "linux",
+    "title": {
+      "en": "Linux",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "7 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "My daily driver kernel, set up on many systems. Also used for various courses.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Actively maintaining Nextcloud and game servers with backups and monitoring.",
+        "Configured VFIO and kernel tuning for GPU passthrough to VMs."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "json",
+    "title": {
+      "en": "JSON",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "5 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Modding, Game Engine, Various courses.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Stored complex application objects to file, and read them back upon application reload.",
+        "Commonly used when modding Stellaris and Minecraft."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "bash",
+    "title": {
+      "en": "Bash",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "5 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Local tooling on Linux systems",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Scripting to modify various behaviors of Linux machines.",
+        "Used heavily during application development."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "xml",
+    "title": {
+      "en": "XML",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "5 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Game mod configuration, Various courses",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Patched Minecraft config XMLs to optimize servers and align with modpack updates.",
+        "Deploy virtual machines and optimize them."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "kvm",
+    "title": {
+      "en": "KVM",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "4 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Virtualize Windows on Linux systems",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Set up Windows 10 virtual machines optimized for gaming, with GPU passthrough.",
+        "Used with QEMU."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "qemu",
+    "title": {
+      "en": "QEMU",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "4 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Virtualize Windows on Linux systems",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Set up Windows 10 virtual machines optimized for gaming, with GPU passthrough.",
+        "Used with KVM."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "postgresql",
+    "title": {
+      "en": "PostgreSQL",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Rollodex, Quester2000",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Modeled contact/search data to support fast filtering.",
+        "Stored app data for user accounts."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "sql",
+    "title": {
+      "en": "SQL",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Rollodex, SER322 - Database Management course",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Designed Retail Inventory Management system for SER322.",
+        "Used queries to troubleshoot and speed up search for Rollodex."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "lua",
+    "title": {
+      "en": "Lua",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Stellaris Modding",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Built gameplay scripts and UI hooks for custom content.",
+        "Iterated on mod changes to improve balance."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "prisma",
+    "title": {
+      "en": "Prisma",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Rollodex, Quester2000",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Managed schema migrations and models for database structure."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "oracle-cloud",
+    "title": {
+      "en": "Oracle Cloud",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "WireGuard experiments with intermediate IP",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Set up a ping point to create a secure connection to my home server."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "aws",
+    "title": {
+      "en": "AWS",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Server deployment for various projects",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Used to host client-server applications for SER321."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  }
+]

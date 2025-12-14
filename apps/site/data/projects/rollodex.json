@@ -1,0 +1,92 @@
+{
+  "id": "rollodex",
+  "names": {
+    "proofTitle": {
+      "en": "Rollodex",
+      "ja": "",
+      "zh": ""
+    },
+    "techStackTitle": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "home": {
+    "proofDetails": {
+      "en": "Co-led fullstack development of a contact management web application.",
+      "ja": "",
+      "zh": ""
+    },
+    "roadmapNextStep": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "techStack": {
+    "item": {
+      "name": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "href": "",
+      "assetId": "rollodex"
+    },
+    "experience": {
+      "id": "rollodex",
+      "title": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "context": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "summary": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "highlights": {
+        "en": [],
+        "ja": [],
+        "zh": []
+      }
+    }
+  },
+  "experienceEntry": {
+    "id": "rollodex",
+    "company": {
+      "en": "Rollodex for Appy.yo",
+      "ja": "",
+      "zh": ""
+    },
+    "role": {
+      "en": "Co-lead Fullstack Developer",
+      "ja": "",
+      "zh": ""
+    },
+    "timeframe": {
+      "en": "2024–2025 (capstone)",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Co-led a remote fullstack development team, developing a contact management tool. Took ownership of API/data integrations and accessibility, while maintaining the repo as Git master across two-week Scrum releases.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Designed APIs and database schemas, templated forms, and rebuilt search/filter logic & UI.",
+        "Cut search latency from ~5s to ~200ms while maintaining repo practices, docs, and two-week sprints."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  }
+}

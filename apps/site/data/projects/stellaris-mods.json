@@ -1,0 +1,94 @@
+{
+  "id": "stellaris-mods",
+  "names": {
+    "proofTitle": {
+      "en": "Stellaris Modding",
+      "ja": "",
+      "zh": ""
+    },
+    "techStackTitle": {
+      "en": "Stellaris Mods",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "home": {
+    "proofDetails": {
+      "en": "Upgraded the memory management library for Stellaris to boost performance.",
+      "ja": "",
+      "zh": ""
+    },
+    "roadmapNextStep": {
+      "en": "The Four Horsemen: Develop a new mod for Stellaris to spawn an end-game crisis, compatible with Gigastructural Engineering.",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "techStack": {
+    "item": {
+      "name": {
+        "en": "Stellaris Mods",
+        "ja": "",
+        "zh": ""
+      },
+      "href": "https://steamcommunity.com/app/281990/workshop/",
+      "assetId": "stellaris-mods"
+    },
+    "experience": {
+      "id": "stellaris-mods-tech",
+      "title": {
+        "en": "Stellaris Mods",
+        "ja": "",
+        "zh": ""
+      },
+      "context": {
+        "en": "3 years of experience",
+        "ja": "",
+        "zh": ""
+      },
+      "summary": {
+        "en": "Repeated bandaging of a broken modpack to encourage a desired storyline.",
+        "ja": "",
+        "zh": ""
+      },
+      "highlights": {
+        "en": [
+          "Built custom Stellaris mechanics and memory optimizing scripts."
+        ],
+        "ja": [],
+        "zh": []
+      }
+    }
+  },
+  "experienceEntry": {
+    "id": "stellaris-mods-project",
+    "company": {
+      "en": "Freelance / Mods",
+      "ja": "",
+      "zh": ""
+    },
+    "role": {
+      "en": "Mod developer (Stellaris & Minecraft)",
+      "ja": "",
+      "zh": ""
+    },
+    "timeframe": {
+      "en": "Ongoing",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Maintain a handful of Minecraft and Stellaris mods, plus high performance heavily modded private servers.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Built custom mod features and balance tweaks for Stellaris and Minecraft.",
+        "Operate game servers and customize modpacks with ongoing profiling and tuning."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  }
+}

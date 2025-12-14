@@ -1,0 +1,89 @@
+{
+  "id": "template",
+  "names": {
+    "proofTitle": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    },
+    "techStackTitle": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "home": {
+    "proofDetails": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    },
+    "roadmapNextStep": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "techStack": {
+    "item": {
+      "name": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "href": "",
+      "assetId": "template"
+    },
+    "experience": {
+      "id": "template",
+      "title": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "context": {
+        "en": "# years of experience",
+        "ja": "",
+        "zh": ""
+      },
+      "summary": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "highlights": {
+        "en": [],
+        "ja": [],
+        "zh": []
+      }
+    }
+  },
+  "experienceEntry": {
+    "id": "template-project",
+    "company": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    },
+    "role": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    },
+    "timeframe": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [],
+      "ja": [],
+      "zh": []
+    }
+  }
+}

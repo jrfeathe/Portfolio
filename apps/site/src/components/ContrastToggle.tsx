@@ -1,25 +1,14 @@
 "use client";
 
-import { FOCUS_VISIBLE_RING } from "@portfolio/ui";
-import clsx from "clsx";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
+import type { Locale } from "../utils/i18n";
+import { getTopBarCopy } from "../utils/i18n";
+import { getNextContrast, type ContrastPreference } from "../utils/contrast";
 import {
-  getNextContrast,
-  type ContrastPreference
-} from "../utils/contrast";
-
-const CONTRAST_LABELS: Record<ContrastPreference, string> = {
-  system: "System",
-  high: "High",
-  standard: "Standard"
-};
-
-const CONTRAST_ICONS: Record<ContrastPreference, string> = {
-  system: "🎚️",
-  high: "✨",
-  standard: "◻️"
-};
+  SegmentedControl,
+  type SegmentedControlOption
+} from "./controls/SegmentedControl";
 
 function readContrast(): ContrastPreference {
   if (typeof window === "undefined") {
@@ -33,8 +22,19 @@ function readContrast(): ContrastPreference {
   return value === "high" || value === "standard" ? value : "system";
 }
 
-export function ContrastToggle({ className }: { className?: string }) {
+type ContrastToggleProps = {
+  className?: string;
+  locale: Locale;
+};
+
+export function ContrastToggle({ className, locale }: ContrastToggleProps) {
   const [contrast, setContrast] = useState<ContrastPreference>("system");
+  const { contrastLabel, contrastOptions } = getTopBarCopy(locale);
+  const options: SegmentedControlOption<ContrastPreference>[] = [
+    { value: "standard", label: contrastOptions.standard, testId: "contrast-standard" },
+    { value: "system", label: contrastOptions.system, testId: "contrast-system" },
+    { value: "high", label: contrastOptions.high, testId: "contrast-toggle" }
+  ];
 
   useEffect(() => {
     setContrast(readContrast());
@@ -56,35 +56,39 @@ export function ContrastToggle({ className }: { className?: string }) {
     return () => media.removeListener?.(handleChange);
   }, []);
 
-  const buttonLabel = useMemo(
-    () => `Switch contrast mode (currently ${CONTRAST_LABELS[contrast]})`,
-    [contrast]
-  );
-
-  const handleClick = () => {
-    const next = getNextContrast(contrast);
+  const handleSelect = (next: ContrastPreference) => {
     window.__portfolioContrast?.set(next);
     setContrast(next);
   };
 
+  const cycleContrast = () => {
+    setContrast((current) => {
+      const next = current === "standard" ? "high" : getNextContrast(current);
+      window.__portfolioContrast?.set(next);
+      return next;
+    });
+  };
+
   return (
-    <button
-      type="button"
-      data-testid="contrast-toggle"
-      className={clsx(
-        "inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-2 text-sm font-medium text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-surfaceMuted",
-        FOCUS_VISIBLE_RING,
-        className
-      )}
-      onClick={handleClick}
-      aria-label={buttonLabel}
-      title={buttonLabel}
-    >
-      <span aria-hidden className="text-base">
-        {CONTRAST_ICONS[contrast]}
-      </span>
-      <span aria-hidden>{CONTRAST_LABELS[contrast]}</span>
-      <span className="sr-only">{buttonLabel}</span>
-    </button>
+    <>
+      <SegmentedControl
+        label={contrastLabel}
+        value={contrast}
+        options={options}
+        onChange={handleSelect}
+        onActiveSelect={cycleContrast}
+        className={className}
+      />
+      <button
+        type="button"
+        data-testid="contrast-toggle-cycle"
+        className="sr-only"
+        aria-hidden="true"
+        tabIndex={-1}
+        onClick={cycleContrast}
+      >
+        Cycle contrast
+      </button>
+    </>
   );
 }

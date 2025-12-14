@@ -15,47 +15,36 @@ const INPUT_CSS = resolve(SITE_DIR, "app/critical.css.src");
 const OUTPUT_CSS = resolve(SITE_DIR, "app/critical.css");
 const MANIFEST_PATH = resolve(SITE_DIR, "app/critical-css.manifest.json");
 
+const CRITICAL_CONTENT_GLOBS = [
+  "app/[locale]/page.tsx",
+  "src/components/Shell/Layout.tsx",
+  "src/components/Shell/AnchorNav.tsx",
+  "src/components/Shell/Breadcrumbs.tsx",
+  "src/components/Shell/StickyCTA.tsx",
+  "src/components/ContrastToggle.tsx",
+  "src/components/ThemeToggle.tsx",
+  "src/components/LanguageSwitcher.tsx",
+  "src/components/ResponsiveImage.tsx",
+  "../../packages/ui/src/lib/Button.tsx"
+];
+
 const CRITICAL_ROUTES = [
   {
     id: "home-en",
     path: "/en",
-    contentGlobs: [
-      "app/[locale]/page.tsx",
-      "src/components/Shell/**/*.tsx",
-      "src/components/ContrastToggle.tsx",
-      "src/components/ThemeToggle.tsx",
-      "src/components/LanguageSwitcher.tsx",
-      "src/components/ResponsiveImage.tsx",
-      "../../packages/ui/src/lib/Button.tsx"
-    ],
+    contentGlobs: CRITICAL_CONTENT_GLOBS,
     output: OUTPUT_CSS
   },
   {
     id: "home-ja",
     path: "/ja",
-    contentGlobs: [
-      "app/[locale]/page.tsx",
-      "src/components/Shell/**/*.tsx",
-      "src/components/ContrastToggle.tsx",
-      "src/components/ThemeToggle.tsx",
-      "src/components/LanguageSwitcher.tsx",
-      "src/components/ResponsiveImage.tsx",
-      "../../packages/ui/src/lib/Button.tsx"
-    ],
+    contentGlobs: CRITICAL_CONTENT_GLOBS,
     output: OUTPUT_CSS
   },
   {
     id: "home-zh",
     path: "/zh",
-    contentGlobs: [
-      "app/[locale]/page.tsx",
-      "src/components/Shell/**/*.tsx",
-      "src/components/ContrastToggle.tsx",
-      "src/components/ThemeToggle.tsx",
-      "src/components/LanguageSwitcher.tsx",
-      "src/components/ResponsiveImage.tsx",
-      "../../packages/ui/src/lib/Button.tsx"
-    ],
+    contentGlobs: CRITICAL_CONTENT_GLOBS,
     output: OUTPUT_CSS
   }
 ];
@@ -108,7 +97,8 @@ function main() {
     console.log(`Generating critical CSS for ${route.path}`);
     runTailwind(route);
 
-    const css = readFileSync(route.output, "utf8").trim();
+    const rawCss = readFileSync(route.output, "utf8");
+    const css = rawCss.replace(/\/\*!.*?\*\//s, "").trim();
     const bytes = Buffer.byteLength(css, "utf8");
     const cssBase64 = Buffer.from(css, "utf8").toString("base64");
 

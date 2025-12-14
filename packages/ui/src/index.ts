@@ -44,6 +44,7 @@ export type { StatTileProps, StatTileTrend } from "./lib/StatTile";
 export {
   tokens,
   colors,
+  colorAliases,
   typography,
   spacing,
   radius,

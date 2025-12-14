@@ -1,0 +1,556 @@
+{
+  "generatedAt": "2025-12-14T21:28:18.847Z",
+  "anchors": [
+    {
+      "id": "react",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "React",
+          "href": "/en/experience#react"
+        },
+        "ja": {
+          "name": "React",
+          "href": "/ja/experience#react"
+        },
+        "zh": {
+          "name": "React",
+          "href": "/zh/experience#react"
+        }
+      }
+    },
+    {
+      "id": "html",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "HTML",
+          "href": "/en/experience#html"
+        },
+        "ja": {
+          "name": "HTML",
+          "href": "/ja/experience#html"
+        },
+        "zh": {
+          "name": "HTML",
+          "href": "/zh/experience#html"
+        }
+      }
+    },
+    {
+      "id": "css",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "CSS",
+          "href": "/en/experience#css"
+        },
+        "ja": {
+          "name": "CSS",
+          "href": "/ja/experience#css"
+        },
+        "zh": {
+          "name": "CSS",
+          "href": "/zh/experience#css"
+        }
+      }
+    },
+    {
+      "id": "javascript",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "JavaScript",
+          "href": "/en/experience#javascript"
+        },
+        "ja": {
+          "name": "JavaScript",
+          "href": "/ja/experience#javascript"
+        },
+        "zh": {
+          "name": "JavaScript",
+          "href": "/zh/experience#javascript"
+        }
+      }
+    },
+    {
+      "id": "typescript",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "TypeScript",
+          "href": "/en/experience#typescript"
+        },
+        "ja": {
+          "name": "TypeScript",
+          "href": "/ja/experience#typescript"
+        },
+        "zh": {
+          "name": "TypeScript",
+          "href": "/zh/experience#typescript"
+        }
+      }
+    },
+    {
+      "id": "c",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "C",
+          "href": "/en/experience#c"
+        },
+        "ja": {
+          "name": "C",
+          "href": "/ja/experience#c"
+        },
+        "zh": {
+          "name": "C",
+          "href": "/zh/experience#c"
+        }
+      }
+    },
+    {
+      "id": "cpp",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "C++",
+          "href": "/en/experience#cpp"
+        },
+        "ja": {
+          "name": "C++",
+          "href": "/ja/experience#cpp"
+        },
+        "zh": {
+          "name": "C++",
+          "href": "/zh/experience#cpp"
+        }
+      }
+    },
+    {
+      "id": "java",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "Java",
+          "href": "/en/experience#java"
+        },
+        "ja": {
+          "name": "Java",
+          "href": "/ja/experience#java"
+        },
+        "zh": {
+          "name": "Java",
+          "href": "/zh/experience#java"
+        }
+      }
+    },
+    {
+      "id": "linux",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "Linux",
+          "href": "/en/experience#linux"
+        },
+        "ja": {
+          "name": "Linux",
+          "href": "/ja/experience#linux"
+        },
+        "zh": {
+          "name": "Linux",
+          "href": "/zh/experience#linux"
+        }
+      }
+    },
+    {
+      "id": "json",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "JSON",
+          "href": "/en/experience#json"
+        },
+        "ja": {
+          "name": "JSON",
+          "href": "/ja/experience#json"
+        },
+        "zh": {
+          "name": "JSON",
+          "href": "/zh/experience#json"
+        }
+      }
+    },
+    {
+      "id": "bash",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "Bash",
+          "href": "/en/experience#bash"
+        },
+        "ja": {
+          "name": "Bash",
+          "href": "/ja/experience#bash"
+        },
+        "zh": {
+          "name": "Bash",
+          "href": "/zh/experience#bash"
+        }
+      }
+    },
+    {
+      "id": "xml",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "XML",
+          "href": "/en/experience#xml"
+        },
+        "ja": {
+          "name": "XML",
+          "href": "/ja/experience#xml"
+        },
+        "zh": {
+          "name": "XML",
+          "href": "/zh/experience#xml"
+        }
+      }
+    },
+    {
+      "id": "kvm",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "KVM",
+          "href": "/en/experience#kvm"
+        },
+        "ja": {
+          "name": "KVM",
+          "href": "/ja/experience#kvm"
+        },
+        "zh": {
+          "name": "KVM",
+          "href": "/zh/experience#kvm"
+        }
+      }
+    },
+    {
+      "id": "qemu",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "QEMU",
+          "href": "/en/experience#qemu"
+        },
+        "ja": {
+          "name": "QEMU",
+          "href": "/ja/experience#qemu"
+        },
+        "zh": {
+          "name": "QEMU",
+          "href": "/zh/experience#qemu"
+        }
+      }
+    },
+    {
+      "id": "postgresql",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "PostgreSQL",
+          "href": "/en/experience#postgresql"
+        },
+        "ja": {
+          "name": "PostgreSQL",
+          "href": "/ja/experience#postgresql"
+        },
+        "zh": {
+          "name": "PostgreSQL",
+          "href": "/zh/experience#postgresql"
+        }
+      }
+    },
+    {
+      "id": "sql",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "SQL",
+          "href": "/en/experience#sql"
+        },
+        "ja": {
+          "name": "SQL",
+          "href": "/ja/experience#sql"
+        },
+        "zh": {
+          "name": "SQL",
+          "href": "/zh/experience#sql"
+        }
+      }
+    },
+    {
+      "id": "lua",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "Lua",
+          "href": "/en/experience#lua"
+        },
+        "ja": {
+          "name": "Lua",
+          "href": "/ja/experience#lua"
+        },
+        "zh": {
+          "name": "Lua",
+          "href": "/zh/experience#lua"
+        }
+      }
+    },
+    {
+      "id": "prisma",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "Prisma",
+          "href": "/en/experience#prisma"
+        },
+        "ja": {
+          "name": "Prisma",
+          "href": "/ja/experience#prisma"
+        },
+        "zh": {
+          "name": "Prisma",
+          "href": "/zh/experience#prisma"
+        }
+      }
+    },
+    {
+      "id": "oracle-cloud",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "Oracle Cloud",
+          "href": "/en/experience#oracle-cloud"
+        },
+        "ja": {
+          "name": "Oracle Cloud",
+          "href": "/ja/experience#oracle-cloud"
+        },
+        "zh": {
+          "name": "Oracle Cloud",
+          "href": "/zh/experience#oracle-cloud"
+        }
+      }
+    },
+    {
+      "id": "aws",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "AWS",
+          "href": "/en/experience#aws"
+        },
+        "ja": {
+          "name": "AWS",
+          "href": "/ja/experience#aws"
+        },
+        "zh": {
+          "name": "AWS",
+          "href": "/zh/experience#aws"
+        }
+      }
+    },
+    {
+      "id": "cpp-game-engine",
+      "category": "experience",
+      "source": "cpp-game-engine",
+      "locales": {
+        "en": {
+          "name": "Indie game development",
+          "href": "/en/experience#cpp-game-engine"
+        },
+        "ja": {
+          "name": "Indie game development",
+          "href": "/ja/experience#cpp-game-engine"
+        },
+        "zh": {
+          "name": "Indie game development",
+          "href": "/zh/experience#cpp-game-engine"
+        }
+      }
+    },
+    {
+      "id": "minecraft-mods",
+      "category": "experience",
+      "source": "minecraft-mods",
+      "locales": {
+        "en": {
+          "name": "minecraft-mods",
+          "href": "/en/experience#minecraft-mods"
+        },
+        "ja": {
+          "name": "minecraft-mods",
+          "href": "/ja/experience#minecraft-mods"
+        },
+        "zh": {
+          "name": "minecraft-mods",
+          "href": "/zh/experience#minecraft-mods"
+        }
+      }
+    },
+    {
+      "id": "portfolio-site",
+      "category": "experience",
+      "source": "portfolio-site",
+      "locales": {
+        "en": {
+          "name": "Portfolio (this website) - Personal project",
+          "href": "/en/experience#portfolio-site"
+        },
+        "ja": {
+          "name": "Portfolio (this website) - Personal project",
+          "href": "/ja/experience#portfolio-site"
+        },
+        "zh": {
+          "name": "Portfolio (this website) - Personal project",
+          "href": "/zh/experience#portfolio-site"
+        }
+      }
+    },
+    {
+      "id": "quester2000",
+      "category": "experience",
+      "source": "quester2000",
+      "locales": {
+        "en": {
+          "name": "Quester2000 - Personal project",
+          "href": "/en/experience#quester2000"
+        },
+        "ja": {
+          "name": "Quester2000 - Personal project",
+          "href": "/ja/experience#quester2000"
+        },
+        "zh": {
+          "name": "Quester2000 - Personal project",
+          "href": "/zh/experience#quester2000"
+        }
+      }
+    },
+    {
+      "id": "rollodex",
+      "category": "experience",
+      "source": "rollodex",
+      "locales": {
+        "en": {
+          "name": "Rollodex for Appy.yo",
+          "href": "/en/experience#rollodex"
+        },
+        "ja": {
+          "name": "Rollodex for Appy.yo",
+          "href": "/ja/experience#rollodex"
+        },
+        "zh": {
+          "name": "Rollodex for Appy.yo",
+          "href": "/zh/experience#rollodex"
+        }
+      }
+    },
+    {
+      "id": "ser321",
+      "category": "experience",
+      "source": "ser321-ta",
+      "locales": {
+        "en": {
+          "name": "SER 321 at Arizona State University",
+          "href": "/en/experience#ser321"
+        },
+        "ja": {
+          "name": "SER 321 at Arizona State University",
+          "href": "/ja/experience#ser321"
+        },
+        "zh": {
+          "name": "SER 321 at Arizona State University",
+          "href": "/zh/experience#ser321"
+        }
+      }
+    },
+    {
+      "id": "stellaris-mods-project",
+      "category": "experience",
+      "source": "stellaris-mods",
+      "locales": {
+        "en": {
+          "name": "Freelance / Mods",
+          "href": "/en/experience#stellaris-mods-project"
+        },
+        "ja": {
+          "name": "Freelance / Mods",
+          "href": "/ja/experience#stellaris-mods-project"
+        },
+        "zh": {
+          "name": "Freelance / Mods",
+          "href": "/zh/experience#stellaris-mods-project"
+        }
+      }
+    },
+    {
+      "id": "availability-weekly",
+      "category": "availability",
+      "source": "availability-weekly",
+      "locales": {
+        "en": {
+          "name": "Availability & meetings",
+          "href": "/en/meetings"
+        },
+        "ja": {
+          "name": "面談可能時間",
+          "href": "/ja/meetings"
+        },
+        "zh": {
+          "name": "可会面时间",
+          "href": "/zh/meetings"
+        }
+      }
+    },
+    {
+      "id": "resume",
+      "category": "resume",
+      "source": "resume-json",
+      "locales": {
+        "en": {
+          "name": "Resume",
+          "href": "/resume.pdf"
+        },
+        "ja": {
+          "name": "Resume",
+          "href": "/resume.pdf"
+        },
+        "zh": {
+          "name": "Resume",
+          "href": "/resume.pdf"
+        }
+      }
+    }
+  ]
+}

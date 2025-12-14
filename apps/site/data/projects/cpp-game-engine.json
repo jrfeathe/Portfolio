@@ -1,0 +1,92 @@
+{
+  "id": "cpp-game-engine",
+  "names": {
+    "proofTitle": {
+      "en": "C++ Game Engine / Game",
+      "ja": "",
+      "zh": ""
+    },
+    "techStackTitle": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "home": {
+    "proofDetails": {
+      "en": "Building a C++ game engine and RPG adventure.",
+      "ja": "",
+      "zh": ""
+    },
+    "roadmapNextStep": {
+      "en": "C++ Game Engine: Continue work on a private game / engine. An abstract loosely-autobiographical RPG adventure.",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "techStack": {
+    "item": {
+      "name": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "href": "",
+      "assetId": "cpp-game-engine"
+    },
+    "experience": {
+      "id": "cpp-game-engine",
+      "title": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "context": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "summary": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "highlights": {
+        "en": [],
+        "ja": [],
+        "zh": []
+      }
+    }
+  },
+  "experienceEntry": {
+    "id": "cpp-game-engine",
+    "company": {
+      "en": "Indie game development",
+      "ja": "",
+      "zh": ""
+    },
+    "role": {
+      "en": "Fullstack Engineer",
+      "ja": "",
+      "zh": ""
+    },
+    "timeframe": {
+      "en": "Ongoing",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Building a C++ game engine and story driven RPG adventure.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Implemented core engine loops, asset loading, vertex buffers, and JSON data structures.",
+        "Experimented with tooling such as OpenGL, SDL, and Dear ImGui."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  }
+}

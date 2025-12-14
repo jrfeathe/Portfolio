@@ -1,0 +1,92 @@
+{
+  "id": "ser321-ta",
+  "names": {
+    "proofTitle": {
+      "en": "Teaching Assistant",
+      "ja": "",
+      "zh": ""
+    },
+    "techStackTitle": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "home": {
+    "proofDetails": {
+      "en": "Supported a high level Distributed Software Systems course as a teaching assistant.",
+      "ja": "",
+      "zh": ""
+    },
+    "roadmapNextStep": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "techStack": {
+    "item": {
+      "name": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "href": "",
+      "assetId": "ser321-ta"
+    },
+    "experience": {
+      "id": "ser321-ta",
+      "title": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "context": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "summary": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "highlights": {
+        "en": [],
+        "ja": [],
+        "zh": []
+      }
+    }
+  },
+  "experienceEntry": {
+    "id": "ser321",
+    "company": {
+      "en": "SER 321 at Arizona State University",
+      "ja": "",
+      "zh": ""
+    },
+    "role": {
+      "en": "Undergraduate Teaching Assistant for Distributed Software Systems course",
+      "ja": "",
+      "zh": ""
+    },
+    "timeframe": {
+      "en": "March – May 2024",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Designed and coded an assignment; a “Wheel of Fortune” Java server supporting a dynamic amount of concurrent clients. Mentored students in designing distributed systems hosted on AWS and debugging client-server architectures.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Actively answered student questions on Slack discussion boards, and hosted office hours once per week.",
+        "Assisted in debugging complex issues with code logic, networking, threading, AWS deployment, Ubuntu, and virtualization."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  }
+}

@@ -1,6 +1,8 @@
 import { Button } from "@portfolio/ui";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { UrlObject } from "url";
 
 import {
   getDictionary,
@@ -8,14 +10,16 @@ import {
 } from "../../src/utils/dictionaries";
 import { isLocale, locales, type Locale } from "../../src/utils/i18n";
 import {
-  ShellLayout,
+  ResponsiveShellLayout,
   StickyCTA
 } from "../../src/components/Shell";
+import { ResponsiveAudioPlayer } from "../../src/components/AudioPlayer";
 import { headers } from "next/headers";
 import { StructuredData } from "../../src/components/seo/StructuredData";
 import { getResumeProfile } from "../../src/lib/resume/profile";
 import { buildHomePageJsonLd } from "../../src/lib/seo/jsonld";
 import { extractNonceFromHeaders } from "../../src/utils/csp";
+import { TechStackCarousel } from "../../src/components/TechStackCarousel";
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
@@ -77,62 +81,72 @@ function resolveBreadcrumbs(dictionary: AppDictionary, locale: Locale) {
     home: { breadcrumbs }
   } = dictionary;
 
-  return [
-    { label: breadcrumbs.home, href: `/${locale}` },
-    { label: breadcrumbs.workspace }
-  ];
+  return [{ label: breadcrumbs.home, href: `/${locale}` }];
 }
 
-function buildSections(dictionary: AppDictionary) {
+function toUrlObject(href: string): UrlObject {
+  const [pathname, hash] = href.split("#");
+  return hash
+    ? { pathname, hash: `#${hash}` }
+    : { pathname };
+}
+
+function buildSections(dictionary: AppDictionary, locale: Locale) {
   const {
     home: { sections }
   } = dictionary;
+  const techDetailMap = new Map(
+    dictionary.experience.techStack.map((entry) => [entry.title.toLowerCase(), entry.id])
+  );
+
+  const techStackItems = sections.techStack.items.map((item) => ({
+    ...item,
+    href: `/${locale}/experience#${techDetailMap.get(item.name.toLowerCase()) ?? item.assetId}`
+  }));
 
   return [
     {
-      id: "mission",
-      eyebrow: sections.mission.eyebrow,
-      title: sections.mission.title,
-      description: sections.mission.description,
+      id: "tech-stack",
+      eyebrow: sections.techStack.eyebrow,
+      title: sections.techStack.title,
+      description: sections.techStack.description,
       content: (
         <>
-          <p>{sections.mission.overview}</p>
-          <ul className="list-disc space-y-2 pl-5">
-            {sections.mission.bulletPoints.map((bullet) => (
-              <li key={bullet}>{bullet}</li>
-            ))}
-          </ul>
+          <p>{sections.techStack.overview}</p>
+          <TechStackCarousel items={techStackItems} />
         </>
       )
     },
     {
-      id: "proof",
+      id: "past-achievements",
       eyebrow: sections.proof.eyebrow,
       title: sections.proof.title,
       description: sections.proof.description,
       content: (
         <>
           <p>{sections.proof.overview}</p>
-          <dl className="grid gap-4 sm:grid-cols-2">
+          <ul className="grid list-none gap-4 sm:grid-cols-2">
             {sections.proof.proofChips.map((chip) => (
-              <div
-                key={chip.title}
-                className="rounded-xl border border-border bg-surface px-4 py-3 shadow-sm dark:border-dark-border dark:bg-dark-surface"
-              >
-                <dt className="text-sm font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
-                  {chip.title}
-                </dt>
-                <dd className="mt-2 text-sm">
-                  {chip.details}
-                </dd>
-              </div>
+              <li key={chip.title}>
+                <Link
+                  href={toUrlObject(chip.href)}
+                  className="block rounded-xl border border-border bg-surface px-4 py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent dark:border-dark-border dark:bg-dark-surface dark:focus-visible:ring-dark-accent"
+                >
+                  <span className="text-sm font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
+                    {chip.title}
+                  </span>
+                  <p className="mt-2 text-sm">
+                    {chip.details}
+                  </p>
+                </Link>
+              </li>
             ))}
-          </dl>
+          </ul>
         </>
       )
     },
     {
-      id: "roadmap",
+      id: "current-projects",
       eyebrow: sections.roadmap.eyebrow,
       title: sections.roadmap.title,
       description: sections.roadmap.description,
@@ -167,7 +181,7 @@ export function generateMetadata({ params }: PageParams): Metadata {
 export default function HomePage({ params, searchParams }: PageProps) {
   const locale = ensureLocale(params.locale);
   const dictionary = getDictionary(locale);
-  const sections = buildSections(dictionary);
+  const sections = buildSections(dictionary, locale);
   const breadcrumbs = resolveBreadcrumbs(dictionary, locale);
   const {
     hero: { title, subtitle, cta, media }
@@ -186,39 +200,65 @@ export default function HomePage({ params, searchParams }: PageProps) {
     <>
       <StructuredData data={structuredData} nonce={nonce} />
       <div data-skim-mode={skimModeEnabled ? "true" : "false"}>
-        <ShellLayout
+        <ResponsiveShellLayout
           title={title}
           subtitle={subtitle}
           heroMedia={media}
           breadcrumbs={breadcrumbs}
           sections={sections}
+          skimModeEnabled={skimModeEnabled}
+          locale={locale}
+          footerContent={dictionary.home.footer}
           cta={
-            <StickyCTA title={cta.title} description={cta.description}>
-              {cta.actions.map((action) => (
-                action.href ? (
-                  <Button
-                    key={`${action.label}-${action.variant}`}
-                    variant={action.variant}
-                    href={action.href}
-                    download={
-                      action.download ? resumeDownloadFilename : undefined
-                    }
-                    rel={
-                      action.href.startsWith("http")
-                        ? "noreferrer noopener"
-                        : undefined
-                    }
-                  >
-                    {action.label}
-                  </Button>
-                ) : (
-                  <Button key={`${action.label}-${action.variant}`} variant={action.variant}>
-                    {action.label}
-                  </Button>
-                )
-              ))}
-            </StickyCTA>
+            <div className="space-y-4">
+              <StickyCTA title={cta.title} description={cta.description}>
+                {cta.actions.map((action, index) =>
+                  action.href ? (
+                    <Button
+                      key={`${action.label}-${action.variant}`}
+                      variant={action.variant}
+                      href={action.href}
+                      className="w-full"
+                      data-variant={action.variant}
+                      tabIndex={index === 0 ? 1 : undefined}
+                      download={
+                        action.download ? resumeDownloadFilename : undefined
+                      }
+                      rel={
+                        action.href.startsWith("http")
+                          ? "noreferrer noopener"
+                          : undefined
+                      }
+                    >
+                      {action.label}
+                    </Button>
+                  ) : (
+                    <Button
+                      key={`${action.label}-${action.variant}`}
+                      variant={action.variant}
+                      className="w-full"
+                      data-variant={action.variant}
+                      tabIndex={index === 0 ? 1 : undefined}
+                    >
+                      {action.label}
+                    </Button>
+                  )
+                )}
+              </StickyCTA>
+            </div>
           }
+        />
+        <ResponsiveAudioPlayer
+          src={dictionary.home.audioPlayer.src}
+          title={dictionary.home.audioPlayer.title}
+          description={dictionary.home.audioPlayer.description}
+          playLabel={dictionary.home.audioPlayer.playLabel}
+          pauseLabel={dictionary.home.audioPlayer.pauseLabel}
+          downloadLabel={dictionary.home.audioPlayer.downloadLabel}
+          closeLabel={dictionary.home.audioPlayer.closeLabel}
+          reopenLabel={dictionary.home.audioPlayer.reopenLabel}
+          locale={locale}
+          trackId={dictionary.home.audioPlayer.trackId}
         />
       </div>
     </>

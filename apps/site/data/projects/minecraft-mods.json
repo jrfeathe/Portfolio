@@ -1,0 +1,92 @@
+{
+  "id": "minecraft-mods",
+  "names": {
+    "proofTitle": {
+      "en": "Minecraft Mods",
+      "ja": "",
+      "zh": ""
+    },
+    "techStackTitle": {
+      "en": "Minecraft Mods",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "home": {
+    "proofDetails": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    },
+    "roadmapNextStep": {
+      "en": "Pixelmon Problem: Continue work to backport an update to Minecraft Pixelmon to fix a periodic client-side crash on my private server.",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "techStack": {
+    "item": {
+      "name": {
+        "en": "Minecraft Mods",
+        "ja": "",
+        "zh": ""
+      },
+      "href": "https://modrinth.com/",
+      "assetId": "minecraft-mods"
+    },
+    "experience": {
+      "id": "minecraft-mods",
+      "title": {
+        "en": "Minecraft Mods",
+        "ja": "",
+        "zh": ""
+      },
+      "context": {
+        "en": "5 years of experience",
+        "ja": "",
+        "zh": ""
+      },
+      "summary": {
+        "en": "10+ high performance modded servers.",
+        "ja": "",
+        "zh": ""
+      },
+      "highlights": {
+        "en": [
+          "Backporting of crash fixes to patch a semi-common client side disconnect.",
+          "Added new features with custom mods, and optimized modpacks."
+        ],
+        "ja": [],
+        "zh": []
+      }
+    }
+  },
+  "experienceEntry": {
+    "id": "minecraft-mods",
+    "company": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    },
+    "role": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    },
+    "timeframe": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [],
+      "ja": [],
+      "zh": []
+    }
+  }
+}

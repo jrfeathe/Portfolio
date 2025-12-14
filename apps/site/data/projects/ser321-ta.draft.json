@@ -1,0 +1,50 @@
+{
+  "id": "ser321-ta",
+  "names": {
+    "proofTitle": "SER321 TA"
+  },
+  "home": {
+    "proofDetails": {
+      "en": "Supported a high level Distributed Software Systems course as a teaching assistant.",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "experienceEntry": {
+    "id": "ser321",
+    "company": "SER 321 at Arizona State University",
+    "role": "Undergraduate Teaching Assistant for Distributed Software Systems course",
+    "timeframe": "March – May 2024",
+    "summary": "Designed and coded an assignment; a “Wheel of Fortune” Java server supporting a dynamic amount of concurrent clients. Mentored students in designing distributed systems hosted on AWS and debugging client-server architectures.",
+    "highlights": [
+      "Actively answered student questions on Slack discussion boards, and hosted office hours once per week.",
+      "Assisted in debugging complex issues with code logic, networking, threading, AWS deployment, Ubuntu, and virtualization."
+    ],
+    "localized": {
+      "en": {
+        "company": "SER 321 at Arizona State University",
+        "role": "Undergraduate Teaching Assistant for Distributed Software Systems course",
+        "timeframe": "March – May 2024",
+        "summary": "Designed and coded an assignment; a “Wheel of Fortune” Java server supporting a dynamic amount of concurrent clients. Mentored students in designing distributed systems hosted on AWS and debugging client-server architectures.",
+        "highlights": [
+          "Actively answered student questions on Slack discussion boards, and hosted office hours once per week.",
+          "Assisted in debugging complex issues with code logic, networking, threading, AWS deployment, Ubuntu, and virtualization."
+        ]
+      },
+      "ja": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      },
+      "zh": {
+        "company": "",
+        "role": "",
+        "timeframe": "",
+        "summary": "",
+        "highlights": []
+      }
+    }
+  }
+}

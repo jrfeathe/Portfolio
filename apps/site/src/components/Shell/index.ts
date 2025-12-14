@@ -1,5 +1,6 @@
 export type { AnchorNavItem, AnchorNavProps } from "./AnchorNav";
 export { AnchorNav } from "./AnchorNav";
+export { AnchorControlPanel } from "./AnchorControlPanel";
 export type { BreadcrumbItem, BreadcrumbsProps } from "./Breadcrumbs";
 export { Breadcrumbs } from "./Breadcrumbs";
 export { ShellFooter } from "./Footer";
@@ -8,3 +9,8 @@ export type { ShellSection, ShellLayoutProps } from "./Layout";
 export { ShellLayout } from "./Layout";
 export type { StickyCTAProps } from "./StickyCTA";
 export { StickyCTA } from "./StickyCTA";
+export { ResponsiveShellLayout } from "./ResponsiveShellLayout";
+export type { ResponsiveShellLayoutProps } from "./ResponsiveShellLayout";
+export { MobileShellLayout } from "./MobileShellLayout";
+export type { MobileShellLayoutProps } from "./MobileShellLayout";
+export { DEFAULT_MOBILE_BREAKPOINT } from "./constants";

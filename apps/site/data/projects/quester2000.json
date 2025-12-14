@@ -1,0 +1,93 @@
+{
+  "id": "quester2000",
+  "names": {
+    "proofTitle": {
+      "en": "Quester2000",
+      "ja": "",
+      "zh": ""
+    },
+    "techStackTitle": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "home": {
+    "proofDetails": {
+      "en": "A point tracking to-do list tool for managing your work-life balance.",
+      "ja": "",
+      "zh": ""
+    },
+    "roadmapNextStep": {
+      "en": "Revisit Quester2000: Add more functionality and improve UI. Possible smartwatch integration.",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "techStack": {
+    "item": {
+      "name": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "href": "",
+      "assetId": "quester2000"
+    },
+    "experience": {
+      "id": "quester2000",
+      "title": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "context": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "summary": {
+        "en": "",
+        "ja": "",
+        "zh": ""
+      },
+      "highlights": {
+        "en": [],
+        "ja": [],
+        "zh": []
+      }
+    }
+  },
+  "experienceEntry": {
+    "id": "quester2000",
+    "company": {
+      "en": "Quester2000 - Personal project",
+      "ja": "",
+      "zh": ""
+    },
+    "role": {
+      "en": "Fullstack Engineer",
+      "ja": "",
+      "zh": ""
+    },
+    "timeframe": {
+      "en": "Ongoing",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Created a point tracking to-do list tool that promotes self discipline and rewarding.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Designed a database schema for storing user credentials, custom quests, and custom items.",
+        "Implemented a flexible frontend UI, designed to work on a variety of systems.",
+        "Became familiar with modern tooling used to create a modern web app."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  }
+}

@@ -3,6 +3,7 @@ import {
   getLanguageSwitcherLabel,
   getLocaleDirection,
   getLocaleLabel,
+  getTopBarCopy,
   isLocale,
   localeCookieName,
   locales,
@@ -31,7 +32,7 @@ describe("i18n utilities", () => {
     });
     expect(getLocaleDirection("en")).toBe("ltr");
     expect(getLocaleDirection("ja")).toBe("ltr");
-    expect(getLanguageSwitcherLabel("zh")).toBe("語言");
+    expect(getLanguageSwitcherLabel("zh")).toBe("语言");
   });
 
   it("parses locale inputs", () => {
@@ -40,5 +41,10 @@ describe("i18n utilities", () => {
     expect(parseLocale(["fr", "en"])).toBeNull();
     expect(parseLocale(null)).toBeNull();
     expect(parseLocale(undefined)).toBeNull();
+  });
+
+  it("falls back to english top bar copy for unsupported locales", () => {
+    // @ts-expect-error intentionally providing an unsupported locale
+    expect(getTopBarCopy("fr")).toEqual(getTopBarCopy("en"));
   });
 });

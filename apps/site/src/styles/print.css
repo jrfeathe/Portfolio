@@ -10,8 +10,8 @@
 
   html,
   body {
-    background: #ffffff !important;
-    color: #0f172a !important;
+    background: var(--light-hc-background) !important;
+    color: var(--light-hc-text) !important;
   }
 
   body {
@@ -62,7 +62,7 @@
   header p {
     max-width: none !important;
     font-size: 12pt !important;
-    color: #334155 !important;
+    color: var(--light-hc-textMuted) !important;
   }
 
   main {
@@ -75,7 +75,7 @@
     page-break-inside: avoid;
     margin-bottom: 1.4rem;
     padding-bottom: 1.2rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--light-hc-divider);
   }
 
   main section:last-child {
@@ -93,7 +93,7 @@
   main section li,
   main section dd {
     font-size: 11pt !important;
-    color: #0f172a !important;
+    color: var(--light-hc-text) !important;
   }
 
   main section ul,
@@ -112,7 +112,7 @@
   }
 
   [class*="border-border"] {
-    border-color: #e2e8f0 !important;
+    border-color: var(--light-hc-divider) !important;
   }
 
   a {
@@ -123,7 +123,7 @@
   a[href^="http"]:after {
     content: " (" attr(href) ")";
     font-size: 9pt;
-    color: #475569;
+    color: var(--light-textMuted);
   }
 
   .rounded-xl,

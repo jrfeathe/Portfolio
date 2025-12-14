@@ -22,6 +22,7 @@ supporting packages.
 3. Launch the site via `pnpm dev`.
 4. Run linting with `pnpm lint` and formatting with `pnpm format`.
 5. Validate bundle budgets with `pnpm --filter @portfolio/site run build:budgets` before pushing heavy UI changes.
+6. Regenerate CSS variables from `packages/ui/tokens.json` with `node scripts/generate-tokens-css.mjs` after changing design tokens.
 
 The default Node version is pinned in `.nvmrc`. Run `nvm use` (or your preferred
 version manager) before installing dependencies to stay aligned with the repo.

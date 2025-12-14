@@ -61,9 +61,9 @@ export function ShellLayout({
   showSkimToggle = true,
   locale
 }: ShellLayoutProps) {
-  const navItems =
+  const navItems: AnchorNavItem[] =
     anchorItems ??
-    sections.map((section) => ({
+    sections.map((section): AnchorNavItem => ({
       label: typeof section.title === "string" ? section.title : section.id,
       href: `#${section.id}`
     }));

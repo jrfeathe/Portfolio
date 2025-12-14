@@ -42,7 +42,7 @@ export const Button = forwardRef<
   ButtonProps
 >((props, ref) => {
   const baseClassName = clsx(
-    "inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition cursor-pointer",
+    "inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition cursor-pointer motion-reduce:transition-none motion-reduce:duration-0 motion-reduce:transform-none",
     FOCUS_VISIBLE_RING
   );
 

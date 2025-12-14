@@ -2,6 +2,7 @@ import { Button } from "@portfolio/ui";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { UrlObject } from "url";
 
 import {
   getDictionary,
@@ -83,6 +84,13 @@ function resolveBreadcrumbs(dictionary: AppDictionary, locale: Locale) {
   return [{ label: breadcrumbs.home, href: `/${locale}` }];
 }
 
+function toUrlObject(href: string): UrlObject {
+  const [pathname, hash] = href.split("#");
+  return hash
+    ? { pathname, hash: `#${hash}` }
+    : { pathname };
+}
+
 function buildSections(dictionary: AppDictionary, locale: Locale) {
   const {
     home: { sections }
@@ -117,22 +125,23 @@ function buildSections(dictionary: AppDictionary, locale: Locale) {
       content: (
         <>
           <p>{sections.proof.overview}</p>
-          <dl className="grid gap-4 sm:grid-cols-2">
+          <ul className="grid list-none gap-4 sm:grid-cols-2">
             {sections.proof.proofChips.map((chip) => (
-              <Link
-                key={chip.title}
-                href={chip.href}
-                className="block rounded-xl border border-border bg-surface px-4 py-3 shadow-sm transition hover:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 dark:border-dark-border dark:bg-dark-surface dark:hover:border-dark-accent"
-              >
-                <dt className="text-sm font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
-                  {chip.title}
-                </dt>
-                <dd className="mt-2 text-sm">
-                  {chip.details}
-                </dd>
-              </Link>
+              <li key={chip.title}>
+                <Link
+                  href={toUrlObject(chip.href)}
+                  className="block rounded-xl border border-border bg-surface px-4 py-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent dark:border-dark-border dark:bg-dark-surface dark:focus-visible:ring-dark-accent"
+                >
+                  <span className="text-sm font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
+                    {chip.title}
+                  </span>
+                  <p className="mt-2 text-sm">
+                    {chip.details}
+                  </p>
+                </Link>
+              </li>
             ))}
-          </dl>
+          </ul>
         </>
       )
     },
@@ -202,15 +211,16 @@ export default function HomePage({ params, searchParams }: PageProps) {
           footerContent={dictionary.home.footer}
           cta={
             <div className="space-y-4">
-          <StickyCTA title={cta.title} description={cta.description}>
-            {cta.actions.map((action) => (
-              action.href ? (
-                <Button
-                  key={`${action.label}-${action.variant}`}
+              <StickyCTA title={cta.title} description={cta.description}>
+                {cta.actions.map((action, index) =>
+                  action.href ? (
+                    <Button
+                      key={`${action.label}-${action.variant}`}
                       variant={action.variant}
                       href={action.href}
                       className="w-full"
                       data-variant={action.variant}
+                      tabIndex={index === 0 ? 1 : undefined}
                       download={
                         action.download ? resumeDownloadFilename : undefined
                       }
@@ -228,15 +238,16 @@ export default function HomePage({ params, searchParams }: PageProps) {
                       variant={action.variant}
                       className="w-full"
                       data-variant={action.variant}
+                      tabIndex={index === 0 ? 1 : undefined}
                     >
-                  {action.label}
-                </Button>
-              )
-            ))}
-          </StickyCTA>
-        </div>
-      }
-    />
+                      {action.label}
+                    </Button>
+                  )
+                )}
+              </StickyCTA>
+            </div>
+          }
+        />
         <ResponsiveAudioPlayer
           src={dictionary.home.audioPlayer.src}
           title={dictionary.home.audioPlayer.title}

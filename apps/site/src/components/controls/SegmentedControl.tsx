@@ -18,6 +18,7 @@ export type SegmentedControlProps<Value extends string> = {
   value: Value;
   options: SegmentedControlOption<Value>[];
   onChange: (value: Value) => void;
+  onActiveSelect?: (value: Value) => void;
   className?: string;
   disabled?: boolean;
 };
@@ -27,6 +28,7 @@ export function SegmentedControl<Value extends string>({
   value,
   options,
   onChange,
+  onActiveSelect,
   className,
   disabled
 }: SegmentedControlProps<Value>) {
@@ -61,6 +63,8 @@ export function SegmentedControl<Value extends string>({
             onClick={() => {
               if (!isActive) {
                 onChange(option.value);
+              } else {
+                onActiveSelect?.(option.value);
               }
             }}
             data-active={isActive ? "true" : "false"}

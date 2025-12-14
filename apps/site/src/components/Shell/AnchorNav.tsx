@@ -198,7 +198,7 @@ export function AnchorNav({
 
   const orientationClasses =
     orientation === "vertical"
-      ? "flex-col gap-1"
+      ? "flex-col gap-1 mr-2"
       : "flex-row gap-2 overflow-x-auto";
   const containerScrollClasses =
     orientation === "vertical"

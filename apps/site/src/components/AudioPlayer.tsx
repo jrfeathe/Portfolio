@@ -178,10 +178,6 @@ export function AudioPlayerOverlay({
     []
   );
 
-  if (!src) {
-    return null;
-  }
-
   const formattedCurrent = formatTime(currentTime);
   const formattedDuration = formatTime(duration);
   const isBottomVariant = variant === "bottom";
@@ -219,6 +215,10 @@ export function AudioPlayerOverlay({
       window.removeEventListener("resize", updateHeight);
     };
   }, [isBottomVariant]);
+
+  if (!src) {
+    return null;
+  }
 
   if (isBottomVariant) {
     return (

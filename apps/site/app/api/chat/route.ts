@@ -11,7 +11,8 @@ import {
   buildWorkEducationFacts,
   sanitizeText,
   type RetrievalHit,
-  type AnchorEntry
+  type AnchorEntry,
+  type AnchorCategory
 } from "../../../src/lib/ai/chatbot";
 import { isBenignLocationQuestion, isBenignStructuralPrompt, runLocalModeration } from "../../../src/lib/ai/moderation";
 import {
@@ -163,25 +164,6 @@ function extractInlineLinks(markdown: string | null): Array<{ text: string; href
   return matches;
 }
 
-function buildSkillSummary(
-  techRefs: AnchorEntry[],
-  resumeHref: string | null
-): { reply: string; usedFallback: boolean } {
-  const names = techRefs.slice(0, 4).map((ref) => ref.name);
-  const links = techRefs.slice(0, 3).map((ref) => `${ref.name} (${ref.href})`);
-  const summary =
-    names.length > 0
-      ? `Jack's strongest areas include ${names.join(", ")}. `
-      : "Jack's strongest areas are highlighted in his tech stack. ";
-  const linkLine =
-    links.length > 0
-      ? `See details: ${links.join(", ")}${resumeHref ? `, and resume (${resumeHref}).` : "."}`
-      : resumeHref
-      ? `See details in his resume (${resumeHref}).`
-      : "";
-  return { reply: applyBrandCorrections(`${summary}${linkLine}`.trim()), usedFallback: true };
-}
-
 const MAX_INPUT_LENGTH = 1200;
 const MAX_HISTORY = 6;
 const MAX_PROMPTS_PER_HOUR = 10;
@@ -232,7 +214,7 @@ function ensureSessionId(value?: string) {
   return safeValue && safeValue.length >= 8 ? safeValue : crypto.randomUUID();
 }
 
-function enforceRateLimit(key: string) {
+function enforceRateLimit(key: string): { allowed: true; remaining: number } | { allowed: false; retryAfterMs: number } {
   const now = Date.now();
   const windowStart = now - RATE_LIMIT_WINDOW_MS;
   const entries = rateLimitBuckets.get(key) ?? [];
@@ -284,6 +266,7 @@ async function writeChatLog(entry: Record<string, unknown>) {
 async function logChatEvent(event: string, payload: Record<string, unknown>) {
   const entry = { level: "info", event, ...payload };
   try {
+    // eslint-disable-next-line no-console
     console.log(JSON.stringify(entry));
   } catch {
     // Swallow logging errors
@@ -343,13 +326,17 @@ function shouldRequireCaptcha(sessionId: string, promptCount: number): boolean {
   return !hasValidCaptcha(sessionId);
 }
 
-function extractMessageContent(choice: any): string {
-  const message = choice?.message;
-  if (!message) {
+function extractMessageContent(choice: unknown): string {
+  if (!choice || typeof choice !== "object") {
     return "";
   }
 
-  const content = (message as any).content;
+  const message = (choice as { message?: unknown }).message;
+  if (!message || typeof message !== "object") {
+    return "";
+  }
+
+  const content = (message as { content?: unknown }).content;
   if (typeof content === "string") {
     return content;
   }
@@ -360,8 +347,8 @@ function extractMessageContent(choice: any): string {
         if (typeof part === "string") {
           return part;
         }
-        if (typeof part?.text === "string") {
-          return part.text;
+        if (part && typeof part === "object" && typeof (part as { text?: unknown }).text === "string") {
+          return (part as { text: string }).text;
         }
         return "";
       })
@@ -369,11 +356,8 @@ function extractMessageContent(choice: any): string {
       .trim();
   }
 
-  if (typeof (message as any).text === "string") {
-    return (message as any).text;
-  }
-
-  return "";
+  const messageText = (message as { text?: unknown }).text;
+  return typeof messageText === "string" ? messageText : "";
 }
 
 function stripNoFunFlag(text: string): { text: string; flagged: boolean } {
@@ -382,7 +366,7 @@ function stripNoFunFlag(text: string): { text: string; flagged: boolean } {
     return { text, flagged: false };
   }
   const cleaned = text.replace(flagRegex, "").trim();
-  return { text: cleaned || null, flagged: true };
+  return { text: cleaned || "", flagged: true };
 }
 
 function applyBrandCorrections(text: string): string {
@@ -392,12 +376,6 @@ function applyBrandCorrections(text: string): string {
 function ensureLinkSpacing(text: string): string {
   // Insert a space before markdown links that are jammed against the previous word.
   return text.replace(/([A-Za-z0-9])(\[([^\]]+)\]\([^)]+\))/g, "$1 $2");
-}
-
-function stripMarkdownLinks(text: string): string {
-  return text
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // [text](url) -> text
-    .replace(/\[([^\]]+)\]\s*\[[^\]]*\]/g, "$1"); // [text][ref] -> text
 }
 
 function stripBracketedUrls(text: string): string {
@@ -472,25 +450,6 @@ function resolveReferer(request: Request) {
   }
 
   return process.env.OPENROUTER_APP_URL ?? "";
-}
-
-function buildFallbackReply(
-  locale: Locale,
-  hits: RetrievalHit[],
-  references: Array<{ title: string; href: string }>
-) {
-  if (!hits.length) {
-    const resumeHref = references.find((ref) => ref.title.toLowerCase().includes("resume"))?.href;
-    return (
-      `I'm having trouble reaching the model right now, but you can review Jack's resume here: ${resumeHref ?? "/resume.pdf"}. ` +
-      "For specific questions, include the tech or project name and I will try again."
-    );
-  }
-
-  const top = hits[0].chunk;
-  const pointer = references[0]?.href ?? top.href;
-  return `Yes. Based on the available context (${top.title}), Jack can help here. ` +
-    `See ${pointer} for details. If you need more depth, ask a follow-up and I'll fetch a richer answer.`;
 }
 
 async function callOpenRouter(
@@ -735,16 +694,27 @@ async function moderateWithOpenRouter(
       return null;
     }
 
-    let parsed: any;
+    let parsed: unknown = null;
     try {
       parsed = JSON.parse(trimmed);
     } catch {
       parsed = null;
     }
 
-    const label = normalizeModerationLabel(parsed?.label ?? trimmed);
-    const confidence = clampConfidence(parsed?.confidence ?? parsed?.score ?? parsed?.probability);
-    const reason = typeof parsed?.reason === "string" ? parsed.reason : undefined;
+    const parsedObject = parsed && typeof parsed === "object" ? (parsed as Record<string, unknown>) : null;
+    const label = normalizeModerationLabel(
+      typeof parsedObject?.label === "string" ? parsedObject.label : trimmed
+    );
+    const confidence = clampConfidence(
+      typeof parsedObject?.confidence === "number"
+        ? parsedObject.confidence
+        : typeof parsedObject?.score === "number"
+        ? parsedObject.score
+        : typeof parsedObject?.probability === "number"
+        ? parsedObject.probability
+        : undefined
+    );
+    const reason = typeof parsedObject?.reason === "string" ? parsedObject.reason : undefined;
     const finishReason = typeof choice?.finish_reason === "string" ? choice.finish_reason : undefined;
     const actualModel = typeof payload?.model === "string" ? payload.model : undefined;
 
@@ -926,7 +896,6 @@ export async function POST(request: Request) {
   let shouldBlockModeration = false;
   let moderationModelLabel: ModerationLabel | undefined;
   const shouldModerate = hasOpenRouterKey && !structuralBenign;
-  const offTopic = !localModeration.professionalIntent;
 
   if (shouldModerate) {
     moderationDecision = await moderateWithOpenRouter(
@@ -1239,10 +1208,9 @@ export async function POST(request: Request) {
 
   const shouldForceSkills = false;
   const shouldEnforceNoFun = noFunFlagFromModel;
-  const driftedSkill = false;
 
   let reply: string;
-  let usedFallback =
+  const usedFallback =
     resolvedReplyText === null || shouldEnforceNoFun || driftedPersona || shouldForceMeetings || shouldForceSkills;
 
   if (!usedFallback) {

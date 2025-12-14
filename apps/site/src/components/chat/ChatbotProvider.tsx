@@ -880,7 +880,7 @@ function ChatFloatingWidget() {
     [solveCaptcha]
   );
 
-  const handleResizeStart = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
+  const handleResizeStart = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
     setIsDraggingResize(true);

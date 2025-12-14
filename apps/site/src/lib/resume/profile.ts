@@ -10,7 +10,15 @@ const REQUIRED_SAME_AS = [
   "https://placeholder.onion"
 ];
 
-type ResumeJson = typeof resumeSource;
+type ResumeJson = (typeof resumeSource) & {
+  summary?: {
+    scope?: string;
+    positioning?: string;
+  };
+  version?: string;
+};
+
+const resumeData: ResumeJson = resumeSource;
 
 export type ResumeRoleSummary = {
   role: string;
@@ -77,17 +85,19 @@ function describeSummary(profile: ResumeJson) {
 }
 
 function buildProfile(): ResumeProfile {
-  const summary = describeSummary(resumeSource);
-  const safeDescription = summary || resumeSource.summary?.scope || "";
+  const summary = describeSummary(resumeData);
+  const fallbackSummary = resumeData.experience?.[0]?.summary ?? resumeData.basics.headline;
+  const safeDescription = summary || fallbackSummary || "";
+  const resumeVersion = resumeData.version ?? "v1";
 
   return {
-    name: resumeSource.basics.name,
-    headline: resumeSource.basics.headline,
+    name: resumeData.basics.name,
+    headline: resumeData.basics.headline,
     summary,
     description: safeDescription,
-    resumeVersion: resumeSource.version,
-    sameAs: mapSameAs(resumeSource),
-    languages: mapLanguages(resumeSource),
+    resumeVersion,
+    sameAs: mapSameAs(resumeData),
+    languages: mapLanguages(resumeData),
     location: {
       region: PUBLIC_REGION,
       countryCode: DEFAULT_COUNTRY,
@@ -98,7 +108,7 @@ function buildProfile(): ResumeProfile {
         }
       ]
     },
-    roles: mapRoles(resumeSource)
+    roles: mapRoles(resumeData)
   };
 }
 

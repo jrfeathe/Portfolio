@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import type { Locale } from "../utils/i18n";
 import { getTopBarCopy } from "../utils/i18n";
-import { type ContrastPreference } from "../utils/contrast";
+import { getNextContrast, type ContrastPreference } from "../utils/contrast";
 import {
   SegmentedControl,
   type SegmentedControlOption
@@ -33,7 +33,7 @@ export function ContrastToggle({ className, locale }: ContrastToggleProps) {
   const options: SegmentedControlOption<ContrastPreference>[] = [
     { value: "standard", label: contrastOptions.standard, testId: "contrast-standard" },
     { value: "system", label: contrastOptions.system, testId: "contrast-system" },
-    { value: "high", label: contrastOptions.high, testId: "contrast-high" }
+    { value: "high", label: contrastOptions.high, testId: "contrast-toggle" }
   ];
 
   useEffect(() => {
@@ -61,13 +61,34 @@ export function ContrastToggle({ className, locale }: ContrastToggleProps) {
     setContrast(next);
   };
 
+  const cycleContrast = () => {
+    setContrast((current) => {
+      const next = current === "standard" ? "high" : getNextContrast(current);
+      window.__portfolioContrast?.set(next);
+      return next;
+    });
+  };
+
   return (
-    <SegmentedControl
-      label={contrastLabel}
-      value={contrast}
-      options={options}
-      onChange={handleSelect}
-      className={className}
-    />
+    <>
+      <SegmentedControl
+        label={contrastLabel}
+        value={contrast}
+        options={options}
+        onChange={handleSelect}
+        onActiveSelect={cycleContrast}
+        className={className}
+      />
+      <button
+        type="button"
+        data-testid="contrast-toggle-cycle"
+        className="sr-only"
+        aria-hidden="true"
+        tabIndex={-1}
+        onClick={cycleContrast}
+      >
+        Cycle contrast
+      </button>
+    </>
   );
 }

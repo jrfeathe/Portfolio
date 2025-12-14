@@ -10,13 +10,13 @@ test.describe("Recruiter skim mode", () => {
     await expect(page.getByRole("img", { name: "Portrait of Jack Featherstone standing under warm light." })).toBeVisible();
     await expect(page.locator("[data-skim-mode=\"true\"]")).toHaveCount(0);
 
-    const themeDark = page.getByRole("radio", { name: "Dark" });
-    await themeDark.click();
-    await expect(themeDark).toHaveAttribute("aria-checked", "true");
+    const themeToggle = page.getByTestId("theme-toggle");
+    await themeToggle.click();
+    await expect(page.evaluate(() => document.documentElement.dataset.theme)).resolves.toBe("dark");
 
-    const contrastHigh = page.getByRole("radio", { name: "High" });
-    await contrastHigh.click();
-    await expect(contrastHigh).toHaveAttribute("aria-checked", "true");
+    const contrastToggle = page.getByTestId("contrast-toggle");
+    await contrastToggle.click();
+    await expect(page.evaluate(() => document.documentElement.dataset.contrast)).resolves.toBe("high");
 
     await expect(page.getByRole("radio", { name: /English/ })).toHaveAttribute("aria-checked", "true");
 

@@ -45,4 +45,4 @@
 
 ## Owner / status
 - Owner: Jack
-- Status: Planned — flow/design accepted; implementation pending.
+- Status: Completed — two-pass moderation (local + OpenRouter) implemented with JA/ZH coverage; remaining optional refinements deferred.

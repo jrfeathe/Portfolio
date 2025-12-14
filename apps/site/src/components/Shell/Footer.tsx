@@ -37,36 +37,38 @@ export function ShellFooter({ className, content }: ShellFooterProps) {
         className
       )}
     >
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 md:flex-row md:items-center md:justify-between">
-        <div className="space-y-2">
-          <p className="text-base font-semibold text-text dark:text-dark-text">
-            {footerContent.heading}
-          </p>
-          <p className="max-w-md leading-relaxed">{footerContent.body}</p>
+      <div className="mx-auto w-full max-w-6xl px-4">
+        <div className="grid gap-6 md:grid-cols-[2fr_1fr] md:items-start md:gap-10">
+          <div className="space-y-2">
+            <p className="text-base font-semibold text-text dark:text-dark-text">
+              {footerContent.heading}
+            </p>
+            <p className="max-w-md leading-relaxed">{footerContent.body}</p>
+          </div>
+          <div className="flex flex-col gap-4 text-sm md:items-end md:text-right">
+            <a
+              href={`mailto:${footerContent.email}`}
+              className="hover:text-text dark:hover:text-dark-text"
+            >
+              {footerContent.email}
+            </a>
+            <a
+              href={footerContent.notesHref}
+              className="hover:text-text dark:hover:text-dark-text"
+            >
+              {footerContent.notesLabel}
+            </a>
+            <a
+              href={footerContent.resumeHref}
+              className="hover:text-text dark:hover:text-dark-text"
+            >
+              {footerContent.resumeLabel}
+            </a>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-sm md:text-right">
-          <a
-            href={`mailto:${footerContent.email}`}
-            className="hover:text-text dark:hover:text-dark-text"
-          >
-            {footerContent.email}
-          </a>
-          <a
-            href={footerContent.notesHref}
-            className="hover:text-text dark:hover:text-dark-text"
-          >
-            {footerContent.notesLabel}
-          </a>
-          <a
-            href={footerContent.resumeHref}
-            className="hover:text-text dark:hover:text-dark-text"
-          >
-            {footerContent.resumeLabel}
-          </a>
+        <div className="mt-6 text-xs text-textMuted dark:text-dark-textMuted">
+          {footerContent.closing}
         </div>
-      </div>
-      <div className="mx-auto mt-6 w-full max-w-6xl px-4 text-xs text-textMuted dark:text-dark-textMuted">
-        {footerContent.closing}
       </div>
     </footer>
   );

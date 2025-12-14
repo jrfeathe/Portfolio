@@ -37,4 +37,4 @@
 
 ## Owner / status
 - Owner: Jack
-- Status: In progress — backend limit/captcha logic exists; UI/state cleanup and QA artifacts remain.
+- Status: Completed — rate-limit/captcha/moderation states polished with QA artifacts; remaining stretch items intentionally deferred per scope lock.

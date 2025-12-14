@@ -26,15 +26,15 @@ type LocalizedTechStackEntry = {
   assetId: string;
 };
 
-type TechExperienceEntry = {
+export type TechExperienceEntry = {
   id: string;
   title: string;
-  context: string | LocalizedStringMap;
-  summary: string | LocalizedStringMap;
-  highlights: string[] | Partial<Record<Locale, string[]>>;
+  context: string;
+  summary: string;
+  highlights: string[];
 };
 
-type LocalizedTechExperienceEntry = {
+export type LocalizedTechExperienceEntry = {
   id: string;
   title: LocalizedStringMap | string;
   context: Partial<Record<Locale, string>>;
@@ -42,7 +42,7 @@ type LocalizedTechExperienceEntry = {
   highlights: Partial<Record<Locale, string[]>>;
 };
 
-type ExperienceEntry = {
+export type ExperienceEntry = {
   id: string;
   company: string;
   role: string;
@@ -51,7 +51,7 @@ type ExperienceEntry = {
   highlights: string[];
 };
 
-type LocalizedExperienceEntry = {
+export type LocalizedExperienceEntry = {
   id: string;
   company: LocalizedStringMap;
   role: LocalizedStringMap;
@@ -94,6 +94,12 @@ export type AppDictionary = {
     fallbackCtaLabel: string;
     captchaTitle: string;
     captchaPrompt: string;
+    rateLimitTitle: string;
+    rateLimitMessage: string;
+    rateLimitTryAfter: string;
+    thinkingLabel: string;
+    moderationTitle: string;
+    moderationBody: string;
     sendLabel: string;
   };
   home: {
@@ -318,9 +324,6 @@ const PROJECT_EXPERIENCE_ENTRIES: LocalizedExperienceEntry[] = [
 
 const buildStellarisProofChip = (locale: Locale) => buildProofChip(stellarisModsProject, locale, "Stellaris Modding");
 const buildQuesterProofChip = (locale: Locale) => buildProofChip(quester2000Project, locale, "Quester2000");
-const buildPortfolioProofChip = (locale: Locale) => buildProofChip(portfolioProject, locale, "Portfolio");
-const buildCppGameEngineProofChip = (locale: Locale) =>
-  buildProofChip(cppGameEngineProject, locale, "C++ Game Engine");
 const buildSer321ProofChip = (locale: Locale) => buildProofChip(ser321Project, locale, "SER321 TA");
 const buildRollodexProofChip = (locale: Locale) => buildProofChip(rollodexProject, locale, "Rollodex");
 
@@ -1066,6 +1069,15 @@ const dictionaries: Record<Locale, AppDictionary> = {
   en,
   ja,
   zh
+};
+
+export const __testables = {
+  ensureLocalizedString,
+  localizeStringList,
+  getRoadmapStep,
+  normalizeTechExperience,
+  localizeTechExperience,
+  localizeExperienceEntry
 };
 
 export function getDictionary(locale: Locale): AppDictionary {

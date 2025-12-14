@@ -46,7 +46,7 @@
 
 ## Owner / status
 - Owner: Jack
-- Status: New — mapping complete; cleanup design needed.
+- Status: Completed — frontend styling map and override audit delivered; deeper cleanup actions deferred for later scope.
 
 ## Recent changes (checkpoint)
 - Centralized palette generation: added `scripts/generate-tokens-css.mjs` to emit `packages/ui/tokens.css` from `packages/ui/tokens.json`, including alias vars used by `globals.css`.

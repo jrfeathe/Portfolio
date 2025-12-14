@@ -17,7 +17,6 @@ import {
   type AvailabilityMatrix,
   type DaySummary,
   type QuarterHourKey,
-  type Weekday,
   WEEKDAYS
 } from "../../lib/availability";
 import type { AppDictionary } from "../../utils/dictionaries";
@@ -78,6 +77,7 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
   const [timezoneOptions, setTimezoneOptions] = useState(() =>
     ensureDefaultTimezone(getTimezoneOptions(true), defaultTimezone)
   );
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     setSelectedTimezone(defaultTimezone);
@@ -111,7 +111,10 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
   useEffect(() => {
     if (!isPickerOpen) {
       setTimezoneSearch("");
+      return;
     }
+
+    searchInputRef.current?.focus();
   }, [isPickerOpen]);
 
   useEffect(() => {
@@ -183,8 +186,8 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
                   onChange={(event) => setTimezoneSearch(event.target.value)}
                   placeholder="Search timezones"
                   aria-label="Search timezones"
+                  ref={searchInputRef}
                   className="w-full rounded-lg border-0 bg-surface px-3 py-2 text-sm text-text outline-none transition focus-visible:ring-2 focus-visible:ring-accent/30 dark:bg-dark-surface dark:text-dark-text dark:focus-visible:ring-dark-accent/40"
-                  autoFocus
                 />
               </div>
               {(() => {
@@ -472,7 +475,7 @@ function AvailabilityGrid({
             );
           })}
         </div>
-        <TimeColumnOverlay copy={copy} labelOffsets={labelOffsets} />
+        <TimeColumnOverlay labelOffsets={labelOffsets} />
       </div>
     </div>
   );
@@ -563,11 +566,10 @@ function computeLabelOffsets(quarterMeta: QuarterMetadata[], firstVisibleRow: nu
 }
 
 type TimeColumnOverlayProps = {
-  copy: AvailabilityCopy;
   labelOffsets: Array<{ meta: QuarterMetadata; offset: number }>;
 };
 
-function TimeColumnOverlay({ copy, labelOffsets }: TimeColumnOverlayProps) {
+function TimeColumnOverlay({ labelOffsets }: TimeColumnOverlayProps) {
   return (
     <div
       aria-hidden="true"

@@ -375,13 +375,13 @@ export function runLocalModeration(message: string): LocalModerationResult {
     };
   }
 
-  if (selfHarmCue) addSuspicion(0.4);
+  if (selfHarmCue) addSuspicion(0.5);
   if (doxxing) addSuspicion(0.4);
   if (sexualBody) addSuspicion(0.25);
   if (glinFlagged) addSuspicion(0.25);
   if (harassmentCue) addSuspicion(0.25);
   if (personalSensitiveCue) addSuspicion(0.2);
-  if (unprofessionalCue) addSuspicion(0.05);
+  if (unprofessionalCue) addSuspicion(0.1);
 
   return {
     flagged: glinFlagged || doxxing || sexualBody || harassmentCue || selfHarmCue || personalSensitiveCue,

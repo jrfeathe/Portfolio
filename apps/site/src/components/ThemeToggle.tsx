@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import type { Locale } from "../utils/i18n";
 import { getTopBarCopy } from "../utils/i18n";
-import { type ThemePreference } from "../utils/theme";
+import { getNextTheme, type ThemePreference } from "../utils/theme";
 import {
   SegmentedControl,
   type SegmentedControlOption
@@ -33,7 +33,7 @@ export function ThemeToggle({ className, locale }: ThemeToggleProps) {
   const options: SegmentedControlOption<ThemePreference>[] = [
     { value: "light", label: `☀️`, testId: "theme-light" },
     { value: "system", label: themeOptions.system, testId: "theme-system" },
-    { value: "dark", label: `🌙`, testId: "theme-dark" }
+    { value: "dark", label: `🌙`, testId: "theme-toggle" }
   ];
 
   useEffect(() => {
@@ -61,13 +61,34 @@ export function ThemeToggle({ className, locale }: ThemeToggleProps) {
     setTheme(next);
   };
 
+  const cycleTheme = () => {
+    setTheme((current) => {
+      const next = current === "light" ? "dark" : getNextTheme(current);
+      window.__portfolioTheme?.set(next);
+      return next;
+    });
+  };
+
   return (
-    <SegmentedControl
-      label={themeLabel}
-      value={theme}
-      options={options}
-      onChange={handleSelect}
-      className={className}
-    />
+    <>
+      <SegmentedControl
+        label={themeLabel}
+        value={theme}
+        options={options}
+        onChange={handleSelect}
+        onActiveSelect={cycleTheme}
+        className={className}
+      />
+      <button
+        type="button"
+        data-testid="theme-toggle-cycle"
+        className="sr-only"
+        aria-hidden="true"
+        tabIndex={-1}
+        onClick={cycleTheme}
+      >
+        Cycle theme
+      </button>
+    </>
   );
 }

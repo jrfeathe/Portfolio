@@ -15,6 +15,7 @@ import {
   type ShellSection
 } from "../../../src/components/Shell";
 import { AvailabilitySection } from "../../../src/components/meetings/AvailabilitySection";
+import { ChatbotLauncher } from "../../../src/components/chat/ChatbotLauncher";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -100,6 +101,7 @@ export default function MeetingsPage({ params }: PageParams) {
   const locale = ensureLocale(params.locale);
   const dictionary = getDictionary(locale);
   const sections = buildSections(dictionary, locale);
+  const chatbotEnabled = process.env.NEXT_PUBLIC_ENABLE_CHATBOT !== "0";
   const breadcrumbs = [
     {
       label: dictionary.home.breadcrumbs.home,
@@ -111,13 +113,16 @@ export default function MeetingsPage({ params }: PageParams) {
   ];
 
   return (
-    <ResponsiveShellLayout
-      title={dictionary.meetings.title}
-      subtitle={dictionary.meetings.subtitle}
-      breadcrumbs={breadcrumbs}
+    <>
+      <ResponsiveShellLayout
+        title={dictionary.meetings.title}
+        subtitle={dictionary.meetings.subtitle}
+        breadcrumbs={breadcrumbs}
       sections={sections}
       showSkimToggle={false}
       locale={locale}
     />
+      {chatbotEnabled ? <ChatbotLauncher locale={locale} copy={dictionary.chatbot} /> : null}
+    </>
   );
 }

@@ -15,7 +15,13 @@ const SLIDE_LOCK_DURATION = 420;
 const INITIAL_VISIBLE_SLIDES = 1;
 const LAZY_SLIDE_DELAY = 600;
 
-export function TechStackCarousel({ items }: { items: TechStackItems }) {
+export function TechStackCarousel({
+  items,
+  iconsReady = true
+}: {
+  items: TechStackItems;
+  iconsReady?: boolean;
+}) {
   const slides = useMemo(() => {
     const chunked: TechStackItem[][] = [];
     for (let i = 0; i < items.length; i += ITEMS_PER_SLIDE) {
@@ -181,7 +187,7 @@ export function TechStackCarousel({ items }: { items: TechStackItems }) {
           style={{ transform: `translateX(-${activeSlide * 100}%)` }}
         >
           {slides.map((slide, slideIndex) => {
-            const slideIsLoaded = slideIndex < visibleSlideCount;
+            const slideIsLoaded = iconsReady && slideIndex < visibleSlideCount;
             return (
               <ul
                 key={`${slide[0]?.name ?? "slide"}-${slideIndex}`}

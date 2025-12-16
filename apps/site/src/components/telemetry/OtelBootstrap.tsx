@@ -3,6 +3,14 @@
 import { useEffect } from "react";
 
 export function OtelBootstrap() {
+  const browserOtelEnabled =
+    typeof process.env.NEXT_PUBLIC_ENABLE_OTEL_BROWSER === "string" &&
+    process.env.NEXT_PUBLIC_ENABLE_OTEL_BROWSER !== "";
+
+  if (!browserOtelEnabled) {
+    return null;
+  }
+
   useEffect(() => {
     let isCancelled = false;
 

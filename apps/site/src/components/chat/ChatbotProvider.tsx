@@ -2,6 +2,7 @@
 
 import { Button, colors as designColors } from "@portfolio/ui";
 import clsx from "clsx";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import {
   createContext,
@@ -18,35 +19,16 @@ import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
 
 import type { Locale } from "../../utils/i18n";
-
-type HCaptchaGlobal = {
-  render: (
-    container: HTMLElement,
-    config: {
-      sitekey: string;
-      callback: (token: string) => void;
-      "expired-callback"?: () => void;
-      "error-callback"?: () => void;
-      theme?: "light" | "dark";
-      size?: "normal" | "compact";
-    }
-  ) => number;
-  reset: (widgetId?: number) => void;
-};
-
-declare global {
-  interface Window {
-    hcaptcha?: HCaptchaGlobal;
-  }
-}
-
-const HCAPTCHA_SCRIPT_SRC = "https://js.hcaptcha.com/1/api.js?render=explicit";
 const CONTRAST_PRIMARY = designColors["light-hc"]?.accent;
 const CONTRAST_PRIMARY_DARK = designColors["dark-hc"]?.accent;
 const CONTRAST_ON_PRIMARY = designColors["light-hc"]?.accentOn;
 const CONTRAST_ON_PRIMARY_DARK = designColors["dark-hc"]?.accentOn;
 const CONTRAST_ON_PRIMARY_STRONG = designColors["dark-hc"]?.accentOn ?? CONTRAST_ON_PRIMARY_DARK;
 const ATTENTION_SURFACE = designColors.light.attention;
+const LazyHCaptchaWidget = dynamic(
+  () => import("./HCaptchaWidget").then((mod) => mod.HCaptchaWidget),
+  { ssr: false, loading: () => null }
+);
 
 export type ChatbotCopy = {
   launcherLabel: string;
@@ -182,15 +164,17 @@ export function useChatbot() {
   return ctx;
 }
 
+export type ChatbotProviderProps = {
+  children?: React.ReactNode;
+  locale: Locale;
+  copy: ChatbotCopy;
+};
+
 export function ChatbotProvider({
   children,
   locale,
   copy
-}: {
-  children: React.ReactNode;
-  locale: Locale;
-  copy: ChatbotCopy;
-}) {
+}: ChatbotProviderProps) {
   const [hydrated, setHydrated] = useState(false);
   const [sessionId, setSessionId] = useState<string>(randomId);
   const [state, setState] = useState<ChatState>({
@@ -639,110 +623,6 @@ function loadHCaptchaScript(): Promise<void> {
   });
 }
 
-function HCaptchaWidget({
-  siteKey,
-  onVerify,
-  disabled
-}: {
-  siteKey: string;
-  onVerify: (token: string) => void;
-  disabled?: boolean;
-}) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const widgetIdRef = useRef<number | null>(null);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const resolveTheme = () =>
-      document.documentElement.classList.contains("dark") ? "dark" : "light";
-
-    setTheme(resolveTheme());
-
-    const observer = new MutationObserver(() => {
-      const next = resolveTheme();
-      setTheme((prev) => (prev === next ? prev : next));
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class", "data-theme"]
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    let mounted = true;
-
-    async function setup() {
-      if (!siteKey || typeof window === "undefined") {
-        return;
-      }
-
-      try {
-        await loadHCaptchaScript();
-      } catch (error) {
-        console.error("[chatbot] Failed to load hCaptcha script:", error);
-        return;
-      }
-
-      if (!mounted || !containerRef.current) {
-        return;
-      }
-
-      const hcaptcha = window.hcaptcha;
-      if (!hcaptcha) {
-        return;
-      }
-
-      if (widgetIdRef.current !== null) {
-        hcaptcha.reset(widgetIdRef.current);
-        widgetIdRef.current = null;
-      }
-
-      widgetIdRef.current = hcaptcha.render(containerRef.current, {
-        sitekey: siteKey,
-        theme,
-        callback: (token: string) => {
-          onVerify(token);
-        },
-        "expired-callback": () => {
-          if (widgetIdRef.current !== null) {
-            hcaptcha.reset(widgetIdRef.current);
-          }
-        },
-        "error-callback": () => {
-          if (widgetIdRef.current !== null) {
-            hcaptcha.reset(widgetIdRef.current);
-          }
-        }
-      });
-    }
-
-    setup();
-
-    return () => {
-      mounted = false;
-      if (window.hcaptcha && widgetIdRef.current !== null) {
-        window.hcaptcha.reset(widgetIdRef.current);
-      }
-      widgetIdRef.current = null;
-    };
-  }, [siteKey, onVerify, theme]);
-
-  return (
-    <div className="mt-2">
-      <div
-        ref={containerRef}
-        className={clsx(disabled && "pointer-events-none opacity-60")}
-      />
-    </div>
-  );
-}
 
 function ChatFloatingWidget() {
   const { state, toggle, sendMessage, copy, solveCaptcha } = useChatbot();
@@ -1112,7 +992,7 @@ function ChatFloatingWidget() {
                 <p className="mt-1 text-xs text-textMuted dark:text-dark-textMuted">
                   {copy.captchaPrompt}
                 </p>
-                <HCaptchaWidget
+                <LazyHCaptchaWidget
                   siteKey={state.captchaSiteKey}
                   onVerify={handleCaptchaVerify}
                   disabled={state.pending}

@@ -15,6 +15,7 @@ import {
   type ShellSection,
   type AnchorNavItem
 } from "../../../src/components/Shell";
+import { ChatbotLauncher } from "../../../src/components/chat/ChatbotLauncher";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -134,6 +135,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
 export default function ExperiencePage({ params }: PageParams) {
   const locale = ensureLocale(params.locale);
   const dictionary = getDictionary(locale);
+  const chatbotEnabled = process.env.NEXT_PUBLIC_ENABLE_CHATBOT !== "0";
   const sections = buildSections(dictionary);
   const projectAnchors: AnchorNavItem[] = dictionary.experience.entries.map((entry) => ({
     label: entry.company,
@@ -166,14 +168,17 @@ export default function ExperiencePage({ params }: PageParams) {
   ];
 
   return (
-    <ResponsiveShellLayout
-      title={dictionary.experience.title}
-      subtitle={dictionary.experience.subtitle}
-      breadcrumbs={breadcrumbs}
-      sections={sections}
-      anchorItems={anchorItems}
-      showSkimToggle={false}
-      locale={locale}
-    />
+    <>
+      <ResponsiveShellLayout
+        title={dictionary.experience.title}
+        subtitle={dictionary.experience.subtitle}
+        breadcrumbs={breadcrumbs}
+        sections={sections}
+        anchorItems={anchorItems}
+        showSkimToggle={false}
+        locale={locale}
+      />
+      {chatbotEnabled ? <ChatbotLauncher locale={locale} copy={dictionary.chatbot} /> : null}
+    </>
   );
 }

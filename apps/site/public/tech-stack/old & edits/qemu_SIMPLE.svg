@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   viewBox="0 0 111.7 111.594"
+   id="svg5"
+   width="111.7"
+   height="111.594"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title1">Kew the Angry Emu</title>
+  <defs
+     id="defs4">
+    <linearGradient
+       id="cvfb"
+       x1="143"
+       x2="143"
+       y1="832"
+       y2="879"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.05,0,0,1.29,-31.6,-1017)">
+      <stop
+         style="stop-color:#fff"
+         offset="0"
+         id="stop1" />
+      <stop
+         style="stop-color:#fff;stop-opacity:0"
+         offset="1"
+         id="stop2" />
+    </linearGradient>
+    <radialGradient
+       id="cvfa"
+       cx="117"
+       cy="98.300003"
+       r="55.900002"
+       gradientTransform="matrix(0.974,1.51,-0.836,0.54,79.6,-130)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         id="stop3" />
+      <stop
+         style="stop-opacity:.897"
+         offset="1"
+         id="stop4" />
+    </radialGradient>
+  </defs>
+  <metadata
+     id="metadata4">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Kew the Angry Emu</dc:title>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Benoît Canet</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>CC BY 3.0</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:publisher>
+          <cc:Agent>
+            <dc:title>QEMU Community</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:date>2012-02-15</dc:date>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/3.0/" />
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>QEMU logo</rdf:li>
+            <rdf:li>QEMU mascot</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:source>http://lists.gnu.org/archive/html/qemu-devel/2012-02/msg01961.html</dc:source>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/3.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-62.1,-55.506)"
+     id="g5">
+    <path
+       d="M 118,55.9 C 96.070102,55.593291 74.845137,69.584132 66.489063,89.860938 c -8.694679,19.852492 -4.173372,44.545742 11.036779,59.997032 15.170896,16.24275 40.400398,21.74569 60.981768,13.37268 3.19332,-0.51521 7.70799,-5.95352 8.36034,-0.50672 1.03197,1.41411 0.74828,4.76803 3.00519,4.37607 7.07895,0 14.15791,0 21.23686,0 -2.93667,-7.26667 -5.87333,-14.53333 -8.81,-21.8 14.22577,-17.90023 15.30571,-44.72445 2.70486,-63.764724 C 154.98548,65.734811 136.72294,55.733637 118,55.9 Z"
+       style="fill:url(#cvfa)"
+       id="path4" />
+    <path
+       id="ellipse4"
+       style="fill:url(#cvfb);stroke-width:1.16383"
+       d="m 117.50039,55.506 c -12.99799,-0.07818 -26.456717,6.037445 -33.184106,17.494419 -6.125495,9.641119 -4.953793,23.146038 2.281082,31.874821 10.685672,-0.83077 19.537214,-38.57097 40.697654,-30.274691 0.19743,4.483667 2.98917,5.671667 4.0698,8.484983 3.24795,4.437959 12.25237,1.06972 16.57191,3.795409 2.02664,0.358962 5.19045,4.01357 4.07896,5.44698 -1.53908,-1.308241 -2.0734,-2.175069 -3.34065,-0.03159 -3.58335,1.490421 -7.37578,-0.777282 -11.08825,-0.603445 -4.81258,-0.393221 -9.33142,1.654376 -13.4044,3.961707 -10.45213,3.009615 -23.54037,8.732757 -13.03466,20.455437 1.28584,4.6677 7.49048,2.36285 11.06132,2.59796 12.88459,-1.15648 25.37908,-9.04344 30.51732,-21.144199 3.90764,-9.883597 1.71308,-21.91256 -5.71768,-29.587576 -7.35462,-8.310214 -18.55722,-12.46412 -29.5083,-12.470211 z" />
+    <path
+       d="m 103,65 c -2.31468,2.739563 -8.244673,1.31813 -4.1549,6.09 -4.490817,-0.308714 -4.322347,7.68065 -7.66615,10.252019 -2.201254,6.979836 -4.507451,14.156811 -4.417984,21.556531 1.180807,4.49394 -0.381243,9.58195 2.043286,13.71449 12.246828,11.05767 21.933068,24.7062 30.209848,38.91676 0.66492,-0.0467 3.17412,8.105 2.14103,1.99203 -0.79712,-7.34272 -1.50457,-14.75235 -4.25875,-21.68743 -2.23437,-6.54375 -4.97405,-13.53533 -5.69628,-20.2046 -1.08775,-6.05999 -0.29469,-13.73198 5.91266,-16.768906 5.41835,-2.249772 10.50986,-5.540603 16.22323,-6.924906 4.54724,-1.630756 14.00396,3.019262 15.74772,-0.664121 -5.23626,-2.98828 -11.55062,-2.71686 -17.25837,-4.340416 -4.97727,-1.061348 -10.13039,-1.974446 -15.18104,-2.986251 -1.10431,-1.132514 3.54976,0.198705 4.95275,0.138947 6.87662,0.803223 13.54325,1.678342 20.28144,3.419784 4.12737,-0.462836 9.20721,4.631116 10.82103,4.667317 -1.71848,-5.674115 -8.54053,-6.68455 -13.34328,-8.52427 -4.9915,-0.537184 -5.32367,-5.532018 -7.82824,-8.683477 -3.52596,-5.09563 -10.41552,-6.13259 -16.06322,-7.792154 -3.06212,-1.436825 -4.5802,1.835142 -6.80142,-1.657866 C 106.9555,65.036901 103.72437,67.14466 103,65 Z m 17.9,10.2 c 4.8296,-1.405745 10.7513,7.116451 3.05266,6.489219 C 120.38327,82.018556 113.95944,75.936468 120.9,75.2 Z"
+       style="fill:#ff6600"
+       id="path5" />
+  </g>
+</svg>

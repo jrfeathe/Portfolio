@@ -12,6 +12,8 @@ const ITEMS_PER_ROW = 4;
 const ROWS_PER_SLIDE = 2;
 const ITEMS_PER_SLIDE = ITEMS_PER_ROW * ROWS_PER_SLIDE;
 const SLIDE_LOCK_DURATION = 420;
+const INITIAL_VISIBLE_SLIDES = 1;
+const LAZY_SLIDE_DELAY = 600;
 
 export function TechStackCarousel({ items }: { items: TechStackItems }) {
   const slides = useMemo(() => {
@@ -23,11 +25,27 @@ export function TechStackCarousel({ items }: { items: TechStackItems }) {
   }, [items]);
 
   const [activeSlide, setActiveSlide] = useState(0);
+  const [visibleSlideCount, setVisibleSlideCount] = useState(() =>
+    slides.length ? INITIAL_VISIBLE_SLIDES : 0,
+  );
   const interactionLockRef = useRef<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const lazySlideTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     setActiveSlide((prev) => Math.min(prev, Math.max(slides.length - 1, 0)));
+  }, [slides.length]);
+
+  useEffect(() => {
+    setVisibleSlideCount((prev) => {
+      if (!slides.length) {
+        return 0;
+      }
+      if (prev === 0) {
+        return INITIAL_VISIBLE_SLIDES;
+      }
+      return Math.min(prev, slides.length);
+    });
   }, [slides.length]);
 
   const lockInteraction = useCallback(() => {
@@ -44,8 +62,36 @@ export function TechStackCarousel({ items }: { items: TechStackItems }) {
       if (interactionLockRef.current !== null) {
         window.clearTimeout(interactionLockRef.current);
       }
+      if (lazySlideTimeoutRef.current !== null) {
+        window.clearTimeout(lazySlideTimeoutRef.current);
+        lazySlideTimeoutRef.current = null;
+      }
     };
   }, []);
+
+  useEffect(() => {
+    if (!slides.length) {
+      return;
+    }
+    setVisibleSlideCount((prev) => Math.max(prev, Math.min(slides.length, activeSlide + 1)));
+  }, [activeSlide, slides.length]);
+
+  useEffect(() => {
+    if (!slides.length || visibleSlideCount >= slides.length) {
+      return;
+    }
+
+    lazySlideTimeoutRef.current = window.setTimeout(() => {
+      setVisibleSlideCount((prev) => Math.min(prev + 1, slides.length));
+    }, LAZY_SLIDE_DELAY);
+
+    return () => {
+      if (lazySlideTimeoutRef.current !== null) {
+        window.clearTimeout(lazySlideTimeoutRef.current);
+        lazySlideTimeoutRef.current = null;
+      }
+    };
+  }, [visibleSlideCount, slides.length]);
 
   const changeSlide = useCallback(
     (delta: number, lockAfter = true) => {
@@ -134,39 +180,50 @@ export function TechStackCarousel({ items }: { items: TechStackItems }) {
           className="flex transition-transform duration-500 ease-out"
           style={{ transform: `translateX(-${activeSlide * 100}%)` }}
         >
-          {slides.map((slide, slideIndex) => (
-            <ul
-              key={`${slide[0]?.name ?? "slide"}-${slideIndex}`}
-              className="grid min-w-full grid-cols-4 grid-rows-2 gap-x-5 gap-y-5 text-center text-xs font-medium text-text dark:text-dark-text"
-            >
-              {slide.map((item) => (
-                <li key={item.name}>
-                  <a
-                    href={item.href}
-                    className="group flex h-full flex-col items-center gap-2 rounded-[1.75rem] border border-transparent bg-transparent px-0 py-0 transition hover:-translate-y-0.5"
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    data-tech-stack-item
-                  >
-                    <span
-                      className="flex h-16 w-16 items-center justify-center rounded-[1.25rem] border border-border/40 bg-surfaceMuted text-accent shadow-sm transition group-hover:border-accent group-hover:text-accent dark:border-dark-border/40 dark:bg-dark-surfaceMuted"
-                      data-tech-stack-icon={item.assetId}
+          {slides.map((slide, slideIndex) => {
+            const slideIsLoaded = slideIndex < visibleSlideCount;
+            return (
+              <ul
+                key={`${slide[0]?.name ?? "slide"}-${slideIndex}`}
+                className="grid min-w-full grid-cols-4 grid-rows-2 gap-x-5 gap-y-5 text-center text-xs font-medium text-text dark:text-dark-text"
+              >
+                {slide.map((item) => (
+                  <li key={item.name}>
+                    <a
+                      href={item.href}
+                      className="group flex h-full flex-col items-center gap-2 rounded-[1.75rem] border border-transparent bg-transparent px-0 py-0 transition hover:-translate-y-0.5"
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      data-tech-stack-item
                     >
-                      <Image
-                        src={`/tech-stack/${item.assetId}.svg`}
-                        alt=""
-                        width={48}
-                        height={48}
-                        className="h-11 w-11 object-contain"
-                        aria-hidden
-                      />
-                    </span>
-                    <span className="truncate text-center font-semibold">{item.name}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ))}
+                      <span
+                        className="flex h-16 w-16 items-center justify-center rounded-[1.25rem] border border-border/40 bg-surfaceMuted text-accent shadow-sm transition group-hover:border-accent group-hover:text-accent dark:border-dark-border/40 dark:bg-dark-surfaceMuted"
+                        data-tech-stack-icon={item.assetId}
+                      >
+                        {slideIsLoaded ? (
+                          <Image
+                            src={`/api/tech-stack-icons/${item.assetId}`}
+                            alt=""
+                            width={48}
+                            height={48}
+                            className="h-11 w-11 object-contain"
+                            aria-hidden
+                            unoptimized
+                          />
+                        ) : (
+                          <span
+                            aria-hidden
+                            className="block h-11 w-11 rounded-[1rem] bg-border/30 dark:bg-dark-border/30"
+                          />
+                        )}
+                      </span>
+                      <span className="truncate text-center font-semibold">{item.name}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            );
+          })}
         </div>
       </div>
       {slides.length > 1 && (

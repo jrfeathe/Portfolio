@@ -1,0 +1,1 @@
+npx svgo qemu.svg -o qemu_min.svg --multipass

@@ -89,7 +89,7 @@ export async function GET(
     if (supportsBrotli) {
       headers.set("Content-Encoding", "br");
       headers.set("Content-Length", String(entry.compressed.length));
-      return new NextResponse(entry.compressed, {
+      return new NextResponse(new Uint8Array(entry.compressed), {
         status: 200,
         headers
       });
@@ -98,14 +98,14 @@ export async function GET(
     if (supportsGzip) {
       headers.set("Content-Encoding", "gzip");
       headers.set("Content-Length", String(entry.gzip.length));
-      return new NextResponse(entry.gzip, {
+      return new NextResponse(new Uint8Array(entry.gzip), {
         status: 200,
         headers
       });
     }
 
     headers.set("Content-Length", String(entry.raw.length));
-    return new NextResponse(entry.raw, {
+    return new NextResponse(new Uint8Array(entry.raw), {
       status: 200,
       headers
     });

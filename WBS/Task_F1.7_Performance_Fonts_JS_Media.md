@@ -223,4 +223,11 @@ Record a waterfall + timings under:
 
 ---
 
-If you paste (or describe) your current **font setup** (next/font vs @font-face + which font files), and whether you’re intentionally using **client-side OpenTelemetry**, I can give you a very concrete “change list” and exact code placements for your repo structure.
+## What we shipped (Dec 17)
+
+* **Fonts**: dropped `next/font` + TTF preload; default to system stacks with locale-specific fallbacks (no font downloads on first paint).
+* **Chatbot**: moved provider to root layout for persistence; lazy loads with a fast emoji launcher placeholder; hCaptcha split into its own lazy widget to avoid upfront script fetch.
+* **JS/telemetry**: browser OTel gated behind `NEXT_PUBLIC_ENABLE_OTEL_BROWSER`; chat loads as lowest-priority chunk while keeping the placeholder visible.
+* **Media**: home audio player is dynamically imported (no SSR) to defer its JS until after hydration.
+
+---

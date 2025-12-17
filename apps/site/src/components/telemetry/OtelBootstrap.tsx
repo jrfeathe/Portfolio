@@ -7,11 +7,11 @@ export function OtelBootstrap() {
     typeof process.env.NEXT_PUBLIC_ENABLE_OTEL_BROWSER === "string" &&
     process.env.NEXT_PUBLIC_ENABLE_OTEL_BROWSER !== "";
 
-  if (!browserOtelEnabled) {
-    return null;
-  }
-
   useEffect(() => {
+    if (!browserOtelEnabled) {
+      return;
+    }
+
     let isCancelled = false;
 
     async function bootstrap() {
@@ -38,7 +38,7 @@ export function OtelBootstrap() {
     return () => {
       isCancelled = true;
     };
-  }, []);
+  }, [browserOtelEnabled]);
 
   return null;
 }

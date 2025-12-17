@@ -20,6 +20,10 @@
     sans-serif;
 }
 
+.chatbot-ready .chatbot-placeholder {
+  display: none;
+}
+
 body {
   font-family: inherit;
 }

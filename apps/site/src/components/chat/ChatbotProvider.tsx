@@ -186,6 +186,16 @@ export function ChatbotProvider({
   });
 
   useEffect(() => {
+    if (typeof document === "undefined") {
+      return;
+    }
+    document.body.classList.add("chatbot-ready");
+    return () => {
+      document.body.classList.remove("chatbot-ready");
+    };
+  }, []);
+
+  useEffect(() => {
     if (hydrated) {
       return;
     }
@@ -579,50 +589,6 @@ function MessageBubble({
     </div>
   );
 }
-
-function loadHCaptchaScript(): Promise<void> {
-  if (typeof window === "undefined") {
-    return Promise.reject(new Error("Window is not available"));
-  }
-
-  if (window.hcaptcha) {
-    return Promise.resolve();
-  }
-
-  let script = document.querySelector<HTMLScriptElement>('script[data-hcaptcha-script="true"]');
-  if (!script) {
-    script = document.createElement("script");
-    script.src = HCAPTCHA_SCRIPT_SRC;
-    script.async = true;
-    script.defer = true;
-    script.dataset.hcaptchaScript = "true";
-    document.body.appendChild(script);
-  }
-
-  return new Promise((resolve, reject) => {
-    const handleLoad = () => {
-      cleanup();
-      resolve();
-    };
-    const handleError = () => {
-      cleanup();
-      reject(new Error("Failed to load hCaptcha script"));
-    };
-    const cleanup = () => {
-      script?.removeEventListener("load", handleLoad);
-      script?.removeEventListener("error", handleError);
-    };
-
-    script.addEventListener("load", handleLoad);
-    script.addEventListener("error", handleError);
-
-    if (window.hcaptcha) {
-      cleanup();
-      resolve();
-    }
-  });
-}
-
 
 function ChatFloatingWidget() {
   const { state, toggle, sendMessage, copy, solveCaptcha } = useChatbot();

@@ -2,7 +2,8 @@ import clsx from "clsx";
 import type { Metadata } from "next";
 import { cookies, headers as getHeaders } from "next/headers";
 import type { ReactNode } from "react";
-import localFont from "next/font/local";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
 
 import "./globals.css";
 import "../src/styles/print.css";
@@ -23,10 +24,36 @@ import {
   themeCookieName,
   type ThemePreference
 } from "../src/utils/theme";
-import { OtelBootstrap } from "../src/components/telemetry/OtelBootstrap";
-import { ChatbotProvider } from "../src/components/chat";
 import { CriticalCss } from "./CriticalCss";
 import { extractNonceFromHeaders } from "../src/utils/csp";
+import type { ChatbotCopy, ChatbotProviderProps } from "../src/components/chat/ChatbotProvider";
+const OtelBootstrap = dynamic(
+  () =>
+    import("../src/components/telemetry/OtelBootstrap").then(
+      (mod) => mod.OtelBootstrap
+    ),
+  { ssr: false, loading: () => null }
+);
+const chatbotLoadingFallback = (copy: ChatbotCopy) => {
+  const label = copy.launcherLabel || "Chat";
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      className="chatbot-placeholder fixed bottom-6 right-6 z-40 flex h-12 items-center gap-2 rounded-full bg-accent px-4 text-sm font-semibold text-accentOn shadow-lg transition hover:bg-accentHover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-accent dark:bg-dark-accent dark:text-dark-accentOn dark:hover:bg-dark-accentHover"
+    >
+      <span aria-hidden>💬</span>
+      <span className="hidden sm:inline">{label}</span>
+    </button>
+  );
+};
+const ChatbotProvider = dynamic<ChatbotProviderProps>(
+  () =>
+    import("../src/components/chat/ChatbotProvider").then(
+      (mod) => mod.ChatbotProvider
+    ),
+  { ssr: false, suspense: true }
+);
 
 // Escapes potentially dangerous characters for safe JS embedding in <script> tags
 const charMap = {
@@ -47,74 +74,6 @@ function escapeUnsafeChars(str: string): string {
   return str.replace(/[<>\b\f\n\r\t\0\u2028\u2029/\\]/g, (c) => charMap[c as keyof typeof charMap] || c);
 }
 
-const sansFont = localFont({
-  src: [
-    {
-      path: "../public/fonts/ubuntu/Ubuntu-Regular.ttf",
-      weight: "400",
-      style: "normal"
-    },
-    {
-      path: "../public/fonts/ubuntu/Ubuntu-Medium.ttf",
-      weight: "500",
-      style: "normal"
-    },
-    {
-      path: "../public/fonts/ubuntu/Ubuntu-Bold.ttf",
-      weight: "700",
-      style: "normal"
-    }
-  ],
-  display: "swap",
-  preload: true,
-  variable: "--font-sans",
-  fallback: [
-    "ui-sans-serif",
-    "system-ui",
-    "-apple-system",
-    "BlinkMacSystemFont",
-    "\"Segoe UI\"",
-    "Roboto",
-    "\"Helvetica Neue\"",
-    "Arial",
-    "\"Noto Sans\"",
-    "sans-serif",
-    "\"Apple Color Emoji\"",
-    "\"Segoe UI Emoji\"",
-    "\"Segoe UI Symbol\"",
-    "\"Noto Color Emoji\""
-  ]
-});
-
-const monoFont = localFont({
-  src: [
-    {
-      path: "../public/fonts/ubuntu-mono/UbuntuMono-Regular.ttf",
-      weight: "400",
-      style: "normal"
-    },
-    {
-      path: "../public/fonts/ubuntu-mono/UbuntuMono-Bold.ttf",
-      weight: "700",
-      style: "normal"
-    }
-  ],
-  display: "swap",
-  preload: true,
-  variable: "--font-mono",
-  fallback: [
-    "\"Fira Code\"",
-    "ui-monospace",
-    "SFMono-Regular",
-    "Menlo",
-    "Monaco",
-    "Consolas",
-    "\"Liberation Mono\"",
-    "\"Courier New\"",
-    "monospace"
-  ]
-});
-
 const defaultDictionary = getDictionary(defaultLocale);
 
 export const metadata: Metadata = {
@@ -129,7 +88,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const cookieStore = cookies();
   const storedLocale = cookieStore.get(localeCookieName)?.value;
   const locale = isLocale(storedLocale) ? storedLocale : defaultLocale;
-  const chatbotCopy = getDictionary(locale).chatbot;
+  const dictionary = getDictionary(locale);
+  const chatbotCopy = dictionary.chatbot;
+  const chatbotEnabled = process.env.NEXT_PUBLIC_ENABLE_CHATBOT !== "0";
+  const browserOtelEnabled =
+    typeof process.env.NEXT_PUBLIC_ENABLE_OTEL_BROWSER === "string" &&
+    process.env.NEXT_PUBLIC_ENABLE_OTEL_BROWSER !== "";
   const headerList = getHeaders();
   const nonce = extractNonceFromHeaders(headerList);
   const storedThemeCookie = cookieStore.get(themeCookieName)?.value;
@@ -172,8 +136,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body
         className={clsx(
           "min-h-screen bg-background font-sans text-text antialiased dark:bg-dark-background dark:text-dark-text",
-          sansFont.variable,
-          monoFont.variable
         )}
         data-csp-nonce={nonce}
       >
@@ -193,10 +155,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             }}
           />
         ) : null}
-        <OtelBootstrap />
-        <ChatbotProvider locale={locale} copy={chatbotCopy}>
-          {children}
-        </ChatbotProvider>
+        {browserOtelEnabled ? <OtelBootstrap /> : null}
+        {chatbotEnabled ? chatbotLoadingFallback(chatbotCopy) : null}
+        {chatbotEnabled ? (
+          <Suspense fallback={null}>
+            <ChatbotProvider locale={locale} copy={chatbotCopy} />
+          </Suspense>
+        ) : null}
+        {children}
       </body>
     </html>
   );

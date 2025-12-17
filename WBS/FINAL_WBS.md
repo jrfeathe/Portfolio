@@ -1,69 +1,90 @@
-# FINAL_WBS — REVOLT Launch Pivot
+# FINAL_WBS — Launch Pivot
 
 This WBS locks the launch scope after the REVOLT audit, trims feature creep, and reserves a small fast-follow lane for the Tor mirror. Legend: LC = launch-critical; FF = fast-follow after launch; AX = archived/not pursuing now.
 
 ## Launch-Critical Streams
 ### F1 — REVOLT Return to Order (LC)
-| ID    | Task                             | Scope / Notes                                                                                                   | Deliverable / DoD                                                    |
-|-------|----------------------------------|-----------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
-| F1.1  | WBS reset & codes                | Lock this FINAL_WBS format/codes; remove reliance on legacy WBS; record archived tracks.                        | FINAL_WBS committed with stable F-codes; archived list confirmed.    |
-| F1.2  | Diagram/tooling cleanup decision | Decide on removing Mermaid/PlantUML + /api/plantuml; if unused, plan removal steps and owners.                  | Decision noted; removal checklist opened or closed.                  |
-| F1.3  | Availability bug fix             | Implement fix and re-run availability/meetings UI across locales; capture QA notes.                             | Slots render correctly; QA notes linked.                             |
-| F1.4  | High-contrast fixes              | Address high-contrast regressions in core pages.                                                                | Before/after screenshots; axe/contrast checks pass for target pages. |
-| F1.5  | Chatbot UI & states              | Clean rate-limit/error/captcha states; align styling with contrast/theme.                                       | Chatbot UI screenshots; manual QA notes for error flows.             |
-| F1.6  | CI restore                       | Get typecheck/Jest/Playwright/budgets green; update flaky tests if needed.                                      | CI pipeline green; notes on any test adjustments.                    |
-| F1.7  | Mobile layout sweeps             | Verify hero/tech stack/audio/skim/chat on mobile; adjust columns/spacing; ensure sticky CTA behavior is sane.   | Mobile screenshots; list of fixes applied.                           |
-| F1.8  | SVG slimming                     | Identify heavy SVGs and simplify/compress.                                                                      | Size deltas recorded; optimized assets committed.                    |
-| F1.9  | Manual a11y audit                | Targeted manual audit (SR paths, tab order, focus traps) for home/experience/meetings/skim.                     | Audit notes with no P0/P1; fixes linked.                             |
-| F1.10 | Portrait & brand assets          | Add portrait and Codex logo; finalize tech-stack assets.                                                        | Assets committed; references updated; visual check attached.         |
-| F1.11 | AudioPlayer stability            | Fix AudioPlayer issues; add music track; verify desktop + mobile playback.                                      | Playback works across devices; regression test or QA notes.          |
-| F1.12 | SEO/canonicals/robots/sitemap    | Audit sitemap/robots/canonicals/meta; fix gaps introduced by copy/layout changes.                               | Updated files; spot-check log.                                       |
-| F1.13 | JSON-LD spot checks              | Re-run rich results checks for home/notes/experience after copy changes.                                        | Validation screenshots/notes; tests passing.                         |
+| ID    | Task                             | Scope / Notes                                                                                  | Deliverable / DoD                                                    |
+|-------|----------------------------------|------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|
+| F1.1  | WBS reset & codes                | Lock this FINAL_WBS format/codes; remove reliance on legacy WBS; record archived tracks.       | FINAL_WBS committed with stable F-codes; archived list confirmed.    |
+| F1.2  | Diagram/tooling cleanup decision | Decide on removing Mermaid/PlantUML + /api/plantuml; if unused, plan removal steps and owners. | Decision noted; removal checklist opened or closed.                  |
+| F1.3  | Availability bug fix             | Implement fix and re-run availability/meetings UI across locales; capture QA notes.            | Slots render correctly; QA notes linked.                             |
+| F1.4  | High-contrast fixes              | Address high-contrast regressions in core pages.                                               | Before/after screenshots; axe/contrast checks pass for target pages. |
+| F1.5  | Chatbot UI & states              | Clean rate-limit/error/captcha states; align styling with contrast/theme.                      | Chatbot UI screenshots; manual QA notes for error flows.             |
+| F1.6  | CI restore                       | Get typecheck/Jest/Playwright/budgets green; update flaky tests if needed.                     | CI pipeline green; notes on any test adjustments.                    |
+| F1.7  | SVG slimming / Performance       | Identify heavy SVGs and simplify/compress. Aim to minimize site load time.                     | Size deltas recorded; optimized assets committed.                    |
 
 ### F2 — Skim Mode MVP (LC)
-| ID   | Task                       | Scope / Notes                                                                                                                                                      | Deliverable / DoD                                                                           |
-|------|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
-| F2.1 | Skim rules & test plan     | Freeze skim rules (experience + tech only; hide intro/roadmap/audio; keep nav/resume/need-proof/chat); write test matrix/screenshots list.                         | Documented rules + test checklist.                                                          |
-| F2.2 | Layout implementation      | Implement skim layout per rules, including health tile placement (hero in full, footer in skim).                                                                   | UI built; screenshots for desktop/mobile; health tile positions verified.                   |
-| F2.3 | Toggle + data gating       | Ensure `?skim` toggles state using skim matrix data; prevent draft content leakage; keep resume/CTA intact.                                                        | Jest/Playwright coverage for toggle and gating; skim matrix wired.                          |
-| F2.4 | QA sweep                   | Manual skim/full compare; ensure anchor nav, resume download filename, and chatbot behavior are consistent.                                                        | QA notes filed; issues resolved.                                                            |
+| ID   | Task                   | Scope / Notes                                                                                                                              | Deliverable / DoD                                                         |
+|------|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
+| F2.1 | Skim rules & test plan | Freeze skim rules (experience + tech only; hide intro/roadmap/audio; keep nav/resume/need-proof/chat); write test matrix/screenshots list. | Documented rules + test checklist.                                        |
+| F2.2 | Layout implementation  | Implement skim layout per rules, including health tile placement (hero in full, footer in skim).                                           | UI built; screenshots for desktop/mobile; health tile positions verified. |
+| F2.3 | Toggle + data gating   | Ensure `?skim` toggles state using skim matrix data; prevent draft content leakage; keep resume/CTA intact.                                | Jest/Playwright coverage for toggle and gating; skim matrix wired.        |
+| F2.4 | QA sweep               | Manual skim/full compare; ensure anchor nav, resume download filename, and chatbot behavior are consistent.                                | QA notes filed; issues resolved.                                          |
 
-### F3 — Localization (LC)
-| ID   | Task                  | Scope / Notes                                                                                          | Deliverable / DoD                                                     |
-|------|-----------------------|--------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
-| F3.1 | Dictionary completion | Finish EN/JA/ZH copy for home/experience/meetings/skim/resume.json; align resume filenames per locale. | Dictionaries updated; lint/tests pass; spot-check of key pages.       |
-| F3.2 | Tone/consistency QA   | Tone-check localized strings and ensure formatting consistency (dates, numbers, availability labels).  | QA notes; fixes applied; screenshots per locale.                      |
-| F3.3 | Chatbot localization  | Localize chatbot system prompts/UI text; ensure allowed links + moderation copy respect locale.        | Chatbot renders correctly per locale; rate-limit/captcha UX verified. |
+### F3 — Frontend Refinement (LC)
+| ID   | Task                          | Scope / Notes                                                                                                                                                       | Deliverable / DoD                                            |
+|------|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
+| F3.1 | Manual a11y audit             | Targeted manual audit (SR paths, tab order, focus traps) for home/experience/meetings/skim.                                                                         | Audit notes with no P0/P1; fixes linked.                     |
+| F3.2 | Portrait & brand assets       | Add portrait and Codex logo; finalize tech-stack assets.                                                                                                            | Assets committed; references updated; visual check attached. |
+| F3.3 | AudioPlayer stability         | Fix AudioPlayer issues; add music track; verify desktop + mobile playback.                                                                                          | Playback works across devices; regression test or QA notes.  |
+| F3.4 | SEO/canonicals/robots/sitemap | Audit sitemap/robots/canonicals/meta; fix gaps introduced by copy/layout changes.                                                                                   | Updated files; spot-check log.                               |
+| F3.5 | Mobile / Medium layout sweeps | Verify hero/tech stack/audio/skim/chat on mobile and medium scaling; adjust columns/spacing; ensure sticky CTA behavior is sane. Add dedicated medium scaling mode. | List of fixes applied.                                       |
+| F3.6 | JSON-LD spot checks           | Re-run rich results checks for home/notes/experience after copy changes.                                                                                            | Validation screenshots/notes; tests passing.                 |
 
-### F4 — Deployment (LC)
+### F4 — Localization (LC)
+| ID   | Task                  | Scope / Notes                                                                                                 | Deliverable / DoD                                                     |
+|------|-----------------------|---------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
+| F4.1 | Dictionary completion | Finish EN/JA/ZH copy for home/experience/meetings/skim/resume.json; align resume filenames per locale.        | Dictionaries updated; lint/tests pass; spot-check of key pages.       |
+| F4.2 | Tone/consistency QA   | Tone-check localized strings and ensure formatting consistency (dates, numbers, availability labels).         | QA notes; fixes applied; screenshots per locale.                      |
+| F4.3 | Chatbot localization  | Localize chatbot system prompts/UI text; ensure allowed links + moderation copy respect locale.               | Chatbot renders correctly per locale; rate-limit/captcha UX verified. |
+
+### F5 — Deployment (LC)
 | ID   | Task                | Scope / Notes                                                                     | Deliverable / DoD                             |
 |------|---------------------|-----------------------------------------------------------------------------------|-----------------------------------------------|
-| F4.1 | Oracle deployment   | Deploy clear-web site on Oracle Cloud; capture env var/config/runbook.            | Live Oracle deployment; runbook documented.   |
-| F4.2 | Domain + TLS        | Configure custom domain + HTTPS; verify redirects/non-www/www and locale routing. | Domain live with TLS; redirect checks logged. |
-| F4.3 | Vercel fallback doc | Document fallback path and config if Oracle is unstable.                          | Short fallback guide committed.               |
+| F5.1 | Oracle deployment   | Deploy clear-web site on Oracle Cloud; capture env var/config/runbook.            | Live Oracle deployment; runbook documented.   |
+| F5.2 | Domain + TLS        | Configure custom domain + HTTPS; verify redirects/non-www/www and locale routing. | Domain live with TLS; redirect checks logged. |
+| F5.3 | Vercel fallback doc | Document fallback path and config if Oracle is unstable.                          | Short fallback guide committed.               |
 
-### F5 — Reliability & Consent (LC)
-| ID   | Task               | Scope / Notes                                                                                                                             | Deliverable / DoD                                                              |
-|------|--------------------|-------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
-| F5.1 | Ping job/script    | Add minimal ping/uptime check (scheduled or manual) and persist sample data.                                                              | Script/job checked in; sample output recorded.                                 |
-| F5.2 | Health tile wiring | Render simple health tile using ping data with offline/fallback messaging (hero in full mode, footer in skim).                            | Tile renders with live/sample data and fallback state.                         |
-| F5.3 | Consent flow       | Ask permission before setting cookies/telemetry; default to cookieless when declined.                                                     | Consent UI implemented; opt-in/out paths tested.                               |
-| F5.4 | Privacy note/tests | Document collected data and consent behavior; add tests for consent persistence and analytics toggle.                                     | Privacy note updated; Jest/Playwright coverage for consent paths.              |
+### F6 — Reliability & Consent (LC)
+| ID   | Task                | Scope / Notes                                                                                                       | Deliverable / DoD                                                 |
+|------|---------------------|---------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|
+| F6.1 | Ping job/script     | Add minimal ping/uptime check (scheduled or manual) and persist sample data.                                        | Script/job checked in; sample output recorded.                    |
+| F6.2 | Health tile wiring  | Render simple health tile using ping data with offline/fallback messaging (hero in full mode, footer in skim).      | Tile renders with live/sample data and fallback state.            |
+| F6.3 | Consent flow        | Ask permission before setting cookies/telemetry; default to cookieless when declined.                               | Consent UI implemented; opt-in/out paths tested.                  |
+| F6.4 | Privacy note/tests  | Document collected data and consent behavior; add tests for consent persistence and analytics toggle.               | Privacy note updated; Jest/Playwright coverage for consent paths. |
+| F6.5 | Chatbot Reliability | Observe and test common questions. Ensure the moderation is appropriate in strength. Ensure high quality responses. | Chatbot responds well to ~25 most common prompts.                 |
 
 ## Fast-Follow
-### F6 — Engineering Writeup (FF, content-critical)
+### F7 — Engineering Writeup (FF, content-critical)
 | ID   | Task                    | Scope / Notes                                                                                                          | Deliverable / DoD                                           |
 |------|-------------------------|------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------|
-| F6.1 | Draft build/lessons MDX | Draft single MDX note covering build lessons + “Why an Onion Mirror”; remove diagram deps; keep MDX pipeline minimal.  | Draft committed; no Mermaid/PlantUML deps referenced.       |
-| F6.2 | Publish & wire links    | Publish note in notes route; add nav/link surface; validate rendering and metadata.                                    | Note live with working links; metadata/JSON-LD still valid. |
+| F7.1 | Draft build/lessons MDX | Draft single MDX note covering build lessons + “Why an Onion Mirror”; remove diagram deps; keep MDX pipeline minimal.  | Draft committed; no Mermaid/PlantUML deps referenced.       |
+| F7.2 | Publish & wire links    | Publish note in notes route; add nav/link surface; validate rendering and metadata.                                    | Note live with working links; metadata/JSON-LD still valid. |
 
-### F7 — Tor Mirror (FF after public launch)
+### F8 — Mainland China Experience (jrfeathe.cn + China-native Chat) (FF after global site live)
+| ID    | Task                                  | Scope / Notes                                                                                                                                         | Deliverable / DoD                                                                                     |
+|-------|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| F8.1  | Register `jrfeathe.cn` + verification | Purchase `.cn`; complete real-name verification; set registrar/DNS ownership under same China cloud account where possible.                           | Domain active; WHOIS/registrar verified; DNS zone editable.                                           |
+| F8.2  | Mainland origin provisioning          | Provision ECS in **cn-shanghai** or **cn-hangzhou**; baseline hardening (SSH, firewall, unattended upgrades, log policy).                             | Origin online; hardening checklist completed; Nginx serving placeholder page.                         |
+| F8.3  | China DNS setup (AliDNS/Tencent DNS)  | Configure authoritative DNS in China; A/AAAA records to origin/CDN; short TTL during cutover; document rollback plan.                                 | `jrfeathe.cn` resolves reliably inside CN; rollback documented/tested.                                |
+| F8.4  | Mainland CDN enablement               | Enable China CDN (prefer same provider as origin); HTTPS at CDN; cache policy (long TTL for assets, short for HTML); HTTP/2 + compression.            | CDN serving traffic; cache headers verified; synthetic test shows improved TTFB/LCP vs origin-only.   |
+| F8.5  | ICP filing (备案)                       | Prepare required site info; submit ICP filing; add备案号 in footer post-approval; keep site content portfolio-only (no onion/VPN/circumvention refs).    | ICP备案 approved;备案号 displayed;备案 info stored in repo/docs.                                             |
+| F8.6  | PSB filing (公安备案)                     | Complete public security filing after site is live; ensure required footer/linkage as applicable.                                                     | 公安备案 completed; confirmation captured in docs.                                                        |
+| F8.7  | China-safe asset audit                | Remove/replace blocked third-party dependencies (e.g., Google fonts/analytics/recaptcha); self-host fonts/assets; avoid cross-border hard deps.       | Lighthouse/Perf run shows no blocked resources; “all assets load” test from CN passes.                |
+| F8.8  | “China mode” chatbot backend          | Add domain-based routing/feature flag: `.cn` uses China LLM; `.com` keeps OpenRouter; keep prompts/telemetry separated.                               | Requests from `.cn` route to CN provider; `.com` unchanged; integration tests pass.                   |
+| F8.9  | Integrate China LLM (e.g., DeepSeek)  | Implement provider adapter (OpenAI-style compatibility if available); timeout/retry strategy tuned for low-latency mainland calls.                    | Chat responses succeed from CN; p95 latency target met; error handling + fallback copy shipped.       |
+| F8.10 | Replace CAPTCHA for `.cn`             | Swap hCaptcha with CN-friendly CAPTCHA (Tencent CAPTCHA / Aliyun CAPTCHA / GeeTest); server-side verify; rate limiting regardless of CAPTCHA.         | CAPTCHA loads in CN; verification succeeds; abuse tests/rate limits validated.                        |
+| F8.11 | CN performance monitoring             | Synthetic checks from mainland vantage points (multi-ISP if possible); alert on DNS/CDN/origin regressions; define perf budgets.                      | Dashboard + alerts configured; baseline metrics recorded; perf budget documented.                     |
+| F8.12 | WeChat Mini Program MVP (optional)    | Register personal Mini Program; minimal portfolio pages + AI “Ask about my projects”; backend endpoints hosted in CN; app review checklist.           | Mini Program approved/published; AI demo works; links/contact flows validated.                        |
+
+### F9 — Tor Mirror (FF after public launch)
 | ID   | Task                       | Scope / Notes                                                                                                         | Deliverable / DoD                                                  |
 |------|----------------------------|-----------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|
-| F7.1 | VPS provisioning/hardening | Provision Tor-friendly VPS; firewall/systemd hardening; logging posture defined.                                      | VPS ready; hardening checklist completed.                          |
-| F7.2 | NoScript-first render      | Ship JS-free render path for mirror; ensure core content loads at Tor Browser “Safest.”                               | NoScript page serves key content; screenshot proof.                |
-| F7.3 | Header/CSP parity          | Align headers/CSP/privacy posture between clear web and mirror; disable trackers by default.                          | Header parity documented; tests or curl captures attached.         |
-| F7.4 | Onion-Location + health    | Add Onion-Location header to clear site once mirror is live; optional mirror healthcheck alongside clear-site status. | Header present; mirror status displayed next to clear-site health. |
+| F9.1 | VPS provisioning/hardening | Provision Tor-friendly VPS; firewall/systemd hardening; logging posture defined.                                      | VPS ready; hardening checklist completed.                          |
+| F9.2 | NoScript-first render      | Ship JS-free render path for mirror; ensure core content loads at Tor Browser “Safest.”                               | NoScript page serves key content; screenshot proof.                |
+| F9.3 | Header/CSP parity          | Align headers/CSP/privacy posture between clear web and mirror; disable trackers by default.                          | Header parity documented; tests or curl captures attached.         |
+| F9.4 | Onion-Location + health    | Add Onion-Location header to clear site once mirror is live; optional mirror healthcheck alongside clear-site status. | Header present; mirror status displayed next to clear-site health. |
 
 ## Icebox / Archived (AX)
 - Our original WBS and associated files have been moved to "WBS/Old WBS".

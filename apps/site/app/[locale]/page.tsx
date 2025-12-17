@@ -1,6 +1,7 @@
 import { Button } from "@portfolio/ui";
 import type { Metadata } from "next";
 import Link from "next/link";
+import dynamicImport from "next/dynamic";
 import { notFound } from "next/navigation";
 import type { UrlObject } from "url";
 
@@ -13,13 +14,17 @@ import {
   ResponsiveShellLayout,
   StickyCTA
 } from "../../src/components/Shell";
-import { ResponsiveAudioPlayer } from "../../src/components/AudioPlayer";
 import { headers } from "next/headers";
 import { StructuredData } from "../../src/components/seo/StructuredData";
 import { getResumeProfile } from "../../src/lib/resume/profile";
 import { buildHomePageJsonLd } from "../../src/lib/seo/jsonld";
 import { extractNonceFromHeaders } from "../../src/utils/csp";
 import { TechStackCarousel } from "../../src/components/TechStackCarousel";
+
+const ResponsiveAudioPlayer = dynamicImport(
+  () => import("../../src/components/AudioPlayer").then((mod) => mod.ResponsiveAudioPlayer),
+  { ssr: false, loading: () => null }
+);
 
 export const runtime = "edge";
 export const dynamic = "force-dynamic";

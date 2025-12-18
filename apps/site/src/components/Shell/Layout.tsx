@@ -68,36 +68,84 @@ export function ShellLayout({
       href: `#${section.id}`
     }));
   const hasNestedAnchors = navItems.some((item) => item.children?.length);
+  const containerWidth = navItems.length ? "max-w-6xl" : "max-w-none";
+  const showHeaderSkimToggle = showSkimToggle && skimModeEnabled;
+  const showHeroSkimToggle = showSkimToggle && !skimModeEnabled;
+  const headerClassName = clsx(
+    "border-b border-border bg-surface dark:border-dark-border dark:bg-dark-surface",
+    skimModeEnabled ? "pb-2 pt-4" : "pb-8 pt-10"
+  );
+  const headerInnerClassName = clsx(
+    "mx-auto flex w-full max-w-6xl flex-col px-4",
+    skimModeEnabled ? "gap-3" : "gap-6"
+  );
+  const headerRowClassName = clsx(
+    "flex flex-wrap",
+    skimModeEnabled ? "items-start gap-2" : "items-center gap-4"
+  );
+  const preferenceControlsClassName = clsx(
+    "ml-auto flex flex-1 flex-wrap justify-end md:flex-none",
+    skimModeEnabled ? "items-start gap-2" : "items-center gap-3"
+  );
+  const heroGridClassName = skimModeEnabled
+    ? "grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start"
+    : "grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start";
+  const titleStackClassName = skimModeEnabled ? "space-y-3" : "space-y-4";
+  const contentGridClassName = skimModeEnabled
+    ? clsx(
+        "shell-layout-grid mx-auto grid w-full grid-cols-1 gap-6 pl-0 pr-6 pb-16 pt-0",
+        navItems.length
+          ? `lg:grid-cols-[220px_minmax(0,1fr)_260px] ${containerWidth}`
+          : "lg:grid-cols-[minmax(0,1fr)_260px] max-w-none",
+        className
+      )
+    : clsx(
+        "shell-layout-grid mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 px-4 pb-24 pt-10 lg:grid-cols-[220px_minmax(0,1fr)_260px]",
+        className
+      );
+  const ctaContainerClassName = clsx(
+    "shell-sidebar space-y-6 lg:col-start-3",
+    skimModeEnabled ? "pt-6" : null
+  );
 
   return (
     <div
       id="top"
       className="bg-background text-text dark:bg-dark-background dark:text-dark-text"
     >
-      <header className="border-b border-border bg-surface pb-8 pt-10 dark:border-dark-border dark:bg-dark-surface">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4">
-          <div className="flex flex-wrap items-center gap-4">
-            {breadcrumbs.length ? (
-              <Breadcrumbs
-                items={breadcrumbs}
-                className="flex-1"
-              />
-            ) : null}
-            <div className="ml-auto flex flex-1 flex-wrap items-center justify-end gap-3 md:flex-none">
+      <header className={headerClassName}>
+        <div className={headerInnerClassName}>
+          <div className={headerRowClassName}>
+            <div className="flex flex-1 items-center gap-3">
+              {showHeaderSkimToggle ? (
+                <div className="min-w-[150px] flex-1 md:flex-none">
+                  <SkimToggleButton active={skimModeEnabled} locale={locale} />
+                </div>
+              ) : null}
+              {breadcrumbs.length ? (
+                <Breadcrumbs
+                  items={breadcrumbs}
+                  className="flex-1"
+                />
+              ) : null}
+            </div>
+            <div className={preferenceControlsClassName}>
               <ThemeToggle className="min-w-[180px] flex-1 md:flex-none" locale={locale} />
               <ContrastToggle className="min-w-[200px] flex-1 md:flex-none" locale={locale} />
               <LanguageSwitcher className="min-w-[250px] flex-1 md:flex-none" />
             </div>
           </div>
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start">
-            <div className="space-y-4">
-              <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
+          <div className={heroGridClassName}>
+            <div className={titleStackClassName}>
+              {title ? (
+                <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
+              ) : null}
               {subtitle ? (
                 <p className="max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted">
                   {subtitle}
                 </p>
               ) : null}
-              {showSkimToggle ? (
+              {showHeroSkimToggle ? (
                 <SkimToggleButton active={skimModeEnabled} locale={locale} />
               ) : null}
             </div>
@@ -132,12 +180,7 @@ export function ShellLayout({
           ) : null}
         </div>
       </header>
-      <div
-        className={clsx(
-          "shell-layout-grid mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 px-4 pb-24 pt-10 lg:grid-cols-[220px_minmax(0,1fr)_260px]",
-          className
-        )}
-      >
+      <div className={contentGridClassName}>
         <main className="flex flex-col gap-16 lg:col-start-2">
           {sections.map((section) => (
             <section
@@ -167,7 +210,7 @@ export function ShellLayout({
           ))}
         </main>
 
-        <div className="shell-sidebar space-y-6 lg:col-start-3">
+        <div className={ctaContainerClassName}>
           {cta}
         </div>
 

@@ -28,7 +28,7 @@ test.describe("Recruiter skim mode", () => {
 
     const skimContainer = page.locator("[data-skim-mode=\"true\"]");
     await expect(skimContainer).toHaveCount(1);
-    await expect(page.getByRole("heading", { name: "Jack Featherstone", level: 1 })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "AI-assisted Fullstack Engineer", level: 1 })).toBeVisible();
 
     await expect(page.getByRole("link", { name: "Download resume" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Download resume" })).toBeVisible();

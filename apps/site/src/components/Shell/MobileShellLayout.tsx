@@ -67,6 +67,7 @@ export function MobileShellLayout({
   const [menuButtonTop, setMenuButtonTop] = useState<number | undefined>(undefined);
   const languageSwitcherRef = useRef<HTMLDivElement | null>(null);
   const hasNestedAnchors = navItems.some((item) => item.children?.length);
+  const hasNavItems = navItems.length > 0;
 
   const handleExpandAllNav = () => {
     document.dispatchEvent(new Event("shell-anchor-expand-all"));
@@ -99,7 +100,7 @@ export function MobileShellLayout({
       id="top"
       className="bg-background text-text dark:bg-dark-background dark:text-dark-text"
     >
-      {menuOpen ? (
+      {menuOpen && hasNavItems ? (
         <div className="fixed inset-0 z-50 flex">
           <button
             type="button"
@@ -169,7 +170,7 @@ export function MobileShellLayout({
         </div>
       ) : null}
 
-      {!menuOpen ? (
+      {!menuOpen && hasNavItems ? (
         <button
           type="button"
           aria-label="Open menu"
@@ -183,10 +184,10 @@ export function MobileShellLayout({
         </button>
       ) : null}
 
-      <header className="border-b border-border bg-surface pb-2 pt-4 dark:border-dark-border dark:bg-dark-surface">
+      <header className="border-b border-border bg-surface pb-2 pt-3 dark:border-dark-border dark:bg-dark-surface">
         <div className="mx-auto w-full max-w-6xl pb-2 px-4">
-          <div className="space-y-4 pb-2">
-            <div className="flex items-center justify-end gap-3">
+          <div className="space-y-3 pb-2">
+            <div className="flex items-start justify-end gap-3">
               <div ref={languageSwitcherRef} className="h-8.5 min-w-[180px]">
                 <LanguageSwitcher className="h-8.5 min-w-[180px]" />
               </div>

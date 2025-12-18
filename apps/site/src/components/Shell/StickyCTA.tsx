@@ -6,20 +6,24 @@ export type StickyCTAProps = {
   description?: ReactNode;
   children: ReactNode;
   className?: string;
+  sticky?: boolean;
 };
 
 export function StickyCTA({
   title,
   description,
   children,
-  className
+  className,
+  sticky = true
 }: StickyCTAProps) {
+  const stickyClassName = sticky ? "lg:sticky lg:top-24" : null;
+
   return (
     <aside
       className={clsx(
         "shell-sticky-cta",
         "group flex flex-col gap-4 rounded-2xl border border-border bg-surface/95 p-6 shadow-lg backdrop-blur transition dark:border-dark-border dark:bg-dark-surface/95",
-        "lg:sticky lg:top-24",
+        stickyClassName,
         className
       )}
     >

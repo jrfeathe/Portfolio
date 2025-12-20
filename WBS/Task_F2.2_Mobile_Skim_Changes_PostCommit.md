@@ -2,6 +2,14 @@
 
 - **Context:** Baseline commit `f2ef28f69db5786b8f9ea0f61d22ab8a181c3df4` implemented desktop skim. Subsequent work layered mobile behavior directly on the shared layout/data, causing desktop regressions (e.g., gaps and reordering). This file captures the post-commit changes and their disposition.
 
+## Current implementation (post-refactor)
+- Skim layout rendering is split into dedicated components:
+  - Desktop: `DesktopSkimLayout`
+  - Mobile: `MobileSkimLayout`
+- Home now builds skim sections per layout and passes `mobileSections` to `ResponsiveShellLayout`, so desktop and mobile render separate section trees.
+- No breakpoint-driven swapping within the same skim tree; mobile/desktop order/padding changes are isolated.
+- Mobile shell behavior (menu gating, skim toggle placement, CTA placement) remains in `MobileShellLayout`.
+
 ## Changes made after the baseline (code deltas)
 - `apps/site/src/components/Shell/MobileShellLayout.tsx`
   - Added `buildFallbackNavItems` to rebuild nav items from sections when `anchorItems` is empty (skim mobile) and avoided showing menu when only `#skim-summary` exists (`isSkimSummaryOnly`, `menuEnabled`).
@@ -15,11 +23,9 @@
   - Content padding: skim mobile uses `pt-0 pb-4` vs `py-4` default.
 
 - `apps/site/app/[locale]/page.tsx`
-  - Skim summary now renders two breakpoint-specific blocks:
-    - Desktop (`hidden md:grid md:grid-cols-2`): original layout restored (summary w/ timezone, tech stack, availability).
-    - Mobile (`md:hidden`): smaller centered title (`text-lg`), summary cards excluding timezone, then tech stack, timezone, availability.
+  - Skim summary now renders via dedicated components (`DesktopSkimLayout` / `MobileSkimLayout`) and the mobile shell uses `mobileSections` to render a separate skim tree.
   - Shared data (`summaryItems`, tech stack items) reused for both; mobile omits timezone from summary and re-adds as its own card.
-  - Previous intermediate changes (now superseded): centered and downsized skim title on mobile, reordering of cards (tech stack → timezone → availability), attempts at responsive reordering that impacted desktop, negative margins to close gaps—replaced by the split layout above.
+  - Previous intermediate changes (now superseded): responsive ordering and breakpoint-only swaps that impacted desktop.
 
 ## Issues observed
 - Desktop skim was affected by mobile ordering/gaps when both shared a single layout tree; responsive ordering created blank space on desktop.
@@ -48,6 +54,7 @@
 - Consider extracting shared skim data into a typed helper if further divergence is needed.
 
 ## Full code diff vs baseline (f2ef28f6)
+Historical reference from the pre-refactor approach (breakpoint-split within a shared skim tree). Current implementation uses dedicated desktop/mobile components and separate section trees.
 
 ### apps/site/app/[locale]/page.tsx
 ```diff

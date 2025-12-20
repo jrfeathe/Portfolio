@@ -57,17 +57,36 @@ export function MobileShellLayout({
   showSkimToggle = true,
   locale
 }: MobileShellLayoutParams) {
-  const navItems: AnchorNavItem[] =
-    anchorItems ??
+  const buildFallbackNavItems = () =>
     sections.map((section) => ({
-      label: typeof section.title === "string" ? section.title : section.id,
+      label:
+        typeof section.title === "string" && section.title.trim().length > 0
+          ? section.title
+          : section.id,
       href: `#${section.id}`
     }));
+  const rawNavItems: AnchorNavItem[] =
+    anchorItems?.length
+      ? anchorItems
+      : skimModeEnabled && Array.isArray(anchorItems)
+        ? buildFallbackNavItems()
+        : anchorItems ?? buildFallbackNavItems();
   const [menuOpen, setMenuOpen] = useState(false);
   const [menuButtonTop, setMenuButtonTop] = useState<number | undefined>(undefined);
   const languageSwitcherRef = useRef<HTMLDivElement | null>(null);
+  const isSkimSummaryOnly =
+    skimModeEnabled &&
+    rawNavItems.length === 1 &&
+    rawNavItems[0]?.href === "#skim-summary" &&
+    !rawNavItems[0]?.children?.length;
+  const navItems = isSkimSummaryOnly ? [] : rawNavItems;
   const hasNestedAnchors = navItems.some((item) => item.children?.length);
   const hasNavItems = navItems.length > 0;
+  const menuEnabled = hasNavItems || isSkimSummaryOnly;
+  const shouldShowSkimToggle = showSkimToggle && (!skimModeEnabled || !menuEnabled);
+  const shouldShowNavSkimToggle = showSkimToggle && skimModeEnabled && menuEnabled;
+  const shouldRenderHeaderCta = !!cta && !skimModeEnabled;
+  const shouldRenderAfterContentCta = !!cta && skimModeEnabled;
 
   const handleExpandAllNav = () => {
     document.dispatchEvent(new Event("shell-anchor-expand-all"));
@@ -100,7 +119,7 @@ export function MobileShellLayout({
       id="top"
       className="bg-background text-text dark:bg-dark-background dark:text-dark-text"
     >
-      {menuOpen && hasNavItems ? (
+      {menuOpen && menuEnabled ? (
         <div className="fixed inset-0 z-50 flex">
           <button
             type="button"
@@ -125,11 +144,18 @@ export function MobileShellLayout({
                 X
               </button>
             </div>
-            {navItems.length ? (
+            {menuEnabled ? (
               <div className="flex min-h-0 flex-1 flex-col gap-3">
                 <div className="space-y-4">
                   <ThemeToggle locale={locale} />
                   <ContrastToggle locale={locale} />
+                  {shouldShowNavSkimToggle ? (
+                    <SkimToggleButton
+                      active={skimModeEnabled}
+                      locale={locale}
+                      className="w-full justify-center"
+                    />
+                  ) : null}
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <a
@@ -157,20 +183,22 @@ export function MobileShellLayout({
                     </button>
                   </div>
                 ) : null}
-                <div className="min-h-0 flex-1 overflow-y-auto">
-                  <AnchorNav
-                    items={navItems}
-                    orientation="vertical"
-                    scrollable={false}
-                  />
-                </div>
+                {navItems.length ? (
+                  <div className="min-h-0 flex-1 overflow-y-auto">
+                    <AnchorNav
+                      items={navItems}
+                      orientation="vertical"
+                      scrollable={false}
+                    />
+                  </div>
+                ) : null}
               </div>
             ) : null}
           </aside>
         </div>
       ) : null}
 
-      {!menuOpen && hasNavItems ? (
+      {!menuOpen && menuEnabled ? (
         <button
           type="button"
           aria-label="Open menu"
@@ -185,8 +213,8 @@ export function MobileShellLayout({
       ) : null}
 
       <header className="border-b border-border bg-surface pb-2 pt-3 dark:border-dark-border dark:bg-dark-surface">
-        <div className="mx-auto w-full max-w-6xl pb-2 px-4">
-          <div className="space-y-3 pb-2">
+        <div className="mx-auto w-full max-w-6xl pb-1 px-4">
+          <div className="space-y-3 pb-0">
             <div className="flex items-start justify-end gap-3">
               <div ref={languageSwitcherRef} className="h-8.5 min-w-[180px]">
                 <LanguageSwitcher className="h-8.5 min-w-[180px]" />
@@ -199,14 +227,21 @@ export function MobileShellLayout({
 
           <div className="space-y-4">
             <div className="space-y-2">
-              <h1 className="text-3xl font-semibold tracking-tight">{title}</h1>
+              <h1
+                className={clsx(
+                  "font-semibold tracking-tight",
+                  skimModeEnabled ? "text-base leading-snug" : "text-3xl"
+                )}
+              >
+                {title}
+              </h1>
               {subtitle ? (
                 <p className="max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted">
                   {subtitle}
                 </p>
               ) : null}
             </div>
-            {showSkimToggle ? (
+            {shouldShowSkimToggle ? (
               <SkimToggleButton active={skimModeEnabled} locale={locale} />
             ) : null}
             {heroMedia ? (
@@ -230,7 +265,7 @@ export function MobileShellLayout({
                 ) : null}
               </figure>
             ) : null}
-            {cta ? (
+            {shouldRenderHeaderCta ? (
               <>
                 {cta}
               </>
@@ -241,7 +276,8 @@ export function MobileShellLayout({
 
       <div
         className={clsx(
-          "mx-auto w-full max-w-6xl px-4 py-4",
+          "mx-auto w-full max-w-6xl px-4",
+          skimModeEnabled ? "pt-4 pb-4" : "py-4",
           className
         )}
       >
@@ -267,12 +303,17 @@ export function MobileShellLayout({
                   </p>
                 ) : null}
               </div>
-              <div className="mt-6 space-y-6 text-base leading-relaxed text-text dark:text-dark-text">
+              <div className="mt-0 space-y-6 text-base leading-relaxed text-text dark:text-dark-text">
                 {section.content}
               </div>
             </section>
           ))}
         </main>
+        {shouldRenderAfterContentCta ? (
+          <div className="mt-6 space-y-4">
+            {cta}
+          </div>
+        ) : null}
       </div>
 
       {footer ?? <ShellFooter content={footerContent} />}

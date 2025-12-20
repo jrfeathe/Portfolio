@@ -4,7 +4,6 @@ import Link from "next/link";
 import dynamicImport from "next/dynamic";
 import { notFound } from "next/navigation";
 import type { UrlObject } from "url";
-import clsx from "clsx";
 
 import {
   getDictionary,
@@ -21,6 +20,8 @@ import { getResumeProfile } from "../../src/lib/resume/profile";
 import { buildHomePageJsonLd } from "../../src/lib/seo/jsonld";
 import { extractNonceFromHeaders } from "../../src/utils/csp";
 import { TechStackCarousel } from "../../src/components/TechStackCarousel";
+import { DesktopSkimLayout } from "../../src/components/DesktopSkimLayout";
+import { MobileSkimLayout } from "../../src/components/MobileSkimLayout";
 
 const ResponsiveAudioPlayer = dynamicImport(
   () => import("../../src/components/AudioPlayer").then((mod) => mod.ResponsiveAudioPlayer),
@@ -170,7 +171,11 @@ function buildSections(dictionary: AppDictionary, locale: Locale) {
   ];
 }
 
-function buildSkimSections(dictionary: AppDictionary, locale: Locale) {
+function buildSkimSections(
+  dictionary: AppDictionary,
+  locale: Locale,
+  layout: "desktop" | "mobile"
+) {
   const {
     home: { sections, skim, footer },
     experience
@@ -237,65 +242,23 @@ function buildSkimSections(dictionary: AppDictionary, locale: Locale) {
       value: timezoneValue
     }
   ];
+  const skimLayoutProps = {
+    columnTitle: skim.columnTitle,
+    summaryItems,
+    techStackTitle: skim.techStackTitle,
+    techStackItems,
+    availabilityLabel: skim.availabilityLabel,
+    availability: skim.availability
+  };
 
   return [
     {
       id: "skim-summary",
       title: "",
       content: (
-        <div className="grid gap-3 md:grid-cols-2">
-          <div className="grid gap-3">
-            <h1 className="pl-4 pt-0 text-2xl font-semibold leading-tight tracking-tight text-text dark:text-dark-text md:text-3xl">
-              {skim.columnTitle}
-            </h1>
-            {summaryItems.map((item, index) => (
-              <div
-                key={item.id}
-                className={clsx(
-                  "skim-card rounded-xl border border-border/70 bg-surface px-4 py-3 dark:border-dark-border/70 dark:bg-dark-surface",
-                  index === 0 && "-mt-0"
-                )}
-              >
-                <p className="text-xs font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
-                  {item.label}
-                </p>
-                {item.href ? (
-                  item.href.startsWith("http") || item.href.startsWith("mailto:") ? (
-                    <a
-                      href={item.href}
-                      className="mt-1 inline-flex text-base font-semibold text-accent underline-offset-4 hover:underline dark:text-dark-accent"
-                    >
-                      {item.value}
-                    </a>
-                  ) : (
-                    <Link
-                      href={item.href}
-                      className="mt-1 inline-flex text-base font-semibold text-accent underline-offset-4 hover:underline dark:text-dark-accent"
-                    >
-                      {item.value}
-                    </Link>
-                  )
-                ) : (
-                  <p className="mt-1 text-base leading-relaxed">{item.value}</p>
-                )}
-              </div>
-            ))}
-          </div>
-          <div className="grid gap-3">
-            <div className="skim-card rounded-xl border border-border/70 bg-surface px-4 py-3 dark:border-dark-border/70 dark:bg-dark-surface">
-              <p className="text-xs font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
-                {skim.techStackTitle}
-              </p>
-              <TechStackCarousel items={techStackItems} />
-            </div>
-            <div className="skim-card rounded-xl border border-border/70 bg-surface px-4 py-3 dark:border-dark-border/70 dark:bg-dark-surface">
-              <p className="text-xs font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
-                {skim.availabilityLabel}
-              </p>
-              <p className="mt-1 text-base leading-relaxed">{skim.availability}</p>
-            </div>
-          </div>
-        </div>
+        layout === "mobile"
+          ? <MobileSkimLayout {...skimLayoutProps} />
+          : <DesktopSkimLayout {...skimLayoutProps} />
       )
     }
   ];
@@ -320,8 +283,11 @@ export default function HomePage({ params, searchParams }: PageProps) {
   const dictionary = getDictionary(locale);
   const skimModeEnabled = resolveSkimMode(searchParams);
   const sections = skimModeEnabled
-    ? buildSkimSections(dictionary, locale)
+    ? buildSkimSections(dictionary, locale, "desktop")
     : buildSections(dictionary, locale);
+  const mobileSections = skimModeEnabled
+    ? buildSkimSections(dictionary, locale, "mobile")
+    : sections;
   const breadcrumbs = skimModeEnabled ? [] : resolveBreadcrumbs(dictionary, locale);
   const {
     hero: { title, subtitle, cta, media }
@@ -351,6 +317,7 @@ export default function HomePage({ params, searchParams }: PageProps) {
           heroMedia={heroMedia}
           breadcrumbs={breadcrumbs}
           sections={sections}
+          mobileSections={mobileSections}
           anchorItems={anchorItems}
           skimModeEnabled={skimModeEnabled}
           locale={locale}

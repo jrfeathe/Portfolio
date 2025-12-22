@@ -2,9 +2,20 @@ import { defineConfig, devices } from "@playwright/test";
 
 const isCI = !!process.env.CI;
 const skipWebServer = process.env.PLAYWRIGHT_SKIP_WEBSERVER === "1";
+const explicitBaseURL = process.env.PLAYWRIGHT_BASE_URL;
+let parsedBaseURL: URL | undefined;
+try {
+  parsedBaseURL = explicitBaseURL ? new URL(explicitBaseURL) : undefined;
+} catch {
+  parsedBaseURL = undefined;
+}
+const resolvedPort = process.env.PLAYWRIGHT_PORT ?? parsedBaseURL?.port;
+const serverPort = Number(resolvedPort || "3001");
+const baseURL = explicitBaseURL ?? `http://127.0.0.1:${serverPort}`;
+const workerCount = Number(process.env.PLAYWRIGHT_WORKERS ?? "1");
 const webServerCommand =
   process.env.PLAYWRIGHT_WEBSERVER_COMMAND ??
-  "pnpm exec next start --hostname 127.0.0.1 --port 3000";
+  `pnpm exec next start --hostname 127.0.0.1 --port ${serverPort}`;
 
 const htmlReportDir = process.env.PLAYWRIGHT_HTML_REPORT ?? "playwright-report";
 const blobReportDir = process.env.PLAYWRIGHT_BLOB_REPORT ?? "blob-report";
@@ -12,10 +23,10 @@ const outputDir = process.env.PLAYWRIGHT_OUTPUT_DIR ?? "test-results";
 
 export default defineConfig({
   testDir: "./tests",
-  fullyParallel: !isCI,
+  fullyParallel: workerCount > 1 && !isCI,
   forbidOnly: isCI,
   retries: isCI ? 2 : 0,
-  workers: isCI ? 2 : undefined,
+  workers: workerCount,
   timeout: 30_000,
   expect: {
     timeout: 5_000
@@ -26,7 +37,7 @@ export default defineConfig({
     ["blob", { outputDir: blobReportDir }]
   ],
   use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000",
+    baseURL,
     screenshot: "only-on-failure",
     trace: "on-first-retry",
     video: "retain-on-failure",
@@ -37,7 +48,7 @@ export default defineConfig({
     ? undefined
     : {
         command: webServerCommand,
-        url: "http://127.0.0.1:3000",
+        url: baseURL,
         reuseExistingServer: true,
         timeout: 120_000,
         stdout: "pipe",

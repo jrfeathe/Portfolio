@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import clsx from "clsx";
+import type { UrlObject } from "url";
 
 import type { AppDictionary } from "../utils/dictionaries";
 import { TechStackCarousel } from "./TechStackCarousel";
@@ -16,6 +17,13 @@ type MobileSkimLayoutProps = {
   availabilityLabel: string;
   availability: ReactNode;
 };
+
+function toUrlObject(href: string): UrlObject {
+  const [pathname, hash] = href.split("#");
+  return hash
+    ? { pathname, hash: `#${hash}` }
+    : { pathname };
+}
 
 export function MobileSkimLayout({
   columnTitle,
@@ -39,7 +47,7 @@ export function MobileSkimLayout({
         </a>
       ) : (
         <Link
-          href={item.href}
+          href={toUrlObject(item.href)}
           className="mt-1 inline-flex text-base font-semibold text-accent underline-offset-4 hover:underline dark:text-dark-accent"
         >
           {item.value}

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import clsx from "clsx";
+import type { UrlObject } from "url";
 
 import type { AppDictionary } from "../utils/dictionaries";
 import { TechStackCarousel } from "./TechStackCarousel";
@@ -13,6 +14,13 @@ export type SkimSummaryItem = {
   value: ReactNode;
   href?: string;
 };
+
+function toUrlObject(href: string): UrlObject {
+  const [pathname, hash] = href.split("#");
+  return hash
+    ? { pathname, hash: `#${hash}` }
+    : { pathname };
+}
 
 type DesktopSkimLayoutProps = {
   columnTitle: string;
@@ -58,7 +66,7 @@ export function DesktopSkimLayout({
                 </a>
               ) : (
                 <Link
-                  href={item.href}
+                  href={toUrlObject(item.href)}
                   className="mt-1 inline-flex text-base font-semibold text-accent underline-offset-4 hover:underline dark:text-dark-accent"
                 >
                   {item.value}

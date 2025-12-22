@@ -294,9 +294,19 @@ export function MobileShellLayout({
                     {section.eyebrow}
                   </span>
                 ) : null}
-                <h2 className="text-2xl font-semibold leading-tight">
-                  {section.title}
-                </h2>
+                {typeof section.title === "string"
+                  ? section.title.trim()
+                    ? (
+                      <h2 className="text-2xl font-semibold leading-tight">
+                        {section.title}
+                      </h2>
+                    )
+                    : null
+                  : section.title ? (
+                    <h2 className="text-2xl font-semibold leading-tight">
+                      {section.title}
+                    </h2>
+                  ) : null}
                 {section.description ? (
                   <p className="max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted">
                     {section.description}

@@ -177,7 +177,7 @@ function buildSkimSections(
   layout: "desktop" | "mobile"
 ) {
   const {
-    home: { sections, skim, footer },
+    home: { sections, skim },
     experience
   } = dictionary;
   const techDetailMap = new Map(
@@ -217,7 +217,7 @@ function buildSkimSections(
     <>
       {timezonePrefix ? <span>{timezonePrefix} </span> : null}
       <Link
-        href={timezoneHref}
+        href={toUrlObject(timezoneHref)}
         className="inline-flex text-base font-semibold text-accent underline-offset-4 hover:underline dark:text-dark-accent"
       >
         {timezoneLinkText ?? skim.timezone}
@@ -334,7 +334,7 @@ export default function HomePage({ params, searchParams }: PageProps) {
                 title={cta.title}
                 description={cta.description}
                 sticky={!skimModeEnabled}
-                className={skimModeEnabled ? "pl-0 pr-6 py-6" : undefined}
+                className={skimModeEnabled ? "pl-6 pr-6 py-6" : undefined}
               >
                 {cta.actions.map((action, index) =>
                   action.href ? (

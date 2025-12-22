@@ -107,6 +107,28 @@ export type AppDictionary = {
       home: string;
       workspace: string;
     };
+    skim: {
+      columnTitle: string;
+      projectManagementLabel: string;
+      projectManagement: string;
+      techStackTitle: string;
+      leadershipLabel: string;
+      leadership: string;
+      leadershipRollodexLinkText: string;
+      leadershipRollodexSuffix: string;
+      leadershipTeachingAssistantLinkText: string;
+      leadershipTeachingAssistantSuffix: string;
+      workAuthLabel: string;
+      workAuthorization: string;
+      timezoneLabel: string;
+      timezoneLinkText: string;
+      timezone: string;
+      availabilityLabel: string;
+      availability: string;
+      emailLabel: string;
+      emailValue: string;
+      emailHref: string;
+    };
     audioPlayer: {
       title: string;
       description: string;
@@ -477,6 +499,29 @@ const en: AppDictionary = {
       home: "Home",
       workspace: "Workspace overview"
     },
+    skim: {
+      columnTitle: "AI-assisted Fullstack Engineer",
+      projectManagementLabel: "Project Management",
+      projectManagement:
+        "Independent and AI-augmented, turning ambiguous goals into a Work Breakdown Structure with clear deliverables and documentation.",
+      techStackTitle: "Primary languages & tools",
+      leadershipLabel: "Leadership & mentorship",
+      leadership: "Rollodex co-lead Fullstack Engineer, and Teaching Assistant for Upper-level Distributed Software Systems course.",
+      leadershipRollodexLinkText: "Rollodex",
+      leadershipRollodexSuffix: " co-lead Fullstack Engineer, and ",
+      leadershipTeachingAssistantLinkText: "Teaching Assistant",
+      leadershipTeachingAssistantSuffix: " for Upper-level Distributed Software Systems course.",
+      workAuthLabel: "Work authorization",
+      workAuthorization: "Authorized to work in US with valid SSN.",
+      timezoneLabel: "Timezone & collaboration",
+      timezoneLinkText: "See the meetings page for scheduling.",
+      timezone: "Provided notice, I can meet most days between 3pm to 6pm NY time. See the meetings page for scheduling.",
+      availabilityLabel: "Availability",
+      availability: "Immediately available for remote part-time work. Two weeks notice required for full-time. Authorized to work in US with valid SSN.",
+      emailLabel: "Email",
+      emailValue: "jfstone2000@proton.me",
+      emailHref: "mailto:jfstone2000@proton.me"
+    },
     audioPlayer: {
       title: "Portfolio background loop",
       description: "",
@@ -491,7 +536,7 @@ const en: AppDictionary = {
     hero: {
       title: "Jack Featherstone",
       subtitle:
-        "Hi, I'm Jack and this is my Software Engineering portfolio! I'm looking to begin my career as a Junior Fullstack Developer. The intent of this site is to prove my skills and abilities, and to capitalize on opportunities to network.",
+        "Hi, I'm Jack and this is my Software Engineering portfolio! I'm currently looking for Fullstack Development roles involving AI. The intent of this site is to showcase my skills and to capitalize on opportunities to network.",
       media: {
         image: {
           ...HERO_IMAGE_BASE,
@@ -683,6 +728,29 @@ const ja: AppDictionary = {
       home: "ホーム",
       workspace: "ワークスペース概要"
     },
+    skim: {
+      columnTitle: "AI活用のフルスタックエンジニア",
+      projectManagementLabel: "プロジェクトマネジメント",
+      projectManagement:
+        "AI を活用しつつ自律的に、曖昧な目標を明確な成果物とドキュメントを備えた WBS に落とし込みます。",
+      techStackTitle: "主要言語とツール",
+      leadershipLabel: "リーダーシップとメンタリング",
+      leadership: "Rollodex 共同リードのフルスタックエンジニア、上級分散ソフトウェアシステムのTA。",
+      leadershipRollodexLinkText: "Rollodex",
+      leadershipRollodexSuffix: " 共同リードのフルスタックエンジニア、上級分散ソフトウェアシステムの",
+      leadershipTeachingAssistantLinkText: "TA",
+      leadershipTeachingAssistantSuffix: "。",
+      workAuthLabel: "就労資格",
+      workAuthorization: "米国での就労が可能（有効な SSN 保持）。",
+      timezoneLabel: "タイムゾーンと協働",
+      timezoneLinkText: "スケジュールは meetings ページをご確認ください。",
+      timezone: "事前連絡をいただければ、NY 時間の 15:00〜18:00 に多くの曜日で調整可能です。スケジュールは meetings ページをご確認ください。",
+      availabilityLabel: "稼働状況",
+      availability: "リモートのパートタイムには即時対応可能。フルタイムには 2 週間の通知が必要です。米国で就労可能（有効な SSN 保持）。",
+      emailLabel: "メール",
+      emailValue: "jfstone2000@proton.me",
+      emailHref: "mailto:jfstone2000@proton.me"
+    },
     audioPlayer: {
       title: "ポートフォリオのバックグラウンドループ",
       description: "",
@@ -697,7 +765,7 @@ const ja: AppDictionary = {
     hero: {
       title: "Jack Featherstone",
       subtitle:
-        "はじめまして、Jack と申します。こちらは私のソフトウェアエンジニアリング・ポートフォリオです。現在、ジュニア・フルスタック開発者としてキャリアを開始する機会を探しています。本サイトの目的は、私のスキルと実務能力を証拠に基づいて示し、ネットワーク構築の機会につなげることです。",
+        "はじめまして、Jack と申します。こちらは私のソフトウェアエンジニアリング・ポートフォリオです。現在、AI を活用したフルスタック開発のポジションを探しています。このサイトは、私のスキルを実証し、ネットワーキングの機会につなげるためのものです。",
       media: {
         image: {
           ...HERO_IMAGE_BASE,
@@ -891,6 +959,29 @@ const zh: AppDictionary = {
       home: "首页",
       workspace: "工作区总览"
     },
+    skim: {
+      columnTitle: "AI 辅助的全栈工程师",
+      projectManagementLabel: "项目管理",
+      projectManagement:
+        "独立且借助 AI，将模糊目标拆解为具有明确交付物和文档的工作分解结构。",
+      techStackTitle: "主要语言与工具",
+      leadershipLabel: "领导力与指导",
+      leadership: "Rollodex 共同负责人全栈工程师，并担任高级分布式软件系统课程的助教。",
+      leadershipRollodexLinkText: "Rollodex",
+      leadershipRollodexSuffix: " 共同负责人全栈工程师，并担任高级分布式软件系统课程的",
+      leadershipTeachingAssistantLinkText: "助教",
+      leadershipTeachingAssistantSuffix: "。",
+      workAuthLabel: "工作许可",
+      workAuthorization: "拥有有效社会安全号，可在美国工作。",
+      timezoneLabel: "时区与协作",
+      timezoneLinkText: "详情见 meetings 页面。",
+      timezone: "提前沟通后，大多数日子可在纽约时间 15:00–18:00 会面。详情见 meetings 页面。",
+      availabilityLabel: "可用性",
+      availability: "可立即开始远程兼职，全职需两周通知。持有效 SSN，可在美国合法工作。",
+      emailLabel: "邮箱",
+      emailValue: "jfstone2000@proton.me",
+      emailHref: "mailto:jfstone2000@proton.me"
+    },
     audioPlayer: {
       title: "作品集背景循环",
       description: "",
@@ -905,7 +996,7 @@ const zh: AppDictionary = {
     hero: {
       title: "Jack Featherstone",
       subtitle:
-        "您好，我叫 Jack。这里是我的软件工程作品集。我正寻求以初级全端开发者的身份开启职业生涯的机会。本网站旨在以可验证的证据呈现我的技能与能力，并拓展专业人脉。",
+        "您好，我叫 Jack。这里是我的软件工程作品集。我正在寻找涉及 AI 的全栈开发职位。本网站旨在展示我的技能，并抓住拓展人脉的机会。",
       media: {
         image: {
           ...HERO_IMAGE_BASE,

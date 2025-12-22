@@ -20,6 +20,8 @@ import { getResumeProfile } from "../../src/lib/resume/profile";
 import { buildHomePageJsonLd } from "../../src/lib/seo/jsonld";
 import { extractNonceFromHeaders } from "../../src/utils/csp";
 import { TechStackCarousel } from "../../src/components/TechStackCarousel";
+import { DesktopSkimLayout } from "../../src/components/DesktopSkimLayout";
+import { MobileSkimLayout } from "../../src/components/MobileSkimLayout";
 
 const ResponsiveAudioPlayer = dynamicImport(
   () => import("../../src/components/AudioPlayer").then((mod) => mod.ResponsiveAudioPlayer),
@@ -169,6 +171,99 @@ function buildSections(dictionary: AppDictionary, locale: Locale) {
   ];
 }
 
+function buildSkimSections(
+  dictionary: AppDictionary,
+  locale: Locale,
+  layout: "desktop" | "mobile"
+) {
+  const {
+    home: { sections, skim },
+    experience
+  } = dictionary;
+  const techDetailMap = new Map(
+    experience.techStack.map((entry) => [entry.title.toLowerCase(), entry.id])
+  );
+
+  const techStackItems = sections.techStack.items.map((item) => ({
+    ...item,
+    href: `/${locale}/experience#${techDetailMap.get(item.name.toLowerCase()) ?? item.assetId}`
+  }));
+
+  const leadershipValue = (
+    <>
+      <Link
+        href={`/${locale}/experience#rollodex`}
+        className="inline-flex text-base font-semibold text-accent underline-offset-4 hover:underline dark:text-dark-accent"
+      >
+        {skim.leadershipRollodexLinkText}
+      </Link>
+      <span>{skim.leadershipRollodexSuffix}</span>
+      <Link
+        href={`/${locale}/experience#ser321`}
+        className="inline-flex text-base font-semibold text-accent underline-offset-4 hover:underline dark:text-dark-accent"
+      >
+        {skim.leadershipTeachingAssistantLinkText}
+      </Link>
+      <span>{skim.leadershipTeachingAssistantSuffix}</span>
+    </>
+  );
+
+  const timezoneLinkText = skim.timezoneLinkText;
+  const timezoneHref = `/${locale}/meetings`;
+  const timezonePrefix = timezoneLinkText
+    ? skim.timezone.replace(timezoneLinkText, "").trim()
+    : skim.timezone;
+  const timezoneValue = (
+    <>
+      {timezonePrefix ? <span>{timezonePrefix} </span> : null}
+      <Link
+        href={toUrlObject(timezoneHref)}
+        className="inline-flex text-base font-semibold text-accent underline-offset-4 hover:underline dark:text-dark-accent"
+      >
+        {timezoneLinkText ?? skim.timezone}
+      </Link>
+    </>
+  );
+
+  const summaryItems = [
+    {
+      id: "project-management",
+      label: skim.projectManagementLabel,
+      value: skim.projectManagement
+    },
+    {
+      id: "leadership",
+      label: skim.leadershipLabel,
+      value: leadershipValue
+    },
+    {
+      id: "timezone",
+      label: skim.timezoneLabel,
+      value: timezoneValue
+    }
+  ];
+  const skimLayoutProps = {
+    columnTitle: skim.columnTitle,
+    summaryItems,
+    techStackTitle: skim.techStackTitle,
+    techStackItems,
+    availabilityLabel: skim.availabilityLabel,
+    availability: skim.availability
+  };
+
+  return [
+    {
+      id: "skim-summary",
+      title: "",
+      content: (
+        layout === "mobile"
+          ? <MobileSkimLayout {...skimLayoutProps} />
+          : <DesktopSkimLayout {...skimLayoutProps} />
+      )
+    }
+  ];
+}
+
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
@@ -186,12 +281,17 @@ export function generateMetadata({ params }: PageParams): Metadata {
 export default function HomePage({ params, searchParams }: PageProps) {
   const locale = ensureLocale(params.locale);
   const dictionary = getDictionary(locale);
-  const sections = buildSections(dictionary, locale);
-  const breadcrumbs = resolveBreadcrumbs(dictionary, locale);
+  const skimModeEnabled = resolveSkimMode(searchParams);
+  const sections = skimModeEnabled
+    ? buildSkimSections(dictionary, locale, "desktop")
+    : buildSections(dictionary, locale);
+  const mobileSections = skimModeEnabled
+    ? buildSkimSections(dictionary, locale, "mobile")
+    : sections;
+  const breadcrumbs = skimModeEnabled ? [] : resolveBreadcrumbs(dictionary, locale);
   const {
     hero: { title, subtitle, cta, media }
   } = dictionary.home;
-  const skimModeEnabled = resolveSkimMode(searchParams);
   const resumeProfile = getResumeProfile();
   const resumeDownloadFilename = `jack-featherstone-resume-${resumeProfile.resumeVersion}.pdf`;
   const structuredData = buildHomePageJsonLd({
@@ -200,23 +300,42 @@ export default function HomePage({ params, searchParams }: PageProps) {
     profile: resumeProfile
   });
   const nonce = extractNonceFromHeaders(headers());
+  const pageTitle = skimModeEnabled ? undefined : title;
+  const pageSubtitle = skimModeEnabled ? undefined : subtitle;
+  const heroMedia = skimModeEnabled ? undefined : media;
+  const anchorItems = skimModeEnabled ? [] : undefined;
+  const emailValue = dictionary.home.skim.emailValue;
+  const emailHref = dictionary.home.skim.emailHref;
 
   return (
     <>
       <StructuredData data={structuredData} nonce={nonce} />
       <div data-skim-mode={skimModeEnabled ? "true" : "false"}>
         <ResponsiveShellLayout
-          title={title}
-          subtitle={subtitle}
-          heroMedia={media}
+          title={pageTitle}
+          subtitle={pageSubtitle}
+          heroMedia={heroMedia}
           breadcrumbs={breadcrumbs}
           sections={sections}
+          mobileSections={mobileSections}
+          anchorItems={anchorItems}
           skimModeEnabled={skimModeEnabled}
           locale={locale}
           footerContent={dictionary.home.footer}
           cta={
-            <div className="space-y-4">
-              <StickyCTA title={cta.title} description={cta.description}>
+            <div
+              className={
+                skimModeEnabled
+                  ? "shell-stacked-sidebar space-y-4 lg:sticky lg:top-24"
+                  : "shell-stacked-sidebar space-y-4"
+              }
+            >
+              <StickyCTA
+                title={cta.title}
+                description={cta.description}
+                sticky={!skimModeEnabled}
+                className={skimModeEnabled ? "pl-6 pr-6 py-6" : undefined}
+              >
                 {cta.actions.map((action, index) =>
                   action.href ? (
                     <Button
@@ -250,21 +369,36 @@ export default function HomePage({ params, searchParams }: PageProps) {
                   )
                 )}
               </StickyCTA>
+              {skimModeEnabled ? (
+                <div className="skim-card skim-email-card rounded-2xl border border-border bg-surface/95 px-4 py-3 text-sm leading-relaxed shadow-sm backdrop-blur dark:border-dark-border dark:bg-dark-surface/95">
+                  <p className="font-semibold text-text dark:text-dark-text">
+                    {dictionary.home.skim.emailLabel}
+                  </p>
+                  <a
+                    className="mt-1 inline-flex text-text underline underline-offset-2 transition hover:text-accent dark:text-dark-text dark:hover:text-dark-accent"
+                    href={emailHref}
+                  >
+                    {emailValue}
+                  </a>
+                </div>
+              ) : null}
             </div>
           }
         />
-        <ResponsiveAudioPlayer
-          src={dictionary.home.audioPlayer.src}
-          title={dictionary.home.audioPlayer.title}
-          description={dictionary.home.audioPlayer.description}
-          playLabel={dictionary.home.audioPlayer.playLabel}
-          pauseLabel={dictionary.home.audioPlayer.pauseLabel}
-          downloadLabel={dictionary.home.audioPlayer.downloadLabel}
-          closeLabel={dictionary.home.audioPlayer.closeLabel}
-          reopenLabel={dictionary.home.audioPlayer.reopenLabel}
-          locale={locale}
-          trackId={dictionary.home.audioPlayer.trackId}
-        />
+        {!skimModeEnabled ? (
+          <ResponsiveAudioPlayer
+            src={dictionary.home.audioPlayer.src}
+            title={dictionary.home.audioPlayer.title}
+            description={dictionary.home.audioPlayer.description}
+            playLabel={dictionary.home.audioPlayer.playLabel}
+            pauseLabel={dictionary.home.audioPlayer.pauseLabel}
+            downloadLabel={dictionary.home.audioPlayer.downloadLabel}
+            closeLabel={dictionary.home.audioPlayer.closeLabel}
+            reopenLabel={dictionary.home.audioPlayer.reopenLabel}
+            locale={locale}
+            trackId={dictionary.home.audioPlayer.trackId}
+          />
+        ) : null}
       </div>
     </>
   );

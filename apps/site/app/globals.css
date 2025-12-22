@@ -368,6 +368,18 @@ body {
     border-color: var(--dark-hc-accent);
   }
 
+  .contrast-high .shell-sticky-cta [data-variant="primary"][href="/resume.pdf"],
+  .contrast-high .shell-sticky-cta [data-variant="primary"][data-resume-button="true"] {
+    color: var(--light-hc-accentOn);
+    -webkit-text-fill-color: var(--light-hc-accentOn);
+  }
+
+  .contrast-high.dark .shell-sticky-cta [data-variant="primary"][href="/resume.pdf"],
+  .contrast-high.dark .shell-sticky-cta [data-variant="primary"][data-resume-button="true"] {
+    color: var(--dark-hc-accentOn);
+    -webkit-text-fill-color: var(--dark-hc-accentOn);
+  }
+
   .contrast-high .shell-sticky-cta {
     border-radius: 1rem;
   }
@@ -436,6 +448,14 @@ body {
     box-shadow: none;
   }
 
+  .contrast-high .shell-sidebar > .shell-stacked-sidebar,
+  .contrast-high.dark .shell-sidebar > .shell-stacked-sidebar {
+    border: none;
+    background: none;
+    box-shadow: none;
+    padding: 0;
+  }
+
   .contrast-high .grid.gap-4.sm\:grid-cols-2 > * {
     border: 2px solid var(--light-hc-accent);
     background-color: var(--light-hc-surface);
@@ -447,6 +467,60 @@ body {
     border: 2px solid var(--dark-hc-accent);
     background-color: var(--dark-hc-surfaceMuted);
     color: var(--dark-hc-text);
+  }
+
+  .contrast-high [data-skim-mode="true"] .shell-sticky-cta,
+  .contrast-high.dark [data-skim-mode="true"] .shell-sticky-cta {
+    border: 2px solid var(--light-hc-accent);
+    background-color: var(--light-hc-background);
+    color: var(--light-hc-text);
+    box-shadow: none;
+  }
+
+  .contrast-high.dark [data-skim-mode="true"] .shell-sticky-cta {
+    border-color: var(--dark-hc-accent);
+    background-color: var(--dark-hc-background);
+    color: var(--dark-hc-text);
+  }
+
+  .contrast-high [data-skim-mode="true"] .skim-card {
+    border: 2px solid var(--light-hc-accent);
+    background-color: var(--light-hc-background);
+    color: var(--light-hc-text);
+    box-shadow: none;
+  }
+
+  .contrast-high.dark [data-skim-mode="true"] .skim-card {
+    border: 2px solid var(--dark-hc-accent);
+    background-color: var(--dark-hc-background);
+    color: var(--dark-hc-text);
+    box-shadow: none;
+  }
+
+  .contrast-high [data-skim-mode="true"] .shell-sticky-cta :is(p, span, a, li, button, h1, h2, h3, h4, h5, h6),
+  .contrast-high [data-skim-mode="true"] .skim-card :is(p, span, a, li, button, h1, h2, h3, h4, h5, h6) {
+    color: var(--light-hc-text);
+  }
+
+  .contrast-high.dark [data-skim-mode="true"] .shell-sticky-cta :is(p, span, a, li, button, h1, h2, h3, h4, h5, h6),
+  .contrast-high.dark [data-skim-mode="true"] .skim-card :is(p, span, a, li, button, h1, h2, h3, h4, h5, h6) {
+    color: var(--dark-hc-text);
+  }
+
+  .contrast-high [data-skim-mode="true"] .skim-card a {
+    border-bottom: 2px solid var(--light-hc-accent);
+    padding-bottom: 2px;
+  }
+
+  .contrast-high.dark [data-skim-mode="true"] .skim-card a {
+    border-bottom: 2px solid var(--dark-hc-accent);
+    padding-bottom: 2px;
+  }
+
+  .contrast-high [data-skim-mode="true"] .skim-card [data-tech-stack-item],
+  .contrast-high.dark [data-skim-mode="true"] .skim-card [data-tech-stack-item] {
+    border-bottom: none;
+    padding-bottom: 0;
   }
 
   .contrast-high :is(button, a, input, select, textarea):focus-visible {

@@ -1,5 +1,6 @@
+import type { Metadata } from "next";
+import type { Route } from "next";
 import Link from "next/link";
-import type { Metadata, Route } from "next";
 import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 
@@ -64,7 +65,7 @@ function buildSections(
       content: notes.length ? (
         <ul className="space-y-6">
           {notes.map((note) => {
-            const noteHref = (`/${locale}/notes/${note.slug}`) as Route;
+            const noteHref = `/${locale}/notes/${note.slug}` as Route;
 
             return (
               <li

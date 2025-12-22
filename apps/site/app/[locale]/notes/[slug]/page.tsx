@@ -1,5 +1,6 @@
+import type { Metadata } from "next";
+import type { Route } from "next";
 import Link from "next/link";
-import type { Metadata, Route } from "next";
 import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 
@@ -84,7 +85,7 @@ export default async function NoteDetailPage({ params }: PageParams) {
     notFound();
   }
 
-  const notesIndexHref = (`/${locale}/notes`) as Route;
+  const notesIndexHref = `/${locale}/notes` as Route;
   const resumeProfile = getResumeProfile();
   const structuredData = buildNoteDetailJsonLd({
     locale,

@@ -18,6 +18,7 @@ import { NoteHeader, TableOfContents } from "../../../../src/components/mdx";
 import { StructuredData } from "../../../../src/components/seo/StructuredData";
 import { getResumeProfile } from "../../../../src/lib/resume/profile";
 import { buildNoteDetailJsonLd } from "../../../../src/lib/seo/jsonld";
+import { resolveOpenGraphLocale } from "../../../../src/lib/seo/opengraph-locale";
 import { extractNonceFromHeaders } from "../../../../src/utils/csp";
 
 export const runtime = "nodejs";
@@ -68,10 +69,17 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   return {
     title: note.frontmatter.title,
     description: note.frontmatter.summary,
+    alternates: {
+      canonical: `/${locale}/notes/${note.slug}`
+    },
+    robots: {
+      index: false,
+      follow: true
+    },
     openGraph: {
       title: note.frontmatter.title,
       description: note.frontmatter.summary,
-      locale
+      locale: resolveOpenGraphLocale(locale)
     }
   };
 }

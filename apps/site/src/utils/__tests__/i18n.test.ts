@@ -3,7 +3,6 @@ import {
   getLanguageSwitcherLabel,
   getLocaleDirection,
   getLocaleLabel,
-  getTopBarCopy,
   isLocale,
   localeCookieName,
   locales,
@@ -43,8 +42,4 @@ describe("i18n utilities", () => {
     expect(parseLocale(undefined)).toBeNull();
   });
 
-  it("falls back to english top bar copy for unsupported locales", () => {
-    // @ts-expect-error intentionally providing an unsupported locale
-    expect(getTopBarCopy("fr")).toEqual(getTopBarCopy("en"));
-  });
 });

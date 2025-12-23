@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import type { Locale } from "../utils/i18n";
-import { getTopBarCopy } from "../utils/i18n";
+import { getDictionary } from "../utils/dictionaries";
 import { getNextTheme, type ThemePreference } from "../utils/theme";
 import {
   SegmentedControl,
@@ -29,7 +29,8 @@ type ThemeToggleProps = {
 
 export function ThemeToggle({ className, locale }: ThemeToggleProps) {
   const [theme, setTheme] = useState<ThemePreference>("system");
-  const { themeLabel, themeOptions } = getTopBarCopy(locale);
+  const { themeToggle } = getDictionary(locale);
+  const { label: themeLabel, options: themeOptions } = themeToggle;
   const options: SegmentedControlOption<ThemePreference>[] = [
     { value: "light", label: `☀️`, testId: "theme-light" },
     { value: "system", label: themeOptions.system, testId: "theme-system" },

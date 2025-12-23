@@ -10,6 +10,7 @@ import {
   parseLocale,
   type Locale
 } from "../../../src/utils/i18n";
+import { resolveOpenGraphLocale } from "../../../src/lib/seo/opengraph-locale";
 import {
   ResponsiveShellLayout,
   type ShellSection,
@@ -124,10 +125,24 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
   const locale = ensureLocale(params.locale);
   const dictionary = getDictionary(locale);
+  const languages = Object.fromEntries(
+    locales.map((entry) => [entry, `/${entry}/experience`])
+  );
 
   return {
     title: dictionary.experience.metadataTitle,
-    description: dictionary.experience.subtitle
+    description: dictionary.experience.subtitle,
+    alternates: {
+      canonical: `/${locale}/experience`,
+      languages
+    },
+    openGraph: {
+      title: dictionary.experience.metadataTitle,
+      description: dictionary.experience.subtitle,
+      type: "website",
+      locale: resolveOpenGraphLocale(locale),
+      images: [`/${locale}/experience/opengraph-image`]
+    }
   };
 }
 

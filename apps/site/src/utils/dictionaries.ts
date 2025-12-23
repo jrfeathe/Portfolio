@@ -9,6 +9,8 @@ import techStackDetailsData from "../../data/tech-stack-details.json";
 import type { Weekday } from "../lib/availability";
 import type { ImageDescriptor, ResponsiveImagePreset } from "../lib/images";
 import type { Locale } from "./i18n";
+import type { ContrastPreference } from "./contrast";
+import type { ThemePreference } from "./theme";
 
 export type CtaVariant = "primary" | "secondary" | "ghost";
 
@@ -81,6 +83,22 @@ export type AppDictionary = {
   metadata: {
     title: string;
     description: string;
+  };
+  themeToggle: {
+    label: string;
+    options: Record<ThemePreference, string>;
+  };
+  contrastToggle: {
+    label: string;
+    options: Record<ContrastPreference, string>;
+  };
+  skimToggle: {
+    buttonLabelOn: string;
+    buttonLabelOff: string;
+    statusOn: string;
+    statusOff: string;
+    ariaEnable: string;
+    ariaDisable: string;
   };
   chatbot: {
     launcherLabel: string;
@@ -468,7 +486,31 @@ const getExperienceEntries = (locale: Locale): ExperienceEntry[] =>
 const en: AppDictionary = {
   metadata: {
     title: "Jack F. Portfolio",
-    description: "Personal engineering portfolio and live project playground."
+    description: "Software engineering portfolio and project tracker."
+  },
+  themeToggle: {
+    label: "Select color theme",
+    options: {
+      light: "Light",
+      system: "System",
+      dark: "Dark"
+    }
+  },
+  contrastToggle: {
+    label: "Select contrast preference",
+    options: {
+      standard: "Normal",
+      system: "System",
+      high: "High"
+    }
+  },
+  skimToggle: {
+    buttonLabelOn: "Skim mode",
+    buttonLabelOff: "Skim mode",
+    statusOn: "ON",
+    statusOff: "OFF",
+    ariaEnable: "Enable recruiter skim mode",
+    ariaDisable: "Disable recruiter skim mode"
   },
   chatbot: {
     launcherLabel: "Open recruiter AI chat",
@@ -626,7 +668,7 @@ const en: AppDictionary = {
   experience: {
     metadataTitle: "Jack F. Experience",
     title: "Experience",
-    subtitle: "Major interactions that have defined my current skill set.",
+    subtitle: "",
     section1title: "Projects",
     section1subtitle: "Important projects and roles that have shaped my current skills.",
     section2title: "Tech stack",
@@ -637,7 +679,7 @@ const en: AppDictionary = {
   meetings: {
     metadataTitle: "Jack F. Contact",
     title: "Contact",
-    subtitle: "I'm open to answering any questions you may have, in any format that works for you.",
+    subtitle: "Have questions? Schedule a meeting with me.",
     section1title: "Availability",
     section1subtitle: "I am commonly able to schedule a short meeting during the hours listed below. Please let me know if you need another time, and I will try to accommodate you!",
     intro:
@@ -697,7 +739,31 @@ const en: AppDictionary = {
 const ja: AppDictionary = {
   metadata: {
     title: "Jack F. ポートフォリオ",
-    description: "エンジニアリングの成果と実験を公開するプロジェクトハブ。"
+    description: "ソフトウェアエンジニアリングのポートフォリオとプロジェクトトラッカー。"
+  },
+  themeToggle: {
+    label: "テーマを選択",
+    options: {
+      light: "ライト",
+      system: "システム",
+      dark: "ダーク"
+    }
+  },
+  contrastToggle: {
+    label: "コントラストを選択",
+    options: {
+      standard: "標準",
+      system: "システム",
+      high: "ハイ"
+    }
+  },
+  skimToggle: {
+    buttonLabelOn: "要約モード",
+    buttonLabelOff: "要約モード",
+    statusOn: "オン",
+    statusOff: "オフ",
+    ariaEnable: "要約モードを有効化",
+    ariaDisable: "要約モードを無効化"
   },
   chatbot: {
     launcherLabel: "AIチャットを開く",
@@ -854,7 +920,7 @@ const ja: AppDictionary = {
   experience: {
     metadataTitle: "Jack F. 経験",
     title: "経験スナップショット",
-    subtitle: "スキルセットを作り上げたプロジェクトと役割を簡潔にまとめています。",
+    subtitle: "",
     section1title: "Projects",
     section1subtitle: "Important projects and roles that have shaped my current skills.",
     section2title: "Tech stack",
@@ -866,7 +932,7 @@ const ja: AppDictionary = {
     metadataTitle: "Jack F. へのお問い合わせ",
     title: "お問い合わせ",
     subtitle:
-      "ご都合のよい方法であれば、どのようなご質問にも喜んでお答えします。",
+      "ご質問がありますか？ミーティングをご予約ください。",
     section1title: "面談可能時間",
     section1subtitle:
       "下記の時間帯であれば、短時間のミーティングを比較的柔軟に調整できます。I am commonly able to schedule a short meeting during the hours listed below. Please let me know if you need another time, and I will try to accommodate you!",
@@ -928,7 +994,31 @@ const ja: AppDictionary = {
 const zh: AppDictionary = {
   metadata: {
     title: "Jack F. 作品集",
-    description: "展示工程成果与实验的个人项目中枢。"
+    description: "软件工程作品集与项目跟踪器。"
+  },
+  themeToggle: {
+    label: "选择主题",
+    options: {
+      light: "浅色",
+      system: "系统",
+      dark: "深色"
+    }
+  },
+  contrastToggle: {
+    label: "选择对比度",
+    options: {
+      standard: "标准",
+      system: "系统",
+      high: "高"
+    }
+  },
+  skimToggle: {
+    buttonLabelOn: "摘要模式",
+    buttonLabelOff: "摘要模式",
+    statusOn: "开",
+    statusOff: "关",
+    ariaEnable: "启用招聘者摘要模式",
+    ariaDisable: "关闭招聘者摘要模式"
   },
   chatbot: {
     launcherLabel: "打开AI聊天",
@@ -1085,7 +1175,7 @@ const zh: AppDictionary = {
   experience: {
     metadataTitle: "Jack F. 经验",
     title: "经验速览",
-    subtitle: "快速了解塑造我技能组合的项目与职责。",
+    subtitle: "",
     section1title: "Projects",
     section1subtitle: "Important projects and roles that have shaped my current skills.",
     section2title: "Tech stack",
@@ -1097,7 +1187,7 @@ const zh: AppDictionary = {
     metadataTitle: "Jack F. 联系",
     title: "联系",
     subtitle:
-      "欢迎通过适合您的任何方式联系我，我很乐意回答您的任何问题。",
+      "有问题吗？欢迎预约与我会面。",
     section1title: "可会面时间",
     section1subtitle:
       "我通常可以在下列时间段安排一次简短的会面。I am commonly able to schedule a short meeting during the hours listed below. Please let me know if you need another time, and I will try to accommodate you!",

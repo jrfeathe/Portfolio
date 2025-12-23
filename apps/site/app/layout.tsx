@@ -14,6 +14,7 @@ import {
   localeCookieName
 } from "../src/utils/i18n";
 import { getDictionary } from "../src/utils/dictionaries";
+import { PORTFOLIO_BASE_URL } from "../src/lib/seo/jsonld";
 import {
   isContrastPreference,
   contrastCookieName,
@@ -77,6 +78,7 @@ function escapeUnsafeChars(str: string): string {
 const defaultDictionary = getDictionary(defaultLocale);
 
 export const metadata: Metadata = {
+  metadataBase: new URL(PORTFOLIO_BASE_URL),
   title: defaultDictionary.metadata.title,
   description: defaultDictionary.metadata.description,
   icons: {

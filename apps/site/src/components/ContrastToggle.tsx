@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import type { Locale } from "../utils/i18n";
-import { getTopBarCopy } from "../utils/i18n";
+import { getDictionary } from "../utils/dictionaries";
 import { getNextContrast, type ContrastPreference } from "../utils/contrast";
 import {
   SegmentedControl,
@@ -29,7 +29,8 @@ type ContrastToggleProps = {
 
 export function ContrastToggle({ className, locale }: ContrastToggleProps) {
   const [contrast, setContrast] = useState<ContrastPreference>("system");
-  const { contrastLabel, contrastOptions } = getTopBarCopy(locale);
+  const { contrastToggle } = getDictionary(locale);
+  const { label: contrastLabel, options: contrastOptions } = contrastToggle;
   const options: SegmentedControlOption<ContrastPreference>[] = [
     { value: "standard", label: contrastOptions.standard, testId: "contrast-standard" },
     { value: "system", label: contrastOptions.system, testId: "contrast-system" },

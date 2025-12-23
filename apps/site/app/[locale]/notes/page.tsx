@@ -119,7 +119,14 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
 
   return {
     title: dictionary.notes.index.title,
-    description: dictionary.notes.index.subtitle
+    description: dictionary.notes.index.subtitle,
+    alternates: {
+      canonical: `/${locale}/notes`
+    },
+    robots: {
+      index: false,
+      follow: true
+    }
   };
 }
 

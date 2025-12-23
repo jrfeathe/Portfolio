@@ -17,7 +17,7 @@ import {
 } from "react";
 
 import type { Locale } from "../utils/i18n";
-import { getTopBarCopy } from "../utils/i18n";
+import { getDictionary } from "../utils/dictionaries";
 
 type SkimToggleButtonProps = {
   active: boolean;
@@ -29,7 +29,7 @@ export function SkimToggleButton({ active, className, locale }: SkimToggleButton
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { skim } = getTopBarCopy(locale);
+  const skim = getDictionary(locale).skimToggle;
   const fallbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prefetchedUrlRef = useRef<string | null>(null);
   const [optimisticActive, setOptimisticActive] = useState(active);

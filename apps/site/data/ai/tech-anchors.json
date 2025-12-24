@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-12-14T21:28:18.847Z",
+  "generatedAt": "2025-12-24T15:28:37.185Z",
   "anchors": [
     {
       "id": "react",
@@ -17,44 +17,6 @@
         "zh": {
           "name": "React",
           "href": "/zh/experience#react"
-        }
-      }
-    },
-    {
-      "id": "html",
-      "category": "tech",
-      "source": "tech-stack-details",
-      "locales": {
-        "en": {
-          "name": "HTML",
-          "href": "/en/experience#html"
-        },
-        "ja": {
-          "name": "HTML",
-          "href": "/ja/experience#html"
-        },
-        "zh": {
-          "name": "HTML",
-          "href": "/zh/experience#html"
-        }
-      }
-    },
-    {
-      "id": "css",
-      "category": "tech",
-      "source": "tech-stack-details",
-      "locales": {
-        "en": {
-          "name": "CSS",
-          "href": "/en/experience#css"
-        },
-        "ja": {
-          "name": "CSS",
-          "href": "/ja/experience#css"
-        },
-        "zh": {
-          "name": "CSS",
-          "href": "/zh/experience#css"
         }
       }
     },
@@ -97,40 +59,21 @@
       }
     },
     {
-      "id": "c",
+      "id": "codex",
       "category": "tech",
       "source": "tech-stack-details",
       "locales": {
         "en": {
-          "name": "C",
-          "href": "/en/experience#c"
+          "name": "Codex",
+          "href": "/en/experience#codex"
         },
         "ja": {
-          "name": "C",
-          "href": "/ja/experience#c"
+          "name": "Codex",
+          "href": "/ja/experience#codex"
         },
         "zh": {
-          "name": "C",
-          "href": "/zh/experience#c"
-        }
-      }
-    },
-    {
-      "id": "cpp",
-      "category": "tech",
-      "source": "tech-stack-details",
-      "locales": {
-        "en": {
-          "name": "C++",
-          "href": "/en/experience#cpp"
-        },
-        "ja": {
-          "name": "C++",
-          "href": "/ja/experience#cpp"
-        },
-        "zh": {
-          "name": "C++",
-          "href": "/zh/experience#cpp"
+          "name": "Codex",
+          "href": "/zh/experience#codex"
         }
       }
     },
@@ -154,6 +97,120 @@
       }
     },
     {
+      "id": "cpp",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "C++",
+          "href": "/en/experience#cpp"
+        },
+        "ja": {
+          "name": "C++",
+          "href": "/ja/experience#cpp"
+        },
+        "zh": {
+          "name": "C++",
+          "href": "/zh/experience#cpp"
+        }
+      }
+    },
+    {
+      "id": "postgresql",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "PostgreSQL",
+          "href": "/en/experience#postgresql"
+        },
+        "ja": {
+          "name": "PostgreSQL",
+          "href": "/ja/experience#postgresql"
+        },
+        "zh": {
+          "name": "PostgreSQL",
+          "href": "/zh/experience#postgresql"
+        }
+      }
+    },
+    {
+      "id": "aws",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "AWS",
+          "href": "/en/experience#aws"
+        },
+        "ja": {
+          "name": "AWS",
+          "href": "/ja/experience#aws"
+        },
+        "zh": {
+          "name": "AWS",
+          "href": "/zh/experience#aws"
+        }
+      }
+    },
+    {
+      "id": "c",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "C",
+          "href": "/en/experience#c"
+        },
+        "ja": {
+          "name": "C",
+          "href": "/ja/experience#c"
+        },
+        "zh": {
+          "name": "C",
+          "href": "/zh/experience#c"
+        }
+      }
+    },
+    {
+      "id": "html",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "HTML",
+          "href": "/en/experience#html"
+        },
+        "ja": {
+          "name": "HTML",
+          "href": "/ja/experience#html"
+        },
+        "zh": {
+          "name": "HTML",
+          "href": "/zh/experience#html"
+        }
+      }
+    },
+    {
+      "id": "css",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "CSS",
+          "href": "/en/experience#css"
+        },
+        "ja": {
+          "name": "CSS",
+          "href": "/ja/experience#css"
+        },
+        "zh": {
+          "name": "CSS",
+          "href": "/zh/experience#css"
+        }
+      }
+    },
+    {
       "id": "linux",
       "category": "tech",
       "source": "tech-stack-details",
@@ -169,6 +226,25 @@
         "zh": {
           "name": "Linux",
           "href": "/zh/experience#linux"
+        }
+      }
+    },
+    {
+      "id": "sql",
+      "category": "tech",
+      "source": "tech-stack-details",
+      "locales": {
+        "en": {
+          "name": "SQL",
+          "href": "/en/experience#sql"
+        },
+        "ja": {
+          "name": "SQL",
+          "href": "/ja/experience#sql"
+        },
+        "zh": {
+          "name": "SQL",
+          "href": "/zh/experience#sql"
         }
       }
     },
@@ -268,44 +344,6 @@
       }
     },
     {
-      "id": "postgresql",
-      "category": "tech",
-      "source": "tech-stack-details",
-      "locales": {
-        "en": {
-          "name": "PostgreSQL",
-          "href": "/en/experience#postgresql"
-        },
-        "ja": {
-          "name": "PostgreSQL",
-          "href": "/ja/experience#postgresql"
-        },
-        "zh": {
-          "name": "PostgreSQL",
-          "href": "/zh/experience#postgresql"
-        }
-      }
-    },
-    {
-      "id": "sql",
-      "category": "tech",
-      "source": "tech-stack-details",
-      "locales": {
-        "en": {
-          "name": "SQL",
-          "href": "/en/experience#sql"
-        },
-        "ja": {
-          "name": "SQL",
-          "href": "/ja/experience#sql"
-        },
-        "zh": {
-          "name": "SQL",
-          "href": "/zh/experience#sql"
-        }
-      }
-    },
-    {
       "id": "lua",
       "category": "tech",
       "source": "tech-stack-details",
@@ -359,25 +397,6 @@
         "zh": {
           "name": "Oracle Cloud",
           "href": "/zh/experience#oracle-cloud"
-        }
-      }
-    },
-    {
-      "id": "aws",
-      "category": "tech",
-      "source": "tech-stack-details",
-      "locales": {
-        "en": {
-          "name": "AWS",
-          "href": "/en/experience#aws"
-        },
-        "ja": {
-          "name": "AWS",
-          "href": "/ja/experience#aws"
-        },
-        "zh": {
-          "name": "AWS",
-          "href": "/zh/experience#aws"
         }
       }
     },

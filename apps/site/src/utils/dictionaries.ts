@@ -447,25 +447,26 @@ const HERO_IMAGE_BASE: Omit<ImageDescriptor, "alt"> = {
 
 const STATIC_TECH_STACK_ITEMS: TechStackEntry[] = [
   { name: "React", href: "https://react.dev/", assetId: "react" },
-  { name: "HTML", href: "https://html.spec.whatwg.org/multipage/", assetId: "html" },
-  { name: "CSS", href: "https://www.w3.org/Style/CSS/Overview.en.html", assetId: "css" },
   { name: "JavaScript", href: "https://developer.mozilla.org/docs/Web/JavaScript", assetId: "javascript" },
   { name: "TypeScript", href: "https://www.typescriptlang.org/", assetId: "typescript" },
-  { name: "C", href: "https://en.cppreference.com/w/c", assetId: "c" },
-  { name: "C++", href: "https://en.cppreference.com/w/cpp", assetId: "cpp" },
+  { name: "Codex", href: "https://openai.com/codex/", assetId: "codex" },
   { name: "Java", href: "https://dev.java/", assetId: "java" },
+  { name: "C++", href: "https://en.cppreference.com/w/cpp", assetId: "cpp" },
+  { name: "PostgreSQL", href: "https://www.postgresql.org/", assetId: "postgresql" },
+  { name: "AWS", href: "https://aws.amazon.com/", assetId: "aws" },
+  { name: "C", href: "https://en.cppreference.com/w/c", assetId: "c" },
+  { name: "HTML", href: "https://html.spec.whatwg.org/multipage/", assetId: "html" },
+  { name: "CSS", href: "https://www.w3.org/Style/CSS/Overview.en.html", assetId: "css" },
   { name: "Linux", href: "https://www.linuxfoundation.org/", assetId: "linux" },
+  { name: "SQL", href: "https://www.iso.org/standard/63555.html", assetId: "sql" },
   { name: "JSON", href: "https://www.json.org/json-en.html", assetId: "json" },
   { name: "Bash", href: "https://www.gnu.org/software/bash/", assetId: "bash" },
   { name: "XML", href: "https://www.w3.org/XML/", assetId: "xml" },
   { name: "KVM", href: "https://www.linux-kvm.org/page/Main_Page", assetId: "kvm" },
   { name: "QEMU", href: "https://www.qemu.org/", assetId: "qemu" },
-  { name: "PostgreSQL", href: "https://www.postgresql.org/", assetId: "postgresql" },
-  { name: "SQL", href: "https://www.iso.org/standard/63555.html", assetId: "sql" },
   { name: "Lua", href: "https://www.lua.org/", assetId: "lua" },
   { name: "Prisma", href: "https://www.prisma.io/", assetId: "prisma" },
   { name: "Oracle Cloud", href: "https://www.oracle.com/cloud/", assetId: "oracle-cloud" },
-  { name: "AWS", href: "https://aws.amazon.com/", assetId: "aws" },
 ];
 
 const getTechStackItems = (locale: Locale): TechStackEntry[] => [

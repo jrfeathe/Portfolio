@@ -26,6 +26,211 @@
     }
   },
   {
+    "id": "javascript",
+    "title": {
+      "en": "JavaScript",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "3 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Backend logic for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Built client/server logic to power complex features, such as menu interfaces, search filtering, and form templates."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "typescript",
+    "title": {
+      "en": "TypeScript",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "6 months of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Backend logic for Software Portfolio (this website), Quester2000.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Built web apps meant to run on cloud services."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "codex",
+    "title": {
+      "en": "Codex",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "6 months of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "AI-assisted development for Software Portfolio (this website), Quester2000",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Instructed Codex to perform complex tasks based on high level documentation and a detailed Work Breakdown Structure.",
+        "Broke tasks into small chunks that Codex could handle, and verified stability of solutions."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "java",
+    "title": {
+      "en": "Java",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "7 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Distributed systems teaching, Minecraft modding, Various courses/projects.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Built a Wheel of Fortune Java client/server assignment for students.",
+        "Decompiled code to patch a crash and reassemble."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "cpp",
+    "title": {
+      "en": "C++",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "7 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Core language foundation. Used for custom game engine and many small projects.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Developed a custom game engine for a current project. (Limited information disclosure)",
+        "The language that I first learned and my top preference."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "postgresql",
+    "title": {
+      "en": "PostgreSQL",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Rollodex, Quester2000",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Modeled contact/search data to support fast filtering.",
+        "Stored app data for user accounts."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "aws",
+    "title": {
+      "en": "AWS",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Server deployment for various projects",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Used to host client-server applications for SER321."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "c",
+    "title": {
+      "en": "C",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "3 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Coursework for various courses.",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "SER334 - Built a Loadable Kernel Module that uses Linux data structures to display details about the processes executing in the kernel.",
+        "Applied scripting for various topics such as thread/compiler optimization, page replacement, image processing, and scheduling algorithms."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
     "id": "html",
     "title": {
       "en": "HTML",
@@ -77,134 +282,6 @@
     }
   },
   {
-    "id": "javascript",
-    "title": {
-      "en": "JavaScript",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "3 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Backend logic for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Built client/server logic to power complex features, such as menu interfaces, search filtering, and form templates."
-      ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "typescript",
-    "title": {
-      "en": "TypeScript",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "6 months of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Backend logic for Software Portfolio (this website), Quester2000.",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Built web apps meant to run on cloud services."
-      ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "c",
-    "title": {
-      "en": "C",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "3 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Coursework for various courses.",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "SER334 - Built a Loadable Kernel Module that uses Linux data structures to display details about the processes executing in the kernel.",
-        "Applied scripting for various topics such as thread/compiler optimization, page replacement, image processing, and scheduling algorithms."
-      ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "cpp",
-    "title": {
-      "en": "C++",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "7 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Core language foundation. Used for custom game engine and many small projects.",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Developed a custom game engine for a current project. (Limited information disclosure)",
-        "The language that I first learned and my top preference."
-      ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "java",
-    "title": {
-      "en": "Java",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "7 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Distributed systems teaching, Minecraft modding, Various courses/projects.",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Built a Wheel of Fortune Java client/server assignment for students.",
-        "Decompiled code to patch a crash and reassemble."
-      ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
     "id": "linux",
     "title": {
       "en": "Linux",
@@ -225,6 +302,32 @@
       "en": [
         "Actively maintaining Nextcloud and game servers with backups and monitoring.",
         "Configured VFIO and kernel tuning for GPU passthrough to VMs."
+      ],
+      "ja": [],
+      "zh": []
+    }
+  },
+  {
+    "id": "sql",
+    "title": {
+      "en": "SQL",
+      "ja": "",
+      "zh": ""
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "",
+      "zh": ""
+    },
+    "summary": {
+      "en": "Rollodex, SER322 - Database Management course",
+      "ja": "",
+      "zh": ""
+    },
+    "highlights": {
+      "en": [
+        "Designed Retail Inventory Management system for SER322.",
+        "Used queries to troubleshoot and speed up search for Rollodex."
       ],
       "ja": [],
       "zh": []
@@ -361,58 +464,6 @@
     }
   },
   {
-    "id": "postgresql",
-    "title": {
-      "en": "PostgreSQL",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "2 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Rollodex, Quester2000",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Modeled contact/search data to support fast filtering.",
-        "Stored app data for user accounts."
-      ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "sql",
-    "title": {
-      "en": "SQL",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "2 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Rollodex, SER322 - Database Management course",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Designed Retail Inventory Management system for SER322.",
-        "Used queries to troubleshoot and speed up search for Rollodex."
-      ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
     "id": "lua",
     "title": {
       "en": "Lua",
@@ -483,31 +534,6 @@
     "highlights": {
       "en": [
         "Set up a ping point to create a secure connection to my home server."
-      ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "aws",
-    "title": {
-      "en": "AWS",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "2 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Server deployment for various projects",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Used to host client-server applications for SER321."
       ],
       "ja": [],
       "zh": []

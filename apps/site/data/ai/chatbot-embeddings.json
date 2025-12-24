@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2025-12-14T21:28:18.847Z",
+  "generatedAt": "2025-12-24T15:28:37.185Z",
   "tokenizer": "bow-v1",
-  "hash": "207e49f35279d875dda48e27dd65e0468d7610a5af7dcd66e15fbb0da9a3692e",
+  "hash": "54f2d7158b8475ba3d6ff1eac2a979a108964b86e88e63430695c7b59db421e6",
   "chunks": [
     {
       "id": "tech-react",
@@ -73,6 +73,540 @@
             "quester2000"
           ],
           "text": "React 2 years of experience Frontend design for Software Portfolio (this website), Rollodex Capstone, Quester2000."
+        }
+      }
+    },
+    {
+      "id": "tech-javascript",
+      "sourceType": "tech",
+      "sourceId": "javascript",
+      "locales": {
+        "en": {
+          "title": "JavaScript",
+          "href": "/en/experience#javascript",
+          "tokens": [
+            "javascript",
+            "years",
+            "experience",
+            "backend",
+            "logic",
+            "software",
+            "portfolio",
+            "website",
+            "rollodex",
+            "capstone",
+            "quester2000",
+            "built",
+            "client",
+            "server",
+            "power",
+            "complex",
+            "features",
+            "such",
+            "menu",
+            "interfaces",
+            "search",
+            "filtering",
+            "form",
+            "templates"
+          ],
+          "text": "JavaScript 3 years of experience Backend logic for Software Portfolio (this website), Rollodex Capstone, Quester2000. Built client/server logic to power complex features, such as menu interfaces, search filtering, and form templates."
+        },
+        "ja": {
+          "title": "JavaScript",
+          "href": "/ja/experience#javascript",
+          "tokens": [
+            "javascript",
+            "years",
+            "experience",
+            "backend",
+            "logic",
+            "software",
+            "portfolio",
+            "website",
+            "rollodex",
+            "capstone",
+            "quester2000"
+          ],
+          "text": "JavaScript 3 years of experience Backend logic for Software Portfolio (this website), Rollodex Capstone, Quester2000."
+        },
+        "zh": {
+          "title": "JavaScript",
+          "href": "/zh/experience#javascript",
+          "tokens": [
+            "javascript",
+            "years",
+            "experience",
+            "backend",
+            "logic",
+            "software",
+            "portfolio",
+            "website",
+            "rollodex",
+            "capstone",
+            "quester2000"
+          ],
+          "text": "JavaScript 3 years of experience Backend logic for Software Portfolio (this website), Rollodex Capstone, Quester2000."
+        }
+      }
+    },
+    {
+      "id": "tech-typescript",
+      "sourceType": "tech",
+      "sourceId": "typescript",
+      "locales": {
+        "en": {
+          "title": "TypeScript",
+          "href": "/en/experience#typescript",
+          "tokens": [
+            "typescript",
+            "months",
+            "experience",
+            "backend",
+            "logic",
+            "software",
+            "portfolio",
+            "website",
+            "quester2000",
+            "built",
+            "web",
+            "apps",
+            "meant",
+            "run",
+            "cloud",
+            "services"
+          ],
+          "text": "TypeScript 6 months of experience Backend logic for Software Portfolio (this website), Quester2000. Built web apps meant to run on cloud services."
+        },
+        "ja": {
+          "title": "TypeScript",
+          "href": "/ja/experience#typescript",
+          "tokens": [
+            "typescript",
+            "months",
+            "experience",
+            "backend",
+            "logic",
+            "software",
+            "portfolio",
+            "website",
+            "quester2000"
+          ],
+          "text": "TypeScript 6 months of experience Backend logic for Software Portfolio (this website), Quester2000."
+        },
+        "zh": {
+          "title": "TypeScript",
+          "href": "/zh/experience#typescript",
+          "tokens": [
+            "typescript",
+            "months",
+            "experience",
+            "backend",
+            "logic",
+            "software",
+            "portfolio",
+            "website",
+            "quester2000"
+          ],
+          "text": "TypeScript 6 months of experience Backend logic for Software Portfolio (this website), Quester2000."
+        }
+      }
+    },
+    {
+      "id": "tech-codex",
+      "sourceType": "tech",
+      "sourceId": "codex",
+      "locales": {
+        "en": {
+          "title": "Codex",
+          "href": "/en/experience#codex",
+          "tokens": [
+            "codex",
+            "months",
+            "experience",
+            "assisted",
+            "development",
+            "software",
+            "portfolio",
+            "website",
+            "quester2000",
+            "instructed",
+            "perform",
+            "complex",
+            "tasks",
+            "based",
+            "high",
+            "level",
+            "documentation",
+            "detailed",
+            "work",
+            "breakdown",
+            "structure",
+            "broke",
+            "small",
+            "chunks",
+            "handle",
+            "verified",
+            "stability",
+            "solutions"
+          ],
+          "text": "Codex 6 months of experience AI-assisted development for Software Portfolio (this website), Quester2000 Instructed Codex to perform complex tasks based on high level documentation and a detailed Work Breakdown Structure. Broke tasks into small chunks that Codex could handle, and verified stability of solutions."
+        },
+        "ja": {
+          "title": "Codex",
+          "href": "/ja/experience#codex",
+          "tokens": [
+            "codex",
+            "months",
+            "experience",
+            "assisted",
+            "development",
+            "software",
+            "portfolio",
+            "website",
+            "quester2000"
+          ],
+          "text": "Codex 6 months of experience AI-assisted development for Software Portfolio (this website), Quester2000"
+        },
+        "zh": {
+          "title": "Codex",
+          "href": "/zh/experience#codex",
+          "tokens": [
+            "codex",
+            "months",
+            "experience",
+            "assisted",
+            "development",
+            "software",
+            "portfolio",
+            "website",
+            "quester2000"
+          ],
+          "text": "Codex 6 months of experience AI-assisted development for Software Portfolio (this website), Quester2000"
+        }
+      }
+    },
+    {
+      "id": "tech-java",
+      "sourceType": "tech",
+      "sourceId": "java",
+      "locales": {
+        "en": {
+          "title": "Java",
+          "href": "/en/experience#java",
+          "tokens": [
+            "java",
+            "years",
+            "experience",
+            "distributed",
+            "systems",
+            "teaching",
+            "minecraft",
+            "modding",
+            "various",
+            "courses",
+            "projects",
+            "built",
+            "wheel",
+            "fortune",
+            "client",
+            "server",
+            "assignment",
+            "students",
+            "decompiled",
+            "code",
+            "patch",
+            "crash",
+            "reassemble"
+          ],
+          "text": "Java 7 years of experience Distributed systems teaching, Minecraft modding, Various courses/projects. Built a Wheel of Fortune Java client/server assignment for students. Decompiled code to patch a crash and reassemble."
+        },
+        "ja": {
+          "title": "Java",
+          "href": "/ja/experience#java",
+          "tokens": [
+            "java",
+            "years",
+            "experience",
+            "distributed",
+            "systems",
+            "teaching",
+            "minecraft",
+            "modding",
+            "various",
+            "courses",
+            "projects"
+          ],
+          "text": "Java 7 years of experience Distributed systems teaching, Minecraft modding, Various courses/projects."
+        },
+        "zh": {
+          "title": "Java",
+          "href": "/zh/experience#java",
+          "tokens": [
+            "java",
+            "years",
+            "experience",
+            "distributed",
+            "systems",
+            "teaching",
+            "minecraft",
+            "modding",
+            "various",
+            "courses",
+            "projects"
+          ],
+          "text": "Java 7 years of experience Distributed systems teaching, Minecraft modding, Various courses/projects."
+        }
+      }
+    },
+    {
+      "id": "tech-cpp",
+      "sourceType": "tech",
+      "sourceId": "cpp",
+      "locales": {
+        "en": {
+          "title": "C++",
+          "href": "/en/experience#cpp",
+          "tokens": [
+            "years",
+            "experience",
+            "core",
+            "language",
+            "foundation",
+            "used",
+            "custom",
+            "game",
+            "engine",
+            "many",
+            "small",
+            "projects",
+            "developed",
+            "current",
+            "project",
+            "limited",
+            "information",
+            "disclosure",
+            "first",
+            "learned",
+            "top",
+            "preference"
+          ],
+          "text": "C++ 7 years of experience Core language foundation. Used for custom game engine and many small projects. Developed a custom game engine for a current project. (Limited information disclosure) The language that I first learned and my top preference."
+        },
+        "ja": {
+          "title": "C++",
+          "href": "/ja/experience#cpp",
+          "tokens": [
+            "years",
+            "experience",
+            "core",
+            "language",
+            "foundation",
+            "used",
+            "custom",
+            "game",
+            "engine",
+            "many",
+            "small",
+            "projects"
+          ],
+          "text": "C++ 7 years of experience Core language foundation. Used for custom game engine and many small projects."
+        },
+        "zh": {
+          "title": "C++",
+          "href": "/zh/experience#cpp",
+          "tokens": [
+            "years",
+            "experience",
+            "core",
+            "language",
+            "foundation",
+            "used",
+            "custom",
+            "game",
+            "engine",
+            "many",
+            "small",
+            "projects"
+          ],
+          "text": "C++ 7 years of experience Core language foundation. Used for custom game engine and many small projects."
+        }
+      }
+    },
+    {
+      "id": "tech-postgresql",
+      "sourceType": "tech",
+      "sourceId": "postgresql",
+      "locales": {
+        "en": {
+          "title": "PostgreSQL",
+          "href": "/en/experience#postgresql",
+          "tokens": [
+            "postgresql",
+            "years",
+            "experience",
+            "rollodex",
+            "quester2000",
+            "modeled",
+            "contact",
+            "search",
+            "data",
+            "support",
+            "fast",
+            "filtering",
+            "stored",
+            "app",
+            "user",
+            "accounts"
+          ],
+          "text": "PostgreSQL 2 years of experience Rollodex, Quester2000 Modeled contact/search data to support fast filtering. Stored app data for user accounts."
+        },
+        "ja": {
+          "title": "PostgreSQL",
+          "href": "/ja/experience#postgresql",
+          "tokens": [
+            "postgresql",
+            "years",
+            "experience",
+            "rollodex",
+            "quester2000"
+          ],
+          "text": "PostgreSQL 2 years of experience Rollodex, Quester2000"
+        },
+        "zh": {
+          "title": "PostgreSQL",
+          "href": "/zh/experience#postgresql",
+          "tokens": [
+            "postgresql",
+            "years",
+            "experience",
+            "rollodex",
+            "quester2000"
+          ],
+          "text": "PostgreSQL 2 years of experience Rollodex, Quester2000"
+        }
+      }
+    },
+    {
+      "id": "tech-aws",
+      "sourceType": "tech",
+      "sourceId": "aws",
+      "locales": {
+        "en": {
+          "title": "AWS",
+          "href": "/en/experience#aws",
+          "tokens": [
+            "aws",
+            "years",
+            "experience",
+            "server",
+            "deployment",
+            "various",
+            "projects",
+            "used",
+            "host",
+            "client",
+            "applications",
+            "ser321"
+          ],
+          "text": "AWS 2 years of experience Server deployment for various projects Used to host client-server applications for SER321."
+        },
+        "ja": {
+          "title": "AWS",
+          "href": "/ja/experience#aws",
+          "tokens": [
+            "aws",
+            "years",
+            "experience",
+            "server",
+            "deployment",
+            "various",
+            "projects"
+          ],
+          "text": "AWS 2 years of experience Server deployment for various projects"
+        },
+        "zh": {
+          "title": "AWS",
+          "href": "/zh/experience#aws",
+          "tokens": [
+            "aws",
+            "years",
+            "experience",
+            "server",
+            "deployment",
+            "various",
+            "projects"
+          ],
+          "text": "AWS 2 years of experience Server deployment for various projects"
+        }
+      }
+    },
+    {
+      "id": "tech-c",
+      "sourceType": "tech",
+      "sourceId": "c",
+      "locales": {
+        "en": {
+          "title": "C",
+          "href": "/en/experience#c",
+          "tokens": [
+            "years",
+            "experience",
+            "coursework",
+            "various",
+            "courses",
+            "ser334",
+            "built",
+            "loadable",
+            "kernel",
+            "module",
+            "uses",
+            "linux",
+            "data",
+            "structures",
+            "display",
+            "details",
+            "processes",
+            "executing",
+            "applied",
+            "scripting",
+            "topics",
+            "such",
+            "thread",
+            "compiler",
+            "optimization",
+            "page",
+            "replacement",
+            "image",
+            "processing",
+            "scheduling",
+            "algorithms"
+          ],
+          "text": "C 3 years of experience Coursework for various courses. SER334 - Built a Loadable Kernel Module that uses Linux data structures to display details about the processes executing in the kernel. Applied scripting for various topics such as thread/compiler optimization, page replacement, image processing, and scheduling algorithms."
+        },
+        "ja": {
+          "title": "C",
+          "href": "/ja/experience#c",
+          "tokens": [
+            "years",
+            "experience",
+            "coursework",
+            "various",
+            "courses"
+          ],
+          "text": "C 3 years of experience Coursework for various courses."
+        },
+        "zh": {
+          "title": "C",
+          "href": "/zh/experience#c",
+          "tokens": [
+            "years",
+            "experience",
+            "coursework",
+            "various",
+            "courses"
+          ],
+          "text": "C 3 years of experience Coursework for various courses."
         }
       }
     },
@@ -236,358 +770,6 @@
       }
     },
     {
-      "id": "tech-javascript",
-      "sourceType": "tech",
-      "sourceId": "javascript",
-      "locales": {
-        "en": {
-          "title": "JavaScript",
-          "href": "/en/experience#javascript",
-          "tokens": [
-            "javascript",
-            "years",
-            "experience",
-            "backend",
-            "logic",
-            "software",
-            "portfolio",
-            "website",
-            "rollodex",
-            "capstone",
-            "quester2000",
-            "built",
-            "client",
-            "server",
-            "power",
-            "complex",
-            "features",
-            "such",
-            "menu",
-            "interfaces",
-            "search",
-            "filtering",
-            "form",
-            "templates"
-          ],
-          "text": "JavaScript 3 years of experience Backend logic for Software Portfolio (this website), Rollodex Capstone, Quester2000. Built client/server logic to power complex features, such as menu interfaces, search filtering, and form templates."
-        },
-        "ja": {
-          "title": "JavaScript",
-          "href": "/ja/experience#javascript",
-          "tokens": [
-            "javascript",
-            "years",
-            "experience",
-            "backend",
-            "logic",
-            "software",
-            "portfolio",
-            "website",
-            "rollodex",
-            "capstone",
-            "quester2000"
-          ],
-          "text": "JavaScript 3 years of experience Backend logic for Software Portfolio (this website), Rollodex Capstone, Quester2000."
-        },
-        "zh": {
-          "title": "JavaScript",
-          "href": "/zh/experience#javascript",
-          "tokens": [
-            "javascript",
-            "years",
-            "experience",
-            "backend",
-            "logic",
-            "software",
-            "portfolio",
-            "website",
-            "rollodex",
-            "capstone",
-            "quester2000"
-          ],
-          "text": "JavaScript 3 years of experience Backend logic for Software Portfolio (this website), Rollodex Capstone, Quester2000."
-        }
-      }
-    },
-    {
-      "id": "tech-typescript",
-      "sourceType": "tech",
-      "sourceId": "typescript",
-      "locales": {
-        "en": {
-          "title": "TypeScript",
-          "href": "/en/experience#typescript",
-          "tokens": [
-            "typescript",
-            "months",
-            "experience",
-            "backend",
-            "logic",
-            "software",
-            "portfolio",
-            "website",
-            "quester2000",
-            "built",
-            "web",
-            "apps",
-            "meant",
-            "run",
-            "cloud",
-            "services"
-          ],
-          "text": "TypeScript 6 months of experience Backend logic for Software Portfolio (this website), Quester2000. Built web apps meant to run on cloud services."
-        },
-        "ja": {
-          "title": "TypeScript",
-          "href": "/ja/experience#typescript",
-          "tokens": [
-            "typescript",
-            "months",
-            "experience",
-            "backend",
-            "logic",
-            "software",
-            "portfolio",
-            "website",
-            "quester2000"
-          ],
-          "text": "TypeScript 6 months of experience Backend logic for Software Portfolio (this website), Quester2000."
-        },
-        "zh": {
-          "title": "TypeScript",
-          "href": "/zh/experience#typescript",
-          "tokens": [
-            "typescript",
-            "months",
-            "experience",
-            "backend",
-            "logic",
-            "software",
-            "portfolio",
-            "website",
-            "quester2000"
-          ],
-          "text": "TypeScript 6 months of experience Backend logic for Software Portfolio (this website), Quester2000."
-        }
-      }
-    },
-    {
-      "id": "tech-c",
-      "sourceType": "tech",
-      "sourceId": "c",
-      "locales": {
-        "en": {
-          "title": "C",
-          "href": "/en/experience#c",
-          "tokens": [
-            "years",
-            "experience",
-            "coursework",
-            "various",
-            "courses",
-            "ser334",
-            "built",
-            "loadable",
-            "kernel",
-            "module",
-            "uses",
-            "linux",
-            "data",
-            "structures",
-            "display",
-            "details",
-            "processes",
-            "executing",
-            "applied",
-            "scripting",
-            "topics",
-            "such",
-            "thread",
-            "compiler",
-            "optimization",
-            "page",
-            "replacement",
-            "image",
-            "processing",
-            "scheduling",
-            "algorithms"
-          ],
-          "text": "C 3 years of experience Coursework for various courses. SER334 - Built a Loadable Kernel Module that uses Linux data structures to display details about the processes executing in the kernel. Applied scripting for various topics such as thread/compiler optimization, page replacement, image processing, and scheduling algorithms."
-        },
-        "ja": {
-          "title": "C",
-          "href": "/ja/experience#c",
-          "tokens": [
-            "years",
-            "experience",
-            "coursework",
-            "various",
-            "courses"
-          ],
-          "text": "C 3 years of experience Coursework for various courses."
-        },
-        "zh": {
-          "title": "C",
-          "href": "/zh/experience#c",
-          "tokens": [
-            "years",
-            "experience",
-            "coursework",
-            "various",
-            "courses"
-          ],
-          "text": "C 3 years of experience Coursework for various courses."
-        }
-      }
-    },
-    {
-      "id": "tech-cpp",
-      "sourceType": "tech",
-      "sourceId": "cpp",
-      "locales": {
-        "en": {
-          "title": "C++",
-          "href": "/en/experience#cpp",
-          "tokens": [
-            "years",
-            "experience",
-            "core",
-            "language",
-            "foundation",
-            "used",
-            "custom",
-            "game",
-            "engine",
-            "many",
-            "small",
-            "projects",
-            "developed",
-            "current",
-            "project",
-            "limited",
-            "information",
-            "disclosure",
-            "first",
-            "learned",
-            "top",
-            "preference"
-          ],
-          "text": "C++ 7 years of experience Core language foundation. Used for custom game engine and many small projects. Developed a custom game engine for a current project. (Limited information disclosure) The language that I first learned and my top preference."
-        },
-        "ja": {
-          "title": "C++",
-          "href": "/ja/experience#cpp",
-          "tokens": [
-            "years",
-            "experience",
-            "core",
-            "language",
-            "foundation",
-            "used",
-            "custom",
-            "game",
-            "engine",
-            "many",
-            "small",
-            "projects"
-          ],
-          "text": "C++ 7 years of experience Core language foundation. Used for custom game engine and many small projects."
-        },
-        "zh": {
-          "title": "C++",
-          "href": "/zh/experience#cpp",
-          "tokens": [
-            "years",
-            "experience",
-            "core",
-            "language",
-            "foundation",
-            "used",
-            "custom",
-            "game",
-            "engine",
-            "many",
-            "small",
-            "projects"
-          ],
-          "text": "C++ 7 years of experience Core language foundation. Used for custom game engine and many small projects."
-        }
-      }
-    },
-    {
-      "id": "tech-java",
-      "sourceType": "tech",
-      "sourceId": "java",
-      "locales": {
-        "en": {
-          "title": "Java",
-          "href": "/en/experience#java",
-          "tokens": [
-            "java",
-            "years",
-            "experience",
-            "distributed",
-            "systems",
-            "teaching",
-            "minecraft",
-            "modding",
-            "various",
-            "courses",
-            "projects",
-            "built",
-            "wheel",
-            "fortune",
-            "client",
-            "server",
-            "assignment",
-            "students",
-            "decompiled",
-            "code",
-            "patch",
-            "crash",
-            "reassemble"
-          ],
-          "text": "Java 7 years of experience Distributed systems teaching, Minecraft modding, Various courses/projects. Built a Wheel of Fortune Java client/server assignment for students. Decompiled code to patch a crash and reassemble."
-        },
-        "ja": {
-          "title": "Java",
-          "href": "/ja/experience#java",
-          "tokens": [
-            "java",
-            "years",
-            "experience",
-            "distributed",
-            "systems",
-            "teaching",
-            "minecraft",
-            "modding",
-            "various",
-            "courses",
-            "projects"
-          ],
-          "text": "Java 7 years of experience Distributed systems teaching, Minecraft modding, Various courses/projects."
-        },
-        "zh": {
-          "title": "Java",
-          "href": "/zh/experience#java",
-          "tokens": [
-            "java",
-            "years",
-            "experience",
-            "distributed",
-            "systems",
-            "teaching",
-            "minecraft",
-            "modding",
-            "various",
-            "courses",
-            "projects"
-          ],
-          "text": "Java 7 years of experience Distributed systems teaching, Minecraft modding, Various courses/projects."
-        }
-      }
-    },
-    {
       "id": "tech-linux",
       "sourceType": "tech",
       "sourceId": "linux",
@@ -661,6 +843,67 @@
             "courses"
           ],
           "text": "Linux 7 years of experience My daily driver kernel, set up on many systems. Also used for various courses."
+        }
+      }
+    },
+    {
+      "id": "tech-sql",
+      "sourceType": "tech",
+      "sourceId": "sql",
+      "locales": {
+        "en": {
+          "title": "SQL",
+          "href": "/en/experience#sql",
+          "tokens": [
+            "sql",
+            "years",
+            "experience",
+            "rollodex",
+            "ser322",
+            "database",
+            "management",
+            "course",
+            "designed",
+            "retail",
+            "inventory",
+            "system",
+            "used",
+            "queries",
+            "troubleshoot",
+            "speed",
+            "search"
+          ],
+          "text": "SQL 2 years of experience Rollodex, SER322 - Database Management course Designed Retail Inventory Management system for SER322. Used queries to troubleshoot and speed up search for Rollodex."
+        },
+        "ja": {
+          "title": "SQL",
+          "href": "/ja/experience#sql",
+          "tokens": [
+            "sql",
+            "years",
+            "experience",
+            "rollodex",
+            "ser322",
+            "database",
+            "management",
+            "course"
+          ],
+          "text": "SQL 2 years of experience Rollodex, SER322 - Database Management course"
+        },
+        "zh": {
+          "title": "SQL",
+          "href": "/zh/experience#sql",
+          "tokens": [
+            "sql",
+            "years",
+            "experience",
+            "rollodex",
+            "ser322",
+            "database",
+            "management",
+            "course"
+          ],
+          "text": "SQL 2 years of experience Rollodex, SER322 - Database Management course"
         }
       }
     },
@@ -971,121 +1214,6 @@
       }
     },
     {
-      "id": "tech-postgresql",
-      "sourceType": "tech",
-      "sourceId": "postgresql",
-      "locales": {
-        "en": {
-          "title": "PostgreSQL",
-          "href": "/en/experience#postgresql",
-          "tokens": [
-            "postgresql",
-            "years",
-            "experience",
-            "rollodex",
-            "quester2000",
-            "modeled",
-            "contact",
-            "search",
-            "data",
-            "support",
-            "fast",
-            "filtering",
-            "stored",
-            "app",
-            "user",
-            "accounts"
-          ],
-          "text": "PostgreSQL 2 years of experience Rollodex, Quester2000 Modeled contact/search data to support fast filtering. Stored app data for user accounts."
-        },
-        "ja": {
-          "title": "PostgreSQL",
-          "href": "/ja/experience#postgresql",
-          "tokens": [
-            "postgresql",
-            "years",
-            "experience",
-            "rollodex",
-            "quester2000"
-          ],
-          "text": "PostgreSQL 2 years of experience Rollodex, Quester2000"
-        },
-        "zh": {
-          "title": "PostgreSQL",
-          "href": "/zh/experience#postgresql",
-          "tokens": [
-            "postgresql",
-            "years",
-            "experience",
-            "rollodex",
-            "quester2000"
-          ],
-          "text": "PostgreSQL 2 years of experience Rollodex, Quester2000"
-        }
-      }
-    },
-    {
-      "id": "tech-sql",
-      "sourceType": "tech",
-      "sourceId": "sql",
-      "locales": {
-        "en": {
-          "title": "SQL",
-          "href": "/en/experience#sql",
-          "tokens": [
-            "sql",
-            "years",
-            "experience",
-            "rollodex",
-            "ser322",
-            "database",
-            "management",
-            "course",
-            "designed",
-            "retail",
-            "inventory",
-            "system",
-            "used",
-            "queries",
-            "troubleshoot",
-            "speed",
-            "search"
-          ],
-          "text": "SQL 2 years of experience Rollodex, SER322 - Database Management course Designed Retail Inventory Management system for SER322. Used queries to troubleshoot and speed up search for Rollodex."
-        },
-        "ja": {
-          "title": "SQL",
-          "href": "/ja/experience#sql",
-          "tokens": [
-            "sql",
-            "years",
-            "experience",
-            "rollodex",
-            "ser322",
-            "database",
-            "management",
-            "course"
-          ],
-          "text": "SQL 2 years of experience Rollodex, SER322 - Database Management course"
-        },
-        "zh": {
-          "title": "SQL",
-          "href": "/zh/experience#sql",
-          "tokens": [
-            "sql",
-            "years",
-            "experience",
-            "rollodex",
-            "ser322",
-            "database",
-            "management",
-            "course"
-          ],
-          "text": "SQL 2 years of experience Rollodex, SER322 - Database Management course"
-        }
-      }
-    },
-    {
       "id": "tech-lua",
       "sourceType": "tech",
       "sourceId": "lua",
@@ -1242,60 +1370,6 @@
             "intermediate"
           ],
           "text": "Oracle Cloud 2 years of experience WireGuard experiments with intermediate IP"
-        }
-      }
-    },
-    {
-      "id": "tech-aws",
-      "sourceType": "tech",
-      "sourceId": "aws",
-      "locales": {
-        "en": {
-          "title": "AWS",
-          "href": "/en/experience#aws",
-          "tokens": [
-            "aws",
-            "years",
-            "experience",
-            "server",
-            "deployment",
-            "various",
-            "projects",
-            "used",
-            "host",
-            "client",
-            "applications",
-            "ser321"
-          ],
-          "text": "AWS 2 years of experience Server deployment for various projects Used to host client-server applications for SER321."
-        },
-        "ja": {
-          "title": "AWS",
-          "href": "/ja/experience#aws",
-          "tokens": [
-            "aws",
-            "years",
-            "experience",
-            "server",
-            "deployment",
-            "various",
-            "projects"
-          ],
-          "text": "AWS 2 years of experience Server deployment for various projects"
-        },
-        "zh": {
-          "title": "AWS",
-          "href": "/zh/experience#aws",
-          "tokens": [
-            "aws",
-            "years",
-            "experience",
-            "server",
-            "deployment",
-            "various",
-            "projects"
-          ],
-          "text": "AWS 2 years of experience Server deployment for various projects"
         }
       }
     },

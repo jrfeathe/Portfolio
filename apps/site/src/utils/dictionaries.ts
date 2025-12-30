@@ -579,14 +579,14 @@ const en: AppDictionary = {
     hero: {
       title: "Jack Featherstone",
       subtitle:
-        "Hi, I'm Jack and this is my Software Engineering portfolio! I'm currently looking for Fullstack Development roles involving AI. The intent of this site is to showcase my skills and to capitalize on opportunities to network.",
+        "Hi, I’m Jack—this is my software engineering portfolio. This site documents my skills and projects, and serves as a hub for professional connections. I’m seeking long-term fullstack roles involving AI that combine development and project management, and I’m also open to smaller contracts and collaborative work.",
       media: {
         image: {
           ...HERO_IMAGE_BASE,
-          alt: "Portrait of Jack Featherstone standing under warm light.",
+          alt: "Digital artwork of Jack Featherstone exuding ki while tilling soil, farming \"tech stack\" crops.",
         },
         preset: "hero",
-        caption: "Self portrait captured for the 2025 personalization refresh."
+        caption: "I finish the rows I start; roots and duty run deep, so the crop stands."
       },
       cta: {
         title: "Need proof fast?",
@@ -598,7 +598,7 @@ const en: AppDictionary = {
             download: true
           },
           { label: "View experience", variant: "secondary", href: "/en/experience" },
-          { label: "Book a short intro", variant: "ghost", href: "/en/meetings" }
+          { label: "Start a conversation", variant: "ghost", href: "/en/meetings" }
         ]
       }
     },
@@ -645,7 +645,7 @@ const en: AppDictionary = {
     ,
     footer: {
       heading: "Jack Featherstone - Software Engineering Portfolio",
-      body: "Showcasing my purpose, skills, achievements, and interests!",
+      body: "Digital extension of my resume, documenting skills, projects, and experience.",
       email: "jfstone2000@proton.me",
       notesLabel: "Engineering notes",
       notesHref: "/en/notes",
@@ -680,9 +680,9 @@ const en: AppDictionary = {
   meetings: {
     metadataTitle: "Jack F. Contact",
     title: "Contact",
-    subtitle: "Have questions? Schedule a meeting with me.",
+    subtitle: "Have questions? Let’s start a conversation.",
     section1title: "Availability",
-    section1subtitle: "I am commonly able to schedule a short meeting during the hours listed below. Please let me know if you need another time, and I will try to accommodate you!",
+    section1subtitle: "I am commonly able to schedule a short meeting during the hours listed below. (colored tiles)",
     intro:
       "",
     availability: {

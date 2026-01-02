@@ -123,3 +123,11 @@ Combined localization table:
 - Prefer short, natural Japanese in polite form.
 - Prefer clear, neutral Simplified Chinese.
 
+## Spot-checks (2026-Jan-02)
+
+Static spot-checks (code/data review; no runtime UI):
+
+- Home/Skim/Meetings/Experience dictionaries for en/ja/zh reviewed in `apps/site/src/utils/dictionaries.ts` (hero, skim, sections, meetings labels present; locale copy present where expected).
+- Resume links aligned per locale: `home.footer.resumeHref` points to `/resume.pdf` for en/ja/zh and file exists at `apps/site/public/resume.pdf`.
+- Resume data localized: `content/resume.json` contains en/ja/zh values for key fields (basics, skills, experience).
+- Project/tech stack locale data validated: `apps/site/data/projects/*.json` (non-draft) + `apps/site/data/tech-stack-details.json` contain en/ja/zh entries with no missing locale values; draft/template files still include gaps and are not used at runtime.

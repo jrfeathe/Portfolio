@@ -132,6 +132,8 @@ export default function MeetingsPage({ params }: PageParams) {
       breadcrumbs={breadcrumbs}
       sections={sections}
       showSkimToggle={false}
+      shellCopy={dictionary.shell}
+      footerContent={dictionary.home.footer}
       locale={locale}
     />
   );

@@ -30,7 +30,7 @@ type ThemeToggleProps = {
 export function ThemeToggle({ className, locale }: ThemeToggleProps) {
   const [theme, setTheme] = useState<ThemePreference>("system");
   const { themeToggle } = getDictionary(locale);
-  const { label: themeLabel, options: themeOptions } = themeToggle;
+  const { label: themeLabel, options: themeOptions, cycleLabel } = themeToggle;
   const options: SegmentedControlOption<ThemePreference>[] = [
     { value: "light", label: `☀️`, testId: "theme-light" },
     { value: "system", label: themeOptions.system, testId: "theme-system" },
@@ -88,7 +88,7 @@ export function ThemeToggle({ className, locale }: ThemeToggleProps) {
         tabIndex={-1}
         onClick={cycleTheme}
       >
-        Cycle theme
+        {cycleLabel}
       </button>
     </>
   );

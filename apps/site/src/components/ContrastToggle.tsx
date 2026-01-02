@@ -30,7 +30,7 @@ type ContrastToggleProps = {
 export function ContrastToggle({ className, locale }: ContrastToggleProps) {
   const [contrast, setContrast] = useState<ContrastPreference>("system");
   const { contrastToggle } = getDictionary(locale);
-  const { label: contrastLabel, options: contrastOptions } = contrastToggle;
+  const { label: contrastLabel, options: contrastOptions, cycleLabel } = contrastToggle;
   const options: SegmentedControlOption<ContrastPreference>[] = [
     { value: "standard", label: contrastOptions.standard, testId: "contrast-standard" },
     { value: "system", label: contrastOptions.system, testId: "contrast-system" },
@@ -88,7 +88,7 @@ export function ContrastToggle({ className, locale }: ContrastToggleProps) {
         tabIndex={-1}
         onClick={cycleContrast}
       >
-        Cycle contrast
+        {cycleLabel}
       </button>
     </>
   );

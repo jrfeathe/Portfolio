@@ -15,6 +15,9 @@ export type AudioPlayerOverlayProps = {
   downloadLabel: string;
   closeLabel: string;
   reopenLabel: string;
+  volumeLabel: string;
+  volumeShowLabel: string;
+  volumeHideLabel: string;
   locale: string;
   trackId?: string;
   loop?: boolean;
@@ -53,6 +56,9 @@ export function AudioPlayerOverlay({
   downloadLabel,
   closeLabel,
   reopenLabel,
+  volumeLabel,
+  volumeShowLabel,
+  volumeHideLabel,
   locale,
   trackId = "portfolio-loop",
   loop = true,
@@ -264,7 +270,7 @@ export function AudioPlayerOverlay({
                 type="button"
                 onClick={handleVolumeToggle}
                 className="rounded-full border border-border px-3 py-2 text-xs font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
-                aria-label={showVolume ? "Hide volume slider" : "Show volume slider"}
+                aria-label={showVolume ? volumeHideLabel : volumeShowLabel}
               >
                 {volume === 0 ? "🔇" : "🔊"}
               </button>
@@ -278,7 +284,7 @@ export function AudioPlayerOverlay({
                     value={volume}
                     onChange={handleVolumeChange}
                     className="w-full accent-accent dark:accent-dark-accent contrast-more:accent-[var(--light-hc-accent)] dark:contrast-more:accent-[var(--dark-hc-accent)]"
-                    aria-label="Volume"
+                    aria-label={volumeLabel}
                   />
                 </div>
               ) : null}
@@ -378,7 +384,7 @@ export function AudioPlayerOverlay({
               type="button"
               onClick={handleVolumeToggle}
               className="rounded-full border-2 border-border px-2 py-1 text-xs font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
-              aria-label={showVolume ? "Hide volume slider" : "Show volume slider"}
+              aria-label={showVolume ? volumeHideLabel : volumeShowLabel}
             >
               {volume === 0 ? "🔇" : "🔊"}
             </button>
@@ -401,7 +407,7 @@ export function AudioPlayerOverlay({
                 value={volume}
                 onChange={handleVolumeChange}
                 className="w-full accent-accent dark:accent-dark-accent contrast-more:accent-[var(--light-hc-accent)] dark:contrast-more:accent-[var(--dark-hc-accent)]"
-                aria-label="Volume"
+                aria-label={volumeLabel}
               />
             </div>
           ) : null}

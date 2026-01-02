@@ -109,7 +109,7 @@ function buildSections(dictionary: AppDictionary): ShellSection[] {
         </div>
       ) : (
         <p className="text-sm text-textMuted dark:text-dark-textMuted">
-          Tech stack details are coming soon.
+          {dictionary.experience.section2empty}
         </p>
       )
     }
@@ -188,6 +188,8 @@ export default function ExperiencePage({ params }: PageParams) {
       sections={sections}
       anchorItems={anchorItems}
       showSkimToggle={false}
+      shellCopy={dictionary.shell}
+      footerContent={dictionary.home.footer}
       locale={locale}
     />
   );

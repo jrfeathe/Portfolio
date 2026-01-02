@@ -121,7 +121,7 @@ function buildSections(dictionary: AppDictionary, locale: Locale) {
       content: (
         <>
           <p>{sections.techStack.overview}</p>
-          <TechStackCarousel items={techStackItems} />
+          <TechStackCarousel items={techStackItems} labels={sections.techStack.carousel} />
         </>
       )
     },
@@ -248,6 +248,7 @@ function buildSkimSections(
     summaryItems,
     techStackTitle: skim.techStackTitle,
     techStackItems,
+    techStackCarouselLabels: sections.techStack.carousel,
     availabilityLabel: skim.availabilityLabel,
     availability: skim.availability
   };
@@ -339,6 +340,7 @@ export default function HomePage({ params, searchParams }: PageProps) {
           mobileSections={mobileSections}
           anchorItems={anchorItems}
           skimModeEnabled={skimModeEnabled}
+          shellCopy={dictionary.shell}
           locale={locale}
           footerContent={dictionary.home.footer}
           cta={
@@ -414,6 +416,9 @@ export default function HomePage({ params, searchParams }: PageProps) {
             downloadLabel={dictionary.home.audioPlayer.downloadLabel}
             closeLabel={dictionary.home.audioPlayer.closeLabel}
             reopenLabel={dictionary.home.audioPlayer.reopenLabel}
+            volumeLabel={dictionary.home.audioPlayer.volumeLabel}
+            volumeShowLabel={dictionary.home.audioPlayer.volumeShowLabel}
+            volumeHideLabel={dictionary.home.audioPlayer.volumeHideLabel}
             locale={locale}
             trackId={dictionary.home.audioPlayer.trackId}
           />

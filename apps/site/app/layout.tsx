@@ -36,7 +36,7 @@ const OtelBootstrap = dynamic(
   { ssr: false, loading: () => null }
 );
 const chatbotLoadingFallback = (copy: ChatbotCopy) => {
-  const label = copy.launcherLabel || "Chat";
+  const label = copy.launcherLabel || copy.panelTitle;
   return (
     <button
       type="button"

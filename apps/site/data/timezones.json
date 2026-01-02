@@ -1,0 +1,2092 @@
+{
+  "Africa/Abidjan": {
+    "en": "Africa/Abidjan",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Accra": {
+    "en": "Africa/Accra",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Addis_Ababa": {
+    "en": "Africa/Addis Ababa",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Algiers": {
+    "en": "Africa/Algiers",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Asmera": {
+    "en": "Africa/Asmera",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Bamako": {
+    "en": "Africa/Bamako",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Bangui": {
+    "en": "Africa/Bangui",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Banjul": {
+    "en": "Africa/Banjul",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Bissau": {
+    "en": "Africa/Bissau",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Blantyre": {
+    "en": "Africa/Blantyre",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Brazzaville": {
+    "en": "Africa/Brazzaville",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Bujumbura": {
+    "en": "Africa/Bujumbura",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Cairo": {
+    "en": "Africa/Cairo",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Casablanca": {
+    "en": "Africa/Casablanca",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Ceuta": {
+    "en": "Africa/Ceuta",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Conakry": {
+    "en": "Africa/Conakry",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Dakar": {
+    "en": "Africa/Dakar",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Dar_es_Salaam": {
+    "en": "Africa/Dar es Salaam",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Djibouti": {
+    "en": "Africa/Djibouti",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Douala": {
+    "en": "Africa/Douala",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/El_Aaiun": {
+    "en": "Africa/El Aaiun",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Freetown": {
+    "en": "Africa/Freetown",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Gaborone": {
+    "en": "Africa/Gaborone",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Harare": {
+    "en": "Africa/Harare",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Johannesburg": {
+    "en": "Africa/Johannesburg",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Juba": {
+    "en": "Africa/Juba",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Kampala": {
+    "en": "Africa/Kampala",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Khartoum": {
+    "en": "Africa/Khartoum",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Kigali": {
+    "en": "Africa/Kigali",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Kinshasa": {
+    "en": "Africa/Kinshasa",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Lagos": {
+    "en": "Africa/Lagos",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Libreville": {
+    "en": "Africa/Libreville",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Lome": {
+    "en": "Africa/Lome",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Luanda": {
+    "en": "Africa/Luanda",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Lubumbashi": {
+    "en": "Africa/Lubumbashi",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Lusaka": {
+    "en": "Africa/Lusaka",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Malabo": {
+    "en": "Africa/Malabo",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Maputo": {
+    "en": "Africa/Maputo",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Maseru": {
+    "en": "Africa/Maseru",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Mbabane": {
+    "en": "Africa/Mbabane",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Mogadishu": {
+    "en": "Africa/Mogadishu",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Monrovia": {
+    "en": "Africa/Monrovia",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Nairobi": {
+    "en": "Africa/Nairobi",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Ndjamena": {
+    "en": "Africa/Ndjamena",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Niamey": {
+    "en": "Africa/Niamey",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Nouakchott": {
+    "en": "Africa/Nouakchott",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Ouagadougou": {
+    "en": "Africa/Ouagadougou",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Porto-Novo": {
+    "en": "Africa/Porto-Novo",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Sao_Tome": {
+    "en": "Africa/Sao Tome",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Tripoli": {
+    "en": "Africa/Tripoli",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Tunis": {
+    "en": "Africa/Tunis",
+    "ja": "",
+    "zh": ""
+  },
+  "Africa/Windhoek": {
+    "en": "Africa/Windhoek",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Adak": {
+    "en": "America/Adak",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Anchorage": {
+    "en": "America/Anchorage",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Anguilla": {
+    "en": "America/Anguilla",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Antigua": {
+    "en": "America/Antigua",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Araguaina": {
+    "en": "America/Araguaina",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Argentina/La_Rioja": {
+    "en": "America/Argentina/La Rioja",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Argentina/Rio_Gallegos": {
+    "en": "America/Argentina/Rio Gallegos",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Argentina/Salta": {
+    "en": "America/Argentina/Salta",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Argentina/San_Juan": {
+    "en": "America/Argentina/San Juan",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Argentina/San_Luis": {
+    "en": "America/Argentina/San Luis",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Argentina/Tucuman": {
+    "en": "America/Argentina/Tucuman",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Argentina/Ushuaia": {
+    "en": "America/Argentina/Ushuaia",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Aruba": {
+    "en": "America/Aruba",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Asuncion": {
+    "en": "America/Asuncion",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Bahia": {
+    "en": "America/Bahia",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Bahia_Banderas": {
+    "en": "America/Bahia Banderas",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Barbados": {
+    "en": "America/Barbados",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Belem": {
+    "en": "America/Belem",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Belize": {
+    "en": "America/Belize",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Blanc-Sablon": {
+    "en": "America/Blanc-Sablon",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Boa_Vista": {
+    "en": "America/Boa Vista",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Bogota": {
+    "en": "America/Bogota",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Boise": {
+    "en": "America/Boise",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Buenos_Aires": {
+    "en": "America/Buenos Aires",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Cambridge_Bay": {
+    "en": "America/Cambridge Bay",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Campo_Grande": {
+    "en": "America/Campo Grande",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Cancun": {
+    "en": "America/Cancun",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Caracas": {
+    "en": "America/Caracas",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Catamarca": {
+    "en": "America/Catamarca",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Cayenne": {
+    "en": "America/Cayenne",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Cayman": {
+    "en": "America/Cayman",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Chicago": {
+    "en": "America/Chicago",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Chihuahua": {
+    "en": "America/Chihuahua",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Ciudad_Juarez": {
+    "en": "America/Ciudad Juarez",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Coral_Harbour": {
+    "en": "America/Coral Harbour",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Cordoba": {
+    "en": "America/Cordoba",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Costa_Rica": {
+    "en": "America/Costa Rica",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Coyhaique": {
+    "en": "America/Coyhaique",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Creston": {
+    "en": "America/Creston",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Cuiaba": {
+    "en": "America/Cuiaba",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Curacao": {
+    "en": "America/Curacao",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Danmarkshavn": {
+    "en": "America/Danmarkshavn",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Dawson": {
+    "en": "America/Dawson",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Dawson_Creek": {
+    "en": "America/Dawson Creek",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Denver": {
+    "en": "America/Denver",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Detroit": {
+    "en": "America/Detroit",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Dominica": {
+    "en": "America/Dominica",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Edmonton": {
+    "en": "America/Edmonton",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Eirunepe": {
+    "en": "America/Eirunepe",
+    "ja": "",
+    "zh": ""
+  },
+  "America/El_Salvador": {
+    "en": "America/El Salvador",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Fort_Nelson": {
+    "en": "America/Fort Nelson",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Fortaleza": {
+    "en": "America/Fortaleza",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Glace_Bay": {
+    "en": "America/Glace Bay",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Godthab": {
+    "en": "America/Godthab",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Goose_Bay": {
+    "en": "America/Goose Bay",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Grand_Turk": {
+    "en": "America/Grand Turk",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Grenada": {
+    "en": "America/Grenada",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Guadeloupe": {
+    "en": "America/Guadeloupe",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Guatemala": {
+    "en": "America/Guatemala",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Guayaquil": {
+    "en": "America/Guayaquil",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Guyana": {
+    "en": "America/Guyana",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Halifax": {
+    "en": "America/Halifax",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Havana": {
+    "en": "America/Havana",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Hermosillo": {
+    "en": "America/Hermosillo",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Indiana/Knox": {
+    "en": "America/Indiana/Knox",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Indiana/Marengo": {
+    "en": "America/Indiana/Marengo",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Indiana/Petersburg": {
+    "en": "America/Indiana/Petersburg",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Indiana/Tell_City": {
+    "en": "America/Indiana/Tell City",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Indiana/Vevay": {
+    "en": "America/Indiana/Vevay",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Indiana/Vincennes": {
+    "en": "America/Indiana/Vincennes",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Indiana/Winamac": {
+    "en": "America/Indiana/Winamac",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Indianapolis": {
+    "en": "America/Indianapolis",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Inuvik": {
+    "en": "America/Inuvik",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Iqaluit": {
+    "en": "America/Iqaluit",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Jamaica": {
+    "en": "America/Jamaica",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Jujuy": {
+    "en": "America/Jujuy",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Juneau": {
+    "en": "America/Juneau",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Kentucky/Monticello": {
+    "en": "America/Kentucky/Monticello",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Kralendijk": {
+    "en": "America/Kralendijk",
+    "ja": "",
+    "zh": ""
+  },
+  "America/La_Paz": {
+    "en": "America/La Paz",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Lima": {
+    "en": "America/Lima",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Los_Angeles": {
+    "en": "America/Los Angeles",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Louisville": {
+    "en": "America/Louisville",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Lower_Princes": {
+    "en": "America/Lower Princes",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Maceio": {
+    "en": "America/Maceio",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Managua": {
+    "en": "America/Managua",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Manaus": {
+    "en": "America/Manaus",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Marigot": {
+    "en": "America/Marigot",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Martinique": {
+    "en": "America/Martinique",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Matamoros": {
+    "en": "America/Matamoros",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Mazatlan": {
+    "en": "America/Mazatlan",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Mendoza": {
+    "en": "America/Mendoza",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Menominee": {
+    "en": "America/Menominee",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Merida": {
+    "en": "America/Merida",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Metlakatla": {
+    "en": "America/Metlakatla",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Mexico_City": {
+    "en": "America/Mexico City",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Miquelon": {
+    "en": "America/Miquelon",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Moncton": {
+    "en": "America/Moncton",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Monterrey": {
+    "en": "America/Monterrey",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Montevideo": {
+    "en": "America/Montevideo",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Montserrat": {
+    "en": "America/Montserrat",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Nassau": {
+    "en": "America/Nassau",
+    "ja": "",
+    "zh": ""
+  },
+  "America/New_York": {
+    "en": "America/New York",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Nome": {
+    "en": "America/Nome",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Noronha": {
+    "en": "America/Noronha",
+    "ja": "",
+    "zh": ""
+  },
+  "America/North_Dakota/Beulah": {
+    "en": "America/North Dakota/Beulah",
+    "ja": "",
+    "zh": ""
+  },
+  "America/North_Dakota/Center": {
+    "en": "America/North Dakota/Center",
+    "ja": "",
+    "zh": ""
+  },
+  "America/North_Dakota/New_Salem": {
+    "en": "America/North Dakota/New Salem",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Ojinaga": {
+    "en": "America/Ojinaga",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Panama": {
+    "en": "America/Panama",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Paramaribo": {
+    "en": "America/Paramaribo",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Phoenix": {
+    "en": "America/Phoenix",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Port-au-Prince": {
+    "en": "America/Port-au-Prince",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Port_of_Spain": {
+    "en": "America/Port of Spain",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Porto_Velho": {
+    "en": "America/Porto Velho",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Puerto_Rico": {
+    "en": "America/Puerto Rico",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Punta_Arenas": {
+    "en": "America/Punta Arenas",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Rankin_Inlet": {
+    "en": "America/Rankin Inlet",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Recife": {
+    "en": "America/Recife",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Regina": {
+    "en": "America/Regina",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Resolute": {
+    "en": "America/Resolute",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Rio_Branco": {
+    "en": "America/Rio Branco",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Santarem": {
+    "en": "America/Santarem",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Santiago": {
+    "en": "America/Santiago",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Santo_Domingo": {
+    "en": "America/Santo Domingo",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Sao_Paulo": {
+    "en": "America/Sao Paulo",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Scoresbysund": {
+    "en": "America/Scoresbysund",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Sitka": {
+    "en": "America/Sitka",
+    "ja": "",
+    "zh": ""
+  },
+  "America/St_Barthelemy": {
+    "en": "America/St Barthelemy",
+    "ja": "",
+    "zh": ""
+  },
+  "America/St_Johns": {
+    "en": "America/St Johns",
+    "ja": "",
+    "zh": ""
+  },
+  "America/St_Kitts": {
+    "en": "America/St Kitts",
+    "ja": "",
+    "zh": ""
+  },
+  "America/St_Lucia": {
+    "en": "America/St Lucia",
+    "ja": "",
+    "zh": ""
+  },
+  "America/St_Thomas": {
+    "en": "America/St Thomas",
+    "ja": "",
+    "zh": ""
+  },
+  "America/St_Vincent": {
+    "en": "America/St Vincent",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Swift_Current": {
+    "en": "America/Swift Current",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Tegucigalpa": {
+    "en": "America/Tegucigalpa",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Thule": {
+    "en": "America/Thule",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Tijuana": {
+    "en": "America/Tijuana",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Toronto": {
+    "en": "America/Toronto",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Tortola": {
+    "en": "America/Tortola",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Vancouver": {
+    "en": "America/Vancouver",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Whitehorse": {
+    "en": "America/Whitehorse",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Winnipeg": {
+    "en": "America/Winnipeg",
+    "ja": "",
+    "zh": ""
+  },
+  "America/Yakutat": {
+    "en": "America/Yakutat",
+    "ja": "",
+    "zh": ""
+  },
+  "Antarctica/Casey": {
+    "en": "Antarctica/Casey",
+    "ja": "",
+    "zh": ""
+  },
+  "Antarctica/Davis": {
+    "en": "Antarctica/Davis",
+    "ja": "",
+    "zh": ""
+  },
+  "Antarctica/DumontDUrville": {
+    "en": "Antarctica/DumontDUrville",
+    "ja": "",
+    "zh": ""
+  },
+  "Antarctica/Macquarie": {
+    "en": "Antarctica/Macquarie",
+    "ja": "",
+    "zh": ""
+  },
+  "Antarctica/Mawson": {
+    "en": "Antarctica/Mawson",
+    "ja": "",
+    "zh": ""
+  },
+  "Antarctica/McMurdo": {
+    "en": "Antarctica/McMurdo",
+    "ja": "",
+    "zh": ""
+  },
+  "Antarctica/Palmer": {
+    "en": "Antarctica/Palmer",
+    "ja": "",
+    "zh": ""
+  },
+  "Antarctica/Rothera": {
+    "en": "Antarctica/Rothera",
+    "ja": "",
+    "zh": ""
+  },
+  "Antarctica/Syowa": {
+    "en": "Antarctica/Syowa",
+    "ja": "",
+    "zh": ""
+  },
+  "Antarctica/Troll": {
+    "en": "Antarctica/Troll",
+    "ja": "",
+    "zh": ""
+  },
+  "Antarctica/Vostok": {
+    "en": "Antarctica/Vostok",
+    "ja": "",
+    "zh": ""
+  },
+  "Arctic/Longyearbyen": {
+    "en": "Arctic/Longyearbyen",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Aden": {
+    "en": "Asia/Aden",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Almaty": {
+    "en": "Asia/Almaty",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Amman": {
+    "en": "Asia/Amman",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Anadyr": {
+    "en": "Asia/Anadyr",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Aqtau": {
+    "en": "Asia/Aqtau",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Aqtobe": {
+    "en": "Asia/Aqtobe",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Ashgabat": {
+    "en": "Asia/Ashgabat",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Atyrau": {
+    "en": "Asia/Atyrau",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Baghdad": {
+    "en": "Asia/Baghdad",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Bahrain": {
+    "en": "Asia/Bahrain",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Baku": {
+    "en": "Asia/Baku",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Bangkok": {
+    "en": "Asia/Bangkok",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Barnaul": {
+    "en": "Asia/Barnaul",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Beirut": {
+    "en": "Asia/Beirut",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Bishkek": {
+    "en": "Asia/Bishkek",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Brunei": {
+    "en": "Asia/Brunei",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Calcutta": {
+    "en": "Asia/Calcutta",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Chita": {
+    "en": "Asia/Chita",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Colombo": {
+    "en": "Asia/Colombo",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Damascus": {
+    "en": "Asia/Damascus",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Dhaka": {
+    "en": "Asia/Dhaka",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Dili": {
+    "en": "Asia/Dili",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Dubai": {
+    "en": "Asia/Dubai",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Dushanbe": {
+    "en": "Asia/Dushanbe",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Famagusta": {
+    "en": "Asia/Famagusta",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Gaza": {
+    "en": "Asia/Gaza",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Hebron": {
+    "en": "Asia/Hebron",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Hong_Kong": {
+    "en": "Asia/Hong Kong",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Hovd": {
+    "en": "Asia/Hovd",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Irkutsk": {
+    "en": "Asia/Irkutsk",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Jakarta": {
+    "en": "Asia/Jakarta",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Jayapura": {
+    "en": "Asia/Jayapura",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Jerusalem": {
+    "en": "Asia/Jerusalem",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Kabul": {
+    "en": "Asia/Kabul",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Kamchatka": {
+    "en": "Asia/Kamchatka",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Karachi": {
+    "en": "Asia/Karachi",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Katmandu": {
+    "en": "Asia/Katmandu",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Khandyga": {
+    "en": "Asia/Khandyga",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Krasnoyarsk": {
+    "en": "Asia/Krasnoyarsk",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Kuala_Lumpur": {
+    "en": "Asia/Kuala Lumpur",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Kuching": {
+    "en": "Asia/Kuching",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Kuwait": {
+    "en": "Asia/Kuwait",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Macau": {
+    "en": "Asia/Macau",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Magadan": {
+    "en": "Asia/Magadan",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Makassar": {
+    "en": "Asia/Makassar",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Manila": {
+    "en": "Asia/Manila",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Muscat": {
+    "en": "Asia/Muscat",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Nicosia": {
+    "en": "Asia/Nicosia",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Novokuznetsk": {
+    "en": "Asia/Novokuznetsk",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Novosibirsk": {
+    "en": "Asia/Novosibirsk",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Omsk": {
+    "en": "Asia/Omsk",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Oral": {
+    "en": "Asia/Oral",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Phnom_Penh": {
+    "en": "Asia/Phnom Penh",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Pontianak": {
+    "en": "Asia/Pontianak",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Pyongyang": {
+    "en": "Asia/Pyongyang",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Qatar": {
+    "en": "Asia/Qatar",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Qostanay": {
+    "en": "Asia/Qostanay",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Qyzylorda": {
+    "en": "Asia/Qyzylorda",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Rangoon": {
+    "en": "Asia/Rangoon",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Riyadh": {
+    "en": "Asia/Riyadh",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Saigon": {
+    "en": "Asia/Saigon",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Sakhalin": {
+    "en": "Asia/Sakhalin",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Samarkand": {
+    "en": "Asia/Samarkand",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Seoul": {
+    "en": "Asia/Seoul",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Shanghai": {
+    "en": "Asia/Shanghai",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Singapore": {
+    "en": "Asia/Singapore",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Srednekolymsk": {
+    "en": "Asia/Srednekolymsk",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Taipei": {
+    "en": "Asia/Taipei",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Tashkent": {
+    "en": "Asia/Tashkent",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Tbilisi": {
+    "en": "Asia/Tbilisi",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Tehran": {
+    "en": "Asia/Tehran",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Thimphu": {
+    "en": "Asia/Thimphu",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Tokyo": {
+    "en": "Asia/Tokyo",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Tomsk": {
+    "en": "Asia/Tomsk",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Ulaanbaatar": {
+    "en": "Asia/Ulaanbaatar",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Urumqi": {
+    "en": "Asia/Urumqi",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Ust-Nera": {
+    "en": "Asia/Ust-Nera",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Vientiane": {
+    "en": "Asia/Vientiane",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Vladivostok": {
+    "en": "Asia/Vladivostok",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Yakutsk": {
+    "en": "Asia/Yakutsk",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Yekaterinburg": {
+    "en": "Asia/Yekaterinburg",
+    "ja": "",
+    "zh": ""
+  },
+  "Asia/Yerevan": {
+    "en": "Asia/Yerevan",
+    "ja": "",
+    "zh": ""
+  },
+  "Atlantic/Azores": {
+    "en": "Atlantic/Azores",
+    "ja": "",
+    "zh": ""
+  },
+  "Atlantic/Bermuda": {
+    "en": "Atlantic/Bermuda",
+    "ja": "",
+    "zh": ""
+  },
+  "Atlantic/Canary": {
+    "en": "Atlantic/Canary",
+    "ja": "",
+    "zh": ""
+  },
+  "Atlantic/Cape_Verde": {
+    "en": "Atlantic/Cape Verde",
+    "ja": "",
+    "zh": ""
+  },
+  "Atlantic/Faeroe": {
+    "en": "Atlantic/Faeroe",
+    "ja": "",
+    "zh": ""
+  },
+  "Atlantic/Madeira": {
+    "en": "Atlantic/Madeira",
+    "ja": "",
+    "zh": ""
+  },
+  "Atlantic/Reykjavik": {
+    "en": "Atlantic/Reykjavik",
+    "ja": "",
+    "zh": ""
+  },
+  "Atlantic/South_Georgia": {
+    "en": "Atlantic/South Georgia",
+    "ja": "",
+    "zh": ""
+  },
+  "Atlantic/St_Helena": {
+    "en": "Atlantic/St Helena",
+    "ja": "",
+    "zh": ""
+  },
+  "Atlantic/Stanley": {
+    "en": "Atlantic/Stanley",
+    "ja": "",
+    "zh": ""
+  },
+  "Australia/Adelaide": {
+    "en": "Australia/Adelaide",
+    "ja": "",
+    "zh": ""
+  },
+  "Australia/Brisbane": {
+    "en": "Australia/Brisbane",
+    "ja": "",
+    "zh": ""
+  },
+  "Australia/Broken_Hill": {
+    "en": "Australia/Broken Hill",
+    "ja": "",
+    "zh": ""
+  },
+  "Australia/Darwin": {
+    "en": "Australia/Darwin",
+    "ja": "",
+    "zh": ""
+  },
+  "Australia/Eucla": {
+    "en": "Australia/Eucla",
+    "ja": "",
+    "zh": ""
+  },
+  "Australia/Hobart": {
+    "en": "Australia/Hobart",
+    "ja": "",
+    "zh": ""
+  },
+  "Australia/Lindeman": {
+    "en": "Australia/Lindeman",
+    "ja": "",
+    "zh": ""
+  },
+  "Australia/Lord_Howe": {
+    "en": "Australia/Lord Howe",
+    "ja": "",
+    "zh": ""
+  },
+  "Australia/Melbourne": {
+    "en": "Australia/Melbourne",
+    "ja": "",
+    "zh": ""
+  },
+  "Australia/Perth": {
+    "en": "Australia/Perth",
+    "ja": "",
+    "zh": ""
+  },
+  "Australia/Sydney": {
+    "en": "Australia/Sydney",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Amsterdam": {
+    "en": "Europe/Amsterdam",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Andorra": {
+    "en": "Europe/Andorra",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Astrakhan": {
+    "en": "Europe/Astrakhan",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Athens": {
+    "en": "Europe/Athens",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Belgrade": {
+    "en": "Europe/Belgrade",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Berlin": {
+    "en": "Europe/Berlin",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Bratislava": {
+    "en": "Europe/Bratislava",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Brussels": {
+    "en": "Europe/Brussels",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Bucharest": {
+    "en": "Europe/Bucharest",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Budapest": {
+    "en": "Europe/Budapest",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Busingen": {
+    "en": "Europe/Busingen",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Chisinau": {
+    "en": "Europe/Chisinau",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Copenhagen": {
+    "en": "Europe/Copenhagen",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Dublin": {
+    "en": "Europe/Dublin",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Gibraltar": {
+    "en": "Europe/Gibraltar",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Guernsey": {
+    "en": "Europe/Guernsey",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Helsinki": {
+    "en": "Europe/Helsinki",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Isle_of_Man": {
+    "en": "Europe/Isle of Man",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Istanbul": {
+    "en": "Europe/Istanbul",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Jersey": {
+    "en": "Europe/Jersey",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Kaliningrad": {
+    "en": "Europe/Kaliningrad",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Kiev": {
+    "en": "Europe/Kiev",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Kirov": {
+    "en": "Europe/Kirov",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Lisbon": {
+    "en": "Europe/Lisbon",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Ljubljana": {
+    "en": "Europe/Ljubljana",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/London": {
+    "en": "Europe/London",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Luxembourg": {
+    "en": "Europe/Luxembourg",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Madrid": {
+    "en": "Europe/Madrid",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Malta": {
+    "en": "Europe/Malta",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Mariehamn": {
+    "en": "Europe/Mariehamn",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Minsk": {
+    "en": "Europe/Minsk",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Monaco": {
+    "en": "Europe/Monaco",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Moscow": {
+    "en": "Europe/Moscow",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Oslo": {
+    "en": "Europe/Oslo",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Paris": {
+    "en": "Europe/Paris",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Podgorica": {
+    "en": "Europe/Podgorica",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Prague": {
+    "en": "Europe/Prague",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Riga": {
+    "en": "Europe/Riga",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Rome": {
+    "en": "Europe/Rome",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Samara": {
+    "en": "Europe/Samara",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/San_Marino": {
+    "en": "Europe/San Marino",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Sarajevo": {
+    "en": "Europe/Sarajevo",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Saratov": {
+    "en": "Europe/Saratov",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Simferopol": {
+    "en": "Europe/Simferopol",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Skopje": {
+    "en": "Europe/Skopje",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Sofia": {
+    "en": "Europe/Sofia",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Stockholm": {
+    "en": "Europe/Stockholm",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Tallinn": {
+    "en": "Europe/Tallinn",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Tirane": {
+    "en": "Europe/Tirane",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Ulyanovsk": {
+    "en": "Europe/Ulyanovsk",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Vaduz": {
+    "en": "Europe/Vaduz",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Vatican": {
+    "en": "Europe/Vatican",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Vienna": {
+    "en": "Europe/Vienna",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Vilnius": {
+    "en": "Europe/Vilnius",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Volgograd": {
+    "en": "Europe/Volgograd",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Warsaw": {
+    "en": "Europe/Warsaw",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Zagreb": {
+    "en": "Europe/Zagreb",
+    "ja": "",
+    "zh": ""
+  },
+  "Europe/Zurich": {
+    "en": "Europe/Zurich",
+    "ja": "",
+    "zh": ""
+  },
+  "Indian/Antananarivo": {
+    "en": "Indian/Antananarivo",
+    "ja": "",
+    "zh": ""
+  },
+  "Indian/Chagos": {
+    "en": "Indian/Chagos",
+    "ja": "",
+    "zh": ""
+  },
+  "Indian/Christmas": {
+    "en": "Indian/Christmas",
+    "ja": "",
+    "zh": ""
+  },
+  "Indian/Cocos": {
+    "en": "Indian/Cocos",
+    "ja": "",
+    "zh": ""
+  },
+  "Indian/Comoro": {
+    "en": "Indian/Comoro",
+    "ja": "",
+    "zh": ""
+  },
+  "Indian/Kerguelen": {
+    "en": "Indian/Kerguelen",
+    "ja": "",
+    "zh": ""
+  },
+  "Indian/Mahe": {
+    "en": "Indian/Mahe",
+    "ja": "",
+    "zh": ""
+  },
+  "Indian/Maldives": {
+    "en": "Indian/Maldives",
+    "ja": "",
+    "zh": ""
+  },
+  "Indian/Mauritius": {
+    "en": "Indian/Mauritius",
+    "ja": "",
+    "zh": ""
+  },
+  "Indian/Mayotte": {
+    "en": "Indian/Mayotte",
+    "ja": "",
+    "zh": ""
+  },
+  "Indian/Reunion": {
+    "en": "Indian/Reunion",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Apia": {
+    "en": "Pacific/Apia",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Auckland": {
+    "en": "Pacific/Auckland",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Bougainville": {
+    "en": "Pacific/Bougainville",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Chatham": {
+    "en": "Pacific/Chatham",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Easter": {
+    "en": "Pacific/Easter",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Efate": {
+    "en": "Pacific/Efate",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Enderbury": {
+    "en": "Pacific/Enderbury",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Fakaofo": {
+    "en": "Pacific/Fakaofo",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Fiji": {
+    "en": "Pacific/Fiji",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Funafuti": {
+    "en": "Pacific/Funafuti",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Galapagos": {
+    "en": "Pacific/Galapagos",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Gambier": {
+    "en": "Pacific/Gambier",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Guadalcanal": {
+    "en": "Pacific/Guadalcanal",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Guam": {
+    "en": "Pacific/Guam",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Honolulu": {
+    "en": "Pacific/Honolulu",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Kiritimati": {
+    "en": "Pacific/Kiritimati",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Kosrae": {
+    "en": "Pacific/Kosrae",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Kwajalein": {
+    "en": "Pacific/Kwajalein",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Majuro": {
+    "en": "Pacific/Majuro",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Marquesas": {
+    "en": "Pacific/Marquesas",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Midway": {
+    "en": "Pacific/Midway",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Nauru": {
+    "en": "Pacific/Nauru",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Niue": {
+    "en": "Pacific/Niue",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Norfolk": {
+    "en": "Pacific/Norfolk",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Noumea": {
+    "en": "Pacific/Noumea",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Pago_Pago": {
+    "en": "Pacific/Pago Pago",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Palau": {
+    "en": "Pacific/Palau",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Pitcairn": {
+    "en": "Pacific/Pitcairn",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Ponape": {
+    "en": "Pacific/Ponape",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Port_Moresby": {
+    "en": "Pacific/Port Moresby",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Rarotonga": {
+    "en": "Pacific/Rarotonga",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Saipan": {
+    "en": "Pacific/Saipan",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Tahiti": {
+    "en": "Pacific/Tahiti",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Tarawa": {
+    "en": "Pacific/Tarawa",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Tongatapu": {
+    "en": "Pacific/Tongatapu",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Truk": {
+    "en": "Pacific/Truk",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Wake": {
+    "en": "Pacific/Wake",
+    "ja": "",
+    "zh": ""
+  },
+  "Pacific/Wallis": {
+    "en": "Pacific/Wallis",
+    "ja": "",
+    "zh": ""
+  }
+}

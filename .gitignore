@@ -32,3 +32,5 @@ apps/site/app/critical.css
 /coverage/
 apps/site/coverage/
 .gnupg-security/
+.tmp_extra_keys.txt
+.tmp_missing_keys.txt

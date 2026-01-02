@@ -17,10 +17,12 @@ const LAZY_SLIDE_DELAY = 600;
 
 export function TechStackCarousel({
   items,
-  iconsReady = true
+  iconsReady = true,
+  labels
 }: {
   items: TechStackItems;
   iconsReady?: boolean;
+  labels: AppDictionary["home"]["sections"]["techStack"]["carousel"];
 }) {
   const slides = useMemo(() => {
     const chunked: TechStackItem[][] = [];
@@ -180,7 +182,7 @@ export function TechStackCarousel({
       <div
         ref={containerRef}
         className="-mx-4 overflow-hidden overscroll-contain px-4 pb-4 pt-2 sm:mx-0 sm:px-0 sm:pt-2"
-        aria-label="Featured tech stack icons"
+        aria-label={labels.label}
       >
         <div
           className="flex transition-transform duration-500 ease-out"
@@ -237,7 +239,7 @@ export function TechStackCarousel({
           <button
             type="button"
             onClick={() => handleArrowClick(-1)}
-            aria-label="Show previous tech stack icons"
+            aria-label={labels.previousLabel}
             disabled={!canScrollPrev}
             className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-surface text-text shadow-md transition hover:border-accent hover:text-accent disabled:opacity-30 dark:border-dark-border/60 dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
           >
@@ -246,7 +248,7 @@ export function TechStackCarousel({
           <button
             type="button"
             onClick={() => handleArrowClick(1)}
-            aria-label="Show next tech stack icons"
+            aria-label={labels.nextLabel}
             disabled={!canScrollNext}
             className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-surface text-text shadow-md transition hover:border-accent hover:text-accent disabled:opacity-30 dark:border-dark-border/60 dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
           >

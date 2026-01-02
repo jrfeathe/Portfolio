@@ -7,6 +7,7 @@ import type { AppDictionary } from "../utils/dictionaries";
 import { TechStackCarousel } from "./TechStackCarousel";
 
 type TechStackItems = AppDictionary["home"]["sections"]["techStack"]["items"];
+type TechStackCarouselLabels = AppDictionary["home"]["sections"]["techStack"]["carousel"];
 
 export type SkimSummaryItem = {
   id: string;
@@ -27,6 +28,7 @@ type DesktopSkimLayoutProps = {
   summaryItems: SkimSummaryItem[];
   techStackTitle: string;
   techStackItems: TechStackItems;
+  techStackCarouselLabels: TechStackCarouselLabels;
   availabilityLabel: string;
   availability: ReactNode;
 };
@@ -36,6 +38,7 @@ export function DesktopSkimLayout({
   summaryItems,
   techStackTitle,
   techStackItems,
+  techStackCarouselLabels,
   availabilityLabel,
   availability
 }: DesktopSkimLayoutProps) {
@@ -83,7 +86,7 @@ export function DesktopSkimLayout({
           <p className="text-xs font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
             {techStackTitle}
           </p>
-          <TechStackCarousel items={techStackItems} />
+          <TechStackCarousel items={techStackItems} labels={techStackCarouselLabels} />
         </div>
         <div className="skim-card rounded-xl border border-border/70 bg-surface px-4 py-3 dark:border-dark-border/70 dark:bg-dark-surface">
           <p className="text-xs font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">

@@ -8,12 +8,14 @@ import { TechStackCarousel } from "./TechStackCarousel";
 import type { SkimSummaryItem } from "./DesktopSkimLayout";
 
 type TechStackItems = AppDictionary["home"]["sections"]["techStack"]["items"];
+type TechStackCarouselLabels = AppDictionary["home"]["sections"]["techStack"]["carousel"];
 
 type MobileSkimLayoutProps = {
   columnTitle: string;
   summaryItems: SkimSummaryItem[];
   techStackTitle: string;
   techStackItems: TechStackItems;
+  techStackCarouselLabels: TechStackCarouselLabels;
   availabilityLabel: string;
   availability: ReactNode;
 };
@@ -30,6 +32,7 @@ export function MobileSkimLayout({
   summaryItems,
   techStackTitle,
   techStackItems,
+  techStackCarouselLabels,
   availabilityLabel,
   availability
 }: MobileSkimLayoutProps) {
@@ -83,7 +86,7 @@ export function MobileSkimLayout({
         <p className="text-xs font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
           {techStackTitle}
         </p>
-        <TechStackCarousel items={techStackItems} />
+        <TechStackCarousel items={techStackItems} labels={techStackCarouselLabels} />
       </div>
       {mobileTimezoneItem ? (
         <div className="skim-card rounded-xl border border-border/70 bg-surface px-4 py-3 dark:border-dark-border/70 dark:bg-dark-surface">

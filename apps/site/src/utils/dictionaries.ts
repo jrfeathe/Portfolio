@@ -86,10 +86,12 @@ export type AppDictionary = {
   };
   themeToggle: {
     label: string;
+    cycleLabel: string;
     options: Record<ThemePreference, string>;
   };
   contrastToggle: {
     label: string;
+    cycleLabel: string;
     options: Record<ContrastPreference, string>;
   };
   skimToggle: {
@@ -118,7 +120,25 @@ export type AppDictionary = {
     thinkingLabel: string;
     moderationTitle: string;
     moderationBody: string;
+    closeLabel: string;
+    referencesLabel: string;
+    contextFactsLabel: string;
+    resizeLabel: string;
+    resizeAriaLabel: string;
+    moderationImageAlt: string;
     sendLabel: string;
+  };
+  shell: {
+    breadcrumbsLabel: string;
+    anchorNavLabel: string;
+    returnToTopLabel: string;
+    expandAllLabel: string;
+    collapseAllLabel: string;
+    menuTitle: string;
+    menuOpenLabel: string;
+    menuCloseLabel: string;
+    menuPanelLabel: string;
+    menuCloseButtonLabel: string;
   };
   home: {
     breadcrumbs: {
@@ -156,6 +176,9 @@ export type AppDictionary = {
       downloadLabel: string;
       closeLabel: string;
       reopenLabel: string;
+      volumeLabel: string;
+      volumeShowLabel: string;
+      volumeHideLabel: string;
       trackId: string;
     };
     hero: {
@@ -191,6 +214,11 @@ export type AppDictionary = {
         description: string;
         overview: string;
         items: TechStackEntry[];
+        carousel: {
+          label: string;
+          previousLabel: string;
+          nextLabel: string;
+        };
       };
       proof: {
         eyebrow: string;
@@ -237,6 +265,7 @@ export type AppDictionary = {
     section1subtitle: string;
     section2title: string;
     section2subtitle: string;
+    section2empty: string;
     entries: ExperienceEntry[];
     techStack: TechExperienceEntry[];
   };
@@ -259,6 +288,12 @@ export type AppDictionary = {
       referenceCloseLabel: string;
       timezoneDropdownLabel: string;
       dropdownDescription: string;
+      timezoneSearchPlaceholder: string;
+      timezoneSearchLabel: string;
+      timezonePickerPinnedLabel: string;
+      timezonePickerAllLabel: string;
+      timezonePickerSelectedLabel: string;
+      timezonePickerNoMatchesLabel: string;
       windowLabelPrefix: string;
       availableLabel: string;
       unavailableLabel: string;
@@ -438,11 +473,11 @@ function localizeExperienceEntry(entry: LocalizedExperienceEntry, locale: Locale
 }
 
 const HERO_IMAGE_BASE: Omit<ImageDescriptor, "alt"> = {
-  src: "/media/hero/portrait-placeholder.svg",
-  width: 960,
-  height: 720,
+  src: "/media/hero/portrait1.png",
+  width: 1536,
+  height: 1024,
   blurDataURL:
-    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAr8B9ngcRwAAAABJRU5ErkJggg=="
+    "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAALCAIAAAD5gJpuAAAB8UlEQVR42gXBu27TUBgAYP/n4tjOzXYSmrSJGohacRM0QwUIVQwIFnaGDrwYA2/A1AkWBkRoFYYKQalKQEnVlCR2LrbjHDvnwvfBbuu1lckahqE0jaXJWogkFaAhAADQ8lY+b+gIaYB0UFQpIHduvaKECCkpgWTNVgkr6qLlSNBkf0EX6RxnihlcXSsRMj8IB2QcnyNQIft3w2mVis2aYT+/nX34uIFNI7r03x+99Xqj75n2NLzAy7GXhlhRX6z7is9Y0hvMzzV2+vLAvUCq0/3Iau7gx8nV8YcgM50HnloGCmnkrpmaBokFdgygZGabwEZdu+xe/u52useTfG1YLu9VLSoDaaGlUNi1qwHPP6onKY+37ZXjAIB4cG/ny5+0IP1Imm+euKk3zBFsyQSIjt1sQXJeRCtZ3Ir8QLBV1YydzZ2ht5oJ7IXoYH932xqNl96UhaFKUYmwIg2xTKzZwBCxUEaz/eJszCU1Dp9WDp9V350wt3U/nyz01bqGlsiL5V8/Cey9CaqPghTHCxn7g4g2GhVteFoPvxbk5NvYsjdvjmLqTRFuFiwzo7HIJ3zKuUoF/LoOR/OonZt++nzWv541K/TnVZRb+53eBpcC9jccy6QAUuPKIGDpRGVtyGYLPArnUcK1rZIuQS1YwjiOhfoPUYcTdpwKYwIAAAAASUVORK5CYII="
 };
 
 const STATIC_TECH_STACK_ITEMS: TechStackEntry[] = [
@@ -491,6 +526,7 @@ const en: AppDictionary = {
   },
   themeToggle: {
     label: "Select color theme",
+    cycleLabel: "Cycle theme",
     options: {
       light: "Light",
       system: "System",
@@ -499,6 +535,7 @@ const en: AppDictionary = {
   },
   contrastToggle: {
     label: "Select contrast preference",
+    cycleLabel: "Cycle contrast",
     options: {
       standard: "Normal",
       system: "System",
@@ -528,14 +565,32 @@ const en: AppDictionary = {
     errorMessage: "Something went wrong. Try again or open the resume.",
     fallbackCtaLabel: "Open resume",
     captchaTitle: "Quick human check",
-    captchaPrompt: "Complete the captcha to continue (required after two prompts).",
+    captchaPrompt: "Complete the captcha to continue.",
     rateLimitTitle: "Rate limit reached",
     rateLimitMessage: "You've hit the chat limit for now.",
     rateLimitTryAfter: "Try again in about {minutes} minutes.",
     thinkingLabel: "Thinking…",
     moderationTitle: "Let's keep it professional.",
     moderationBody: "I can help with Jack's roles, skills, projects, and availability.",
+    closeLabel: "Close chat",
+    referencesLabel: "References",
+    contextFactsLabel: "Context facts ({count})",
+    resizeLabel: "Resize",
+    resizeAriaLabel: "Resize chat",
+    moderationImageAlt: "No Fun Allowed sign",
     sendLabel: "Send"
+  },
+  shell: {
+    breadcrumbsLabel: "Breadcrumbs",
+    anchorNavLabel: "On-page navigation",
+    returnToTopLabel: "Return to top",
+    expandAllLabel: "Expand all",
+    collapseAllLabel: "Collapse all",
+    menuTitle: "Menu",
+    menuOpenLabel: "Open menu",
+    menuCloseLabel: "Close menu",
+    menuPanelLabel: "Navigation and display options",
+    menuCloseButtonLabel: "X"
   },
   home: {
     breadcrumbs: {
@@ -574,6 +629,9 @@ const en: AppDictionary = {
       downloadLabel: "Download track",
       closeLabel: "Hide player",
       reopenLabel: "Open audio player",
+      volumeLabel: "Volume",
+      volumeShowLabel: "Show volume slider",
+      volumeHideLabel: "Hide volume slider",
       trackId: "portfolio-loop"
     },
     hero: {
@@ -619,7 +677,12 @@ const en: AppDictionary = {
           "",
         overview:
           "",
-        items: getTechStackItems("en")
+        items: getTechStackItems("en"),
+        carousel: {
+          label: "Featured tech stack icons",
+          previousLabel: "Show previous tech stack icons",
+          nextLabel: "Show next tech stack icons"
+        }
       },
       proof: {
         eyebrow: "Evidence",
@@ -674,6 +737,7 @@ const en: AppDictionary = {
     section1subtitle: "Important projects and roles that have shaped my current skills.",
     section2title: "Tech stack",
     section2subtitle: "Relevant experience with each technology.",
+    section2empty: "Tech stack details are coming soon.",
     entries: getExperienceEntries("en"),
     techStack: getTechStackDetails("en")
   },
@@ -697,6 +761,12 @@ const en: AppDictionary = {
       referenceCloseLabel: "Close reference",
       timezoneDropdownLabel: "View in another timezone",
       dropdownDescription: "",
+      timezoneSearchPlaceholder: "Search timezones",
+      timezoneSearchLabel: "Search timezones",
+      timezonePickerPinnedLabel: "Pinned",
+      timezonePickerAllLabel: "All timezones",
+      timezonePickerSelectedLabel: "Selected",
+      timezonePickerNoMatchesLabel: "No matches",
       windowLabelPrefix: "Visible hours:",
       availableLabel: "commonly available",
       unavailableLabel: "typically unavailable",
@@ -744,6 +814,7 @@ const ja: AppDictionary = {
   },
   themeToggle: {
     label: "テーマを選択",
+    cycleLabel: "テーマを切り替え",
     options: {
       light: "ライト",
       system: "システム",
@@ -752,6 +823,7 @@ const ja: AppDictionary = {
   },
   contrastToggle: {
     label: "コントラストを選択",
+    cycleLabel: "コントラストを切り替え",
     options: {
       standard: "標準",
       system: "システム",
@@ -788,7 +860,25 @@ const ja: AppDictionary = {
     thinkingLabel: "考えています…",
     moderationTitle: "プロフェッショナルな内容でお願いします。",
     moderationBody: "Jack の役割、スキル、プロジェクト、稼働状況についてお答えします。",
+    closeLabel: "チャットを閉じる",
+    referencesLabel: "参照",
+    contextFactsLabel: "参考情報（{count}）",
+    resizeLabel: "サイズ変更",
+    resizeAriaLabel: "チャットサイズを変更",
+    moderationImageAlt: "「No Fun Allowed」看板",
     sendLabel: "送信"
+  },
+  shell: {
+    breadcrumbsLabel: "パンくずリスト",
+    anchorNavLabel: "ページ内ナビゲーション",
+    returnToTopLabel: "トップへ戻る",
+    expandAllLabel: "すべて展開",
+    collapseAllLabel: "すべて折りたたむ",
+    menuTitle: "メニュー",
+    menuOpenLabel: "メニューを開く",
+    menuCloseLabel: "メニューを閉じる",
+    menuPanelLabel: "ナビゲーションと表示オプション",
+    menuCloseButtonLabel: "×"
   },
   home: {
     breadcrumbs: {
@@ -827,6 +917,9 @@ const ja: AppDictionary = {
       downloadLabel: "トラックをダウンロード",
       closeLabel: "プレーヤーを隠す",
       reopenLabel: "オーディオを開く",
+      volumeLabel: "音量",
+      volumeShowLabel: "音量スライダーを表示",
+      volumeHideLabel: "音量スライダーを非表示",
       trackId: "portfolio-loop"
     },
     hero: {
@@ -872,7 +965,12 @@ const ja: AppDictionary = {
           "",
         overview:
           "",
-        items: getTechStackItems("ja")
+        items: getTechStackItems("ja"),
+        carousel: {
+          label: "注目の技術スタックアイコン",
+          previousLabel: "前の技術スタックアイコンを表示",
+          nextLabel: "次の技術スタックアイコンを表示"
+        }
       },
       proof: {
         eyebrow: "エビデンス",
@@ -926,6 +1024,7 @@ const ja: AppDictionary = {
     section1subtitle: "Important projects and roles that have shaped my current skills.",
     section2title: "Tech stack",
     section2subtitle: "Relevant experience with each technology.",
+    section2empty: "技術スタックの詳細は準備中です。",
     entries: getExperienceEntries("ja"),
     techStack: getTechStackDetails("ja")
   },
@@ -951,6 +1050,12 @@ const ja: AppDictionary = {
       referenceCloseLabel: "閉じる",
       timezoneDropdownLabel: "別のタイムゾーンで表示",
       dropdownDescription: "",
+      timezoneSearchPlaceholder: "タイムゾーンを検索",
+      timezoneSearchLabel: "タイムゾーンを検索",
+      timezonePickerPinnedLabel: "ピン留め",
+      timezonePickerAllLabel: "すべてのタイムゾーン",
+      timezonePickerSelectedLabel: "選択済み",
+      timezonePickerNoMatchesLabel: "該当なし",
       windowLabelPrefix: "表示中の時間帯:",
       availableLabel: "空いている時間",
       unavailableLabel: "通常は空いていません",
@@ -999,6 +1104,7 @@ const zh: AppDictionary = {
   },
   themeToggle: {
     label: "选择主题",
+    cycleLabel: "切换主题",
     options: {
       light: "浅色",
       system: "系统",
@@ -1007,6 +1113,7 @@ const zh: AppDictionary = {
   },
   contrastToggle: {
     label: "选择对比度",
+    cycleLabel: "切换对比度",
     options: {
       standard: "标准",
       system: "系统",
@@ -1043,7 +1150,25 @@ const zh: AppDictionary = {
     thinkingLabel: "思考中…",
     moderationTitle: "请保持专业。",
     moderationBody: "我可以提供 Jack 的角色、技能、项目和时间安排信息。",
+    closeLabel: "关闭聊天",
+    referencesLabel: "参考",
+    contextFactsLabel: "上下文要点（{count}）",
+    resizeLabel: "调整大小",
+    resizeAriaLabel: "调整聊天窗口大小",
+    moderationImageAlt: "“No Fun Allowed” 标志",
     sendLabel: "发送"
+  },
+  shell: {
+    breadcrumbsLabel: "面包屑导航",
+    anchorNavLabel: "页面内导航",
+    returnToTopLabel: "返回顶部",
+    expandAllLabel: "全部展开",
+    collapseAllLabel: "全部收起",
+    menuTitle: "菜单",
+    menuOpenLabel: "打开菜单",
+    menuCloseLabel: "关闭菜单",
+    menuPanelLabel: "导航与显示选项",
+    menuCloseButtonLabel: "×"
   },
   home: {
     breadcrumbs: {
@@ -1082,6 +1207,9 @@ const zh: AppDictionary = {
       downloadLabel: "下载音轨",
       closeLabel: "隐藏播放器",
       reopenLabel: "打开音频",
+      volumeLabel: "音量",
+      volumeShowLabel: "显示音量滑块",
+      volumeHideLabel: "隐藏音量滑块",
       trackId: "portfolio-loop"
     },
     hero: {
@@ -1127,7 +1255,12 @@ const zh: AppDictionary = {
           "",
         overview:
           "",
-        items: getTechStackItems("zh")
+        items: getTechStackItems("zh"),
+        carousel: {
+          label: "精选技术栈图标",
+          previousLabel: "显示上一个技术栈图标",
+          nextLabel: "显示下一个技术栈图标"
+        }
       },
       proof: {
         eyebrow: "证据",
@@ -1181,6 +1314,7 @@ const zh: AppDictionary = {
     section1subtitle: "Important projects and roles that have shaped my current skills.",
     section2title: "Tech stack",
     section2subtitle: "Relevant experience with each technology.",
+    section2empty: "技术栈详情即将上线。",
     entries: getExperienceEntries("zh"),
     techStack: getTechStackDetails("zh")
   },
@@ -1206,6 +1340,12 @@ const zh: AppDictionary = {
       referenceCloseLabel: "关闭",
       timezoneDropdownLabel: "以其他时区查看",
       dropdownDescription: "",
+      timezoneSearchPlaceholder: "搜索时区",
+      timezoneSearchLabel: "搜索时区",
+      timezonePickerPinnedLabel: "置顶",
+      timezonePickerAllLabel: "所有时区",
+      timezonePickerSelectedLabel: "已选择",
+      timezonePickerNoMatchesLabel: "无匹配",
       windowLabelPrefix: "显示区间：",
       availableLabel: "通常可用",
       unavailableLabel: "通常不可用",

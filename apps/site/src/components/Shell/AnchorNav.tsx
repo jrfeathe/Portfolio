@@ -12,6 +12,7 @@ export type AnchorNavItem = {
 
 export type AnchorNavProps = {
   items: AnchorNavItem[];
+  ariaLabel: string;
   className?: string;
   orientation?: "vertical" | "horizontal";
   scrollable?: boolean;
@@ -21,6 +22,7 @@ const DEFAULT_ROOT_MARGIN = "-45% 0px -45% 0px";
 
 export function AnchorNav({
   items,
+  ariaLabel,
   className,
   orientation = "vertical",
   scrollable = true
@@ -215,7 +217,7 @@ export function AnchorNav({
         containerScrollClasses,
         className
       )}
-      aria-label="On-page navigation"
+      aria-label={ariaLabel}
     >
       <ol className={clsx("flex", orientationClasses)}>
         {items.map((item) => {

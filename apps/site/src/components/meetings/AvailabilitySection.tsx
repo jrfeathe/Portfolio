@@ -19,6 +19,7 @@ import {
   type QuarterHourKey,
   WEEKDAYS
 } from "../../lib/availability";
+import timezoneDictionary from "../../../data/timezones.json";
 import type { AppDictionary } from "../../utils/dictionaries";
 import type { Locale } from "../../utils/i18n";
 
@@ -42,6 +43,7 @@ const ROW_HEIGHT_REM = 0.5;
 const HOUR_GAP_REM = 0.25;
 const HEADER_OFFSET_REM = 3;
 const PINNED_TIMEZONES = ["America/New_York", "Asia/Tokyo", "Asia/Shanghai"];
+const TIMEZONE_LABELS = timezoneDictionary as Record<string, Record<Locale, string>>;
 
 type QuarterMetadata = {
   index: number;
@@ -50,6 +52,14 @@ type QuarterMetadata = {
   minute: string;
   label: string;
 };
+
+function getTimezoneLabel(timezone: string, locale: Locale) {
+  const entry = TIMEZONE_LABELS[timezone];
+  if (!entry) {
+    return formatTimezoneName(timezone);
+  }
+  return entry[locale] || entry.en || formatTimezoneName(timezone);
+}
 
 export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) {
   const data = getAvailabilityData();
@@ -94,8 +104,8 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
   const canonicalSummary = useMemo(() => summarizeAvailability(baseMatrix), [baseMatrix]);
   const convertedSummary = useMemo(() => summarizeAvailability(convertedMatrix), [convertedMatrix]);
 
-  const convertedLabel = formatTimezoneName(selectedTimezone);
-  const baseLabel = formatTimezoneName(data.timezone);
+  const convertedLabel = getTimezoneLabel(selectedTimezone, locale);
+  const baseLabel = getTimezoneLabel(data.timezone, locale);
   const convertedOffset = getOffsetLabel(selectedTimezone);
   const baseOffset = getOffsetLabel(data.timezone);
   const windowLabel = null;
@@ -184,8 +194,8 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
                   type="text"
                   value={timezoneSearch}
                   onChange={(event) => setTimezoneSearch(event.target.value)}
-                  placeholder="Search timezones"
-                  aria-label="Search timezones"
+                  placeholder={copy.timezoneSearchPlaceholder}
+                  aria-label={copy.timezoneSearchLabel}
                   ref={searchInputRef}
                   className="w-full rounded-lg border-0 bg-surface px-3 py-2 text-sm text-text outline-none transition focus-visible:ring-2 focus-visible:ring-accent/30 dark:bg-dark-surface dark:text-dark-text dark:focus-visible:ring-dark-accent/40"
                 />
@@ -197,12 +207,14 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
                 const normalizedQuery = timezoneSearch.trim().toLowerCase();
                 const isSearching = normalizedQuery.length > 0;
                 const optionMatchesQuery = (tz: string) =>
-                  `${formatTimezoneName(tz)} (${getOffsetLabel(tz)})`.toLowerCase().includes(normalizedQuery);
+                  `${getTimezoneLabel(tz, locale)} (${getOffsetLabel(tz)})`
+                    .toLowerCase()
+                    .includes(normalizedQuery);
                 const remainingOptions = timezoneOptions.filter(optionMatchesQuery);
 
                 const renderOption = (value: string, isPinned: boolean) => {
                   const isSelected = value === selectedTimezone;
-                  const optionLabel = `${formatTimezoneName(value)} (${getOffsetLabel(value)})`;
+                  const optionLabel = `${getTimezoneLabel(value, locale)} (${getOffsetLabel(value)})`;
                   return (
                     <button
                       key={`${isPinned ? "pinned" : "all"}-${value}`}
@@ -216,7 +228,9 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
                     >
                       <span className="truncate">{optionLabel}</span>
                       {isSelected ? (
-                        <span className="text-[0.65rem] font-semibold text-accent dark:text-dark-accent">Selected</span>
+                        <span className="text-[0.65rem] font-semibold text-accent dark:text-dark-accent">
+                          {copy.timezonePickerSelectedLabel}
+                        </span>
                       ) : null}
                     </button>
                   );
@@ -227,18 +241,20 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
                     {!isSearching ? (
                       <>
                         <div className="px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
-                          Pinned
+                          {copy.timezonePickerPinnedLabel}
                         </div>
                         {pinnedOptions.map((value) => renderOption(value, true))}
                       </>
                     ) : null}
                     <div className="px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
-                      All timezones
+                      {copy.timezonePickerAllLabel}
                     </div>
                     {remainingOptions.length ? (
                       remainingOptions.map((value) => renderOption(value, false))
                     ) : (
-                      <div className="px-3 py-2 text-sm text-textMuted dark:text-dark-textMuted">No matches</div>
+                      <div className="px-3 py-2 text-sm text-textMuted dark:text-dark-textMuted">
+                        {copy.timezonePickerNoMatchesLabel}
+                      </div>
                     )}
                   </div>
                 );

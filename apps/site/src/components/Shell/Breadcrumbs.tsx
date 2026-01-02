@@ -10,10 +10,11 @@ export type BreadcrumbItem = {
 
 export type BreadcrumbsProps = {
   items: BreadcrumbItem[];
+  ariaLabel: string;
   className?: string;
 };
 
-export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
+export function Breadcrumbs({ items, ariaLabel, className }: BreadcrumbsProps) {
   if (!items.length) {
     return null;
   }
@@ -22,7 +23,7 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
 
   return (
     <nav
-      aria-label="Breadcrumbs"
+      aria-label={ariaLabel}
       className={clsx("text-sm text-textMuted dark:text-dark-textMuted", className)}
     >
       <ol className="flex flex-wrap items-center gap-2">

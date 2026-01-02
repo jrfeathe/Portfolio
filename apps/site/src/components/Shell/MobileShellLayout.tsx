@@ -39,6 +39,7 @@ type MobileShellLayoutParams = {
   };
   skimModeEnabled?: boolean;
   showSkimToggle?: boolean;
+  shellCopy: MobileShellLayoutProps["shellCopy"];
   locale: Locale;
 };
 
@@ -55,6 +56,7 @@ export function MobileShellLayout({
   heroMedia,
   skimModeEnabled = false,
   showSkimToggle = true,
+  shellCopy,
   locale
 }: MobileShellLayoutParams) {
   const buildFallbackNavItems = () =>
@@ -124,24 +126,24 @@ export function MobileShellLayout({
           <button
             type="button"
             className="absolute inset-0 bg-black/30"
-            aria-label="Close menu"
+            aria-label={shellCopy.menuCloseLabel}
             onClick={() => setMenuOpen(false)}
           />
           <aside
             id="mobile-preferences"
             className="relative z-10 mr-auto flex h-full w-72 max-w-[85vw] flex-col gap-6 border-r border-border bg-surface p-5 shadow-2xl dark:border-dark-border dark:bg-dark-surface"
-            aria-label="Navigation and display options"
+            aria-label={shellCopy.menuPanelLabel}
           >
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold text-text dark:text-dark-text">
-                Menu
+                {shellCopy.menuTitle}
               </p>
               <button
                 type="button"
                 className="rounded-full border border-border h-6 w-6 text-xs font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
                 onClick={() => setMenuOpen(false)}
               >
-                X
+                {shellCopy.menuCloseButtonLabel}
               </button>
             </div>
             {menuEnabled ? (
@@ -162,7 +164,7 @@ export function MobileShellLayout({
                     href="#top"
                     className="inline-flex flex-1 items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
                   >
-                    Return to top
+                    {shellCopy.returnToTopLabel}
                   </a>
                 </div>
                 {hasNestedAnchors ? (
@@ -172,14 +174,14 @@ export function MobileShellLayout({
                       onClick={handleExpandAllNav}
                       className="inline-flex flex-1 items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
                     >
-                      Expand all
+                      {shellCopy.expandAllLabel}
                     </button>
                     <button
                       type="button"
                       onClick={handleCollapseAllNav}
                       className="inline-flex flex-1 items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
                     >
-                      Collapse all
+                      {shellCopy.collapseAllLabel}
                     </button>
                   </div>
                 ) : null}
@@ -187,6 +189,7 @@ export function MobileShellLayout({
                   <div className="min-h-0 flex-1 overflow-y-auto">
                     <AnchorNav
                       items={navItems}
+                      ariaLabel={shellCopy.anchorNavLabel}
                       orientation="vertical"
                       scrollable={false}
                     />
@@ -201,7 +204,7 @@ export function MobileShellLayout({
       {!menuOpen && menuEnabled ? (
         <button
           type="button"
-          aria-label="Open menu"
+          aria-label={shellCopy.menuOpenLabel}
           aria-expanded="false"
           aria-controls="mobile-preferences"
           className="fixed left-4 z-40 inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-lg font-semibold text-text shadow-lg transition hover:border-accent hover:text-accent dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
@@ -221,7 +224,7 @@ export function MobileShellLayout({
               </div>
             </div>
             {breadcrumbs.length ? (
-              <Breadcrumbs items={breadcrumbs} />
+              <Breadcrumbs items={breadcrumbs} ariaLabel={shellCopy.breadcrumbsLabel} />
             ) : null}
           </div>
 
@@ -326,7 +329,7 @@ export function MobileShellLayout({
         ) : null}
       </div>
 
-      {footer ?? <ShellFooter content={footerContent} />}
+      {footer ?? (footerContent ? <ShellFooter content={footerContent} /> : null)}
     </div>
   );
 }

@@ -3,8 +3,8 @@
   "names": {
     "proofTitle": {
       "en": "Portfolio",
-      "ja": "",
-      "zh": ""
+      "ja": "ポートフォリオ",
+      "zh": "作品集"
     },
     "techStackTitle": {
       "en": "",
@@ -15,8 +15,8 @@
   "home": {
     "proofDetails": {
       "en": "AI-assisted rapid fullstack development to increase opportunities in job hunting.",
-      "ja": "",
-      "zh": ""
+      "ja": "AI支援による迅速なフルスタック開発で、就職活動の機会を拡大します。",
+      "zh": "通过 AI 辅助的快速全栈开发，提高求职机会。"
     },
     "roadmapNextStep": {
       "en": "",
@@ -62,23 +62,23 @@
     "id": "portfolio-site",
     "company": {
       "en": "Portfolio (this website) - Personal project",
-      "ja": "",
-      "zh": ""
+      "ja": "ポートフォリオ（本サイト） - 個人プロジェクト",
+      "zh": "作品集（本网站）- 个人项目"
     },
     "role": {
       "en": "Solo AI-Assisted Fullstack Engineer",
-      "ja": "",
-      "zh": ""
+      "ja": "個人（AI支援）フルスタックエンジニア",
+      "zh": "独立 AI 辅助全栈工程师"
     },
     "timeframe": {
       "en": "October - December 2025",
-      "ja": "",
-      "zh": ""
+      "ja": "2025年10月～12月",
+      "zh": "2025 年 10 月至 12 月"
     },
     "summary": {
       "en": "Designed and built a personalized engineering portfolio with localization, accessibility, basic telemetry, and custom UI components.",
-      "ja": "",
-      "zh": ""
+      "ja": "ローカリゼーション、アクセシビリティ、基本的なテレメトリ、カスタムUIコンポーネントを備えた、パーソナライズされたエンジニアリングポートフォリオを設計・構築しました。",
+      "zh": "设计并构建了一个个性化的工程师作品集，包含本地化、无障碍、基础遥测以及自定义 UI 组件。"
     },
     "highlights": {
       "en": [
@@ -87,8 +87,18 @@
         "Built a custom component set with theme/contrast controls and accessibility guardrails.",
         "Centered performance and observability with critical CSS, edge rendering, and structured data."
       ],
-      "ja": [],
-      "zh": []
+      "ja": [
+        "高レベルなドキュメントと詳細なWBS（Work Breakdown Structure）に基づき、Codexに複雑なタスクを実行させました。",
+        "情報の一貫性を保つため、コンテンツ定義を集中管理しつつ en/ja/zh の完全ローカライズを実施しました。",
+        "テーマ／コントラスト制御とアクセシビリティのガードレールを備えたカスタムコンポーネントセットを構築しました。",
+        "クリティカルCSS、エッジレンダリング、構造化データにより、パフォーマンスと可観測性を重視しました。"
+      ],
+      "zh": [
+        "基于高层文档和详细的工作分解结构（WBS），指导 Codex 执行复杂任务。",
+        "通过集中式内容定义实现 en/ja/zh 全面本地化，保持信息一致。",
+        "构建了自定义组件集，提供主题/对比度控制和无障碍防护。",
+        "通过关键 CSS、边缘渲染和结构化数据，将性能与可观测性置于核心。"
+      ]
     }
   }
 }

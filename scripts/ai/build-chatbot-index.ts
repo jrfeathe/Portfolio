@@ -22,19 +22,19 @@ type TechStackEntry = {
 };
 
 type ResumeProfileLink = {
-  label?: string;
-  url?: string;
+  label?: LocalizedString;
+  url?: LocalizedString;
 };
 
 type ResumeBasics = {
-  name?: string;
-  headline?: string;
+  name?: LocalizedString;
+  headline?: LocalizedString;
   profiles?: ResumeProfileLink[];
 };
 
 type ResumeLanguage = {
-  language?: string;
-  proficiency?: string;
+  language?: LocalizedString;
+  proficiency?: LocalizedString;
 };
 
 type ResumeSkills = {
@@ -42,34 +42,34 @@ type ResumeSkills = {
 };
 
 type ResumeExperience = {
-  role?: string;
-  company?: string;
-  location?: string;
-  start?: string;
-  end?: string;
-  summary?: string;
-  highlights?: string[];
+  role?: LocalizedString;
+  company?: LocalizedString;
+  location?: LocalizedString;
+  start?: LocalizedString;
+  end?: LocalizedString;
+  summary?: LocalizedString;
+  highlights?: LocalizedString[];
 };
 
 type ResumeEducation = {
-  institution?: string;
-  credential?: string;
-  status?: string;
-  graduation?: string;
+  institution?: LocalizedString;
+  credential?: LocalizedString;
+  status?: LocalizedString;
+  graduation?: LocalizedString;
   gpa?: number;
-  notes?: string[];
+  notes?: LocalizedString[];
 };
 
 type ResumeValueField = {
-  value?: string;
-  label?: string;
+  value?: LocalizedString;
+  label?: LocalizedString;
 };
 
 type ResumeAvailability = {
   start_date?: ResumeValueField;
   timezone?: {
-    label?: string;
-    collaboration_window?: string;
+    label?: LocalizedString;
+    collaboration_window?: LocalizedString;
   };
 };
 
@@ -584,24 +584,31 @@ function buildAvailabilityChunk(availability: AvailabilityData, locale: Locale):
 }
 
 function buildResumeProfileChunk(resume: ResumeJson, locale: Locale): EmbeddingChunk | null {
+  const name = localizeString(resume.basics?.name, locale);
+  const headline = localizeString(resume.basics?.headline, locale);
   const profiles = (resume.basics?.profiles ?? [])
-    .map((profile) => profile.label)
+    .map((profile) => localizeString(profile.label, locale))
     .filter((label): label is string => Boolean(label));
   const languages = (resume.skills?.languages_spoken ?? [])
     .map((entry) => {
-      if (!entry?.language) return null;
-      return entry.proficiency ? `${entry.language} (${entry.proficiency})` : entry.language;
+      const language = localizeString(entry.language, locale);
+      if (!language) return null;
+      const proficiency = localizeString(entry.proficiency, locale);
+      return proficiency ? `${language} (${proficiency})` : language;
     })
     .filter((value): value is string => Boolean(value));
-  const eligibility = resume.eligibility?.us_status?.value;
-  const startDate = resume.availability?.start_date?.value;
-  const timezoneLabel = resume.availability?.timezone?.label;
-  const collaborationWindow = resume.availability?.timezone?.collaboration_window;
+  const eligibility = localizeString(resume.eligibility?.us_status?.value, locale);
+  const startDate = localizeString(resume.availability?.start_date?.value, locale);
+  const timezoneLabel = localizeString(resume.availability?.timezone?.label, locale);
+  const collaborationWindow = localizeString(
+    resume.availability?.timezone?.collaboration_window,
+    locale
+  );
 
   const text = sanitizeText(
     [
-      resume.basics?.name,
-      resume.basics?.headline,
+      name,
+      headline,
       profiles.length ? `Profiles: ${profiles.join(", ")}` : null,
       languages.length ? `Languages: ${languages.join(", ")}` : null,
       eligibility ? `Work eligibility: ${eligibility}` : null,
@@ -620,7 +627,7 @@ function buildResumeProfileChunk(resume: ResumeJson, locale: Locale): EmbeddingC
   return {
     id: `resume-profile-${locale}`,
     locale,
-    title: resume.basics?.name || "Resume",
+    title: name || "Resume",
     href: `/resume.pdf`,
     sourceType: "resume",
     sourceId: "resume-profile",
@@ -637,15 +644,29 @@ function buildResumeExperienceChunks(
   const chunks: EmbeddingChunk[] = [];
 
   for (const entry of experiences ?? []) {
-    const base = slugify(entry.company || entry.role || "experience");
+    const base = slugify(
+      localizeString(entry.company, "en") || localizeString(entry.role, "en") || "experience"
+    );
     const suffix = slugCounts.get(base) ?? 0;
     const id = suffix === 0 ? base : `${base}-${suffix}`;
     slugCounts.set(base, suffix + 1);
 
-    const title = entry.company || entry.role || "Experience";
-    const timeframe = [entry.start, entry.end].filter(Boolean).join(" – ");
+    const title =
+      localizeString(entry.company, locale) ||
+      localizeString(entry.role, locale) ||
+      "Experience";
+    const role = localizeString(entry.role, locale);
+    const location = localizeString(entry.location, locale);
+    const start = localizeString(entry.start, locale);
+    const end = localizeString(entry.end, locale);
+    const summary = localizeString(entry.summary, locale);
+    const highlights = (entry.highlights ?? [])
+      .map((highlight) => localizeString(highlight, locale))
+      .filter((value): value is string => Boolean(value))
+      .join(" ");
+    const timeframe = [start, end].filter(Boolean).join(" – ");
     const text = sanitizeText(
-      [title, entry.role, entry.location, timeframe, entry.summary, (entry.highlights ?? []).join(" ")].filter(Boolean).join(" ")
+      [title, role, location, timeframe, summary, highlights].filter(Boolean).join(" ")
     );
 
     if (!text) continue;
@@ -673,17 +694,36 @@ function buildResumeEducationChunks(
   const chunks: EmbeddingChunk[] = [];
 
   for (const entry of education ?? []) {
-    const base = slugify(entry.institution || entry.credential || "education");
+    const base = slugify(
+      localizeString(entry.institution, "en") ||
+        localizeString(entry.credential, "en") ||
+        "education"
+    );
     const suffix = slugCounts.get(base) ?? 0;
     const id = suffix === 0 ? base : `${base}-${suffix}`;
     slugCounts.set(base, suffix + 1);
 
-    const title = entry.institution || entry.credential || "Education";
-    const metadata = [entry.credential, entry.status, entry.graduation, entry.gpa ? `GPA ${entry.gpa}` : ""]
+    const title =
+      localizeString(entry.institution, locale) ||
+      localizeString(entry.credential, locale) ||
+      "Education";
+    const credential = localizeString(entry.credential, locale);
+    const status = localizeString(entry.status, locale);
+    const graduation = localizeString(entry.graduation, locale);
+    const notes = (entry.notes ?? [])
+      .map((note) => localizeString(note, locale))
+      .filter((value): value is string => Boolean(value))
+      .join(" ");
+    const metadata = [
+      credential,
+      status,
+      graduation,
+      entry.gpa ? `GPA ${entry.gpa}` : ""
+    ]
       .filter(Boolean)
       .join(", ");
     const text = sanitizeText(
-      [title, metadata, (entry.notes ?? []).join(" ")].filter(Boolean).join(" ")
+      [title, metadata, notes].filter(Boolean).join(" ")
     );
 
     if (!text) continue;

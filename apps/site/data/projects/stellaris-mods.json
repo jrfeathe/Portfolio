@@ -3,33 +3,33 @@
   "names": {
     "proofTitle": {
       "en": "Stellaris Modding",
-      "ja": "",
-      "zh": ""
+      "ja": "Stellaris Modding",
+      "zh": "Stellaris 模组开发"
     },
     "techStackTitle": {
       "en": "Stellaris Mods",
-      "ja": "",
-      "zh": ""
+      "ja": "Stellaris Mods",
+      "zh": "Stellaris 模组"
     }
   },
   "home": {
     "proofDetails": {
       "en": "Upgraded the memory management library for Stellaris to boost performance.",
-      "ja": "",
-      "zh": ""
+      "ja": "パフォーマンス向上のため、Stellarisのメモリ管理ライブラリをアップグレードしました。",
+      "zh": "升级 Stellaris 的内存管理库以提升性能。"
     },
     "roadmapNextStep": {
       "en": "The Four Horsemen: Develop a new mod for Stellaris to spawn an end-game crisis, compatible with Gigastructural Engineering.",
-      "ja": "",
-      "zh": ""
+      "ja": "The Four Horsemen：Gigastructural Engineering と互換性のある、終盤危機を発生させるStellaris向け新modを開発します。",
+      "zh": "四骑士：为 Stellaris 开发一个可生成终局危机的新模组，并与 Gigastructural Engineering 兼容。"
     }
   },
   "techStack": {
     "item": {
       "name": {
         "en": "Stellaris Mods",
-        "ja": "",
-        "zh": ""
+        "ja": "Stellaris Mods",
+        "zh": "Stellaris 模组"
       },
       "href": "https://steamcommunity.com/app/281990/workshop/",
       "assetId": "stellaris-mods"
@@ -38,25 +38,29 @@
       "id": "stellaris-mods-tech",
       "title": {
         "en": "Stellaris Mods",
-        "ja": "",
-        "zh": ""
+        "ja": "Stellaris Mods",
+        "zh": "Stellaris 模组"
       },
       "context": {
         "en": "3 years of experience",
-        "ja": "",
-        "zh": ""
+        "ja": "経験3年",
+        "zh": "3 年经验"
       },
       "summary": {
         "en": "Repeated bandaging of a broken modpack to encourage a desired storyline.",
-        "ja": "",
-        "zh": ""
+        "ja": "望むストーリーラインを実現するため、壊れたmodpackを繰り返し応急処置してきました。",
+        "zh": "为实现理想剧情，多次为损坏的模组整合包进行修补。"
       },
       "highlights": {
         "en": [
           "Built custom Stellaris mechanics and memory optimizing scripts."
         ],
-        "ja": [],
-        "zh": []
+        "ja": [
+          "カスタムのStellarisメカニクスと、メモリ最適化スクリプトを構築しました。"
+        ],
+        "zh": [
+          "构建了自定义 Stellaris 机制和内存优化脚本。"
+        ]
       }
     }
   },
@@ -64,31 +68,37 @@
     "id": "stellaris-mods-project",
     "company": {
       "en": "Freelance / Mods",
-      "ja": "",
-      "zh": ""
+      "ja": "フリーランス / Mods",
+      "zh": "自由职业 / 模组"
     },
     "role": {
       "en": "Mod developer (Stellaris & Minecraft)",
-      "ja": "",
-      "zh": ""
+      "ja": "Mod開発者（Stellaris & Minecraft）",
+      "zh": "模组开发者（Stellaris & Minecraft）"
     },
     "timeframe": {
       "en": "Ongoing",
-      "ja": "",
-      "zh": ""
+      "ja": "継続中",
+      "zh": "进行中"
     },
     "summary": {
       "en": "Maintain a handful of Minecraft and Stellaris mods, plus high performance heavily modded private servers.",
-      "ja": "",
-      "zh": ""
+      "ja": "MinecraftとStellarisのmodsをいくつか保守し、高性能な重度mod導入のプライベートサーバーも運用しています。",
+      "zh": "维护多款 Minecraft 与 Stellaris 模组，并运营高性能、重度模组化的私人服务器。"
     },
     "highlights": {
       "en": [
         "Built custom mod features and balance tweaks for Stellaris and Minecraft.",
         "Operate game servers and customize modpacks with ongoing profiling and tuning."
       ],
-      "ja": [],
-      "zh": []
+      "ja": [
+        "Stellaris と Minecraft 向けに、カスタムmod機能とバランス調整を実装しました。",
+        "継続的なプロファイリングとチューニングを行いながら、ゲームサーバーの運用とmodpackのカスタマイズを行っています。"
+      ],
+      "zh": [
+        "为 Stellaris 和 Minecraft 构建了自定义模组功能与平衡性调整。",
+        "通过持续的性能分析与调优，运营游戏服务器并定制模组整合包。"
+      ]
     }
   }
 }

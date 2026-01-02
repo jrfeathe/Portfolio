@@ -312,7 +312,7 @@ export default function HomePage({ params, searchParams }: PageProps) {
   const {
     hero: { title, subtitle, cta, media }
   } = dictionary.home;
-  const resumeProfile = getResumeProfile();
+  const resumeProfile = getResumeProfile(locale);
   const resumeDownloadFilename = `jack-featherstone-resume-${resumeProfile.resumeVersion}.pdf`;
   const structuredData = buildHomePageJsonLd({
     locale,

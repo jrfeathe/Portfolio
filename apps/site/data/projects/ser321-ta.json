@@ -3,8 +3,8 @@
   "names": {
     "proofTitle": {
       "en": "Teaching Assistant",
-      "ja": "",
-      "zh": ""
+      "ja": "ティーチングアシスタント",
+      "zh": "助教"
     },
     "techStackTitle": {
       "en": "",
@@ -15,8 +15,8 @@
   "home": {
     "proofDetails": {
       "en": "Supported a high level Distributed Software Systems course as a teaching assistant.",
-      "ja": "",
-      "zh": ""
+      "ja": "ティーチングアシスタントとして、高度な分散ソフトウェアシステムの講義を支援しました。",
+      "zh": "作为助教支持高阶《分布式软件系统》课程。"
     },
     "roadmapNextStep": {
       "en": "",
@@ -62,31 +62,37 @@
     "id": "ser321",
     "company": {
       "en": "SER 321 at Arizona State University",
-      "ja": "",
-      "zh": ""
+      "ja": "アリゾナ州立大学 SER 321",
+      "zh": "亚利桑那州立大学 SER 321"
     },
     "role": {
       "en": "Undergraduate Teaching Assistant for Distributed Software Systems course",
-      "ja": "",
-      "zh": ""
+      "ja": "分散ソフトウェアシステム講義の学部生ティーチングアシスタント",
+      "zh": "《分布式软件系统》课程本科助教"
     },
     "timeframe": {
       "en": "March – May 2024",
-      "ja": "",
-      "zh": ""
+      "ja": "2024年3月～5月",
+      "zh": "2024 年 3 月至 5 月"
     },
     "summary": {
       "en": "Designed and coded an assignment; a “Wheel of Fortune” Java server supporting a dynamic amount of concurrent clients. Mentored students in designing distributed systems hosted on AWS and debugging client-server architectures.",
-      "ja": "",
-      "zh": ""
+      "ja": "課題を設計・実装しました。動的な同時接続数に対応する「Wheel of Fortune」Javaサーバーです。AWS上でホストする分散システム設計や、クライアント／サーバーアーキテクチャのデバッグを学生に指導しました。",
+      "zh": "设计并编写了一项作业：一个支持动态并发客户端数量的“Wheel of Fortune”Java 服务器。在 AWS 上托管的分布式系统设计以及客户端-服务器架构调试方面指导学生。"
     },
     "highlights": {
       "en": [
         "Actively answered student questions on Slack discussion boards, and hosted office hours once per week.",
         "Assisted in debugging complex issues with code logic, networking, threading, AWS deployment, Ubuntu, and virtualization."
       ],
-      "ja": [],
-      "zh": []
+      "ja": [
+        "Slackのディスカッションボードで学生の質問に積極的に回答し、週1回オフィスアワーを実施しました。",
+        "コードロジック、ネットワーク、スレッド、AWSデプロイ、Ubuntu、仮想化に関する複雑な問題のデバッグを支援しました。"
+      ],
+      "zh": [
+        "积极在 Slack 讨论区回答学生问题，并每周举办一次答疑时间。",
+        "协助排查代码逻辑、网络、线程、AWS 部署、Ubuntu 与虚拟化等方面的复杂问题。"
+      ]
     }
   }
 }

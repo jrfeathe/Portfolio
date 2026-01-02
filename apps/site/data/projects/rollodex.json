@@ -3,8 +3,8 @@
   "names": {
     "proofTitle": {
       "en": "Rollodex",
-      "ja": "",
-      "zh": ""
+      "ja": "Rollodex",
+      "zh": "Rollodex"
     },
     "techStackTitle": {
       "en": "",
@@ -15,8 +15,8 @@
   "home": {
     "proofDetails": {
       "en": "Co-led fullstack development of a contact management web application.",
-      "ja": "",
-      "zh": ""
+      "ja": "連絡先管理Webアプリのフルスタック開発を共同リードしました。",
+      "zh": "共同领导联系人管理 Web 应用的全栈开发。"
     },
     "roadmapNextStep": {
       "en": "",
@@ -62,31 +62,37 @@
     "id": "rollodex",
     "company": {
       "en": "Rollodex for Appy.yo",
-      "ja": "",
-      "zh": ""
+      "ja": "Appy.yo向けRollodex",
+      "zh": "面向 Appy.yo 的 Rollodex"
     },
     "role": {
       "en": "Co-lead Fullstack Developer",
-      "ja": "",
-      "zh": ""
+      "ja": "共同リード・フルスタック開発者",
+      "zh": "联合负责人（全栈开发）"
     },
     "timeframe": {
       "en": "2024–2025 (capstone)",
-      "ja": "",
-      "zh": ""
+      "ja": "2024–2025（キャップストーン）",
+      "zh": "2024–2025（毕业设计）"
     },
     "summary": {
       "en": "Co-led a remote fullstack development team, developing a contact management tool. Took ownership of API/data integrations and accessibility, while maintaining the repo as Git master across two-week Scrum releases.",
-      "ja": "",
-      "zh": ""
+      "ja": "リモートのフルスタック開発チームを共同リードし、連絡先管理ツールを開発しました。API／データ統合とアクセシビリティを担当しつつ、2週間ごとのScrumリリースでGit masterとしてリポジトリを管理しました。",
+      "zh": "共同领导远程全栈开发团队开发联系人管理工具。负责 API/数据集成与无障碍，同时在两周一次的 Scrum 迭代发布中担任仓库的 Git master。"
     },
     "highlights": {
       "en": [
         "Designed APIs and database schemas, templated forms, and rebuilt search/filter logic & UI.",
         "Cut search latency from ~5s to ~200ms while maintaining repo practices, docs, and two-week sprints."
       ],
-      "ja": [],
-      "zh": []
+      "ja": [
+        "APIとDBスキーマを設計し、フォームのテンプレート化、検索／フィルタのロジックとUIを再構築しました。",
+        "リポジトリ運用、ドキュメント、2週間スプリントを維持しながら、検索レイテンシを約5秒から約200msへ短縮しました。"
+      ],
+      "zh": [
+        "设计 API 与数据库模式，模板化表单，并重建搜索/筛选逻辑与 UI。",
+        "在保持仓库规范、文档和两周迭代的同时，将搜索延迟从约 5 秒降低到约 200 毫秒。"
+      ]
     }
   }
 }

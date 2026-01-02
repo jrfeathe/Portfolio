@@ -17,7 +17,7 @@ describe("dictionaries", () => {
     const dictionary = getDictionary("ja");
     expect(dictionary.metadata.title).toBe("Jack F. ポートフォリオ");
     expect(dictionary.home.hero.title).toBe("Jack Featherstone");
-    expect(dictionary.notes.index.empty).toContain("近日");
+    expect(dictionary.notes.index.empty).toContain("ノートは準備中です。");
   });
 
   it("returns localized hero copy for chinese locale", () => {

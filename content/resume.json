@@ -1,102 +1,357 @@
 {
   "basics": {
-    "name": "Jack R. Featherstone",
-    "headline": "Upstate NY engineer focused on fullstack development, reliable services, and accessibility",
+    "name": {
+      "en": "Jack R. Featherstone",
+      "ja": "Jack R. Featherstone",
+      "zh": "Jack R. Featherstone"
+    },
+    "headline": {
+      "en": "Upstate NY engineer focused on fullstack development, reliable services, and accessibility",
+      "ja": "フルスタック開発、信頼性の高いサービス、アクセシビリティに注力するニューヨーク州北部のエンジニア",
+      "zh": "专注于全栈开发、可靠服务与无障碍的纽约州北部工程师"
+    },
     "profiles": [
-      { "label": "LinkedIn", "url": "https://linkedin.com/in/jrfeathe" },
-      { "label": "GitHub", "url": "https://github.com/jrfeathe" }
+      {
+        "label": {
+          "en": "LinkedIn",
+          "ja": "LinkedIn",
+          "zh": "LinkedIn"
+        },
+        "url": {
+          "en": "https://linkedin.com/in/jrfeathe",
+          "ja": "https://linkedin.com/in/jrfeathe",
+          "zh": "https://linkedin.com/in/jrfeathe"
+        }
+      },
+      {
+        "label": {
+          "en": "GitHub",
+          "ja": "GitHub",
+          "zh": "GitHub"
+        },
+        "url": {
+          "en": "https://github.com/jrfeathe",
+          "ja": "https://github.com/jrfeathe",
+          "zh": "https://github.com/jrfeathe"
+        }
+      }
     ]
   },
   "skills": {
     "languages_spoken": [
-      { "language": "English", "proficiency": "native" },
-      { "language": "Japanese", "proficiency": "JLPT N5" },
-      { "language": "Chinese (Simplified)", "proficiency": "HSK1" }
+      {
+        "language": {
+          "en": "English",
+          "ja": "英語",
+          "zh": "英语"
+        },
+        "proficiency": {
+          "en": "native",
+          "ja": "ネイティブ",
+          "zh": "母语"
+        }
+      },
+      {
+        "language": {
+          "en": "Japanese",
+          "ja": "日本語",
+          "zh": "日语"
+        },
+        "proficiency": {
+          "en": "JLPT N5",
+          "ja": "JLPT N5",
+          "zh": "JLPT N5"
+        }
+      },
+      {
+        "language": {
+          "en": "Chinese (Simplified)",
+          "ja": "中国語（簡体字）",
+          "zh": "中文（简体）"
+        },
+        "proficiency": {
+          "en": "HSK1",
+          "ja": "HSK1",
+          "zh": "HSK1"
+        }
+      }
     ]
   },
   "experience": [
     {
-      "role": "Industrial Technician",
-      "company": "Captech Logistics",
-      "location": "Scotia, NY",
-      "start": "2020-06",
-      "end": "present",
-      "summary": "Operate, maintain, and improve industrial equipment and packaging workflows.",
+      "role": {
+        "en": "Industrial Technician",
+        "ja": "産業技術者",
+        "zh": "工业技术员"
+      },
+      "company": {
+        "en": "Captech Logistics",
+        "ja": "Captech Logistics",
+        "zh": "Captech Logistics"
+      },
+      "location": {
+        "en": "Scotia, NY",
+        "ja": "ニューヨーク州スコシア",
+        "zh": "纽约州斯科舍"
+      },
+      "start": {
+        "en": "2020-06",
+        "ja": "2020-06",
+        "zh": "2020-06"
+      },
+      "end": {
+        "en": "present",
+        "ja": "現在",
+        "zh": "目前"
+      },
+      "summary": {
+        "en": "Operate, maintain, and improve industrial equipment and packaging workflows.",
+        "ja": "産業用設備および包装ワークフローの運用、保守、改善を行いました。",
+        "zh": "负责工业设备和包装流程的运行、维护与改进。"
+      },
       "highlights": [
-        "Operated automatic beverage packaging systems.",
-        "Diagnosed conveyor, pneumatic, and electrical faults to reduce unplanned downtime during peak production windows.",
-        "Created repeatable service checklists and parts inspection that cut maintenance turnaround and onboarding time.",
-        "Collaborated with mechanics to tune processes for safety and throughput."
+        {
+          "en": "Operated automatic beverage packaging systems.",
+          "ja": "自動飲料包装システムを運用しました。",
+          "zh": "操作自动化饮料包装系统。"
+        },
+        {
+          "en": "Diagnosed conveyor, pneumatic, and electrical faults to reduce unplanned downtime during peak production windows.",
+          "ja": "コンベヤ、空圧、電気系統の不具合を診断し、繁忙期の突発停止を削減しました。",
+          "zh": "诊断输送带、气动和电气故障，减少高峰生产期的非计划停机。"
+        },
+        {
+          "en": "Created repeatable service checklists and parts inspection that cut maintenance turnaround and onboarding time.",
+          "ja": "再現可能な点検チェックリストと部品検査を作成し、保守対応時間とオンボーディング時間を短縮しました。",
+          "zh": "制定可复用的维护清单和部件检查流程，缩短维护周转和上手时间。"
+        },
+        {
+          "en": "Collaborated with mechanics to tune processes for safety and throughput.",
+          "ja": "整備士と協力し、安全性と処理能力向上のため工程を調整しました。",
+          "zh": "与机械师协作，优化流程以提升安全性和吞吐量。"
+        }
       ]
     },
     {
-      "role": "Digital Fabrication Intern",
-      "company": "BAM Logistics",
-      "location": "Cobleskill, NY",
-      "start": "2022-06",
-      "end": "2022-08",
-      "summary": "Prototyped and documented fabrication requests, pairing CAD work with light automation to deliver high quality designs.",
+      "role": {
+        "en": "Digital Fabrication Intern",
+        "ja": "デジタルファブリケーション・インターン",
+        "zh": "数字制造实习生"
+      },
+      "company": {
+        "en": "BAM Logistics",
+        "ja": "BAM Logistics",
+        "zh": "BAM Logistics"
+      },
+      "location": {
+        "en": "Cobleskill, NY",
+        "ja": "ニューヨーク州コーブルスキル",
+        "zh": "纽约州科布尔斯基尔"
+      },
+      "start": {
+        "en": "2022-06",
+        "ja": "2022-06",
+        "zh": "2022-06"
+      },
+      "end": {
+        "en": "2022-08",
+        "ja": "2022-08",
+        "zh": "2022-08"
+      },
+      "summary": {
+        "en": "Prototyped and documented fabrication requests, pairing CAD work with light automation to deliver high quality designs.",
+        "ja": "CAD作業と軽量な自動化を組み合わせ、試作と製作依頼の文書化を行い、高品質な設計を提供しました。",
+        "zh": "将 CAD 工作与轻量自动化结合，对制造需求进行原型设计与文档化，交付高质量设计。"
+      },
       "highlights": [
-        "Delivered small-batch signs on a two-week cadence by coordinating requirements with shop staff.",
-        "Used technical skills to reverse-image-search blurry drafts, find original copies, and deliver clean SVGs.",
-        "Operated CNC plasma cutter and replaced consumable components.",
-        "Experimented with new technologies to automate the creation of designs."
+        {
+          "en": "Delivered small-batch signs on a two-week cadence by coordinating requirements with shop staff.",
+          "ja": "工場スタッフと要件を調整し、2週間サイクルで少量生産の看板を納品しました。",
+          "zh": "通过与车间人员协调需求，以两周节奏交付小批量标识。"
+        },
+        {
+          "en": "Used technical skills to reverse-image-search blurry drafts, find original copies, and deliver clean SVGs.",
+          "ja": "技術的手法で不鮮明な下書きを画像検索し、元データを特定してクリーンなSVGを作成しました。",
+          "zh": "运用技术手段对模糊草稿进行反向图片搜索，找到原稿并交付干净的 SVG。"
+        },
+        {
+          "en": "Operated CNC plasma cutter and replaced consumable components.",
+          "ja": "CNCプラズマカッターを操作し、消耗部品を交換しました。",
+          "zh": "操作 CNC 等离子切割机并更换耗材部件。"
+        },
+        {
+          "en": "Experimented with new technologies to automate the creation of designs.",
+          "ja": "新技術を試し、設計作成の自動化を検討しました。",
+          "zh": "试验新技术以实现设计生成的自动化。"
+        }
       ]
     },
     {
-      "role": "Undergraduate Teaching Assistant, SER 321 (Distributed Software Systems)",
-      "company": "Arizona State University",
-      "location": "Remote",
-      "start": "2024-03",
-      "end": "2024-05",
-      "summary": "Supplemental context not in the project anchors: supported distributed systems labs and documented debugging steps for students (no grading duties).",
+      "role": {
+        "en": "Undergraduate Teaching Assistant, SER 321 (Distributed Software Systems)",
+        "ja": "学部生ティーチングアシスタント（SER 321：分散ソフトウェアシステム）",
+        "zh": "本科助教，SER 321（分布式软件系统）"
+      },
+      "company": {
+        "en": "Arizona State University",
+        "ja": "アリゾナ州立大学",
+        "zh": "亚利桑那州立大学"
+      },
+      "location": {
+        "en": "Remote",
+        "ja": "リモート",
+        "zh": "远程"
+      },
+      "start": {
+        "en": "2024-03",
+        "ja": "2024-03",
+        "zh": "2024-03"
+      },
+      "end": {
+        "en": "2024-05",
+        "ja": "2024-05",
+        "zh": "2024-05"
+      },
+      "summary": {
+        "en": "Supplemental context not in the project anchors: supported distributed systems labs and documented debugging steps for students (no grading duties).",
+        "ja": "プロジェクト外の補足業務として、分散システム演習の支援と学生向けデバッグ手順の文書化を行いました（採点業務なし）。",
+        "zh": "作为项目之外的补充工作，支持分布式系统实验，并为学生整理调试步骤（不负责评分）。"
+      },
       "highlights": [
-        "Published troubleshooting instructions for Linux & Java networking/threading labs so students could self-serve fixes.",
-        "Coordinated Slack Q&A and live office hours to keep students engaged and productive."
+        {
+          "en": "Published troubleshooting instructions for Linux & Java networking/threading labs so students could self-serve fixes.",
+          "ja": "学生が自力で解決できるよう、Linux および Java のネットワーク／スレッド演習向けトラブルシューティング手順を公開しました。",
+          "zh": "发布 Linux 与 Java 网络/线程实验的故障排查指南，便于学生自助解决问题。"
+        },
+        {
+          "en": "Coordinated Slack Q&A and live office hours to keep students engaged and productive.",
+          "ja": "SlackでのQ&A対応やライブのオフィスアワーを調整し、学生の参加度と生産性を維持しました。",
+          "zh": "协调 Slack 问答和线上答疑时间，保持学生的参与度和效率。"
+        }
       ]
     }
   ],
   "education": [
     {
-      "institution": "Arizona State University, Ira A. Fulton Schools of Engineering",
-      "credential": "Bachelor of Science in Software Engineering",
-      "status": "completed",
-      "graduation": "2025",
+      "institution": {
+        "en": "Arizona State University, Ira A. Fulton Schools of Engineering",
+        "ja": "アリゾナ州立大学 アイラ・A・フルトン工学部",
+        "zh": "亚利桑那州立大学 Ira A. Fulton 工程学院"
+      },
+      "credential": {
+        "en": "Bachelor of Science in Software Engineering",
+        "ja": "ソフトウェア工学 学士",
+        "zh": "软件工程理学学士"
+      },
+      "status": {
+        "en": "completed",
+        "ja": "修了",
+        "zh": "已完成"
+      },
+      "graduation": {
+        "en": "2025",
+        "ja": "2025",
+        "zh": "2025"
+      },
       "gpa": 3.59,
       "notes": [
-        "Undergraduate Teaching Assistant for SER 321 (Distributed Software Systems).",
-        "Coursework in fullstack development, distributed systems, CAD, arduino, databases, and operating systems."
+        {
+          "en": "Undergraduate Teaching Assistant for SER 321 (Distributed Software Systems).",
+          "ja": "SER 321（分散ソフトウェアシステム）の学部生ティーチングアシスタントを務めました。",
+          "zh": "SER 321（分布式软件系统）本科助教。"
+        },
+        {
+          "en": "Coursework in fullstack development, distributed systems, CAD, arduino, databases, and operating systems.",
+          "ja": "フルスタック開発、分散システム、CAD、Arduino、データベース、オペレーティングシステムを履修しました。",
+          "zh": "修读全栈开发、分布式系统、CAD、Arduino、数据库与操作系统课程。"
+        }
       ]
     },
     {
-      "institution": "Schenectady County Community College",
-      "credential": "Associate of Applied Science in Computer Science",
-      "status": "completed",
-      "graduation": "2020"
+      "institution": {
+        "en": "Schenectady County Community College",
+        "ja": "スケネクタディ郡コミュニティカレッジ",
+        "zh": "斯克内克塔迪县社区学院"
+      },
+      "credential": {
+        "en": "Associate of Applied Science in Computer Science",
+        "ja": "コンピュータサイエンス 応用科学準学士",
+        "zh": "计算机科学应用科学副学士"
+      },
+      "status": {
+        "en": "completed",
+        "ja": "修了",
+        "zh": "已完成"
+      },
+      "graduation": {
+        "en": "2020",
+        "ja": "2020",
+        "zh": "2020"
+      }
     },
     {
-      "institution": "Scotia-Glenville High School",
-      "credential": "High School Diploma",
-      "status": "completed",
-      "graduation": "2018",
+      "institution": {
+        "en": "Scotia-Glenville High School",
+        "ja": "スコシア＝グレンビル高校",
+        "zh": "斯科舍—格伦维尔高中"
+      },
+      "credential": {
+        "en": "High School Diploma",
+        "ja": "高等学校卒業資格",
+        "zh": "高中毕业文凭"
+      },
+      "status": {
+        "en": "completed",
+        "ja": "修了",
+        "zh": "已完成"
+      },
+      "graduation": {
+        "en": "2018",
+        "ja": "2018",
+        "zh": "2018"
+      },
       "notes": [
-        "Graduated with Honors in Mathematics and Science.",
-        "SAT score: 1360."
+        {
+          "en": "Graduated with Honors in Mathematics and Science.",
+          "ja": "数学および科学で優等卒業しました。",
+          "zh": "数学与科学荣誉毕业。"
+        },
+        {
+          "en": "SAT score: 1360.",
+          "ja": "SATスコアは1360です。",
+          "zh": "SAT 成绩：1360。"
+        }
       ]
     }
   ],
   "eligibility": {
     "us_status": {
-      "value": "Citizen with valid SSN"
+      "value": {
+        "en": "Citizen with valid SSN",
+        "ja": "有効なSSNを持つ市民",
+        "zh": "持有有效 SSN 的公民"
+      }
     }
   },
   "availability": {
     "start_date": {
-      "value": "Two weeks notice / Immediate"
+      "value": {
+        "en": "Two weeks notice / Immediate",
+        "ja": "2週間通知／即時",
+        "zh": "两周通知 / 可立即"
+      }
     },
     "timezone": {
-      "label": "UTC-5 (ET)",
-      "collaboration_window": "Visit /[locale]/meetings for the interactive availability map."
+      "label": {
+        "en": "UTC-5 (ET)",
+        "ja": "UTC-5（ET）",
+        "zh": "UTC-5（ET）"
+      },
+      "collaboration_window": {
+        "en": "Visit /[locale]/meetings for the interactive availability map.",
+        "ja": "インタラクティブな対応可能時間マップは /[locale]/meetings をご覧ください。",
+        "zh": "交互式可用时间地图请访问 /[locale]/meetings。"
+      }
     }
   }
 }

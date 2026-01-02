@@ -269,6 +269,18 @@ function collectStringValues(value, pathPrefix, entries, seen, rejectedEntries, 
     return;
   }
 
+  if (typeof value.en === "string") {
+    addEntry(entries, seen, pathPrefix, value.en);
+    return;
+  }
+
+  if (Array.isArray(value.en)) {
+    value.en.forEach((entry, index) => {
+      addEntry(entries, seen, `${pathPrefix}[${index}]`, entry);
+    });
+    return;
+  }
+
   Object.entries(value).forEach(([key, child]) => {
     const nextPath = pathPrefix ? `${pathPrefix}.${key}` : key;
     collectStringValues(child, nextPath, entries, seen, rejectedEntries, rejectedSeen);

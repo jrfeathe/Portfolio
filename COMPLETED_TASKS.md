@@ -44,5 +44,6 @@
 | F3.4  | SEO/canonicals/robots/sitemap     | 2025-Dec-23     | SEO metadata, canonicals, robots, and sitemap spot-checks logged in `WBS/Task_F3.4_SEO_Canonicals_Robots_Sitemap.md`.                                                                                                                                                |
 | F4.1  | Dictionary completion             | 2026-Jan-02     | Dictionaries/resume locale data verified in `apps/site/src/utils/dictionaries.ts` + `content/resume.json`; resume href aligned to `/resume.pdf`; spot-check notes in `WBS/Task_F4.1_Localization_Pipeline.md`; lint/tests pass per user confirmation.                     |
 | F4.2  | Tone/consistency QA               | 2026-Jan-02     | QA notes in `WBS/Task_F4.2_Localization_QA.md`; tone/consistency audit of `apps/site/data/script-strings_en-ja-zh.md` vs `apps/site/data/localization_instructions.md`; screenshots captured for home/skim (en/ja/zh) in `WBS/Task_F4.2_img_*`.                      |
+| F4.3  | Chatbot localization              | 2026-Jan-03     | User-confirmed chatbot renders correctly per locale and captcha UI verified; localization notes updated in `WBS/Task_F4.3_Chatbot_Localization.md`; alias/tokenization updates in `apps/site/src/lib/ai/chatbot.ts` + `scripts/ai/build-chatbot-index.ts`.            |
 
 Update this log as additional WBS items reach completion.

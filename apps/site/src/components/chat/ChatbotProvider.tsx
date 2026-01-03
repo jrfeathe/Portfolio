@@ -42,6 +42,8 @@ export type ChatbotCopy = {
   fallbackCtaLabel: string;
   captchaTitle: string;
   captchaPrompt: string;
+  captchaServiceUnavailable: string;
+  captchaValidationFailed: string;
   rateLimitTitle: string;
   rateLimitMessage: string;
   rateLimitTryAfter: string;
@@ -176,11 +178,9 @@ export type ChatbotProviderProps = {
   copy: ChatbotCopy;
 };
 
-export function ChatbotProvider({
-  children,
-  locale,
-  copy
-}: ChatbotProviderProps) {
+export function ChatbotProvider(props: ChatbotProviderProps) {
+  const { children, copy } = props;
+  const locale = props.locale;
   const [hydrated, setHydrated] = useState(false);
   const [sessionId, setSessionId] = useState<string>(randomId);
   const [state, setState] = useState<ChatState>({
@@ -607,7 +607,7 @@ function MessageBubble({
 }
 
 function ChatFloatingWidget() {
-  const { state, toggle, sendMessage, copy, solveCaptcha } = useChatbot();
+  const { state, toggle, sendMessage, copy, solveCaptcha, locale } = useChatbot();
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [chatSize, setChatSize] = useState<{ width: number; height: number }>({ width: 420, height: 520 });
@@ -979,6 +979,7 @@ function ChatFloatingWidget() {
                 <LazyHCaptchaWidget
                   siteKey={state.captchaSiteKey}
                   onVerify={handleCaptchaVerify}
+                  locale={locale}
                   disabled={state.pending}
                 />
               </div>

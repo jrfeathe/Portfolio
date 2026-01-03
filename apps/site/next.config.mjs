@@ -135,7 +135,9 @@ const config = {
       "@opentelemetry/resources",
       "@opentelemetry/sdk-trace-base",
       "@opentelemetry/sdk-trace-node",
-      "@opentelemetry/semantic-conventions"
+      "@opentelemetry/semantic-conventions",
+      "@node-rs/jieba",
+      "kuromoji"
     ]
   },
   images: {

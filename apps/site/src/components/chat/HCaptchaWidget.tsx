@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 
-const HCAPTCHA_SCRIPT_SRC = "https://js.hcaptcha.com/1/api.js?render=explicit";
+import type { Locale } from "../../utils/i18n";
+
+const HCAPTCHA_SCRIPT_BASE = "https://js.hcaptcha.com/1/api.js?render=explicit";
 
 type HCaptchaGlobal = {
   render: (
@@ -24,22 +26,52 @@ declare global {
   }
 }
 
-function loadHCaptchaScript(): Promise<void> {
+function getHCaptchaLanguage(locale?: Locale): string | null {
+  if (locale === "ja") {
+    return "ja";
+  }
+  if (locale === "zh") {
+    return "zh-CN";
+  }
+  return null;
+}
+
+function buildHCaptchaScriptSrc(locale?: Locale): string {
+  const language = getHCaptchaLanguage(locale);
+  if (!language) {
+    return HCAPTCHA_SCRIPT_BASE;
+  }
+  return `${HCAPTCHA_SCRIPT_BASE}&hl=${encodeURIComponent(language)}`;
+}
+
+function loadHCaptchaScript(locale?: Locale): Promise<void> {
   if (typeof window === "undefined") {
     return Promise.reject(new Error("Window is not available"));
   }
 
-  if (window.hcaptcha) {
+  let script = document.querySelector<HTMLScriptElement>('script[data-hcaptcha-script="true"]');
+  const desiredLanguage = getHCaptchaLanguage(locale) ?? "default";
+  const desiredSrc = buildHCaptchaScriptSrc(locale);
+
+  if (script && script.dataset.hcaptchaLang !== desiredLanguage) {
+    script.remove();
+    script = null;
+    if (window.hcaptcha) {
+      delete window.hcaptcha;
+    }
+  }
+
+  if (window.hcaptcha && script && script.dataset.hcaptchaLang === desiredLanguage) {
     return Promise.resolve();
   }
 
-  let script = document.querySelector<HTMLScriptElement>('script[data-hcaptcha-script="true"]');
   if (!script) {
     script = document.createElement("script");
-    script.src = HCAPTCHA_SCRIPT_SRC;
+    script.src = desiredSrc;
     script.async = true;
     script.defer = true;
     script.dataset.hcaptchaScript = "true";
+    script.dataset.hcaptchaLang = desiredLanguage;
     document.body.appendChild(script);
   }
 
@@ -70,10 +102,12 @@ function loadHCaptchaScript(): Promise<void> {
 export function HCaptchaWidget({
   siteKey,
   onVerify,
+  locale,
   disabled
 }: {
   siteKey: string;
   onVerify: (token: string) => void;
+  locale: Locale;
   disabled?: boolean;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -106,7 +140,7 @@ export function HCaptchaWidget({
       }
 
       try {
-        await loadHCaptchaScript();
+        await loadHCaptchaScript(locale);
       } catch (error) {
         console.error("[chatbot] Failed to load hCaptcha script:", error);
         return;
@@ -154,7 +188,7 @@ export function HCaptchaWidget({
       }
       widgetIdRef.current = null;
     };
-  }, [siteKey, onVerify, theme]);
+  }, [siteKey, onVerify, theme, locale]);
 
   return (
     <div className="mt-2">

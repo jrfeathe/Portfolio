@@ -114,6 +114,8 @@ export type AppDictionary = {
     fallbackCtaLabel: string;
     captchaTitle: string;
     captchaPrompt: string;
+    captchaServiceUnavailable: string;
+    captchaValidationFailed: string;
     rateLimitTitle: string;
     rateLimitMessage: string;
     rateLimitTryAfter: string;
@@ -566,6 +568,8 @@ const en: AppDictionary = {
     fallbackCtaLabel: "Open resume",
     captchaTitle: "Quick human check",
     captchaPrompt: "Complete the captcha to continue.",
+    captchaServiceUnavailable: "Captcha service is unavailable right now. Please try again later.",
+    captchaValidationFailed: "Captcha validation failed. Please try again.",
     rateLimitTitle: "Rate limit reached",
     rateLimitMessage: "You've hit the chat limit for now.",
     rateLimitTryAfter: "Try again in about {minutes} minutes.",
@@ -854,6 +858,8 @@ const ja: AppDictionary = {
     fallbackCtaLabel: "履歴書を開く",
     captchaTitle: "簡易的な人間確認",
     captchaPrompt: "続行するにはキャプチャを完了してください。",
+    captchaServiceUnavailable: "現在、キャプチャサービスを利用できません。しばらくしてからお試しください。",
+    captchaValidationFailed: "キャプチャの検証に失敗しました。もう一度お試しください。",
     rateLimitTitle: "レート制限に達しました",
     rateLimitMessage: "現在、チャットの上限に達しています。",
     rateLimitTryAfter: "約 {minutes} 分後に再試行してください。",
@@ -1144,6 +1150,8 @@ const zh: AppDictionary = {
     fallbackCtaLabel: "打开简历",
     captchaTitle: "快速人机验证",
     captchaPrompt: "请完成验证码以继续。",
+    captchaServiceUnavailable: "验证码服务暂时不可用，请稍后再试。",
+    captchaValidationFailed: "验证码验证失败，请重试。",
     rateLimitTitle: "已达到速率限制",
     rateLimitMessage: "您目前已达到聊天上限。",
     rateLimitTryAfter: "请在约 {minutes} 分钟后再试。",

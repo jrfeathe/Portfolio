@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-12-24T15:28:37.185Z",
+  "generatedAt": "2026-01-03T20:39:15.885Z",
   "anchors": [
     {
       "id": "react",
@@ -410,11 +410,11 @@
           "href": "/en/experience#cpp-game-engine"
         },
         "ja": {
-          "name": "Indie game development",
+          "name": "インディーゲーム開発",
           "href": "/ja/experience#cpp-game-engine"
         },
         "zh": {
-          "name": "Indie game development",
+          "name": "独立游戏开发",
           "href": "/zh/experience#cpp-game-engine"
         }
       }
@@ -448,11 +448,11 @@
           "href": "/en/experience#portfolio-site"
         },
         "ja": {
-          "name": "Portfolio (this website) - Personal project",
+          "name": "ポートフォリオ（本サイト） - 個人プロジェクト",
           "href": "/ja/experience#portfolio-site"
         },
         "zh": {
-          "name": "Portfolio (this website) - Personal project",
+          "name": "作品集（本网站）- 个人项目",
           "href": "/zh/experience#portfolio-site"
         }
       }
@@ -467,11 +467,11 @@
           "href": "/en/experience#quester2000"
         },
         "ja": {
-          "name": "Quester2000 - Personal project",
+          "name": "Quester2000 - 個人プロジェクト",
           "href": "/ja/experience#quester2000"
         },
         "zh": {
-          "name": "Quester2000 - Personal project",
+          "name": "Quester2000 - 个人项目",
           "href": "/zh/experience#quester2000"
         }
       }
@@ -486,11 +486,11 @@
           "href": "/en/experience#rollodex"
         },
         "ja": {
-          "name": "Rollodex for Appy.yo",
+          "name": "Appy.yo向けRollodex",
           "href": "/ja/experience#rollodex"
         },
         "zh": {
-          "name": "Rollodex for Appy.yo",
+          "name": "面向 Appy.yo 的 Rollodex",
           "href": "/zh/experience#rollodex"
         }
       }
@@ -505,11 +505,11 @@
           "href": "/en/experience#ser321"
         },
         "ja": {
-          "name": "SER 321 at Arizona State University",
+          "name": "アリゾナ州立大学 SER 321",
           "href": "/ja/experience#ser321"
         },
         "zh": {
-          "name": "SER 321 at Arizona State University",
+          "name": "亚利桑那州立大学 SER 321",
           "href": "/zh/experience#ser321"
         }
       }
@@ -524,11 +524,11 @@
           "href": "/en/experience#stellaris-mods-project"
         },
         "ja": {
-          "name": "Freelance / Mods",
+          "name": "フリーランス / Mods",
           "href": "/ja/experience#stellaris-mods-project"
         },
         "zh": {
-          "name": "Freelance / Mods",
+          "name": "自由职业 / 模组",
           "href": "/zh/experience#stellaris-mods-project"
         }
       }

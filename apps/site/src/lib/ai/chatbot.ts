@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import fsSync from "node:fs";
 import path from "node:path";
+import { createRequire } from "node:module";
 
 import { defaultLocale, type Locale } from "../../utils/i18n";
 
@@ -56,6 +57,33 @@ const STOP_WORDS = new Set([
   "not", "than", "then", "so", "if", "when", "what", "which", "who", "whom", "how",
   "do", "did", "done", "does", "just", "also", "experience"
 ]);
+const SHORT_TOKENS = new Set(["ai", "ui", "ux", "ml", "ci", "cd", "k8s"]);
+const LATIN_TOKEN = /[a-z0-9][a-z0-9+.#-]*/gi;
+const PUNCTUATION_ONLY = /^[\p{P}\p{S}]+$/u;
+const CJK_TOKEN = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u;
+const JAPANESE_DROP_POS = new Set(["助詞", "助動詞", "記号", "フィラー"]);
+const NAME_ALIAS_TOKENS = new Map<string, string[]>([
+  ["ジャク", ["jack"]],
+  ["ジャクさん", ["jack"]],
+  ["夹克", ["jack"]]
+]);
+
+type KuromojiToken = {
+  surface_form?: string;
+  pos?: string;
+  basic_form?: string;
+};
+
+type KuromojiTokenizer = {
+  tokenize: (text: string) => KuromojiToken[];
+};
+
+type JiebaTokenizer = {
+  cut: (sentence: string | Uint8Array, hmm?: boolean | undefined | null) => string[];
+};
+
+const require = createRequire(import.meta.url);
+let tokenizerPromise: Promise<{ ja?: KuromojiTokenizer; zh?: JiebaTokenizer }> | null = null;
 
 const AI_PATH_CANDIDATES = [
   path.join(process.cwd(), "apps", "site", "data", "ai"),
@@ -86,12 +114,199 @@ export function sanitizeText(text: string): string {
     .trim();
 }
 
-export function tokenize(text: string): string[] {
-  const normalized = text.toLowerCase().replace(/[^a-z0-9\s]/g, " ");
-  const tokens = normalized
-    .split(/\s+/)
-    .filter((token) => token.length > 2 && !STOP_WORDS.has(token));
-  return Array.from(new Set(tokens));
+function resolveKuromojiDictPath() {
+  const candidates: string[] = [];
+  const seen = new Set<string>();
+
+  const addCandidate = (root: string) => {
+    if (!root || seen.has(root)) return;
+    seen.add(root);
+    candidates.push(root);
+  };
+
+  try {
+    const packageRoot = path.dirname(require.resolve("kuromoji/package.json"));
+    const resolvedRoot = path.isAbsolute(packageRoot)
+      ? packageRoot
+      : path.resolve(process.cwd(), packageRoot);
+    addCandidate(resolvedRoot);
+  } catch {
+    // Ignore and fall back to scanning for node_modules.
+  }
+
+  const addFrom = (start: string) => {
+    let current = start;
+    for (let depth = 0; depth < 6; depth += 1) {
+      addCandidate(path.join(current, "node_modules", "kuromoji"));
+      const parent = path.dirname(current);
+      if (parent === current) break;
+      current = parent;
+    }
+  };
+
+  addFrom(process.cwd());
+
+  for (const root of candidates) {
+    const dictPath = path.join(root, "dict");
+    if (fsSync.existsSync(path.join(dictPath, "base.dat.gz"))) {
+      return dictPath;
+    }
+  }
+
+  const fallbackRoot = candidates[0] ?? process.cwd();
+  return path.join(fallbackRoot, "dict");
+}
+
+async function loadTokenizers(): Promise<{ ja?: KuromojiTokenizer; zh?: JiebaTokenizer }> {
+  if (tokenizerPromise) {
+    return tokenizerPromise;
+  }
+
+  tokenizerPromise = (async () => {
+    const tokenizers: { ja?: KuromojiTokenizer; zh?: JiebaTokenizer } = {};
+
+    try {
+      const kuromoji = require("kuromoji") as {
+        builder: (options: { dicPath: string }) => {
+          build: (cb: (err: Error | null, tokenizer?: KuromojiTokenizer) => void) => void;
+        };
+      };
+      const dicPath = resolveKuromojiDictPath();
+      tokenizers.ja = await new Promise<KuromojiTokenizer>((resolve, reject) => {
+        kuromoji.builder({ dicPath }).build((err, tokenizer) => {
+          if (err || !tokenizer) {
+            reject(err ?? new Error("Failed to build kuromoji tokenizer"));
+            return;
+          }
+          resolve(tokenizer);
+        });
+      });
+    } catch (error) {
+      console.warn("[chatbot] Failed to initialize kuromoji tokenizer:", error);
+    }
+
+    try {
+      const { Jieba } = require("@node-rs/jieba") as {
+        Jieba: { withDict: (dict: Uint8Array) => JiebaTokenizer };
+      };
+      const { dict } = require("@node-rs/jieba/dict") as { dict: Uint8Array };
+      tokenizers.zh = Jieba.withDict(dict);
+    } catch (error) {
+      console.warn("[chatbot] Failed to initialize jieba tokenizer:", error);
+    }
+
+    return tokenizers;
+  })();
+
+  return tokenizerPromise;
+}
+
+function addLatinToken(tokens: Set<string>, raw: string) {
+  const normalized = raw.toLowerCase().replace(/^[^a-z0-9]+|[^a-z0-9]+$/g, "");
+  if (!normalized) return;
+
+  const expanded = new Set<string>();
+  expanded.add(normalized);
+
+  if (normalized === "c++" || normalized.includes("c++")) {
+    expanded.add("c++");
+    expanded.add("cpp");
+  }
+  if (normalized === "c#") {
+    expanded.add("csharp");
+  }
+
+  if (normalized.includes(".") || normalized.includes("-")) {
+    normalized.split(/[.-]/).forEach((part) => part && expanded.add(part));
+  }
+
+  const stripped = normalized.replace(/[+#.]/g, "");
+  if (stripped && stripped !== normalized) {
+    expanded.add(stripped);
+  }
+
+  for (const token of expanded) {
+    if (STOP_WORDS.has(token)) continue;
+    if (token.length < 3 && !SHORT_TOKENS.has(token) && !/\d/.test(token)) {
+      continue;
+    }
+    tokens.add(token);
+  }
+}
+
+function addJapaneseTokens(tokens: Set<string>, value: string, tokenizer?: KuromojiTokenizer) {
+  if (!tokenizer) {
+    return;
+  }
+
+  const tokenList = tokenizer.tokenize(value);
+  for (const token of tokenList) {
+    const surface = token.surface_form?.trim();
+    if (!surface) continue;
+    if (token.pos && JAPANESE_DROP_POS.has(token.pos)) continue;
+    if (PUNCTUATION_ONLY.test(surface)) continue;
+
+    tokens.add(surface);
+
+    const base = token.basic_form?.trim();
+    if (base && base !== "*" && base !== surface) {
+      tokens.add(base);
+    }
+  }
+}
+
+function addChineseTokens(tokens: Set<string>, value: string, tokenizer?: JiebaTokenizer) {
+  if (!tokenizer) {
+    return;
+  }
+
+  const segments = tokenizer.cut(value, true);
+  for (const segment of segments) {
+    const cleaned = segment.trim();
+    if (!cleaned) continue;
+    if (PUNCTUATION_ONLY.test(cleaned)) continue;
+    tokens.add(cleaned);
+  }
+}
+
+function addNameAliasTokens(tokens: Set<string>, rawText: string) {
+  if (!CJK_TOKEN.test(rawText)) {
+    return;
+  }
+
+  const hasCjkTokens = Array.from(tokens).some((token) => CJK_TOKEN.test(token));
+  const normalized = hasCjkTokens ? "" : rawText.normalize("NFKC");
+
+  for (const [alias, expansions] of NAME_ALIAS_TOKENS.entries()) {
+    if (!tokens.has(alias) && (!normalized || !normalized.includes(alias))) {
+      continue;
+    }
+    for (const token of expansions) {
+      tokens.add(token);
+    }
+  }
+}
+
+export async function tokenize(text: string, locale: Locale): Promise<string[]> {
+  const normalized = sanitizeText(text).toLowerCase();
+  const tokens = new Set<string>();
+
+  for (const match of normalized.matchAll(LATIN_TOKEN)) {
+    addLatinToken(tokens, match[0]);
+  }
+
+  if (locale === "ja" || locale === "zh") {
+    const tokenizers = await loadTokenizers();
+    if (locale === "ja") {
+      addJapaneseTokens(tokens, text, tokenizers.ja);
+    } else {
+      addChineseTokens(tokens, text, tokenizers.zh);
+    }
+  }
+
+  addNameAliasTokens(tokens, text);
+
+  return Array.from(tokens);
 }
 
 function expandTokens(tokens: string[]): string[] {
@@ -332,14 +547,14 @@ function summarizeTimelineDetail(title: string, text: string, dateOnly: boolean)
   return collapsed.length > 220 ? `${collapsed.slice(0, 220)}...` : collapsed;
 }
 
-export function buildWorkEducationFacts(
+export async function buildWorkEducationFacts(
   question: string,
   locale: Locale,
   index: EmbeddingIndex,
   limit = 4
-): ContextFact[] {
+): Promise<ContextFact[]> {
   const cleaned = sanitizeText(question);
-  const queryTokens = tokenize(cleaned);
+  const queryTokens = await tokenize(cleaned, locale);
   const localeChunks = pickLocaleChunks(index, locale);
 
   const WORK_SOURCE_IDS = new Set([
@@ -550,7 +765,7 @@ export async function retrieveContext(
 ): Promise<RetrievalHit[]> {
   const { anchors, index } = await loadChatResources();
   const cleaned = sanitizeText(question);
-  const queryTokens = expandTokens(tokenize(cleaned));
+  const queryTokens = expandTokens(await tokenize(cleaned, locale));
 
   const candidates = pickLocaleChunks(index, locale);
   const scored: RetrievalHit[] = [];

@@ -68,7 +68,8 @@ function parseArgs(argv) {
 }
 
 function escapeMarkdown(value) {
-  return value.replace(/\|/g, "\\|").replace(/\r?\n/g, "<br>");
+  const str = String(value);
+  return str.replace(/\\/g, "\\\\").replace(/\|/g, "\\|").replace(/\r?\n/g, "<br>");
 }
 
 function normalizeEnglish(value) {

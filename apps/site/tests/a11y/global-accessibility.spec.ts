@@ -24,15 +24,10 @@ const journeys = [
     path: "/en/notes",
     async prepare(page: Page) {
       await page.waitForLoadState("networkidle");
-      await expect(page.getByRole("link", { name: /MDX pipeline/i })).toBeVisible();
-    }
-  },
-  {
-    name: "note detail",
-    path: "/en/notes/mdx-pipeline",
-    async prepare(page: Page) {
-      await page.waitForLoadState("networkidle");
-      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+      await expect(page.getByRole("heading", { level: 1, name: /Engineering notes/i })).toBeVisible();
+      await expect(
+        page.getByText(/single narrative that explains how the portfolio was built/i)
+      ).toBeVisible();
     }
   }
 ];

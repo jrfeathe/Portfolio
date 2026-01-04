@@ -252,6 +252,7 @@ export type AppDictionary = {
     index: {
       title: string;
       subtitle: string;
+      body: string;
       empty: string;
     };
     detail: {
@@ -726,6 +727,8 @@ const en: AppDictionary = {
       title: "Engineering notes",
       subtitle:
         "Long-form breakdowns of delivery choices, instrumentation tactics, and operating agreements behind the portfolio effort.",
+      body:
+        "This page is now a single narrative that explains how the portfolio was built, from planning and constraints through accessibility, performance, and release operations. The goal is a cohesive end-to-end write-up that focuses on decisions, tradeoffs, and what I would change next time.",
       empty: "Notes are on the way."
     },
     detail: {
@@ -1015,6 +1018,8 @@ const ja: AppDictionary = {
       title: "エンジニアリングノート",
       subtitle:
         "本ポートフォリオ制作の裏側にある設計判断、計測手法、運用方針を詳しく解説します。",
+      body:
+        "このページは、ポートフォリオ構築の過程を一続きの物語としてまとめた長文メモです。計画と制約から、アクセシビリティ、性能、運用までを通して、判断とトレードオフ、次に改善したい点を記録します。",
       empty: "ノートは準備中です。"
     },
     detail: {
@@ -1307,6 +1312,8 @@ const zh: AppDictionary = {
       title: "工程笔记",
       subtitle:
         "对该作品集背后的交付选择、观测手段和运行约定的长文解析。",
+      body:
+        "这个页面现在是一篇完整的长文，按时间线讲述作品集的构建过程：从规划与约束，到可访问性、性能和发布运维。重点是记录关键决策、权衡取舍，以及下一次会改进的地方。",
       empty: "笔记即将上线。"
     },
     detail: {

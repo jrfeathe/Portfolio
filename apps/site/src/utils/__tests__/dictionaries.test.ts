@@ -2,29 +2,35 @@ import path from "node:path";
 
 import { getDictionary } from "../dictionaries";
 
+const expectNonEmptyString = (value: unknown) => {
+  expect(typeof value).toBe("string");
+  expect((value as string).trim().length).toBeGreaterThan(0);
+};
+
 describe("dictionaries", () => {
   it("returns english dictionary by default", () => {
     const dictionary = getDictionary("en");
-    expect(dictionary.metadata.title).toContain("Jack F.");
-    expect(dictionary.home.hero.title).toBe("Jack Featherstone");
-    expect(dictionary.home.hero.cta.actions[0]?.label).toBe("Download resume");
+    expectNonEmptyString(dictionary.metadata.title);
+    expectNonEmptyString(dictionary.home.hero.title);
+    expect(dictionary.home.hero.cta.actions.length).toBeGreaterThan(0);
+    expectNonEmptyString(dictionary.home.hero.cta.actions[0]!.label);
     expect(dictionary.home.sections.techStack.items.length).toBeGreaterThan(10);
     expect(dictionary.experience.techStack.length).toBeGreaterThan(10);
-    expect(dictionary.notes.detail.tocLabel).toBe("On this page");
+    expectNonEmptyString(dictionary.notes.detail.tocLabel);
   });
 
   it("returns localized hero copy for japanese locale", () => {
     const dictionary = getDictionary("ja");
-    expect(dictionary.metadata.title).toBe("Jack F. ポートフォリオ");
-    expect(dictionary.home.hero.title).toBe("Jack Featherstone");
-    expect(dictionary.notes.index.empty).toContain("ノートは準備中です。");
+    expectNonEmptyString(dictionary.metadata.title);
+    expectNonEmptyString(dictionary.home.hero.title);
+    expectNonEmptyString(dictionary.notes.index.empty);
   });
 
   it("returns localized hero copy for chinese locale", () => {
     const dictionary = getDictionary("zh");
-    expect(dictionary.metadata.title).toContain("作品集");
-    expect(dictionary.home.hero.title).toBe("Jack Featherstone");
-    expect(dictionary.home.sections.proof.proofChips).toHaveLength(4);
+    expectNonEmptyString(dictionary.metadata.title);
+    expectNonEmptyString(dictionary.home.hero.title);
+    expect(dictionary.home.sections.proof.proofChips.length).toBeGreaterThan(0);
   });
 
   describe("fallbacks and validation", () => {

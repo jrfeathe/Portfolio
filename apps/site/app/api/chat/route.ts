@@ -22,6 +22,7 @@ import {
   type ModerationDecision,
   type ModerationLabel
 } from "../../../src/lib/ai/moderationOutcome";
+import { getDictionary } from "../../../src/utils/dictionaries";
 import { defaultLocale, isLocale, type Locale } from "../../../src/utils/i18n";
 
 export const runtime = "nodejs";
@@ -751,6 +752,7 @@ export async function POST(request: Request) {
   }
 
   const locale = isLocale(body.locale) ? (body.locale as Locale) : defaultLocale;
+  const copy = getDictionary(locale).chatbot;
   const sessionId = ensureSessionId(body.sessionId);
   const ip = getClientIp(request);
 
@@ -797,7 +799,7 @@ export async function POST(request: Request) {
       return NextResponse.json(
         {
           error: "captcha_required",
-          message: "Please complete the captcha to continue.",
+          message: copy.captchaPrompt,
           captchaRequired: true,
           captchaSiteKey,
           promptCount
@@ -815,8 +817,8 @@ export async function POST(request: Request) {
         {
           error: validation.reason ?? "captcha_invalid",
           message: isProviderDown
-            ? "Captcha service is unavailable right now. Please try again later."
-            : "Captcha validation failed. Please try again.",
+            ? copy.captchaServiceUnavailable
+            : copy.captchaValidationFailed,
           captchaRequired: !isProviderDown,
           captchaSiteKey: isProviderDown ? undefined : captchaSiteKey,
           promptCount
@@ -1080,7 +1082,7 @@ export async function POST(request: Request) {
   const history = summarizeHistory(body.history ?? []);
   const workEduQuestion = isWorkEducationQuestion(trimmedMessage);
   const workEducationFacts = workEduQuestion
-    ? buildWorkEducationFacts(trimmedMessage, locale, resources.index, 5)
+    ? await buildWorkEducationFacts(trimmedMessage, locale, resources.index, 5)
     : [];
 
   const selectedModel = process.env.OPENROUTER_MODEL ?? "openrouter/auto";

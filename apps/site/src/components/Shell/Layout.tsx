@@ -17,6 +17,9 @@ import type {
   ResponsiveImagePreset
 } from "../../lib/images";
 import type { Locale } from "../../utils/i18n";
+import type { AppDictionary } from "../../utils/dictionaries";
+
+type ShellCopy = AppDictionary["shell"];
 
 export type ShellSection = {
   id: string;
@@ -43,6 +46,7 @@ export type ShellLayoutProps = {
   };
   skimModeEnabled?: boolean;
   showSkimToggle?: boolean;
+  shellCopy: ShellCopy;
   locale: Locale;
 };
 
@@ -59,6 +63,7 @@ export function ShellLayout({
   heroMedia,
   skimModeEnabled = false,
   showSkimToggle = true,
+  shellCopy,
   locale
 }: ShellLayoutProps) {
   const navItems: AnchorNavItem[] =
@@ -131,6 +136,7 @@ export function ShellLayout({
               {breadcrumbs.length ? (
                 <Breadcrumbs
                   items={breadcrumbs}
+                  ariaLabel={shellCopy.breadcrumbsLabel}
                   className="flex-1"
                 />
               ) : null}
@@ -180,6 +186,7 @@ export function ShellLayout({
           {navItems.length ? (
             <AnchorNav
               items={navItems}
+              ariaLabel={shellCopy.anchorNavLabel}
               orientation="horizontal"
               className="flex lg:hidden"
             />
@@ -233,19 +240,23 @@ export function ShellLayout({
         {navItems.length ? (
           <div className="hidden lg:col-start-1 lg:row-start-1 lg:block">
             <div className="sticky top-24 space-y-3">
-              <AnchorControlPanel enabled={hasNestedAnchors} />
-              <AnchorNav items={navItems} />
+              <AnchorControlPanel
+                enabled={hasNestedAnchors}
+                expandLabel={shellCopy.expandAllLabel}
+                collapseLabel={shellCopy.collapseAllLabel}
+              />
+              <AnchorNav items={navItems} ariaLabel={shellCopy.anchorNavLabel} />
               <a
                 href="#top"
                 className="inline-flex w-full items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
               >
-                Return to top
+                {shellCopy.returnToTopLabel}
               </a>
             </div>
           </div>
         ) : null}
       </div>
-      {footer ?? <ShellFooter content={footerContent} />}
+      {footer ?? (footerContent ? <ShellFooter content={footerContent} /> : null)}
     </div>
   );
 }

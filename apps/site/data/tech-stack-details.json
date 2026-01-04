@@ -3,514 +3,654 @@
     "id": "react",
     "title": {
       "en": "React",
-      "ja": "",
-      "zh": ""
+      "ja": "React",
+      "zh": "React"
     },
     "context": {
       "en": "2 years of experience",
-      "ja": "",
-      "zh": ""
+      "ja": "経験2年",
+      "zh": "2 年经验"
     },
     "summary": {
       "en": "Frontend design for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
-      "ja": "",
-      "zh": ""
+      "ja": "Software Portfolio（本サイト）、Rollodex Capstone、Quester2000 のフロントエンド設計を担当しました。",
+      "zh": "为 Software Portfolio（本网站）、Rollodex 毕业设计、Quester2000 进行前端设计。"
     },
     "highlights": {
       "en": [
         "Rollodex - Implemented various components to build templated forms and redesign search/filter UI.",
         "Portfolio - Implemented a wide suite of custom UI components."
       ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "html",
-    "title": {
-      "en": "HTML",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "5 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Web design for Web Development & Design Foundations coursework, Software Portfolio (this website), Rollodex Capstone, Quester2000.",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Built legacy style websites using HTML and CSS to display information and navigate between pages.",
-        "Integrated with JavaScript, TypeScript, and React to build complex web apps."
+      "ja": [
+        "Rollodex：テンプレート化されたフォーム構築や検索／フィルタUI再設計のため、各種コンポーネントを実装しました。",
+        "ポートフォリオ：多数のカスタムUIコンポーネントを実装しました。"
       ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "css",
-    "title": {
-      "en": "CSS",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "5 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "UI design for Software Portfolio (this website), Rollodex Capstone, Quester2000, Various courses.",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Created themes for web applications to customize and improve accessibility."
-      ],
-      "ja": [],
-      "zh": []
+      "zh": [
+        "Rollodex：实现多种组件，用于构建模板化表单并重构搜索/筛选 UI。",
+        "作品集：实现了大量自定义 UI 组件。"
+      ]
     }
   },
   {
     "id": "javascript",
     "title": {
       "en": "JavaScript",
-      "ja": "",
-      "zh": ""
+      "ja": "JavaScript",
+      "zh": "JavaScript"
     },
     "context": {
       "en": "3 years of experience",
-      "ja": "",
-      "zh": ""
+      "ja": "経験3年",
+      "zh": "3 年经验"
     },
     "summary": {
       "en": "Backend logic for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
-      "ja": "",
-      "zh": ""
+      "ja": "Software Portfolio（本サイト）、Rollodex Capstone、Quester2000 のバックエンドロジックを担当しました。",
+      "zh": "为 Software Portfolio（本网站）、Rollodex 毕业设计、Quester2000 编写后端逻辑。"
     },
     "highlights": {
       "en": [
         "Built client/server logic to power complex features, such as menu interfaces, search filtering, and form templates."
       ],
-      "ja": [],
-      "zh": []
+      "ja": [
+        "メニューUI、検索フィルタ、フォームテンプレートなどの複雑な機能を支えるクライアント／サーバーロジックを構築しました。"
+      ],
+      "zh": [
+        "构建客户端/服务器逻辑，以支撑菜单界面、搜索过滤和表单模板等复杂功能。"
+      ]
     }
   },
   {
     "id": "typescript",
     "title": {
       "en": "TypeScript",
-      "ja": "",
-      "zh": ""
+      "ja": "TypeScript",
+      "zh": "TypeScript"
     },
     "context": {
       "en": "6 months of experience",
-      "ja": "",
-      "zh": ""
+      "ja": "経験6か月",
+      "zh": "6 个月经验"
     },
     "summary": {
       "en": "Backend logic for Software Portfolio (this website), Quester2000.",
-      "ja": "",
-      "zh": ""
+      "ja": "Software Portfolio（本サイト）、Quester2000 のバックエンドロジックを担当しました。",
+      "zh": "为 Software Portfolio（本网站）、Quester2000 编写后端逻辑。"
     },
     "highlights": {
       "en": [
         "Built web apps meant to run on cloud services."
       ],
-      "ja": [],
-      "zh": []
+      "ja": [
+        "クラウドサービス上で稼働するWebアプリを構築しました。"
+      ],
+      "zh": [
+        "构建了面向云服务运行的 Web 应用。"
+      ]
     }
   },
   {
-    "id": "c",
+    "id": "codex",
     "title": {
-      "en": "C",
-      "ja": "",
-      "zh": ""
+      "en": "Codex",
+      "ja": "Codex",
+      "zh": "Codex"
     },
     "context": {
-      "en": "3 years of experience",
-      "ja": "",
-      "zh": ""
+      "en": "6 months of experience",
+      "ja": "経験6か月",
+      "zh": "6 个月经验"
     },
     "summary": {
-      "en": "Coursework for various courses.",
-      "ja": "",
-      "zh": ""
+      "en": "AI-assisted development for Software Portfolio (this website), Quester2000",
+      "ja": "Software Portfolio（本サイト）、Quester2000 におけるAI支援開発。",
+      "zh": "用于 Software Portfolio（本网站）、Quester2000 的 AI 辅助开发。"
     },
     "highlights": {
       "en": [
-        "SER334 - Built a Loadable Kernel Module that uses Linux data structures to display details about the processes executing in the kernel.",
-        "Applied scripting for various topics such as thread/compiler optimization, page replacement, image processing, and scheduling algorithms."
+        "Instructed Codex to perform complex tasks based on high level documentation and a detailed Work Breakdown Structure.",
+        "Broke tasks into small chunks that Codex could handle, and verified stability of solutions."
       ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "cpp",
-    "title": {
-      "en": "C++",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "7 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Core language foundation. Used for custom game engine and many small projects.",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Developed a custom game engine for a current project. (Limited information disclosure)",
-        "The language that I first learned and my top preference."
+      "ja": [
+        "高レベルなドキュメントと詳細なWBSに基づき、Codexに複雑なタスクを実行させました。",
+        "Codexが扱えるようタスクを細分化し、解決策の安定性を検証しました。"
       ],
-      "ja": [],
-      "zh": []
+      "zh": [
+        "基于高层文档和详细的工作分解结构（WBS），指导 Codex 执行复杂任务。",
+        "将任务拆分为 Codex 可处理的小单元，并验证解决方案的稳定性。"
+      ]
     }
   },
   {
     "id": "java",
     "title": {
       "en": "Java",
-      "ja": "",
-      "zh": ""
+      "ja": "Java",
+      "zh": "Java"
     },
     "context": {
       "en": "7 years of experience",
-      "ja": "",
-      "zh": ""
+      "ja": "経験7年",
+      "zh": "7 年经验"
     },
     "summary": {
       "en": "Distributed systems teaching, Minecraft modding, Various courses/projects.",
-      "ja": "",
-      "zh": ""
+      "ja": "分散システム教育、Minecraft mod開発、各種講義／プロジェクトで使用しました。",
+      "zh": "分布式系统教学、Minecraft 模组开发，以及各类课程/项目。"
     },
     "highlights": {
       "en": [
         "Built a Wheel of Fortune Java client/server assignment for students.",
         "Decompiled code to patch a crash and reassemble."
       ],
-      "ja": [],
-      "zh": []
+      "ja": [
+        "学生向けに「Wheel of Fortune」Javaクライアント／サーバー課題を構築しました。",
+        "クラッシュ修正のためコードを逆コンパイルし、再構築しました。"
+      ],
+      "zh": [
+        "为学生构建了“Wheel of Fortune”Java 客户端/服务器作业。",
+        "通过反编译代码修复崩溃并重新组装。"
+      ]
     }
   },
   {
-    "id": "linux",
+    "id": "cpp",
     "title": {
-      "en": "Linux",
-      "ja": "",
-      "zh": ""
+      "en": "C++",
+      "ja": "C++",
+      "zh": "C++"
     },
     "context": {
       "en": "7 years of experience",
-      "ja": "",
-      "zh": ""
+      "ja": "経験7年",
+      "zh": "7 年经验"
     },
     "summary": {
-      "en": "My daily driver kernel, set up on many systems. Also used for various courses.",
-      "ja": "",
-      "zh": ""
+      "en": "Core language foundation. Used for custom game engine and many small projects.",
+      "ja": "中核となる言語基盤です。カスタムゲームエンジンや多数の小規模プロジェクトで使用しました。",
+      "zh": "核心语言基础，用于自定义游戏引擎和多个小型项目。"
     },
     "highlights": {
       "en": [
-        "Actively maintaining Nextcloud and game servers with backups and monitoring.",
-        "Configured VFIO and kernel tuning for GPU passthrough to VMs."
+        "Developed a custom game engine for a current project. (Limited information disclosure)",
+        "The language that I first learned and my top preference."
       ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "json",
-    "title": {
-      "en": "JSON",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "5 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Modding, Game Engine, Various courses.",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Stored complex application objects to file, and read them back upon application reload.",
-        "Commonly used when modding Stellaris and Minecraft."
+      "ja": [
+        "現行プロジェクト向けにカスタムゲームエンジンを開発。（情報開示制限あり）",
+        "最初に学んだ言語であり、最も好んで使用しています。"
       ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "bash",
-    "title": {
-      "en": "Bash",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "5 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Local tooling on Linux systems",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Scripting to modify various behaviors of Linux machines.",
-        "Used heavily during application development."
-      ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "xml",
-    "title": {
-      "en": "XML",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "5 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Game mod configuration, Various courses",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Patched Minecraft config XMLs to optimize servers and align with modpack updates.",
-        "Deploy virtual machines and optimize them."
-      ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "kvm",
-    "title": {
-      "en": "KVM",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "4 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Virtualize Windows on Linux systems",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Set up Windows 10 virtual machines optimized for gaming, with GPU passthrough.",
-        "Used with QEMU."
-      ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "qemu",
-    "title": {
-      "en": "QEMU",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "4 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Virtualize Windows on Linux systems",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Set up Windows 10 virtual machines optimized for gaming, with GPU passthrough.",
-        "Used with KVM."
-      ],
-      "ja": [],
-      "zh": []
+      "zh": [
+        "为当前项目开发了自定义游戏引擎。（信息披露有限）",
+        "我最早学习的语言，也是首选语言。"
+      ]
     }
   },
   {
     "id": "postgresql",
     "title": {
       "en": "PostgreSQL",
-      "ja": "",
-      "zh": ""
+      "ja": "PostgreSQL",
+      "zh": "PostgreSQL"
     },
     "context": {
       "en": "2 years of experience",
-      "ja": "",
-      "zh": ""
+      "ja": "経験2年",
+      "zh": "2 年经验"
     },
     "summary": {
       "en": "Rollodex, Quester2000",
-      "ja": "",
-      "zh": ""
+      "ja": "Rollodex、Quester2000",
+      "zh": "Rollodex、Quester2000"
     },
     "highlights": {
       "en": [
         "Modeled contact/search data to support fast filtering.",
         "Stored app data for user accounts."
       ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "sql",
-    "title": {
-      "en": "SQL",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "2 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Rollodex, SER322 - Database Management course",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Designed Retail Inventory Management system for SER322.",
-        "Used queries to troubleshoot and speed up search for Rollodex."
+      "ja": [
+        "高速なフィルタリングを支える連絡先／検索データをモデリングしました。",
+        "ユーザーアカウント用のアプリデータを保存しました。"
       ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "lua",
-    "title": {
-      "en": "Lua",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "2 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Stellaris Modding",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Built gameplay scripts and UI hooks for custom content.",
-        "Iterated on mod changes to improve balance."
-      ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "prisma",
-    "title": {
-      "en": "Prisma",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "2 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "Rollodex, Quester2000",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Managed schema migrations and models for database structure."
-      ],
-      "ja": [],
-      "zh": []
-    }
-  },
-  {
-    "id": "oracle-cloud",
-    "title": {
-      "en": "Oracle Cloud",
-      "ja": "",
-      "zh": ""
-    },
-    "context": {
-      "en": "2 years of experience",
-      "ja": "",
-      "zh": ""
-    },
-    "summary": {
-      "en": "WireGuard experiments with intermediate IP",
-      "ja": "",
-      "zh": ""
-    },
-    "highlights": {
-      "en": [
-        "Set up a ping point to create a secure connection to my home server."
-      ],
-      "ja": [],
-      "zh": []
+      "zh": [
+        "建模联系人/搜索数据，以支持快速筛选。",
+        "存储用户账户的应用数据。"
+      ]
     }
   },
   {
     "id": "aws",
     "title": {
       "en": "AWS",
-      "ja": "",
-      "zh": ""
+      "ja": "AWS",
+      "zh": "AWS"
     },
     "context": {
       "en": "2 years of experience",
-      "ja": "",
-      "zh": ""
+      "ja": "経験2年",
+      "zh": "2 年经验"
     },
     "summary": {
       "en": "Server deployment for various projects",
-      "ja": "",
-      "zh": ""
+      "ja": "各種プロジェクトにおけるサーバーデプロイ。",
+      "zh": "用于多个项目的服务器部署。"
     },
     "highlights": {
       "en": [
         "Used to host client-server applications for SER321."
       ],
-      "ja": [],
-      "zh": []
+      "ja": [
+        "SER321 向けのクライアント／サーバーアプリをホストするために使用しました。"
+      ],
+      "zh": [
+        "用于托管 SER321 的客户端-服务器应用。"
+      ]
+    }
+  },
+  {
+    "id": "c",
+    "title": {
+      "en": "C",
+      "ja": "C",
+      "zh": "C"
+    },
+    "context": {
+      "en": "3 years of experience",
+      "ja": "経験3年",
+      "zh": "3 年经验"
+    },
+    "summary": {
+      "en": "Coursework for various courses.",
+      "ja": "各種講義の課題で使用しました。",
+      "zh": "多门课程的课程作业。"
+    },
+    "highlights": {
+      "en": [
+        "SER334 - Built a Loadable Kernel Module that uses Linux data structures to display details about the processes executing in the kernel.",
+        "Applied scripting for various topics such as thread/compiler optimization, page replacement, image processing, and scheduling algorithms."
+      ],
+      "ja": [
+        "SER334：Linuxデータ構造を用いて、カーネル内で実行中のプロセス詳細を表示するロード可能カーネルモジュールを構築しました。",
+        "スレッド／コンパイラ最適化、ページ置換、画像処理、スケジューリングアルゴリズムなど、各種トピックでスクリプトを適用しました。"
+      ],
+      "zh": [
+        "SER334：构建了一个使用 Linux 数据结构的可加载内核模块，用于显示内核中正在执行的进程详情。",
+        "在线程/编译器优化、页面置换、图像处理和调度算法等多个主题中应用脚本。"
+      ]
+    }
+  },
+  {
+    "id": "html",
+    "title": {
+      "en": "HTML",
+      "ja": "HTML",
+      "zh": "HTML"
+    },
+    "context": {
+      "en": "5 years of experience",
+      "ja": "経験5年",
+      "zh": "5 年经验"
+    },
+    "summary": {
+      "en": "Web design for Web Development & Design Foundations coursework, Software Portfolio (this website), Rollodex Capstone, Quester2000.",
+      "ja": "Web Development & Design Foundations の課題、Software Portfolio（本サイト）、Rollodex Capstone、Quester2000 のWebデザインを担当しました。",
+      "zh": "用于 Web Development & Design Foundations 课程、Software Portfolio（本网站）、Rollodex 毕业设计、Quester2000 的网页设计。"
+    },
+    "highlights": {
+      "en": [
+        "Built legacy style websites using HTML and CSS to display information and navigate between pages.",
+        "Integrated with JavaScript, TypeScript, and React to build complex web apps."
+      ],
+      "ja": [
+        "HTML と CSS を用いて、情報表示とページ遷移を行う従来型Webサイトを構築しました。",
+        "JavaScript、TypeScript、React と統合し、複雑なWebアプリを構築しました。"
+      ],
+      "zh": [
+        "使用 HTML 和 CSS 构建传统风格网站，用于信息展示和页面导航。",
+        "与 JavaScript、TypeScript 和 React 集成，构建复杂的 Web 应用。"
+      ]
+    }
+  },
+  {
+    "id": "css",
+    "title": {
+      "en": "CSS",
+      "ja": "CSS",
+      "zh": "CSS"
+    },
+    "context": {
+      "en": "5 years of experience",
+      "ja": "経験5年",
+      "zh": "5 年经验"
+    },
+    "summary": {
+      "en": "UI design for Software Portfolio (this website), Rollodex Capstone, Quester2000, Various courses.",
+      "ja": "Software Portfolio（本サイト）、Rollodex Capstone、Quester2000、各種講義のUIデザインを担当しました。",
+      "zh": "为 Software Portfolio（本网站）、Rollodex 毕业设计、Quester2000 及多门课程进行 UI 设计。"
+    },
+    "highlights": {
+      "en": [
+        "Created themes for web applications to customize and improve accessibility."
+      ],
+      "ja": [
+        "Webアプリ向けのテーマを作成し、カスタマイズ性とアクセシビリティを向上させました。"
+      ],
+      "zh": [
+        "为 Web 应用创建主题，以实现定制化并提升无障碍性。"
+      ]
+    }
+  },
+  {
+    "id": "linux",
+    "title": {
+      "en": "Linux",
+      "ja": "Linux",
+      "zh": "Linux"
+    },
+    "context": {
+      "en": "7 years of experience",
+      "ja": "経験7年",
+      "zh": "7 年经验"
+    },
+    "summary": {
+      "en": "My daily driver kernel, set up on many systems. Also used for various courses.",
+      "ja": "日常的に使用するカーネルで、多数のシステムに導入しています。各種講義でも使用しました。",
+      "zh": "作为日常使用的内核，部署在多套系统中，也用于多门课程。"
+    },
+    "highlights": {
+      "en": [
+        "Actively maintaining Nextcloud and game servers with backups and monitoring.",
+        "Configured VFIO and kernel tuning for GPU passthrough to VMs."
+      ],
+      "ja": [
+        "バックアップと監視を行いながら、Nextcloud やゲームサーバーを積極的に運用しています。",
+        "GPU パススルー用に VFIO 設定とカーネルチューニングを行いました。"
+      ],
+      "zh": [
+        "通过备份与监控，积极维护 Nextcloud 和游戏服务器。",
+        "为虚拟机的 GPU 直通配置 VFIO 并进行内核调优。"
+      ]
+    }
+  },
+  {
+    "id": "sql",
+    "title": {
+      "en": "SQL",
+      "ja": "SQL",
+      "zh": "SQL"
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "経験2年",
+      "zh": "2 年经验"
+    },
+    "summary": {
+      "en": "Rollodex, SER322 - Database Management course",
+      "ja": "Rollodex、SER322（データベース管理）",
+      "zh": "Rollodex、SER322（数据库管理）"
+    },
+    "highlights": {
+      "en": [
+        "Designed Retail Inventory Management system for SER322.",
+        "Used queries to troubleshoot and speed up search for Rollodex."
+      ],
+      "ja": [
+        "SER322 向けに小売在庫管理システムを設計しました。",
+        "クエリを用いて Rollodex のトラブルシューティングと検索高速化を行いました。"
+      ],
+      "zh": [
+        "为 SER322 设计了零售库存管理系统。",
+        "使用查询对 Rollodex 进行故障排查并加速搜索。"
+      ]
+    }
+  },
+  {
+    "id": "json",
+    "title": {
+      "en": "JSON",
+      "ja": "JSON",
+      "zh": "JSON"
+    },
+    "context": {
+      "en": "5 years of experience",
+      "ja": "経験5年",
+      "zh": "5 年经验"
+    },
+    "summary": {
+      "en": "Modding, Game Engine, Various courses.",
+      "ja": "mod開発、ゲームエンジン、各種講義で使用しました。",
+      "zh": "模组开发、游戏引擎及多门课程。"
+    },
+    "highlights": {
+      "en": [
+        "Stored complex application objects to file, and read them back upon application reload.",
+        "Commonly used when modding Stellaris and Minecraft."
+      ],
+      "ja": [
+        "複雑なアプリケーションオブジェクトをファイルに保存し、再起動時に読み込みました。",
+        "Stellaris や Minecraft のmod開発で頻繁に使用しています。"
+      ],
+      "zh": [
+        "将复杂的应用对象存储到文件中，并在应用重载时读取。",
+        "在 Stellaris 和 Minecraft 的模组开发中常用。"
+      ]
+    }
+  },
+  {
+    "id": "bash",
+    "title": {
+      "en": "Bash",
+      "ja": "Bash",
+      "zh": "Bash"
+    },
+    "context": {
+      "en": "5 years of experience",
+      "ja": "経験5年",
+      "zh": "5 年经验"
+    },
+    "summary": {
+      "en": "Local tooling on Linux systems",
+      "ja": "Linux システム上のローカルツール。",
+      "zh": "Linux 系统上的本地工具。"
+    },
+    "highlights": {
+      "en": [
+        "Scripting to modify various behaviors of Linux machines.",
+        "Used heavily during application development."
+      ],
+      "ja": [
+        "Linux マシンの挙動を変更するためのスクリプトを作成しました。",
+        "アプリケーション開発中に多用しました。"
+      ],
+      "zh": [
+        "编写脚本以修改 Linux 机器的各种行为。",
+        "在应用开发过程中大量使用。"
+      ]
+    }
+  },
+  {
+    "id": "xml",
+    "title": {
+      "en": "XML",
+      "ja": "XML",
+      "zh": "XML"
+    },
+    "context": {
+      "en": "5 years of experience",
+      "ja": "経験5年",
+      "zh": "5 年经验"
+    },
+    "summary": {
+      "en": "Game mod configuration, Various courses",
+      "ja": "ゲームmod設定、各種講義",
+      "zh": "游戏模组配置及多门课程"
+    },
+    "highlights": {
+      "en": [
+        "Patched Minecraft config XMLs to optimize servers and align with modpack updates.",
+        "Deploy virtual machines and optimize them."
+      ],
+      "ja": [
+        "サーバー最適化とmodpack更新に合わせるため、Minecraft の設定XMLを修正しました。",
+        "仮想マシンのデプロイと最適化を行いました。"
+      ],
+      "zh": [
+        "修补 Minecraft 配置 XML，以优化服务器并与模组整合包更新保持一致。",
+        "部署并优化虚拟机。"
+      ]
+    }
+  },
+  {
+    "id": "kvm",
+    "title": {
+      "en": "KVM",
+      "ja": "KVM",
+      "zh": "KVM"
+    },
+    "context": {
+      "en": "4 years of experience",
+      "ja": "経験4年",
+      "zh": "4 年经验"
+    },
+    "summary": {
+      "en": "Virtualize Windows on Linux systems",
+      "ja": "Linux システム上で Windows を仮想化。",
+      "zh": "在 Linux 系统上虚拟化 Windows。"
+    },
+    "highlights": {
+      "en": [
+        "Set up Windows 10 virtual machines optimized for gaming, with GPU passthrough.",
+        "Used with QEMU."
+      ],
+      "ja": [
+        "GPU パススルー対応の、ゲーム向け最適化 Windows 10 仮想マシンを構築しました。",
+        "QEMU と併用しました。"
+      ],
+      "zh": [
+        "搭建了支持 GPU 直通、针对游戏优化的 Windows 10 虚拟机。",
+        "与 QEMU 配合使用。"
+      ]
+    }
+  },
+  {
+    "id": "qemu",
+    "title": {
+      "en": "QEMU",
+      "ja": "QEMU",
+      "zh": "QEMU"
+    },
+    "context": {
+      "en": "4 years of experience",
+      "ja": "経験4年",
+      "zh": "4 年经验"
+    },
+    "summary": {
+      "en": "Virtualize Windows on Linux systems",
+      "ja": "Linux システム上で Windows を仮想化。",
+      "zh": "在 Linux 系统上虚拟化 Windows。"
+    },
+    "highlights": {
+      "en": [
+        "Set up Windows 10 virtual machines optimized for gaming, with GPU passthrough.",
+        "Used with KVM."
+      ],
+      "ja": [
+        "GPU パススルー対応の、ゲーム向け最適化 Windows 10 仮想マシンを構築しました。",
+        "KVM と併用しました。"
+      ],
+      "zh": [
+        "搭建了支持 GPU 直通、针对游戏优化的 Windows 10 虚拟机。",
+        "与 KVM 配合使用。"
+      ]
+    }
+  },
+  {
+    "id": "lua",
+    "title": {
+      "en": "Lua",
+      "ja": "Lua",
+      "zh": "Lua"
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "経験2年",
+      "zh": "2 年经验"
+    },
+    "summary": {
+      "en": "Stellaris Modding",
+      "ja": "Stellaris mod開発",
+      "zh": "Stellaris 模组开发"
+    },
+    "highlights": {
+      "en": [
+        "Built gameplay scripts and UI hooks for custom content.",
+        "Iterated on mod changes to improve balance."
+      ],
+      "ja": [
+        "カスタムコンテンツ向けにゲームプレイスクリプトとUIフックを構築しました。",
+        "バランス改善のため、mod変更を反復しました。"
+      ],
+      "zh": [
+        "为自定义内容构建了玩法脚本和 UI 钩子。",
+        "通过反复调整模组改动以改善平衡性。"
+      ]
+    }
+  },
+  {
+    "id": "prisma",
+    "title": {
+      "en": "Prisma",
+      "ja": "Prisma",
+      "zh": "Prisma"
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "経験2年",
+      "zh": "2 年经验"
+    },
+    "summary": {
+      "en": "Rollodex, Quester2000",
+      "ja": "Rollodex、Quester2000",
+      "zh": "Rollodex、Quester2000"
+    },
+    "highlights": {
+      "en": [
+        "Managed schema migrations and models for database structure."
+      ],
+      "ja": [
+        "データベース構造のスキーママイグレーションとモデルを管理しました。"
+      ],
+      "zh": [
+        "管理数据库结构的模式迁移与模型。"
+      ]
+    }
+  },
+  {
+    "id": "oracle-cloud",
+    "title": {
+      "en": "Oracle Cloud",
+      "ja": "Oracle Cloud",
+      "zh": "Oracle Cloud"
+    },
+    "context": {
+      "en": "2 years of experience",
+      "ja": "経験2年",
+      "zh": "2 年经验"
+    },
+    "summary": {
+      "en": "WireGuard experiments with intermediate IP",
+      "ja": "中継IPを用いた WireGuard の実験。",
+      "zh": "使用中间 IP 进行的 WireGuard 实验。"
+    },
+    "highlights": {
+      "en": [
+        "Set up a ping point to create a secure connection to my home server."
+      ],
+      "ja": [
+        "自宅サーバーへの安全な接続を確立するための中継ポイントを構築しました。"
+      ],
+      "zh": [
+        "设置中继节点，以建立到家庭服务器的安全连接。"
+      ]
     }
   }
 ]

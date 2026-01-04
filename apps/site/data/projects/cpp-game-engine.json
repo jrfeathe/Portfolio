@@ -3,8 +3,8 @@
   "names": {
     "proofTitle": {
       "en": "C++ Game Engine / Game",
-      "ja": "",
-      "zh": ""
+      "ja": "C++ゲームエンジン / ゲーム",
+      "zh": "C++ 游戏引擎 / 游戏"
     },
     "techStackTitle": {
       "en": "",
@@ -15,13 +15,13 @@
   "home": {
     "proofDetails": {
       "en": "Building a C++ game engine and RPG adventure.",
-      "ja": "",
-      "zh": ""
+      "ja": "C++ゲームエンジンとRPGアドベンチャーを構築しています。",
+      "zh": "正在构建 C++ 游戏引擎和 RPG 冒险。"
     },
     "roadmapNextStep": {
       "en": "C++ Game Engine: Continue work on a private game / engine. An abstract loosely-autobiographical RPG adventure.",
-      "ja": "",
-      "zh": ""
+      "ja": "C++ゲームエンジン：プライベートなゲーム / エンジンの開発を継続します。抽象的で半自伝的なRPGアドベンチャーです。",
+      "zh": "C++ 游戏引擎：继续开发私人游戏 / 引擎。一款抽象的、半自传式 RPG 冒险。"
     }
   },
   "techStack": {
@@ -62,31 +62,37 @@
     "id": "cpp-game-engine",
     "company": {
       "en": "Indie game development",
-      "ja": "",
-      "zh": ""
+      "ja": "インディーゲーム開発",
+      "zh": "独立游戏开发"
     },
     "role": {
       "en": "Fullstack Engineer",
-      "ja": "",
-      "zh": ""
+      "ja": "フルスタックエンジニア",
+      "zh": "全栈工程师"
     },
     "timeframe": {
       "en": "Ongoing",
-      "ja": "",
-      "zh": ""
+      "ja": "継続中",
+      "zh": "进行中"
     },
     "summary": {
       "en": "Building a C++ game engine and story driven RPG adventure.",
-      "ja": "",
-      "zh": ""
+      "ja": "C++ゲームエンジンと、ストーリー主導のRPGアドベンチャーを構築しています。",
+      "zh": "正在构建 C++ 游戏引擎和剧情驱动的 RPG 冒险。"
     },
     "highlights": {
       "en": [
         "Implemented core engine loops, asset loading, vertex buffers, and JSON data structures.",
         "Experimented with tooling such as OpenGL, SDL, and Dear ImGui."
       ],
-      "ja": [],
-      "zh": []
+      "ja": [
+        "コアとなるエンジンループ、アセット読み込み、頂点バッファ、JSONデータ構造を実装しました。",
+        "OpenGL、SDL、Dear ImGui などのツールを試用しました。"
+      ],
+      "zh": [
+        "实现了核心引擎循环、资源加载、顶点缓冲以及 JSON 数据结构。",
+        "尝试使用 OpenGL、SDL、Dear ImGui 等工具。"
+      ]
     }
   }
 }

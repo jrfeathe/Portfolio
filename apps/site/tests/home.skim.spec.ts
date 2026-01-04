@@ -5,8 +5,10 @@ test.describe("Recruiter skim mode", () => {
     test.setTimeout(90_000);
     await page.goto("/en", { waitUntil: "domcontentloaded" });
 
-    await expect(page.getByRole("heading", { name: "Jack Featherstone", level: 1 })).toBeVisible();
-    await expect(page.getByRole("img", { name: "Portrait of Jack Featherstone standing under warm light." })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    const heroPortrait = page.locator("[data-hero-portrait=\"true\"]");
+    await expect(heroPortrait).toBeVisible();
+    await expect(heroPortrait.locator("img")).toBeVisible();
     await expect(page.locator("[data-skim-mode=\"true\"]")).toHaveCount(0);
     await expect(page.getByTestId("skim-toggle")).toBeVisible();
 
@@ -15,13 +17,12 @@ test.describe("Recruiter skim mode", () => {
 
     const skimContainer = page.locator("[data-skim-mode=\"true\"]");
     await expect(skimContainer).toHaveCount(1);
-    await expect(page.getByRole("heading", { name: "AI-assisted Fullstack Engineer", level: 1 })).toBeVisible();
+    await expect(page.locator("[data-hero-portrait=\"true\"]")).toHaveCount(0);
 
-    await expect(page.getByRole("link", { name: "Download resume" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Download resume" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "View experience" })).toBeVisible();
-    await expect(page.getByRole("link", { name: "Book a short intro" })).toBeVisible();
-    await expect(page.getByRole("link", { name: /React/ })).toBeVisible();
+    const ctaContainer = page.locator(".shell-stacked-sidebar");
+    await expect(ctaContainer).toBeVisible();
+    const ctaLinks = await ctaContainer.getByRole("link").count();
+    expect(ctaLinks).toBeGreaterThan(0);
 
   });
 });

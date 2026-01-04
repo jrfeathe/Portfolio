@@ -3,13 +3,13 @@
   "names": {
     "proofTitle": {
       "en": "Minecraft Mods",
-      "ja": "",
-      "zh": ""
+      "ja": "Minecraft Mods",
+      "zh": "Minecraft 模组"
     },
     "techStackTitle": {
       "en": "Minecraft Mods",
-      "ja": "",
-      "zh": ""
+      "ja": "Minecraft Mods",
+      "zh": "Minecraft 模组"
     }
   },
   "home": {
@@ -20,16 +20,16 @@
     },
     "roadmapNextStep": {
       "en": "Pixelmon Problem: Continue work to backport an update to Minecraft Pixelmon to fix a periodic client-side crash on my private server.",
-      "ja": "",
-      "zh": ""
+      "ja": "Pixelmon Problem：Minecraft Pixelmon の更新をバックポートして、プライベートサーバーで定期的に発生するクライアント側クラッシュを修正する作業を継続します。",
+      "zh": "Pixelmon Problem：继续回溯移植 Minecraft Pixelmon 的更新，以修复我私人服务器上周期性出现的客户端崩溃。"
     }
   },
   "techStack": {
     "item": {
       "name": {
         "en": "Minecraft Mods",
-        "ja": "",
-        "zh": ""
+        "ja": "Minecraft Mods",
+        "zh": "Minecraft 模组"
       },
       "href": "https://modrinth.com/",
       "assetId": "minecraft-mods"
@@ -38,26 +38,32 @@
       "id": "minecraft-mods",
       "title": {
         "en": "Minecraft Mods",
-        "ja": "",
-        "zh": ""
+        "ja": "Minecraft Mods",
+        "zh": "Minecraft 模组"
       },
       "context": {
         "en": "5 years of experience",
-        "ja": "",
-        "zh": ""
+        "ja": "経験5年",
+        "zh": "5 年经验"
       },
       "summary": {
         "en": "10+ high performance modded servers.",
-        "ja": "",
-        "zh": ""
+        "ja": "高性能なmoddedサーバーを10台以上運用しています。",
+        "zh": "10+ 个高性能模组服务器。"
       },
       "highlights": {
         "en": [
           "Backporting of crash fixes to patch a semi-common client side disconnect.",
           "Added new features with custom mods, and optimized modpacks."
         ],
-        "ja": [],
-        "zh": []
+        "ja": [
+          "比較的よくあるクライアント側切断を解消するため、クラッシュ修正をバックポートしました。",
+          "カスタムmodsで新機能を追加し、modpacksを最適化しました。"
+        ],
+        "zh": [
+          "回溯移植崩溃修复，用于解决较常见的客户端断开问题。",
+          "通过自定义模组新增功能，并优化模组整合包。"
+        ]
       }
     }
   },

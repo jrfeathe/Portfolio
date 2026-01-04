@@ -5,6 +5,8 @@ import clsx from "clsx";
 type AnchorControlPanelProps = {
   className?: string;
   enabled?: boolean;
+  expandLabel: string;
+  collapseLabel: string;
 };
 
 function dispatchEvent(name: string) {
@@ -14,7 +16,12 @@ function dispatchEvent(name: string) {
   document.dispatchEvent(new CustomEvent(name));
 }
 
-export function AnchorControlPanel({ className, enabled = false }: AnchorControlPanelProps) {
+export function AnchorControlPanel({
+  className,
+  enabled = false,
+  expandLabel,
+  collapseLabel
+}: AnchorControlPanelProps) {
   if (!enabled) {
     return null;
   }
@@ -32,14 +39,14 @@ export function AnchorControlPanel({ className, enabled = false }: AnchorControl
           onClick={() => dispatchEvent("shell-anchor-expand-all")}
           className="rounded-full border border-border/60 px-2 py-0.5 transition hover:border-accent hover:text-text dark:border-dark-border/60 dark:hover:border-dark-accent"
         >
-          Expand all
+          {expandLabel}
         </button>
         <button
           type="button"
           onClick={() => dispatchEvent("shell-anchor-collapse-all")}
           className="rounded-full border border-border/60 px-2 py-0.5 transition hover:border-accent hover:text-text dark:border-dark-border/60 dark:hover:border-dark-accent"
         >
-          Collapse all
+          {collapseLabel}
         </button>
       </div>
     </div>

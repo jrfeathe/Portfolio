@@ -42,12 +42,20 @@ export type ChatbotCopy = {
   fallbackCtaLabel: string;
   captchaTitle: string;
   captchaPrompt: string;
+  captchaServiceUnavailable: string;
+  captchaValidationFailed: string;
   rateLimitTitle: string;
   rateLimitMessage: string;
   rateLimitTryAfter: string;
   thinkingLabel: string;
   moderationTitle: string;
   moderationBody: string;
+  closeLabel: string;
+  referencesLabel: string;
+  contextFactsLabel: string;
+  resizeLabel: string;
+  resizeAriaLabel: string;
+  moderationImageAlt: string;
   sendLabel: string;
 };
 
@@ -170,11 +178,9 @@ export type ChatbotProviderProps = {
   copy: ChatbotCopy;
 };
 
-export function ChatbotProvider({
-  children,
-  locale,
-  copy
-}: ChatbotProviderProps) {
+export function ChatbotProvider(props: ChatbotProviderProps) {
+  const { children, copy } = props;
+  const locale = props.locale;
   const [hydrated, setHydrated] = useState(false);
   const [sessionId, setSessionId] = useState<string>(randomId);
   const [state, setState] = useState<ChatState>({
@@ -496,15 +502,19 @@ function MarkdownMessage({
   );
 }
 
-function ContextFactsPanel({ facts }: { facts: ContextFact[] }) {
+function ContextFactsPanel({ facts, labelTemplate }: { facts: ContextFact[]; labelTemplate: string }) {
   if (!facts.length) {
     return null;
   }
 
+  const label = labelTemplate.includes("{count}")
+    ? labelTemplate.replace("{count}", String(facts.length))
+    : labelTemplate;
+
   return (
     <details className="mt-2 rounded-lg border border-slate-200 bg-white/80 px-3 py-2 text-xs text-text shadow-sm transition dark:border-slate-700 dark:bg-dark-surface dark:text-dark-text">
       <summary className="cursor-pointer select-none font-semibold text-text dark:text-dark-text">
-        Context facts ({facts.length})
+        {label}
       </summary>
       <div className="mt-2 space-y-2">
         {facts.map((fact, index) => (
@@ -524,11 +534,15 @@ function ContextFactsPanel({ facts }: { facts: ContextFact[] }) {
 
 function MessageBubble({
   message,
+  referencesLabel,
+  contextFactsLabel,
   forcedColors,
   highContrast,
   isDark
 }: {
   message: ChatMessage;
+  referencesLabel: string;
+  contextFactsLabel: string;
   forcedColors?: boolean;
   highContrast?: boolean;
   isDark?: boolean;
@@ -571,10 +585,12 @@ function MessageBubble({
         style={userForcedTextStyle}
         contentStyle={userForcedTextStyle}
       />
-      {!isUser && message.contextFacts?.length ? <ContextFactsPanel facts={message.contextFacts} /> : null}
+      {!isUser && message.contextFacts?.length ? (
+        <ContextFactsPanel facts={message.contextFacts} labelTemplate={contextFactsLabel} />
+      ) : null}
       {message.references?.length ? (
         <div className="mt-2 space-y-1 text-xs text-textMuted dark:text-dark-textMuted">
-          <div className="font-semibold text-text dark:text-dark-text">References</div>
+          <div className="font-semibold text-text dark:text-dark-text">{referencesLabel}</div>
           <ul className="ml-3 list-disc space-y-1">
             {message.references.map((ref) => (
               <li key={`${message.id}-${ref.href}`}>
@@ -591,7 +607,7 @@ function MessageBubble({
 }
 
 function ChatFloatingWidget() {
-  const { state, toggle, sendMessage, copy, solveCaptcha } = useChatbot();
+  const { state, toggle, sendMessage, copy, solveCaptcha, locale } = useChatbot();
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [chatSize, setChatSize] = useState<{ width: number; height: number }>({ width: 420, height: 520 });
@@ -864,7 +880,7 @@ function ChatFloatingWidget() {
               type="button"
               onClick={toggle}
               className="flex h-9 w-9 items-center justify-center rounded-full border text-danger transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-danger dark:text-danger"
-              aria-label="Close chat"
+              aria-label={copy.closeLabel}
               onMouseEnter={() => setIsCloseHover(true)}
               onMouseLeave={() => setIsCloseHover(false)}
               style={closeButtonStyle}
@@ -895,6 +911,8 @@ function ChatFloatingWidget() {
                   <MessageBubble
                     key={message.id}
                     message={message}
+                    referencesLabel={copy.referencesLabel}
+                    contextFactsLabel={copy.contextFactsLabel}
                     forcedColors={isForcedColors}
                     highContrast={effectiveHighContrast}
                     isDark={isDarkMode}
@@ -926,7 +944,7 @@ function ChatFloatingWidget() {
                   <div className="overflow-hidden rounded-md border border-border/70 dark:border-dark-border/70">
                     <Image
                       src="/no_fun.jpg"
-                      alt="No Fun Allowed sign"
+                      alt={copy.moderationImageAlt}
                       width={180}
                       height={190}
                       className="h-auto w-[180px] max-w-full object-contain"
@@ -961,6 +979,7 @@ function ChatFloatingWidget() {
                 <LazyHCaptchaWidget
                   siteKey={state.captchaSiteKey}
                   onVerify={handleCaptchaVerify}
+                  locale={locale}
                   disabled={state.pending}
                 />
               </div>
@@ -993,12 +1012,12 @@ function ChatFloatingWidget() {
                   type="button"
                   className="group relative flex h-5 w-5 cursor-sw-resize items-center justify-center rounded border border-accent bg-surface/80 text-accent shadow-sm transition hover:bg-surface hover:text-accent contrast-more:border-accent dark:border-dark-accent dark:bg-dark-surface/80 dark:text-dark-accent dark:hover:text-dark-accent"
                   onMouseDown={handleResizeStart}
-                  aria-label="Resize chat"
+                  aria-label={copy.resizeAriaLabel}
                 >
                   <span className="pointer-events-none text-[12px] leading-none">↙</span>
                   {!isDraggingResize ? (
                     <span className="pointer-events-none absolute -top-8 left-0 z-10 hidden translate-y-1 whitespace-nowrap rounded bg-surface px-2 py-1 text-[11px] text-text shadow-sm ring-1 ring-border group-hover:block dark:bg-dark-surface dark:text-dark-text dark:ring-dark-border">
-                      Resize
+                      {copy.resizeLabel}
                     </span>
                   ) : null}
                 </button>

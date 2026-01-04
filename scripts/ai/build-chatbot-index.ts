@@ -22,19 +22,19 @@ type TechStackEntry = {
 };
 
 type ResumeProfileLink = {
-  label?: string;
-  url?: string;
+  label?: LocalizedString;
+  url?: LocalizedString;
 };
 
 type ResumeBasics = {
-  name?: string;
-  headline?: string;
+  name?: LocalizedString;
+  headline?: LocalizedString;
   profiles?: ResumeProfileLink[];
 };
 
 type ResumeLanguage = {
-  language?: string;
-  proficiency?: string;
+  language?: LocalizedString;
+  proficiency?: LocalizedString;
 };
 
 type ResumeSkills = {
@@ -42,34 +42,34 @@ type ResumeSkills = {
 };
 
 type ResumeExperience = {
-  role?: string;
-  company?: string;
-  location?: string;
-  start?: string;
-  end?: string;
-  summary?: string;
-  highlights?: string[];
+  role?: LocalizedString;
+  company?: LocalizedString;
+  location?: LocalizedString;
+  start?: LocalizedString;
+  end?: LocalizedString;
+  summary?: LocalizedString;
+  highlights?: LocalizedString[];
 };
 
 type ResumeEducation = {
-  institution?: string;
-  credential?: string;
-  status?: string;
-  graduation?: string;
+  institution?: LocalizedString;
+  credential?: LocalizedString;
+  status?: LocalizedString;
+  graduation?: LocalizedString;
   gpa?: number;
-  notes?: string[];
+  notes?: LocalizedString[];
 };
 
 type ResumeValueField = {
-  value?: string;
-  label?: string;
+  value?: LocalizedString;
+  label?: LocalizedString;
 };
 
 type ResumeAvailability = {
   start_date?: ResumeValueField;
   timezone?: {
-    label?: string;
-    collaboration_window?: string;
+    label?: LocalizedString;
+    collaboration_window?: LocalizedString;
   };
 };
 
@@ -171,8 +171,35 @@ const STOP_WORDS = new Set([
   "had", "from", "into", "about", "while", "without", "can", "will", "would", "could",
   "a", "an", "of", "to", "in", "on", "by", "at", "as", "is", "it", "be", "or", "but",
   "not", "than", "then", "so", "if", "when", "what", "which", "who", "whom", "how",
-  "do", "did", "done", "just", "also"
+  "do", "did", "done", "just", "also", "experience"
 ]);
+const SHORT_TOKENS = new Set(["ai", "ui", "ux", "ml", "ci", "cd", "k8s"]);
+const LATIN_TOKEN = /[a-z0-9][a-z0-9+.#-]*/gi;
+const PUNCTUATION_ONLY = /^[\p{P}\p{S}]+$/u;
+const CJK_TOKEN = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u;
+const JAPANESE_DROP_POS = new Set(["助詞", "助動詞", "記号", "フィラー"]);
+const NAME_ALIAS_TOKENS = new Map<string, string[]>([
+  ["ジャク", ["jack"]],
+  ["ジャクさん", ["jack"]],
+  ["夹克", ["jack"]]
+]);
+
+type KuromojiToken = {
+  surface_form?: string;
+  pos?: string;
+  basic_form?: string;
+};
+
+type KuromojiTokenizer = {
+  tokenize: (text: string) => KuromojiToken[];
+};
+
+type JiebaTokenizer = {
+  cut: (sentence: string | Uint8Array, hmm?: boolean | undefined | null) => string[];
+};
+
+let jaTokenizer: KuromojiTokenizer | null = null;
+let zhTokenizer: JiebaTokenizer | null = null;
 
 const AVAILABILITY_DAY_LABELS: Record<Locale, Record<Weekday, string>> = {
   en: {
@@ -258,12 +285,184 @@ function sanitizeText(text: string): string {
     .trim();
 }
 
-function tokenize(text: string): string[] {
-  const normalized = text.toLowerCase().replace(/[^a-z0-9\s]/g, " ");
-  const tokens = normalized
-    .split(/\s+/)
-    .filter((token) => token.length > 2 && !STOP_WORDS.has(token));
-  return Array.from(new Set(tokens));
+function resolveKuromojiDictPath() {
+  const candidates: string[] = [];
+  const seen = new Set<string>();
+
+  const addCandidate = (root: string) => {
+    if (!root || seen.has(root)) return;
+    seen.add(root);
+    candidates.push(root);
+  };
+
+  try {
+    const packageRoot = path.dirname(require.resolve("kuromoji/package.json"));
+    const resolvedRoot = path.isAbsolute(packageRoot)
+      ? packageRoot
+      : path.resolve(process.cwd(), packageRoot);
+    addCandidate(resolvedRoot);
+  } catch {
+    // Ignore and fall back to scanning for node_modules.
+  }
+
+  const addFrom = (start: string) => {
+    let current = start;
+    for (let depth = 0; depth < 6; depth += 1) {
+      addCandidate(path.join(current, "node_modules", "kuromoji"));
+      const parent = path.dirname(current);
+      if (parent === current) break;
+      current = parent;
+    }
+  };
+
+  addFrom(process.cwd());
+
+  for (const root of candidates) {
+    const dictPath = path.join(root, "dict");
+    if (fs.existsSync(path.join(dictPath, "base.dat.gz"))) {
+      return dictPath;
+    }
+  }
+
+  const fallbackRoot = candidates[0] ?? process.cwd();
+  return path.join(fallbackRoot, "dict");
+}
+
+async function initTokenizers() {
+  if (jaTokenizer && zhTokenizer) {
+    return;
+  }
+
+  if (!jaTokenizer) {
+    const kuromoji = require("kuromoji") as {
+      builder: (options: { dicPath: string }) => {
+        build: (cb: (err: Error | null, tokenizer?: KuromojiTokenizer) => void) => void;
+      };
+    };
+    const dicPath = resolveKuromojiDictPath();
+    jaTokenizer = await new Promise<KuromojiTokenizer>((resolve, reject) => {
+      kuromoji.builder({ dicPath }).build((err, tokenizer) => {
+        if (err || !tokenizer) {
+          reject(err ?? new Error("Failed to build kuromoji tokenizer"));
+          return;
+        }
+        resolve(tokenizer);
+      });
+    });
+  }
+
+  if (!zhTokenizer) {
+    const { Jieba } = require("@node-rs/jieba") as {
+      Jieba: { withDict: (dict: Uint8Array) => JiebaTokenizer };
+    };
+    const { dict } = require("@node-rs/jieba/dict") as { dict: Uint8Array };
+    zhTokenizer = Jieba.withDict(dict);
+  }
+}
+
+function addLatinToken(tokens: Set<string>, raw: string) {
+  const normalized = raw.toLowerCase().replace(/^[^a-z0-9]+|[^a-z0-9]+$/g, "");
+  if (!normalized) return;
+
+  const expanded = new Set<string>();
+  expanded.add(normalized);
+
+  if (normalized === "c++" || normalized.includes("c++")) {
+    expanded.add("c++");
+    expanded.add("cpp");
+  }
+  if (normalized === "c#") {
+    expanded.add("csharp");
+  }
+
+  if (normalized.includes(".") || normalized.includes("-")) {
+    normalized.split(/[.-]/).forEach((part) => part && expanded.add(part));
+  }
+
+  const stripped = normalized.replace(/[+#.]/g, "");
+  if (stripped && stripped !== normalized) {
+    expanded.add(stripped);
+  }
+
+  for (const token of expanded) {
+    if (STOP_WORDS.has(token)) continue;
+    if (token.length < 3 && !SHORT_TOKENS.has(token) && !/\d/.test(token)) {
+      continue;
+    }
+    tokens.add(token);
+  }
+}
+
+function addJapaneseTokens(tokens: Set<string>, value: string) {
+  if (!jaTokenizer) {
+    return;
+  }
+
+  const tokenList = jaTokenizer.tokenize(value);
+  for (const token of tokenList) {
+    const surface = token.surface_form?.trim();
+    if (!surface) continue;
+    if (token.pos && JAPANESE_DROP_POS.has(token.pos)) continue;
+    if (PUNCTUATION_ONLY.test(surface)) continue;
+
+    tokens.add(surface);
+
+    const base = token.basic_form?.trim();
+    if (base && base !== "*" && base !== surface) {
+      tokens.add(base);
+    }
+  }
+}
+
+function addChineseTokens(tokens: Set<string>, value: string) {
+  if (!zhTokenizer) {
+    return;
+  }
+
+  const segments = zhTokenizer.cut(value, true);
+  for (const segment of segments) {
+    const cleaned = segment.trim();
+    if (!cleaned) continue;
+    if (PUNCTUATION_ONLY.test(cleaned)) continue;
+    tokens.add(cleaned);
+  }
+}
+
+function addNameAliasTokens(tokens: Set<string>, rawText: string) {
+  if (!CJK_TOKEN.test(rawText)) {
+    return;
+  }
+
+  const hasCjkTokens = Array.from(tokens).some((token) => CJK_TOKEN.test(token));
+  const normalized = hasCjkTokens ? "" : rawText.normalize("NFKC");
+
+  for (const [alias, expansions] of NAME_ALIAS_TOKENS.entries()) {
+    if (!tokens.has(alias) && (!normalized || !normalized.includes(alias))) {
+      continue;
+    }
+    for (const token of expansions) {
+      tokens.add(token);
+    }
+  }
+}
+
+function tokenize(text: string, locale: Locale): string[] {
+  const normalized = sanitizeText(text).toLowerCase();
+  const tokens = new Set<string>();
+
+  for (const match of normalized.matchAll(LATIN_TOKEN)) {
+    addLatinToken(tokens, match[0]);
+  }
+
+  if (locale === "ja") {
+    addJapaneseTokens(tokens, text);
+  } else if (locale === "zh") {
+    addChineseTokens(tokens, text);
+  }
+
+  addNameAliasTokens(tokens, text);
+
+  return Array.from(tokens);
 }
 
 function slugify(value: string): string {
@@ -525,7 +724,7 @@ function buildTechChunks(entry: TechStackEntry, locale: Locale): EmbeddingChunk 
     href: `/${locale}/experience#${entry.id}`,
     sourceType: "tech",
     sourceId: entry.id,
-    tokens: tokenize(text),
+    tokens: tokenize(text, locale),
     text
   };
 }
@@ -553,7 +752,7 @@ function buildProjectChunks(project: ProjectRecord, locale: Locale): EmbeddingCh
     href: `/${locale}/experience#${id}`,
     sourceType: "experience",
     sourceId: id,
-    tokens: tokenize(text),
+    tokens: tokenize(text, locale),
     text
   };
 }
@@ -565,7 +764,7 @@ function buildAvailabilityChunk(availability: AvailabilityData, locale: Locale):
   }
 
   const text = buildAvailabilitySummary(availability, locale);
-  const tokens = tokenize(text);
+  const tokens = tokenize(text, locale);
 
   if (!tokens.length) {
     return null;
@@ -584,24 +783,31 @@ function buildAvailabilityChunk(availability: AvailabilityData, locale: Locale):
 }
 
 function buildResumeProfileChunk(resume: ResumeJson, locale: Locale): EmbeddingChunk | null {
+  const name = localizeString(resume.basics?.name, locale);
+  const headline = localizeString(resume.basics?.headline, locale);
   const profiles = (resume.basics?.profiles ?? [])
-    .map((profile) => profile.label)
+    .map((profile) => localizeString(profile.label, locale))
     .filter((label): label is string => Boolean(label));
   const languages = (resume.skills?.languages_spoken ?? [])
     .map((entry) => {
-      if (!entry?.language) return null;
-      return entry.proficiency ? `${entry.language} (${entry.proficiency})` : entry.language;
+      const language = localizeString(entry.language, locale);
+      if (!language) return null;
+      const proficiency = localizeString(entry.proficiency, locale);
+      return proficiency ? `${language} (${proficiency})` : language;
     })
     .filter((value): value is string => Boolean(value));
-  const eligibility = resume.eligibility?.us_status?.value;
-  const startDate = resume.availability?.start_date?.value;
-  const timezoneLabel = resume.availability?.timezone?.label;
-  const collaborationWindow = resume.availability?.timezone?.collaboration_window;
+  const eligibility = localizeString(resume.eligibility?.us_status?.value, locale);
+  const startDate = localizeString(resume.availability?.start_date?.value, locale);
+  const timezoneLabel = localizeString(resume.availability?.timezone?.label, locale);
+  const collaborationWindow = localizeString(
+    resume.availability?.timezone?.collaboration_window,
+    locale
+  );
 
   const text = sanitizeText(
     [
-      resume.basics?.name,
-      resume.basics?.headline,
+      name,
+      headline,
       profiles.length ? `Profiles: ${profiles.join(", ")}` : null,
       languages.length ? `Languages: ${languages.join(", ")}` : null,
       eligibility ? `Work eligibility: ${eligibility}` : null,
@@ -620,11 +826,11 @@ function buildResumeProfileChunk(resume: ResumeJson, locale: Locale): EmbeddingC
   return {
     id: `resume-profile-${locale}`,
     locale,
-    title: resume.basics?.name || "Resume",
+    title: name || "Resume",
     href: `/resume.pdf`,
     sourceType: "resume",
     sourceId: "resume-profile",
-    tokens: tokenize(text),
+    tokens: tokenize(text, locale),
     text
   };
 }
@@ -637,15 +843,29 @@ function buildResumeExperienceChunks(
   const chunks: EmbeddingChunk[] = [];
 
   for (const entry of experiences ?? []) {
-    const base = slugify(entry.company || entry.role || "experience");
+    const base = slugify(
+      localizeString(entry.company, "en") || localizeString(entry.role, "en") || "experience"
+    );
     const suffix = slugCounts.get(base) ?? 0;
     const id = suffix === 0 ? base : `${base}-${suffix}`;
     slugCounts.set(base, suffix + 1);
 
-    const title = entry.company || entry.role || "Experience";
-    const timeframe = [entry.start, entry.end].filter(Boolean).join(" – ");
+    const title =
+      localizeString(entry.company, locale) ||
+      localizeString(entry.role, locale) ||
+      "Experience";
+    const role = localizeString(entry.role, locale);
+    const location = localizeString(entry.location, locale);
+    const start = localizeString(entry.start, locale);
+    const end = localizeString(entry.end, locale);
+    const summary = localizeString(entry.summary, locale);
+    const highlights = (entry.highlights ?? [])
+      .map((highlight) => localizeString(highlight, locale))
+      .filter((value): value is string => Boolean(value))
+      .join(" ");
+    const timeframe = [start, end].filter(Boolean).join(" – ");
     const text = sanitizeText(
-      [title, entry.role, entry.location, timeframe, entry.summary, (entry.highlights ?? []).join(" ")].filter(Boolean).join(" ")
+      [title, role, location, timeframe, summary, highlights].filter(Boolean).join(" ")
     );
 
     if (!text) continue;
@@ -657,7 +877,7 @@ function buildResumeExperienceChunks(
       href: `/resume.pdf`,
       sourceType: "experience",
       sourceId: id,
-      tokens: tokenize(text),
+      tokens: tokenize(text, locale),
       text
     });
   }
@@ -673,17 +893,36 @@ function buildResumeEducationChunks(
   const chunks: EmbeddingChunk[] = [];
 
   for (const entry of education ?? []) {
-    const base = slugify(entry.institution || entry.credential || "education");
+    const base = slugify(
+      localizeString(entry.institution, "en") ||
+        localizeString(entry.credential, "en") ||
+        "education"
+    );
     const suffix = slugCounts.get(base) ?? 0;
     const id = suffix === 0 ? base : `${base}-${suffix}`;
     slugCounts.set(base, suffix + 1);
 
-    const title = entry.institution || entry.credential || "Education";
-    const metadata = [entry.credential, entry.status, entry.graduation, entry.gpa ? `GPA ${entry.gpa}` : ""]
+    const title =
+      localizeString(entry.institution, locale) ||
+      localizeString(entry.credential, locale) ||
+      "Education";
+    const credential = localizeString(entry.credential, locale);
+    const status = localizeString(entry.status, locale);
+    const graduation = localizeString(entry.graduation, locale);
+    const notes = (entry.notes ?? [])
+      .map((note) => localizeString(note, locale))
+      .filter((value): value is string => Boolean(value))
+      .join(" ");
+    const metadata = [
+      credential,
+      status,
+      graduation,
+      entry.gpa ? `GPA ${entry.gpa}` : ""
+    ]
       .filter(Boolean)
       .join(", ");
     const text = sanitizeText(
-      [title, metadata, (entry.notes ?? []).join(" ")].filter(Boolean).join(" ")
+      [title, metadata, notes].filter(Boolean).join(" ")
     );
 
     if (!text) continue;
@@ -695,7 +934,7 @@ function buildResumeEducationChunks(
       href: `/resume.pdf`,
       sourceType: "education",
       sourceId: id,
-      tokens: tokenize(text),
+      tokens: tokenize(text, locale),
       text
     });
   }
@@ -711,6 +950,7 @@ async function writeJson(filePath: string, payload: unknown) {
 
 async function main() {
   const root = process.cwd();
+  await initTokenizers();
   const dataDir = resolvePath([
     path.join(root, "apps", "site", "data"),
     path.join(root, "data")
@@ -807,7 +1047,7 @@ async function main() {
 
   await writeJson(path.join(aiDir, "chatbot-embeddings.json"), {
     generatedAt: now,
-    tokenizer: "bow-v1",
+    tokenizer: "locale-v2",
     hash: crypto.createHash("sha256").update(JSON.stringify(aggregatedChunks)).digest("hex"),
     chunks: aggregatedChunks
   });

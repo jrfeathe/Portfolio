@@ -1,0 +1,4198 @@
+{
+  "version": 1,
+  "generatedAt": "2026-01-02T19:54:38.119Z",
+  "entries": {
+    "projects.cpp-game-engine.names.proofTitle": {
+      "english": "C++ Game Engine / Game",
+      "hash": "b7cf40e884c5382a18efa1d21a473f42ed97ad15d754a18b96783119b7b75b16"
+    },
+    "projects.cpp-game-engine.names.techStackTitle": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.cpp-game-engine.home.proofDetails": {
+      "english": "Building a C++ game engine and RPG adventure.",
+      "hash": "4c7798c53253d08d42d50c17c2c9b4371e9bcae87b6f2f83b8372db41a006868"
+    },
+    "projects.cpp-game-engine.home.roadmapNextStep": {
+      "english": "C++ Game Engine: Continue work on a private game / engine. An abstract loosely-autobiographical RPG adventure.",
+      "hash": "20cc90900052e85875434288c00cc2fd50a0aaeff2128ddd8d8fd9e2fe9fd326"
+    },
+    "projects.cpp-game-engine.techStack.item.name": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.cpp-game-engine.techStack.experience.title": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.cpp-game-engine.techStack.experience.context": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.cpp-game-engine.techStack.experience.summary": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.cpp-game-engine.experienceEntry.company": {
+      "english": "Indie game development",
+      "hash": "f2af2bb56699a47422ea62b3f39fbf29344f17da5f86c6eea180616d938a20ef"
+    },
+    "projects.cpp-game-engine.experienceEntry.role": {
+      "english": "Fullstack Engineer",
+      "hash": "de4e2b7f2be6b217eb42160bd06c6f3d76e73e5fab25c3a36cdda1c477203081"
+    },
+    "projects.cpp-game-engine.experienceEntry.timeframe": {
+      "english": "Ongoing",
+      "hash": "a90620097624cae57edb193379e4a70f87b34096acc7c5d0b07d957b947a3e22"
+    },
+    "projects.cpp-game-engine.experienceEntry.summary": {
+      "english": "Building a C++ game engine and story driven RPG adventure.",
+      "hash": "322975ba1c7df614afd8eef1051f5ac8ca1f4c636038d3b6d42282199de72177"
+    },
+    "projects.cpp-game-engine.experienceEntry.highlights[0]": {
+      "english": "Implemented core engine loops, asset loading, vertex buffers, and JSON data structures.",
+      "hash": "ce20b9f9be543652026a50a1ed5c5763c1eca9925f0aea9d315a6e3915dcafa4"
+    },
+    "projects.cpp-game-engine.experienceEntry.highlights[1]": {
+      "english": "Experimented with tooling such as OpenGL, SDL, and Dear ImGui.",
+      "hash": "5de53c01f63fa69bd71cae0cc149656dbbe9d6fe52b253ba475cc45fd00ccaf8"
+    },
+    "projects.minecraft-mods.names.proofTitle": {
+      "english": "Minecraft Mods",
+      "hash": "52787ffc16c0aa9a7b48a55101a7cade66fdf7dea1b40c4cd8a5690199db4d3a"
+    },
+    "projects.minecraft-mods.names.techStackTitle": {
+      "english": "Minecraft Mods",
+      "hash": "52787ffc16c0aa9a7b48a55101a7cade66fdf7dea1b40c4cd8a5690199db4d3a"
+    },
+    "projects.minecraft-mods.home.proofDetails": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.minecraft-mods.home.roadmapNextStep": {
+      "english": "Pixelmon Problem: Continue work to backport an update to Minecraft Pixelmon to fix a periodic client-side crash on my private server.",
+      "hash": "76a19aac47c3486baf2e10e3ef684bc684334e0d33712380c650c435ff71632c"
+    },
+    "projects.minecraft-mods.techStack.item.name": {
+      "english": "Minecraft Mods",
+      "hash": "52787ffc16c0aa9a7b48a55101a7cade66fdf7dea1b40c4cd8a5690199db4d3a"
+    },
+    "projects.minecraft-mods.techStack.experience.title": {
+      "english": "Minecraft Mods",
+      "hash": "52787ffc16c0aa9a7b48a55101a7cade66fdf7dea1b40c4cd8a5690199db4d3a"
+    },
+    "projects.minecraft-mods.techStack.experience.context": {
+      "english": "5 years of experience",
+      "hash": "6c85b9555aee7012f221aaaf6e8fa6408d6b8b4402cfcb0252dde3ba65a49cd6"
+    },
+    "projects.minecraft-mods.techStack.experience.summary": {
+      "english": "10+ high performance modded servers.",
+      "hash": "2725b490790da36ee131544b5acba67268afbee0128813346fca32bc5c019abc"
+    },
+    "projects.minecraft-mods.techStack.experience.highlights[0]": {
+      "english": "Backporting of crash fixes to patch a semi-common client side disconnect.",
+      "hash": "fd34810ad039574e4a0903142df8cc07e0e4fc6a3ce6e84a54651aae9e2ac2bf"
+    },
+    "projects.minecraft-mods.techStack.experience.highlights[1]": {
+      "english": "Added new features with custom mods, and optimized modpacks.",
+      "hash": "5c9c016183cec74ee58b3dafd7758d7b0d866c19b64ba4db088d57b92d4be9e8"
+    },
+    "projects.minecraft-mods.experienceEntry.company": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.minecraft-mods.experienceEntry.role": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.minecraft-mods.experienceEntry.timeframe": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.minecraft-mods.experienceEntry.summary": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.portfolio-site.names.proofTitle": {
+      "english": "Portfolio",
+      "hash": "1853eb2e9e5ed2bcc1d03b5a49cf407f2e43851363a8ffd0ce5ab7aa37ca8309"
+    },
+    "projects.portfolio-site.names.techStackTitle": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.portfolio-site.home.proofDetails": {
+      "english": "AI-assisted rapid fullstack development to increase opportunities in job hunting.",
+      "hash": "989045b479aa3baaab7964f83d9041422652acae09a6b8903d44f54a30a9bce4"
+    },
+    "projects.portfolio-site.home.roadmapNextStep": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.portfolio-site.techStack.item.name": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.portfolio-site.techStack.experience.title": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.portfolio-site.techStack.experience.context": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.portfolio-site.techStack.experience.summary": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.portfolio-site.experienceEntry.company": {
+      "english": "Portfolio (this website) - Personal project",
+      "hash": "a6f9e304e20f8213d29aba58b03d80b2818e98e73a268625fad05f1008bf5abe"
+    },
+    "projects.portfolio-site.experienceEntry.role": {
+      "english": "Solo AI-Assisted Fullstack Engineer",
+      "hash": "df8f919d1262e499d0bf2aadef0a7601753935a3d9c37c201d8d4c6127bfade6"
+    },
+    "projects.portfolio-site.experienceEntry.timeframe": {
+      "english": "October - December 2025",
+      "hash": "6a2a737d74d35bfa74fbea0b619ff5383315ae361812697ce0ef02dcc6616e4c"
+    },
+    "projects.portfolio-site.experienceEntry.summary": {
+      "english": "Designed and built a personalized engineering portfolio with localization, accessibility, basic telemetry, and custom UI components.",
+      "hash": "0b56b0e720879c9c084802ed574e12db4a5613edcd839341612734c13a7e32dd"
+    },
+    "projects.portfolio-site.experienceEntry.highlights[0]": {
+      "english": "Instructed Codex to perform complex tasks based on high level documentation and a detailed Work Breakdown Structure.",
+      "hash": "8eedf2f8e9bfeba9d9ecba2fdeaca5e9432b8f91d2833082f97df521ab2b0aa4"
+    },
+    "projects.portfolio-site.experienceEntry.highlights[1]": {
+      "english": "Full en/ja/zh localization with centralized content definitions to keep information consistent.",
+      "hash": "3381f7b672ccd5640f938c6d4630dfda67e125fa81f824840a8f4befda23f8c4"
+    },
+    "projects.portfolio-site.experienceEntry.highlights[2]": {
+      "english": "Built a custom component set with theme/contrast controls and accessibility guardrails.",
+      "hash": "97aa31a87848bef9bea76a3cf935321a19d93e736ce4b4bdc24ddfa4116fbe3e"
+    },
+    "projects.portfolio-site.experienceEntry.highlights[3]": {
+      "english": "Centered performance and observability with critical CSS, edge rendering, and structured data.",
+      "hash": "d16a4919a5d492cc486c923565dd9c9979cb72401850cb49d6131600a001c5d0"
+    },
+    "projects.quester2000.names.proofTitle": {
+      "english": "Quester2000",
+      "hash": "d8705a11c721c8c97d3906b1e6a9d121d95b12e24af700d925f8c954d531206a"
+    },
+    "projects.quester2000.names.techStackTitle": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.quester2000.home.proofDetails": {
+      "english": "A point tracking to-do list tool for managing your work-life balance.",
+      "hash": "6797b7f9628a4fb57d262ebbe4448e641dc2b3c2cf1f61d034a226089e05c8d2"
+    },
+    "projects.quester2000.home.roadmapNextStep": {
+      "english": "Revisit Quester2000: Add more functionality and improve UI. Possible smartwatch integration.",
+      "hash": "5963ffd338d9101b419be564e1349595c01fbbe1aca1aaeea27a64aec7865ace"
+    },
+    "projects.quester2000.techStack.item.name": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.quester2000.techStack.experience.title": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.quester2000.techStack.experience.context": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.quester2000.techStack.experience.summary": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.quester2000.experienceEntry.company": {
+      "english": "Quester2000 - Personal project",
+      "hash": "842914790fb536c2f3ee842f9d8ba4e517b0504d10b51eb93c0931303ac3f798"
+    },
+    "projects.quester2000.experienceEntry.role": {
+      "english": "Fullstack Engineer",
+      "hash": "de4e2b7f2be6b217eb42160bd06c6f3d76e73e5fab25c3a36cdda1c477203081"
+    },
+    "projects.quester2000.experienceEntry.timeframe": {
+      "english": "Ongoing",
+      "hash": "a90620097624cae57edb193379e4a70f87b34096acc7c5d0b07d957b947a3e22"
+    },
+    "projects.quester2000.experienceEntry.summary": {
+      "english": "Created a point tracking to-do list tool that promotes self discipline and rewarding.",
+      "hash": "9449afc9664705afc789438a0eb7b9c86779fc1ce8e75902a7aa46316bdb07d7"
+    },
+    "projects.quester2000.experienceEntry.highlights[0]": {
+      "english": "Designed a database schema for storing user credentials, custom quests, and custom items.",
+      "hash": "98ab1879eab69221444f229bc2c264d945e07d5a1ca23ec218c0f6cde1a9a345"
+    },
+    "projects.quester2000.experienceEntry.highlights[1]": {
+      "english": "Implemented a flexible frontend UI, designed to work on a variety of systems.",
+      "hash": "14ed1f28e306f8eaa01d7b269f9a8430684f335faf8ff40adc559cfd49954249"
+    },
+    "projects.quester2000.experienceEntry.highlights[2]": {
+      "english": "Became familiar with modern tooling used to create a modern web app.",
+      "hash": "31a48a5e8597137257302ff88e384b2fdf3b5086dba7982cbea06627a5053df9"
+    },
+    "projects.rollodex.names.proofTitle": {
+      "english": "Rollodex",
+      "hash": "0cd45410eb208a33230bb0218f56e378edb2987c4b49c035c05011fb4d8ba57e"
+    },
+    "projects.rollodex.names.techStackTitle": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.rollodex.home.proofDetails": {
+      "english": "Co-led fullstack development of a contact management web application.",
+      "hash": "cae905031501688884eb76a4279de8cd9ed81f9fd9ef2c25a59a31e22a0606b2"
+    },
+    "projects.rollodex.home.roadmapNextStep": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.rollodex.techStack.item.name": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.rollodex.techStack.experience.title": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.rollodex.techStack.experience.context": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.rollodex.techStack.experience.summary": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.rollodex.experienceEntry.company": {
+      "english": "Rollodex for Appy.yo",
+      "hash": "ed2ab3bffd587bf690e03b9e09057d48645a13a0d1627b1f2b6372bf38a9568a"
+    },
+    "projects.rollodex.experienceEntry.role": {
+      "english": "Co-lead Fullstack Developer",
+      "hash": "aa8256690b2f816aa857521657bdcaa007d1ec106a107f1097c7a17a8580ac33"
+    },
+    "projects.rollodex.experienceEntry.timeframe": {
+      "english": "2024–2025 (capstone)",
+      "hash": "a8f2b0ad8c58291a87b49976f9d60bfaffd7733189d0685919d05014f119e678"
+    },
+    "projects.rollodex.experienceEntry.summary": {
+      "english": "Co-led a remote fullstack development team, developing a contact management tool. Took ownership of API/data integrations and accessibility, while maintaining the repo as Git master across two-week Scrum releases.",
+      "hash": "0a757c4ed6242bf6a414bb3c5b2e3d3a31577106ebb42a62339de13789297d0b"
+    },
+    "projects.rollodex.experienceEntry.highlights[0]": {
+      "english": "Designed APIs and database schemas, templated forms, and rebuilt search/filter logic & UI.",
+      "hash": "5eee1ea1c5c510281f20d07023b20f99c31f9468365dda89c21fdab4abbbcd33"
+    },
+    "projects.rollodex.experienceEntry.highlights[1]": {
+      "english": "Cut search latency from ~5s to ~200ms while maintaining repo practices, docs, and two-week sprints.",
+      "hash": "53526bd38d184b5ae8d363a4bf72d99ef40bb653034b2b61dc4da09e82c6c49b"
+    },
+    "projects.ser321-ta.names.proofTitle": {
+      "english": "Teaching Assistant",
+      "hash": "068dbda1724d5e28c785546d42479ab4858bf44dd549667337b94442dfffa0cb"
+    },
+    "projects.ser321-ta.names.techStackTitle": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.ser321-ta.home.proofDetails": {
+      "english": "Supported a high level Distributed Software Systems course as a teaching assistant.",
+      "hash": "6ce51663ca91b0103aeb9668599a2dec015b41d7192d74363968e035e15d504c"
+    },
+    "projects.ser321-ta.home.roadmapNextStep": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.ser321-ta.techStack.item.name": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.ser321-ta.techStack.experience.title": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.ser321-ta.techStack.experience.context": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.ser321-ta.techStack.experience.summary": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "projects.ser321-ta.experienceEntry.company": {
+      "english": "SER 321 at Arizona State University",
+      "hash": "5876bf1d8c791013d745a778ca664812d90a829a0006976b4393c8e0b298eb56"
+    },
+    "projects.ser321-ta.experienceEntry.role": {
+      "english": "Undergraduate Teaching Assistant for Distributed Software Systems course",
+      "hash": "f8cb8c99594fb4fc4ba6e51ef08a1e3c733fe719e0facd5c1633b105877a6c04"
+    },
+    "projects.ser321-ta.experienceEntry.timeframe": {
+      "english": "March – May 2024",
+      "hash": "a0c786bc530ffbc9fcec74549244377e2acf6004c0af54c2798efef6c63f25c8"
+    },
+    "projects.ser321-ta.experienceEntry.summary": {
+      "english": "Designed and coded an assignment; a “Wheel of Fortune” Java server supporting a dynamic amount of concurrent clients. Mentored students in designing distributed systems hosted on AWS and debugging client-server architectures.",
+      "hash": "e08156059b1d84a83fd213c07b77db955dcbfa759aa2ab0b6020aa38ecead8d3"
+    },
+    "projects.ser321-ta.experienceEntry.highlights[0]": {
+      "english": "Actively answered student questions on Slack discussion boards, and hosted office hours once per week.",
+      "hash": "e239000d288ea16326ab0fd9309126244a5ab103676118992e570f94999c3471"
+    },
+    "projects.ser321-ta.experienceEntry.highlights[1]": {
+      "english": "Assisted in debugging complex issues with code logic, networking, threading, AWS deployment, Ubuntu, and virtualization.",
+      "hash": "f854e86a0a50d3ac89563fd92f012662deb4f1c60e0faa64bcbe1e8bde812da1"
+    },
+    "projects.stellaris-mods.names.proofTitle": {
+      "english": "Stellaris Modding",
+      "hash": "940b7e1002159bdc7b293d54ce5002753a06ca8339a29636af57b655eb7ea3ed"
+    },
+    "projects.stellaris-mods.names.techStackTitle": {
+      "english": "Stellaris Mods",
+      "hash": "e125d9b520beef3864dd33938363288759d4274598dbd394327f8f6f5b6e463d"
+    },
+    "projects.stellaris-mods.home.proofDetails": {
+      "english": "Upgraded the memory management library for Stellaris to boost performance.",
+      "hash": "be07e6ed3057e019597d8e300c7dabb39c1df5ce8d020d6055a2536c111b5412"
+    },
+    "projects.stellaris-mods.home.roadmapNextStep": {
+      "english": "The Four Horsemen: Develop a new mod for Stellaris to spawn an end-game crisis, compatible with Gigastructural Engineering.",
+      "hash": "990e4eace1cc7f3f54977758494e3231e53c4c25c0b218d029517c390d6b8e84"
+    },
+    "projects.stellaris-mods.techStack.item.name": {
+      "english": "Stellaris Mods",
+      "hash": "e125d9b520beef3864dd33938363288759d4274598dbd394327f8f6f5b6e463d"
+    },
+    "projects.stellaris-mods.techStack.experience.title": {
+      "english": "Stellaris Mods",
+      "hash": "e125d9b520beef3864dd33938363288759d4274598dbd394327f8f6f5b6e463d"
+    },
+    "projects.stellaris-mods.techStack.experience.context": {
+      "english": "3 years of experience",
+      "hash": "9acf58ee81cf3729d030c4a720563421182863302c7ef7532657cfd6e47ca734"
+    },
+    "projects.stellaris-mods.techStack.experience.summary": {
+      "english": "Repeated bandaging of a broken modpack to encourage a desired storyline.",
+      "hash": "745494ad1a5c20ddf6042e3a90ec0e997ed06a18282684b4c2b491d155556392"
+    },
+    "projects.stellaris-mods.techStack.experience.highlights[0]": {
+      "english": "Built custom Stellaris mechanics and memory optimizing scripts.",
+      "hash": "75740c5289ccff2c09283c482cafdb75a6e9e62cbc748e6509b1e3c12fff0164"
+    },
+    "projects.stellaris-mods.experienceEntry.company": {
+      "english": "Freelance / Mods",
+      "hash": "264eab9e52aee1693f3fdf676e9e16baccb45daf90b13bd6cd854527580b4676"
+    },
+    "projects.stellaris-mods.experienceEntry.role": {
+      "english": "Mod developer (Stellaris & Minecraft)",
+      "hash": "08590e206fb617326410b375a85b3a8b4f034f245ba32956335d1d22e94b4c0b"
+    },
+    "projects.stellaris-mods.experienceEntry.timeframe": {
+      "english": "Ongoing",
+      "hash": "a90620097624cae57edb193379e4a70f87b34096acc7c5d0b07d957b947a3e22"
+    },
+    "projects.stellaris-mods.experienceEntry.summary": {
+      "english": "Maintain a handful of Minecraft and Stellaris mods, plus high performance heavily modded private servers.",
+      "hash": "2b024342e64c34c23edaca4e65197d1f276c553bc4fbd8191591db3b1bccaf44"
+    },
+    "projects.stellaris-mods.experienceEntry.highlights[0]": {
+      "english": "Built custom mod features and balance tweaks for Stellaris and Minecraft.",
+      "hash": "f10d251b58eadda1f3d758ee024aa35422148c3bc02254d6538f647529dabf2a"
+    },
+    "projects.stellaris-mods.experienceEntry.highlights[1]": {
+      "english": "Operate game servers and customize modpacks with ongoing profiling and tuning.",
+      "hash": "794f7b697582d1382eda8953d0f16526634babe443ba47ec32a8d886f3490481"
+    },
+    "techStackDetails.react.title": {
+      "english": "React",
+      "hash": "01fad993ff61aca9a1f2f07100c95eb1559d8b6440a00cb974a92810a6b5a2dc"
+    },
+    "techStackDetails.react.context": {
+      "english": "2 years of experience",
+      "hash": "806d7e0cc5792c324ad8ad6b9bf5406a49a7dde9115ed1d9713f9b6465ef7394"
+    },
+    "techStackDetails.react.summary": {
+      "english": "Frontend design for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
+      "hash": "bd9e4e518612632bf2dd405e1fd93c707c4ec1d24e8cf5f724cfbf1c631c504d"
+    },
+    "techStackDetails.react.highlights[0]": {
+      "english": "Rollodex - Implemented various components to build templated forms and redesign search/filter UI.",
+      "hash": "a0d38fd0b56bf59e47649261c42fefa60491f247b90668d4b32f6818581aa291"
+    },
+    "techStackDetails.react.highlights[1]": {
+      "english": "Portfolio - Implemented a wide suite of custom UI components.",
+      "hash": "ba264799cd8886dfecb73ae3b163919af60c98f9364903f0addb59968e23e243"
+    },
+    "techStackDetails.javascript.title": {
+      "english": "JavaScript",
+      "hash": "b27ad06d123c6145fba7e9217a4cfbf2488b4743810ed8c8ff14ad01a5bbe515"
+    },
+    "techStackDetails.javascript.context": {
+      "english": "3 years of experience",
+      "hash": "9acf58ee81cf3729d030c4a720563421182863302c7ef7532657cfd6e47ca734"
+    },
+    "techStackDetails.javascript.summary": {
+      "english": "Backend logic for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
+      "hash": "a3f39a67db94f4288b676290a8eba9bf9ebb39f937a4711e88d273df242e0d4c"
+    },
+    "techStackDetails.javascript.highlights[0]": {
+      "english": "Built client/server logic to power complex features, such as menu interfaces, search filtering, and form templates.",
+      "hash": "05ca52ee75e5fa396154c6926771f2b3ee042cba6ac99e4c9bb9ccbbe45bb503"
+    },
+    "techStackDetails.typescript.title": {
+      "english": "TypeScript",
+      "hash": "ed0504f70a48ffe9ed17e7ddee02a72a9c8af602aee1f7ce11853975ce911733"
+    },
+    "techStackDetails.typescript.context": {
+      "english": "6 months of experience",
+      "hash": "39060a13b00b124677526ecc30d098dea56fccdef0c0ee6ad31f8bad82a4f752"
+    },
+    "techStackDetails.typescript.summary": {
+      "english": "Backend logic for Software Portfolio (this website), Quester2000.",
+      "hash": "4f526f273fb332e2cb667bf56babde7df51d7f1c4d26afb52718c4ea442c0bdc"
+    },
+    "techStackDetails.typescript.highlights[0]": {
+      "english": "Built web apps meant to run on cloud services.",
+      "hash": "35d10a276903a706b4bf8b428739b86e12260bfa939adc99b68a672c32ec6814"
+    },
+    "techStackDetails.codex.title": {
+      "english": "Codex",
+      "hash": "616efbe96852d8c957d6be5634ed41e871cf1ecf134c9b9693f614daeb15137c"
+    },
+    "techStackDetails.codex.context": {
+      "english": "6 months of experience",
+      "hash": "39060a13b00b124677526ecc30d098dea56fccdef0c0ee6ad31f8bad82a4f752"
+    },
+    "techStackDetails.codex.summary": {
+      "english": "AI-assisted development for Software Portfolio (this website), Quester2000",
+      "hash": "a9401c465c7b0c8c5b501f85f17511fa2947be672810e9a6b988eaf3c02bb8c6"
+    },
+    "techStackDetails.codex.highlights[0]": {
+      "english": "Instructed Codex to perform complex tasks based on high level documentation and a detailed Work Breakdown Structure.",
+      "hash": "8eedf2f8e9bfeba9d9ecba2fdeaca5e9432b8f91d2833082f97df521ab2b0aa4"
+    },
+    "techStackDetails.codex.highlights[1]": {
+      "english": "Broke tasks into small chunks that Codex could handle, and verified stability of solutions.",
+      "hash": "09dd46d66cfe13d67ff6a70861f5a6be876a319624d23b0b35b2fbf034130068"
+    },
+    "techStackDetails.java.title": {
+      "english": "Java",
+      "hash": "c1ba60ce13586503a21a05e9ef0bb959f1ba74a1d37bcfcbf5fc6bfb548f684d"
+    },
+    "techStackDetails.java.context": {
+      "english": "7 years of experience",
+      "hash": "5e71f0757965e4f56aae012f54fbcd98132c568b625b186a85d7a53a23e3a951"
+    },
+    "techStackDetails.java.summary": {
+      "english": "Distributed systems teaching, Minecraft modding, Various courses/projects.",
+      "hash": "5530a33d18c78943d1f1d634f4de34564cddb960629fd7286d74bde4579690d4"
+    },
+    "techStackDetails.java.highlights[0]": {
+      "english": "Built a Wheel of Fortune Java client/server assignment for students.",
+      "hash": "ba5d7973ce3bc468643f6ad55c5cf57b53286acd364c51a5e525f1ba7f7ed66c"
+    },
+    "techStackDetails.java.highlights[1]": {
+      "english": "Decompiled code to patch a crash and reassemble.",
+      "hash": "4c03c2c8ac44a1157dd74612731c2c11de3ed41679b893997895f34986de38b0"
+    },
+    "techStackDetails.cpp.title": {
+      "english": "C++",
+      "hash": "f1deb75fa21d3c47a6e7a45967b79fad2d053947066dc95322c5bcee1e9fe21c"
+    },
+    "techStackDetails.cpp.context": {
+      "english": "7 years of experience",
+      "hash": "5e71f0757965e4f56aae012f54fbcd98132c568b625b186a85d7a53a23e3a951"
+    },
+    "techStackDetails.cpp.summary": {
+      "english": "Core language foundation. Used for custom game engine and many small projects.",
+      "hash": "165984db512f12bbf95ebcbe5e4cb4e9c64f7ccf93a0665be8e5bb9c4a6da0c2"
+    },
+    "techStackDetails.cpp.highlights[0]": {
+      "english": "Developed a custom game engine for a current project. (Limited information disclosure)",
+      "hash": "59604e1d17ab40435e9c1c78bfd8e6ea0fea0d396219517c75b18254f7f28d16"
+    },
+    "techStackDetails.cpp.highlights[1]": {
+      "english": "The language that I first learned and my top preference.",
+      "hash": "e39ef31542c56736f3ae74bae1294b6eeb6f5bf2cffa532b2487f391afddfb20"
+    },
+    "techStackDetails.postgresql.title": {
+      "english": "PostgreSQL",
+      "hash": "cc52d03280b7034c8e3653d2748ebd489a873ef4bbc89cb187fbfcabfbbf6873"
+    },
+    "techStackDetails.postgresql.context": {
+      "english": "2 years of experience",
+      "hash": "806d7e0cc5792c324ad8ad6b9bf5406a49a7dde9115ed1d9713f9b6465ef7394"
+    },
+    "techStackDetails.postgresql.summary": {
+      "english": "Rollodex, Quester2000",
+      "hash": "fa62191934e4bf695e5621b46e972a823bfee94712b3795fc4d48e579e2e950f"
+    },
+    "techStackDetails.postgresql.highlights[0]": {
+      "english": "Modeled contact/search data to support fast filtering.",
+      "hash": "935de62d0b5213285b5f10e392a6ea53ab2de7fb39ee1135111eaf13492993a5"
+    },
+    "techStackDetails.postgresql.highlights[1]": {
+      "english": "Stored app data for user accounts.",
+      "hash": "0f6d6a5ee921926f73b542c3f223269b6178f68f97f7db1f7326df38adc07354"
+    },
+    "techStackDetails.aws.title": {
+      "english": "AWS",
+      "hash": "32fd72a0e0746043a1cce59f2e840490df6b9ea49e9bbcade136da5e8173d6c0"
+    },
+    "techStackDetails.aws.context": {
+      "english": "2 years of experience",
+      "hash": "806d7e0cc5792c324ad8ad6b9bf5406a49a7dde9115ed1d9713f9b6465ef7394"
+    },
+    "techStackDetails.aws.summary": {
+      "english": "Server deployment for various projects",
+      "hash": "c74116d22b9791f77763b89958d8bf21dceb374bc67d98e5c8b4d7511843fcea"
+    },
+    "techStackDetails.aws.highlights[0]": {
+      "english": "Used to host client-server applications for SER321.",
+      "hash": "162e516e7c60924eb4cb4a155505d5abd39b71c6d1591faf0c9584295c09f97c"
+    },
+    "techStackDetails.c.title": {
+      "english": "C",
+      "hash": "6b23c0d5f35d1b11f9b683f0b0a617355deb11277d91ae091d399c655b87940d"
+    },
+    "techStackDetails.c.context": {
+      "english": "3 years of experience",
+      "hash": "9acf58ee81cf3729d030c4a720563421182863302c7ef7532657cfd6e47ca734"
+    },
+    "techStackDetails.c.summary": {
+      "english": "Coursework for various courses.",
+      "hash": "fe5da398dbb46d3ed49f1a85f00b15bc590df6ef0397324c4d3a732067d4184d"
+    },
+    "techStackDetails.c.highlights[0]": {
+      "english": "SER334 - Built a Loadable Kernel Module that uses Linux data structures to display details about the processes executing in the kernel.",
+      "hash": "b077871fd127273cae15f0ab6e19328443a627cebd94bb51c7930901712ec597"
+    },
+    "techStackDetails.c.highlights[1]": {
+      "english": "Applied scripting for various topics such as thread/compiler optimization, page replacement, image processing, and scheduling algorithms.",
+      "hash": "05b1cb9772287f5140bc00041e84ad09b479bc5ea62a032aaf03f3dd94e4d924"
+    },
+    "techStackDetails.html.title": {
+      "english": "HTML",
+      "hash": "07239dbd2a1a1dd793be9062a205eb6be88c36af3fe7e4d6426aea45aa253815"
+    },
+    "techStackDetails.html.context": {
+      "english": "5 years of experience",
+      "hash": "6c85b9555aee7012f221aaaf6e8fa6408d6b8b4402cfcb0252dde3ba65a49cd6"
+    },
+    "techStackDetails.html.summary": {
+      "english": "Web design for Web Development & Design Foundations coursework, Software Portfolio (this website), Rollodex Capstone, Quester2000.",
+      "hash": "3e52e8e6c2ed5300d79090b90750fb5327faeba6c84a354d253623cd677199b0"
+    },
+    "techStackDetails.html.highlights[0]": {
+      "english": "Built legacy style websites using HTML and CSS to display information and navigate between pages.",
+      "hash": "9939c6496d7404a9dfa56b4a5d1384962c7cc7d8fac3ec323a3956908ab4c14a"
+    },
+    "techStackDetails.html.highlights[1]": {
+      "english": "Integrated with JavaScript, TypeScript, and React to build complex web apps.",
+      "hash": "deaa1104f604c40aeb6d25e6ae9ccda3c2e7ab033ef8e24bb4f72fdb089861cb"
+    },
+    "techStackDetails.css.title": {
+      "english": "CSS",
+      "hash": "b581e46042cbfbb0af4542a858079a84fd3ae98e5563f615710191d5b3597680"
+    },
+    "techStackDetails.css.context": {
+      "english": "5 years of experience",
+      "hash": "6c85b9555aee7012f221aaaf6e8fa6408d6b8b4402cfcb0252dde3ba65a49cd6"
+    },
+    "techStackDetails.css.summary": {
+      "english": "UI design for Software Portfolio (this website), Rollodex Capstone, Quester2000, Various courses.",
+      "hash": "1b25499b1faf8329936aafcbeef3b168d3cf41fa6a5e91b5d611f482111fdd09"
+    },
+    "techStackDetails.css.highlights[0]": {
+      "english": "Created themes for web applications to customize and improve accessibility.",
+      "hash": "fa3c58f414b2ac2adc71800deaf614f07c5f3714bca3b886ffcd30fb5de7b44f"
+    },
+    "techStackDetails.linux.title": {
+      "english": "Linux",
+      "hash": "4828e60247c1636f57b7446a314e7f599c12b53d40061cc851a1442004354fed"
+    },
+    "techStackDetails.linux.context": {
+      "english": "7 years of experience",
+      "hash": "5e71f0757965e4f56aae012f54fbcd98132c568b625b186a85d7a53a23e3a951"
+    },
+    "techStackDetails.linux.summary": {
+      "english": "My daily driver kernel, set up on many systems. Also used for various courses.",
+      "hash": "c3b5ea70c0a38475b5e2511d17d80140c2d47e0a458da8959c6c9ae3b2000cd1"
+    },
+    "techStackDetails.linux.highlights[0]": {
+      "english": "Actively maintaining Nextcloud and game servers with backups and monitoring.",
+      "hash": "216e5b08b00804e73923a6b15fa35fb06a95d080e375f4324148c1306d6c06df"
+    },
+    "techStackDetails.linux.highlights[1]": {
+      "english": "Configured VFIO and kernel tuning for GPU passthrough to VMs.",
+      "hash": "db0f345bbc0a3008541509d589dde393ad3357f5405b1870a02b49e3d3859ec9"
+    },
+    "techStackDetails.sql.title": {
+      "english": "SQL",
+      "hash": "a7056a455639d1c7deec82ee787db24a0c1878e2792b4597709f0facf7cc7b35"
+    },
+    "techStackDetails.sql.context": {
+      "english": "2 years of experience",
+      "hash": "806d7e0cc5792c324ad8ad6b9bf5406a49a7dde9115ed1d9713f9b6465ef7394"
+    },
+    "techStackDetails.sql.summary": {
+      "english": "Rollodex, SER322 - Database Management course",
+      "hash": "29dee2202e1e1281f6d64f3b2204c01f601609bc2961e2f539062fdd6fe87240"
+    },
+    "techStackDetails.sql.highlights[0]": {
+      "english": "Designed Retail Inventory Management system for SER322.",
+      "hash": "1ff42a3336c6cb1ab45df0e7bbbca1188786b9449c9d91ac5901dcb5484fb66c"
+    },
+    "techStackDetails.sql.highlights[1]": {
+      "english": "Used queries to troubleshoot and speed up search for Rollodex.",
+      "hash": "53b541c009db3be1fc1b5d86aa0fe695683ed24aa4c3b35968d4b5b2c9e7abcd"
+    },
+    "techStackDetails.json.title": {
+      "english": "JSON",
+      "hash": "db1a21a0bc2ef8fbe13ac4cf044e8c9116d29137d5ed8b916ab63dcb2d4290df"
+    },
+    "techStackDetails.json.context": {
+      "english": "5 years of experience",
+      "hash": "6c85b9555aee7012f221aaaf6e8fa6408d6b8b4402cfcb0252dde3ba65a49cd6"
+    },
+    "techStackDetails.json.summary": {
+      "english": "Modding, Game Engine, Various courses.",
+      "hash": "b57bdc70fb402392b07ba10d26a14212227b779d4fed7ac372dc2af5d1aa2bfc"
+    },
+    "techStackDetails.json.highlights[0]": {
+      "english": "Stored complex application objects to file, and read them back upon application reload.",
+      "hash": "41be8fe03a2f1a074a0a26c8bf588d98a14b10ed6115af4d2ee8363523cab30d"
+    },
+    "techStackDetails.json.highlights[1]": {
+      "english": "Commonly used when modding Stellaris and Minecraft.",
+      "hash": "275ab485f53ba51b5c4c6fb7a6d487b451ff014bead00a00664736fd5ebf1fec"
+    },
+    "techStackDetails.bash.title": {
+      "english": "Bash",
+      "hash": "d1e9567da9a8a4b0c43da0791da1d2594cf5d7b78547fea132d06bccc1b06091"
+    },
+    "techStackDetails.bash.context": {
+      "english": "5 years of experience",
+      "hash": "6c85b9555aee7012f221aaaf6e8fa6408d6b8b4402cfcb0252dde3ba65a49cd6"
+    },
+    "techStackDetails.bash.summary": {
+      "english": "Local tooling on Linux systems",
+      "hash": "2c3531706a179f83c1019271f920424cdfdaae8e52a9df9e7837680b6556a8bb"
+    },
+    "techStackDetails.bash.highlights[0]": {
+      "english": "Scripting to modify various behaviors of Linux machines.",
+      "hash": "8491e2ce8a7dfb084db4c277187db5ef55ade8fe4ebec7284f7a12badfe8056b"
+    },
+    "techStackDetails.bash.highlights[1]": {
+      "english": "Used heavily during application development.",
+      "hash": "7ef674746a84a88dc8ab97525c0612178de4405f07c901f46d90c989e261e69e"
+    },
+    "techStackDetails.xml.title": {
+      "english": "XML",
+      "hash": "40658e9af8fd92229ae162dc98547cb75eb96999edd7dc214582ac6c23ef6585"
+    },
+    "techStackDetails.xml.context": {
+      "english": "5 years of experience",
+      "hash": "6c85b9555aee7012f221aaaf6e8fa6408d6b8b4402cfcb0252dde3ba65a49cd6"
+    },
+    "techStackDetails.xml.summary": {
+      "english": "Game mod configuration, Various courses",
+      "hash": "700200925828c8b8b1407ffc3f38df24dc178ea055f101bff8079feff75ae2d5"
+    },
+    "techStackDetails.xml.highlights[0]": {
+      "english": "Patched Minecraft config XMLs to optimize servers and align with modpack updates.",
+      "hash": "946adcd6bec10476376aedce8c3df2c163a960f3a492ab4350b00ef793d8f277"
+    },
+    "techStackDetails.xml.highlights[1]": {
+      "english": "Deploy virtual machines and optimize them.",
+      "hash": "56209b89ade38a43d91e2ea7a04f8884cbf9ca5d08cb739927f3bb379cef9b8a"
+    },
+    "techStackDetails.kvm.title": {
+      "english": "KVM",
+      "hash": "d27c7d202f214eaaa42894b132c1d4d7d778d8c297c2da06d54cec5d8dcb61c3"
+    },
+    "techStackDetails.kvm.context": {
+      "english": "4 years of experience",
+      "hash": "8a4d8c417422365839b71ad83f597b2f84c26de4d30b166d98cd18eb42e6d759"
+    },
+    "techStackDetails.kvm.summary": {
+      "english": "Virtualize Windows on Linux systems",
+      "hash": "394dec99b56609bcf20da597df7631eaf5711e5c378845234ccb93357975be87"
+    },
+    "techStackDetails.kvm.highlights[0]": {
+      "english": "Set up Windows 10 virtual machines optimized for gaming, with GPU passthrough.",
+      "hash": "c81738cbe21513503628c1533c3e3e48d493f98ffd2edda5b68a2b03e39aa5e2"
+    },
+    "techStackDetails.kvm.highlights[1]": {
+      "english": "Used with QEMU.",
+      "hash": "81e54ea1c4b1794df8f25a87674873bdceb966340e8cefde7c6414dc6e2b05d5"
+    },
+    "techStackDetails.qemu.title": {
+      "english": "QEMU",
+      "hash": "8620862ff8ffec9fe564de3473f7214cd48e92f3dac93e253f4c4d695bff7baf"
+    },
+    "techStackDetails.qemu.context": {
+      "english": "4 years of experience",
+      "hash": "8a4d8c417422365839b71ad83f597b2f84c26de4d30b166d98cd18eb42e6d759"
+    },
+    "techStackDetails.qemu.summary": {
+      "english": "Virtualize Windows on Linux systems",
+      "hash": "394dec99b56609bcf20da597df7631eaf5711e5c378845234ccb93357975be87"
+    },
+    "techStackDetails.qemu.highlights[0]": {
+      "english": "Set up Windows 10 virtual machines optimized for gaming, with GPU passthrough.",
+      "hash": "c81738cbe21513503628c1533c3e3e48d493f98ffd2edda5b68a2b03e39aa5e2"
+    },
+    "techStackDetails.qemu.highlights[1]": {
+      "english": "Used with KVM.",
+      "hash": "40e0c1dc7a4d691e4734bb444a14a2b13c4c88684e322246899ad6e3ffb91400"
+    },
+    "techStackDetails.lua.title": {
+      "english": "Lua",
+      "hash": "b897ce727082286d99b851bcc54df589cf3704f56d3cc76e8b389e7f336e5735"
+    },
+    "techStackDetails.lua.context": {
+      "english": "2 years of experience",
+      "hash": "806d7e0cc5792c324ad8ad6b9bf5406a49a7dde9115ed1d9713f9b6465ef7394"
+    },
+    "techStackDetails.lua.summary": {
+      "english": "Stellaris Modding",
+      "hash": "940b7e1002159bdc7b293d54ce5002753a06ca8339a29636af57b655eb7ea3ed"
+    },
+    "techStackDetails.lua.highlights[0]": {
+      "english": "Built gameplay scripts and UI hooks for custom content.",
+      "hash": "9351c48faa4014dedb90ed8176842456b4eb5504253e9b21370f98370f424a85"
+    },
+    "techStackDetails.lua.highlights[1]": {
+      "english": "Iterated on mod changes to improve balance.",
+      "hash": "f2d4dacf0388a5de07a08488ac8daa1484ad66bf4af843947ab1453863784aec"
+    },
+    "techStackDetails.prisma.title": {
+      "english": "Prisma",
+      "hash": "e4b88de23274e99ca98b822e9f304564c85d96333a5d35bb218b95654a03c7ab"
+    },
+    "techStackDetails.prisma.context": {
+      "english": "2 years of experience",
+      "hash": "806d7e0cc5792c324ad8ad6b9bf5406a49a7dde9115ed1d9713f9b6465ef7394"
+    },
+    "techStackDetails.prisma.summary": {
+      "english": "Rollodex, Quester2000",
+      "hash": "fa62191934e4bf695e5621b46e972a823bfee94712b3795fc4d48e579e2e950f"
+    },
+    "techStackDetails.prisma.highlights[0]": {
+      "english": "Managed schema migrations and models for database structure.",
+      "hash": "d6456a8445087ecd87691f69c419e3093b4e2653ca56242fe4fec76b9d93c29f"
+    },
+    "techStackDetails.oracle-cloud.title": {
+      "english": "Oracle Cloud",
+      "hash": "5a6de57d969c303301a26ecaf579731df1f3718804ecd2f333b754fae9b689cf"
+    },
+    "techStackDetails.oracle-cloud.context": {
+      "english": "2 years of experience",
+      "hash": "806d7e0cc5792c324ad8ad6b9bf5406a49a7dde9115ed1d9713f9b6465ef7394"
+    },
+    "techStackDetails.oracle-cloud.summary": {
+      "english": "WireGuard experiments with intermediate IP",
+      "hash": "d4a4e86d743564112cf60cbb9f5ae987054fcbf561a6fff1874670dc5be85db4"
+    },
+    "techStackDetails.oracle-cloud.highlights[0]": {
+      "english": "Set up a ping point to create a secure connection to my home server.",
+      "hash": "ea55dd33aabc3759265f43193b57a5ff9605ccd6a85db42eb911136ff084ba72"
+    },
+    "resume.basics.name": {
+      "english": "Jack R. Featherstone",
+      "hash": "0bd68c05e0db06940ecb42e5d1c71af9b9680faf5b327ae9548aa2f586151203"
+    },
+    "resume.basics.headline": {
+      "english": "Upstate NY engineer focused on fullstack development, reliable services, and accessibility",
+      "hash": "ddc9f67895daac516409e00c32212811a65018f92eaaee45540d5bb5710948be"
+    },
+    "resume.basics.profiles[0].label": {
+      "english": "LinkedIn",
+      "hash": "dd84425b72da12c6c828339ce814342daceac705b50d42e377e1acebf8f2320b"
+    },
+    "resume.basics.profiles[0].url": {
+      "english": "https://linkedin.com/in/jrfeathe",
+      "hash": "521bd8d2109085d06a7575ce9d7381e0efaa35d50a6e223329ab9824ecf81641"
+    },
+    "resume.basics.profiles[1].label": {
+      "english": "GitHub",
+      "hash": "f911e414cf6bdfc595532ab166b5ba0f63d73c021452fcdacbda363dda6ad8fb"
+    },
+    "resume.basics.profiles[1].url": {
+      "english": "https://github.com/jrfeathe",
+      "hash": "80c17b82a6ba0d385e7aba043414ad3af5661cecb12115fee525a24d629be915"
+    },
+    "resume.skills.languages_spoken[0].language": {
+      "english": "English",
+      "hash": "ba118bf7fc9c1aedc1edb28a0aa86e0b43b681f222af6616e13c43be87815b06"
+    },
+    "resume.skills.languages_spoken[0].proficiency": {
+      "english": "native",
+      "hash": "bef32d2c315a289576f2a6828d27edb16bb316a4d85c271f2d794045f3ea668d"
+    },
+    "resume.skills.languages_spoken[1].language": {
+      "english": "Japanese",
+      "hash": "be4ee906d3efecfc34a94a6cd378633a67f7f35d5abbc3f498715ac5dcbee54f"
+    },
+    "resume.skills.languages_spoken[1].proficiency": {
+      "english": "JLPT N5",
+      "hash": "eab2757c9e0afc5a6cd2b2d1804e720f2a0ea30ec7478b7e4c2af5ca323ae96c"
+    },
+    "resume.skills.languages_spoken[2].language": {
+      "english": "Chinese (Simplified)",
+      "hash": "237635fca547a70d1f35d02d971708531107fa5ae48e66eff5ba7256ade276a9"
+    },
+    "resume.skills.languages_spoken[2].proficiency": {
+      "english": "HSK1",
+      "hash": "e8e266017562d504065ba036976b731bd366a55bdb5ba28bfbc7c8ee2eb473f9"
+    },
+    "resume.experience[0].role": {
+      "english": "Industrial Technician",
+      "hash": "278b38f8ed3da48cb3472b4c153a7725dcc785bc4a0773d06a00ae8e48baba5e"
+    },
+    "resume.experience[0].company": {
+      "english": "Captech Logistics",
+      "hash": "b9bcc43b78c00457261a8f6a57f0978ec0e2163a0cd7437284746f16c374388f"
+    },
+    "resume.experience[0].location": {
+      "english": "Scotia, NY",
+      "hash": "ca2cbe15beff0b2301ee2f94dd42370e1108d036e8494069c38445d352c1be28"
+    },
+    "resume.experience[0].start": {
+      "english": "2020-06",
+      "hash": "aacf198399898026eaacbf8dffbebc76ca80c62ae83e4ab049bb04c68659f3d5"
+    },
+    "resume.experience[0].end": {
+      "english": "present",
+      "hash": "4d4c7eee2e28d03cb2dbf3df639c3290ade66e18755e83caade2d8f37bd8c044"
+    },
+    "resume.experience[0].summary": {
+      "english": "Operate, maintain, and improve industrial equipment and packaging workflows.",
+      "hash": "cda0e3bf5eb9a731f69e640ccbba6ab5da3c3e9ebdcdd02196ad2c078910a9f5"
+    },
+    "resume.experience[0].highlights[0]": {
+      "english": "Operated automatic beverage packaging systems.",
+      "hash": "705b48aa6691b7aa8375c84af4e0ab0d4173e31dfedb5b76b39097b9cf710806"
+    },
+    "resume.experience[0].highlights[1]": {
+      "english": "Diagnosed conveyor, pneumatic, and electrical faults to reduce unplanned downtime during peak production windows.",
+      "hash": "7455f0526dda548fcde2d13ecd6210adcdd2754b0f8927067056cda333049edb"
+    },
+    "resume.experience[0].highlights[2]": {
+      "english": "Created repeatable service checklists and parts inspection that cut maintenance turnaround and onboarding time.",
+      "hash": "b4e981dd144c6cfa053ee80bff0c9240956bed66082c33c8dcff4357b2b7bbfa"
+    },
+    "resume.experience[0].highlights[3]": {
+      "english": "Collaborated with mechanics to tune processes for safety and throughput.",
+      "hash": "746c01e3e1ac68b60c4806eec64635f8be881581cc0eacd30b70e52ec29a4209"
+    },
+    "resume.experience[1].role": {
+      "english": "Digital Fabrication Intern",
+      "hash": "e94e35afbfeccd0a610b211591963709e9692d08d5ff978515f8dbc19fa194e2"
+    },
+    "resume.experience[1].company": {
+      "english": "BAM Logistics",
+      "hash": "425da94bcdbc2b94ff4a06dd8b2bf58a5fe6f198b2bea85f3301c5eda4716c9f"
+    },
+    "resume.experience[1].location": {
+      "english": "Cobleskill, NY",
+      "hash": "3a6475027a3394fedb1d018b87bc425cb3985949f5474335aefd643e32c287c7"
+    },
+    "resume.experience[1].start": {
+      "english": "2022-06",
+      "hash": "f059da1903ad586af095f80d342a0c7bc6ac2b783fc2ad861919fd106663afe5"
+    },
+    "resume.experience[1].end": {
+      "english": "2022-08",
+      "hash": "6cd8ddf7f7a4fc382af87d16f49e88bf58064ea01591ff6a92938a4e95ccf402"
+    },
+    "resume.experience[1].summary": {
+      "english": "Prototyped and documented fabrication requests, pairing CAD work with light automation to deliver high quality designs.",
+      "hash": "95f1e59edbdaae98cff9053f6098962bcf2285e01ffb477b12ad398b5cf7df29"
+    },
+    "resume.experience[1].highlights[0]": {
+      "english": "Delivered small-batch signs on a two-week cadence by coordinating requirements with shop staff.",
+      "hash": "6556b144089191a2fd5bbf81647d7ab0d24f13d3cd49c2ce905484b4dd083fc8"
+    },
+    "resume.experience[1].highlights[1]": {
+      "english": "Used technical skills to reverse-image-search blurry drafts, find original copies, and deliver clean SVGs.",
+      "hash": "c22e844fe847b0e661e200d986033d9786d967149a14489cf9528bd5d324293a"
+    },
+    "resume.experience[1].highlights[2]": {
+      "english": "Operated CNC plasma cutter and replaced consumable components.",
+      "hash": "43921e685139891f0bf09d8ae7f5d916fb87187df739e50b3e1488db140bf68c"
+    },
+    "resume.experience[1].highlights[3]": {
+      "english": "Experimented with new technologies to automate the creation of designs.",
+      "hash": "547b35d9bf8d734e3d8e5f0c4f95b4fb3300accceac7d53f5191e02a23408c2b"
+    },
+    "resume.experience[2].role": {
+      "english": "Undergraduate Teaching Assistant, SER 321 (Distributed Software Systems)",
+      "hash": "53fe7472474851c4e0cf3a88f8b7d3479ad004efc0ae1f2477980a77da9274c0"
+    },
+    "resume.experience[2].company": {
+      "english": "Arizona State University",
+      "hash": "60ad74dd5ad644f88782fed1133587c03582b086362ce0c16651e1b76870a740"
+    },
+    "resume.experience[2].location": {
+      "english": "Remote",
+      "hash": "ffa98e02f7ce33fc935f02b3b668f6ad57661814dade5f41453fbee2b70cdd95"
+    },
+    "resume.experience[2].start": {
+      "english": "2024-03",
+      "hash": "e8b532b1eefae127ae49f86af0dd1069f68b9e7b86e95cc5f3fb811ebddcdb23"
+    },
+    "resume.experience[2].end": {
+      "english": "2024-05",
+      "hash": "049cebe321997964fecde9133bfd81abeb4dd400666d74c9d00c646d3d80d99c"
+    },
+    "resume.experience[2].summary": {
+      "english": "Supplemental context not in the project anchors: supported distributed systems labs and documented debugging steps for students (no grading duties).",
+      "hash": "7ad8a91bde4f95476a73028c30f9308dbb1d4dfdaff46a33750053a5f161c279"
+    },
+    "resume.experience[2].highlights[0]": {
+      "english": "Published troubleshooting instructions for Linux & Java networking/threading labs so students could self-serve fixes.",
+      "hash": "24a1adecb18b091a32cf42b43c9b3533a91225811852aa4be803441329101164"
+    },
+    "resume.experience[2].highlights[1]": {
+      "english": "Coordinated Slack Q&A and live office hours to keep students engaged and productive.",
+      "hash": "7c201c48cfdf6a4f1e5fca66a2f7f66d9329eb0e89d6165adad29896f392ce25"
+    },
+    "resume.education[0].institution": {
+      "english": "Arizona State University, Ira A. Fulton Schools of Engineering",
+      "hash": "f9b90ad27865d9a053cc908617ead4b7f2cf993099db83217b31e2cb125a98fb"
+    },
+    "resume.education[0].credential": {
+      "english": "Bachelor of Science in Software Engineering",
+      "hash": "22b32f338fd5235eec728ceac4b2e67682fd3c2bd66436c547b83ae107d0d63f"
+    },
+    "resume.education[0].status": {
+      "english": "completed",
+      "hash": "4ddb3e96801a1ee2b77dc5247c0db478d5f97a93b90e7cdb09f5f51d43764b08"
+    },
+    "resume.education[0].graduation": {
+      "english": "2025",
+      "hash": "b2b2f104d32c638903e151a9b20d6e27b41d8c0c84cf8458738f83ca2f1dd744"
+    },
+    "resume.education[0].notes[0]": {
+      "english": "Undergraduate Teaching Assistant for SER 321 (Distributed Software Systems).",
+      "hash": "6e13ff20f89580514258ec07d2eea60ad33d37bd2d43a69bec8920d6a9359a3d"
+    },
+    "resume.education[0].notes[1]": {
+      "english": "Coursework in fullstack development, distributed systems, CAD, arduino, databases, and operating systems.",
+      "hash": "e12696490b887bafe054ec57002a14fe231c6a1fb6a49987eebd4f2cbfebf2be"
+    },
+    "resume.education[1].institution": {
+      "english": "Schenectady County Community College",
+      "hash": "040fca0d4e3cc84d3e1f12ca4bf1b5897116bdf89fd79f42cf6efe3cd56ca4ef"
+    },
+    "resume.education[1].credential": {
+      "english": "Associate of Applied Science in Computer Science",
+      "hash": "c9f9b39f84716dfb993edf990c9b9dd3e319c8ccf1b480707b5ae0f6b1b5b3f6"
+    },
+    "resume.education[1].status": {
+      "english": "completed",
+      "hash": "4ddb3e96801a1ee2b77dc5247c0db478d5f97a93b90e7cdb09f5f51d43764b08"
+    },
+    "resume.education[1].graduation": {
+      "english": "2020",
+      "hash": "73a2af8864fc500fa49048bf3003776c19938f360e56bd03663866fb3087884a"
+    },
+    "resume.education[2].institution": {
+      "english": "Scotia-Glenville High School",
+      "hash": "304e0f17895a09cb1d556755eaf22b5c61bba55592db3cb45185f19a6ba731c9"
+    },
+    "resume.education[2].credential": {
+      "english": "High School Diploma",
+      "hash": "2d35d0953993975705e03f2471e1f13f8554542c87b735a0123a3d317039ec41"
+    },
+    "resume.education[2].status": {
+      "english": "completed",
+      "hash": "4ddb3e96801a1ee2b77dc5247c0db478d5f97a93b90e7cdb09f5f51d43764b08"
+    },
+    "resume.education[2].graduation": {
+      "english": "2018",
+      "hash": "152e69cf3c8e76c8d8b0aed924ddd1708e4c68624611af33d52c2c2814dd5df9"
+    },
+    "resume.education[2].notes[0]": {
+      "english": "Graduated with Honors in Mathematics and Science.",
+      "hash": "6320d2044aa63e88e23faa47a93295049c278afe4e12233358d9c79384b428ec"
+    },
+    "resume.education[2].notes[1]": {
+      "english": "SAT score: 1360.",
+      "hash": "a9e9d6f1377e6947ca5aba1ba1e57cd41fca9b1243071e92a35f0b9db277ad6b"
+    },
+    "resume.eligibility.us_status.value": {
+      "english": "Citizen with valid SSN",
+      "hash": "3b08578e5850be378b9d4d5cadf6bb225330ac3a5237d22d6fbc2f8b7a7e6b6f"
+    },
+    "resume.availability.start_date.value": {
+      "english": "Two weeks notice / Immediate",
+      "hash": "f7ab67632fe2532d6f4791f625eaaf6d5f82b0535f7e745fe9f4edb064d1bd0f"
+    },
+    "resume.availability.timezone.label": {
+      "english": "UTC-5 (ET)",
+      "hash": "4ab98507cab9a2a00231732ccba507d72b703bab262fbd133a957981cd525b55"
+    },
+    "resume.availability.timezone.collaboration_window": {
+      "english": "Visit /[locale]/meetings for the interactive availability map.",
+      "hash": "51f9b0ad0ae40b571df882cf2aefc63b86fb0ab9ff093cccd8e749776b68d107"
+    },
+    "timezones.Africa/Abidjan": {
+      "english": "Africa/Abidjan",
+      "hash": "8e9e0533acc53b5ed31bca139a1659cf84816bb0a739c09a9161d64bd98a6def"
+    },
+    "timezones.Africa/Accra": {
+      "english": "Africa/Accra",
+      "hash": "413c61b75c1786aad2486b8988150d46c699290b0d138b9709b3081d96e04f51"
+    },
+    "timezones.Africa/Addis_Ababa": {
+      "english": "Africa/Addis Ababa",
+      "hash": "4ea2ecb8122aae95796cbc45abb7ed9371e06fd2b12a00ae01eb9f8f4b88781e"
+    },
+    "timezones.Africa/Algiers": {
+      "english": "Africa/Algiers",
+      "hash": "a011131551bd4ea86c53a5e903af8c6c4177fea5b6cb1e3cdb1f60a322d6ad26"
+    },
+    "timezones.Africa/Asmera": {
+      "english": "Africa/Asmera",
+      "hash": "eab3966cb189b8e35f56d5b72f4e3836f1d9f9e160a1ccf1a4a7ee8d0e4520f0"
+    },
+    "timezones.Africa/Bamako": {
+      "english": "Africa/Bamako",
+      "hash": "c7c63329217f6aa653233153eea98f578b5f3718fcc7a73164fa98f8c34f49e7"
+    },
+    "timezones.Africa/Bangui": {
+      "english": "Africa/Bangui",
+      "hash": "886e7fd3eee8ac046da3321947316f63b43cc39c610b534bc7790ba0e929ab26"
+    },
+    "timezones.Africa/Banjul": {
+      "english": "Africa/Banjul",
+      "hash": "fbeba3a5ec59fd407739fc844c52f8c2ae11b5302d5fa98ffe4991eb284bfdb9"
+    },
+    "timezones.Africa/Bissau": {
+      "english": "Africa/Bissau",
+      "hash": "467771c29cd75acbfc3a6d1c63fc0df6c31bb65bf8c7d86e43af41fa9879515a"
+    },
+    "timezones.Africa/Blantyre": {
+      "english": "Africa/Blantyre",
+      "hash": "6d19c74920d66b822574733b7a358feae08c9b9a37e68cbf404266970537c8ca"
+    },
+    "timezones.Africa/Brazzaville": {
+      "english": "Africa/Brazzaville",
+      "hash": "e73e6efe2a81a24eac32c2325e2bbfd380d9d4afafe75489e54bb406e2b5d3cf"
+    },
+    "timezones.Africa/Bujumbura": {
+      "english": "Africa/Bujumbura",
+      "hash": "45ceddf2f828ed86ded43e82a0ab00c78a66ea0b719e13461b8cc8571193a5a2"
+    },
+    "timezones.Africa/Cairo": {
+      "english": "Africa/Cairo",
+      "hash": "2e9a9bb3cc4394baaf0f4bbc4799401ba6b400f8198e76e3cf9d570149462622"
+    },
+    "timezones.Africa/Casablanca": {
+      "english": "Africa/Casablanca",
+      "hash": "9824257c811fd5169fc6d6bebc272d1551f1392f1fcbb2c61bdc9f02e531260f"
+    },
+    "timezones.Africa/Ceuta": {
+      "english": "Africa/Ceuta",
+      "hash": "25e1c83126001a14d357992dbc433cb8321f63a46c3ad3f04e79e5d133e1c345"
+    },
+    "timezones.Africa/Conakry": {
+      "english": "Africa/Conakry",
+      "hash": "573b6836c1f9dd8359a160762086eb46ef072167804a7c32ae5eb51b3abef767"
+    },
+    "timezones.Africa/Dakar": {
+      "english": "Africa/Dakar",
+      "hash": "47302d2c6d23bfad23ecb03c056378bd53fb4c084883af66b6ecd59a7d1c96b3"
+    },
+    "timezones.Africa/Dar_es_Salaam": {
+      "english": "Africa/Dar es Salaam",
+      "hash": "4cc6350504c8c88e814c83c739fd958b3ef6bd1a510104fa3ddf344ae547c440"
+    },
+    "timezones.Africa/Djibouti": {
+      "english": "Africa/Djibouti",
+      "hash": "9da4c7b429018afada6f88bc0710e6efdf1a4a61327e5590c07cb2e24f590b10"
+    },
+    "timezones.Africa/Douala": {
+      "english": "Africa/Douala",
+      "hash": "68e4f331b314c820a6d46848fee2c947bd187b43a9bb12ebb918e60111f243a8"
+    },
+    "timezones.Africa/El_Aaiun": {
+      "english": "Africa/El Aaiun",
+      "hash": "4c489155ecf63c1e9e30ad3fd4cafe47720e98fcb220ba341ea1893441fd2e3c"
+    },
+    "timezones.Africa/Freetown": {
+      "english": "Africa/Freetown",
+      "hash": "957ec0de24ed1c92afe55d48b31f71ba857c404d9633793f40b771ee33f18035"
+    },
+    "timezones.Africa/Gaborone": {
+      "english": "Africa/Gaborone",
+      "hash": "bf7846ff85a6fed30389cbafc916d764c158417ca69d92e1ad70dc8cf5625ce9"
+    },
+    "timezones.Africa/Harare": {
+      "english": "Africa/Harare",
+      "hash": "ac504bd693c0061370083d00a12d31862af109b0e0bd78fbe61c3a815c607a19"
+    },
+    "timezones.Africa/Johannesburg": {
+      "english": "Africa/Johannesburg",
+      "hash": "cc7db809992d5b4f94c2550e81d4073180d1f4d9b9c8e4dc1d5d871df70f7f88"
+    },
+    "timezones.Africa/Juba": {
+      "english": "Africa/Juba",
+      "hash": "3b62a8622715218d3ffeca3f69db34b84442f3f3baab55123a1567fb4663884e"
+    },
+    "timezones.Africa/Kampala": {
+      "english": "Africa/Kampala",
+      "hash": "84634579fea52f3e5cf528d810d4c947d7d5ef89ba1d1fde6b328acf124b2bed"
+    },
+    "timezones.Africa/Khartoum": {
+      "english": "Africa/Khartoum",
+      "hash": "e9e3b0177711e8f80130a2d273651e2802f9ca8637e4979593e88bcaf25f9c74"
+    },
+    "timezones.Africa/Kigali": {
+      "english": "Africa/Kigali",
+      "hash": "f32e5b5922d8226af58be25590cc5dfebf6a5bff291aaaab227d91685f9b7fed"
+    },
+    "timezones.Africa/Kinshasa": {
+      "english": "Africa/Kinshasa",
+      "hash": "94e722c4a361d9e37b15a03d122014abcb61fd49d082b9f96379a95798109ef3"
+    },
+    "timezones.Africa/Lagos": {
+      "english": "Africa/Lagos",
+      "hash": "93ba6a1325530174deafec7766d7968db9244fa82df6ecac134c47c3c59fb103"
+    },
+    "timezones.Africa/Libreville": {
+      "english": "Africa/Libreville",
+      "hash": "8fd743d7caf53d6536536527090525c4fc312988e3f377ecf673c867149fbff7"
+    },
+    "timezones.Africa/Lome": {
+      "english": "Africa/Lome",
+      "hash": "788aab353fccfba32080e7dd1ae55d04b3122aa047200b61ca97faafcca2efa2"
+    },
+    "timezones.Africa/Luanda": {
+      "english": "Africa/Luanda",
+      "hash": "448b74968f80959705cc196336e0cd4548f410ffb280aea3650055ed9b9891bc"
+    },
+    "timezones.Africa/Lubumbashi": {
+      "english": "Africa/Lubumbashi",
+      "hash": "1b902fa1eb2f2d960ea1909a9e27dd3c25c140d125ba1714e98c2f6e5c144713"
+    },
+    "timezones.Africa/Lusaka": {
+      "english": "Africa/Lusaka",
+      "hash": "e7cc2eb182c019eb4fd7537796b6836d4e3930b21fa707b8e1da8d6eeb84040c"
+    },
+    "timezones.Africa/Malabo": {
+      "english": "Africa/Malabo",
+      "hash": "ec05bc3133198e1f60e997fad7ed0d49fd12ff4fb594d9df30744b3e22b8721f"
+    },
+    "timezones.Africa/Maputo": {
+      "english": "Africa/Maputo",
+      "hash": "8050abe3fb4ba7f1155791a57fcaad15f1a4276465fbb7fd83184a868fd7e996"
+    },
+    "timezones.Africa/Maseru": {
+      "english": "Africa/Maseru",
+      "hash": "baca8339847c1dfe021e395456bd02f918222cb821fe0b4c5086a37feb68f0f8"
+    },
+    "timezones.Africa/Mbabane": {
+      "english": "Africa/Mbabane",
+      "hash": "90e6efc1953e44874de3876fb90aee713b33cbaf8ef3c525fb2ba2c81440eaee"
+    },
+    "timezones.Africa/Mogadishu": {
+      "english": "Africa/Mogadishu",
+      "hash": "e8dc340bb2411cd18ce9afe66c45d35705bb93d98eba3fae2ba7fe816d7003b7"
+    },
+    "timezones.Africa/Monrovia": {
+      "english": "Africa/Monrovia",
+      "hash": "c27f4f2d41305657bae10b7fb12cdc8e916c50a21edbb40daf43536ed151c083"
+    },
+    "timezones.Africa/Nairobi": {
+      "english": "Africa/Nairobi",
+      "hash": "8a46a5b88726e1b00d9197374658a99d5e0ff180671355834b84da71b18bcdcc"
+    },
+    "timezones.Africa/Ndjamena": {
+      "english": "Africa/Ndjamena",
+      "hash": "53dbf03db9e7ae85ae4530962145e71f9cd697887c6eeb783d6e06dbb60423ed"
+    },
+    "timezones.Africa/Niamey": {
+      "english": "Africa/Niamey",
+      "hash": "4c4c3af4718e886bbbbadb1a9911506f3a40d10c45b2b4d619e9b7b3810581af"
+    },
+    "timezones.Africa/Nouakchott": {
+      "english": "Africa/Nouakchott",
+      "hash": "f94c4a85f1895295e2a45d03f944755769fd1622581f49b493a3b43739b874ac"
+    },
+    "timezones.Africa/Ouagadougou": {
+      "english": "Africa/Ouagadougou",
+      "hash": "85ebcfb3d38156d817c1ff6a16da77f3766275b7dc0c4e01f7a8a2ebfc08274c"
+    },
+    "timezones.Africa/Porto-Novo": {
+      "english": "Africa/Porto-Novo",
+      "hash": "b4677dd13ead6e9f0fd7acd018fa663f4a686125e62bcfcaca7af1254252552f"
+    },
+    "timezones.Africa/Sao_Tome": {
+      "english": "Africa/Sao Tome",
+      "hash": "59a0fc14a31b54b2711e04c1da57ae94cfc8126d37caf1817ce2d6cb47fa091e"
+    },
+    "timezones.Africa/Tripoli": {
+      "english": "Africa/Tripoli",
+      "hash": "77e2718712382d33655d5562602af94c2f9cdf0d83e22530f43064f02b1b180e"
+    },
+    "timezones.Africa/Tunis": {
+      "english": "Africa/Tunis",
+      "hash": "6dbca29ce898b3b8057aea9648763dffdc93000453d66ed64255cac59eba6d14"
+    },
+    "timezones.Africa/Windhoek": {
+      "english": "Africa/Windhoek",
+      "hash": "507df7b946afcad44c48602cae12748a32273998b568ec88b9f7ddb94861de80"
+    },
+    "timezones.America/Adak": {
+      "english": "America/Adak",
+      "hash": "3e1e07e40908ba4cd35bfbc8d0727990b97f945db5e553868655183c481175ae"
+    },
+    "timezones.America/Anchorage": {
+      "english": "America/Anchorage",
+      "hash": "d6bd4d6652b20da37ab730c8c8e0324d91d8ec3e8513ac61e09d51df7832ae7d"
+    },
+    "timezones.America/Anguilla": {
+      "english": "America/Anguilla",
+      "hash": "4f89952748d92ba690d0244b1e5a320c533c72ea13e2f4d0099a711e7e77a2a5"
+    },
+    "timezones.America/Antigua": {
+      "english": "America/Antigua",
+      "hash": "0300c9b6089b95aa9c85a1bec12783e29ed1e3ae73ff58f87217db252485fbf4"
+    },
+    "timezones.America/Araguaina": {
+      "english": "America/Araguaina",
+      "hash": "812dea334a55c4703ef1f93bd6ee2902b3192b0e6df13b3670a68dc85510ed40"
+    },
+    "timezones.America/Argentina/La_Rioja": {
+      "english": "America/Argentina/La Rioja",
+      "hash": "9e48f5d02e2d34007f19ef632ee269c8e0e145147e7caf7e1ef42ee351c61c7a"
+    },
+    "timezones.America/Argentina/Rio_Gallegos": {
+      "english": "America/Argentina/Rio Gallegos",
+      "hash": "1aa56b59831ebf8cedafa9c79f64c27d0d4f77c7cf7aedc60db6aa8e6b8da323"
+    },
+    "timezones.America/Argentina/Salta": {
+      "english": "America/Argentina/Salta",
+      "hash": "25ed1c53b630ea0b12ca58f9a0d9621f343e77b5c116bf0f04c97d29a17c90fe"
+    },
+    "timezones.America/Argentina/San_Juan": {
+      "english": "America/Argentina/San Juan",
+      "hash": "ed27cc7e5834e11a6f7aafb0d68f68b9712f1e58add128e85e712cf4686b3b4a"
+    },
+    "timezones.America/Argentina/San_Luis": {
+      "english": "America/Argentina/San Luis",
+      "hash": "38c20c05f3f6e9e59c9e1bfd86ebfbe6316f05b9e9fd6bca9a34adfda35bdf2e"
+    },
+    "timezones.America/Argentina/Tucuman": {
+      "english": "America/Argentina/Tucuman",
+      "hash": "908883d0e43f66c2482c059f8716f7cd6c518335885fe246bb4d80f647c6d678"
+    },
+    "timezones.America/Argentina/Ushuaia": {
+      "english": "America/Argentina/Ushuaia",
+      "hash": "9a6ca963dc13ae326cbe94db84ac0d3f07befb8c023642f2f548a29cc2d96352"
+    },
+    "timezones.America/Aruba": {
+      "english": "America/Aruba",
+      "hash": "c8d9bcf7660d0ba497a1469d6bc9c9c0f00df9dd102758da1be029eac941b7c4"
+    },
+    "timezones.America/Asuncion": {
+      "english": "America/Asuncion",
+      "hash": "8ca340d8332bd5f7dc5e8f1aa93f6dd839058e2aa8c5e3c2954b88816ed22df7"
+    },
+    "timezones.America/Bahia": {
+      "english": "America/Bahia",
+      "hash": "4bcf2327bdfadd3ea64d5bfee7cbd78e30861bd56b67fd02f1c28b7863f01ed8"
+    },
+    "timezones.America/Bahia_Banderas": {
+      "english": "America/Bahia Banderas",
+      "hash": "c1cfcfe9d21cf0b0f4443f4ea7c2b384d859a2745f012a43164ffa3e5b796ed5"
+    },
+    "timezones.America/Barbados": {
+      "english": "America/Barbados",
+      "hash": "f985cbcbd04ee16b87c92d263a152f9def480350ea0640476ca2d1b77691333f"
+    },
+    "timezones.America/Belem": {
+      "english": "America/Belem",
+      "hash": "edf73aebb0509fc0a6a0a971391f82248c305cd4acd90b89bcef73d8751ccd79"
+    },
+    "timezones.America/Belize": {
+      "english": "America/Belize",
+      "hash": "24381ca5e5845a4b929ac5e7da94908103c50ef29bbec55e58171ccd8bfabf3a"
+    },
+    "timezones.America/Blanc-Sablon": {
+      "english": "America/Blanc-Sablon",
+      "hash": "0c61ac7b3ee6a08128888dac25ef7f10c8da1340ad78741a069e497e7601a197"
+    },
+    "timezones.America/Boa_Vista": {
+      "english": "America/Boa Vista",
+      "hash": "f08aab05c6adb000053a559840f3a65834adee17b2a3ad40e34ac1fdb87ca38c"
+    },
+    "timezones.America/Bogota": {
+      "english": "America/Bogota",
+      "hash": "43a0373f2cad2936fe9606275f6a8d684ca13bea1add2438cfba1df2aead9352"
+    },
+    "timezones.America/Boise": {
+      "english": "America/Boise",
+      "hash": "4d8533a4cf39e8dd31e24b2a055d6628f1e2457ab45b68999d83d0d6e9a70600"
+    },
+    "timezones.America/Buenos_Aires": {
+      "english": "America/Buenos Aires",
+      "hash": "d0a51aa12aafb703df3151c54b4a9dd43c2fe4bf18669edddf1babfaad94f6a8"
+    },
+    "timezones.America/Cambridge_Bay": {
+      "english": "America/Cambridge Bay",
+      "hash": "9b499bbf3346c3c7eb23ff6346ab0746383ed52e84e3580c1335200052a64e46"
+    },
+    "timezones.America/Campo_Grande": {
+      "english": "America/Campo Grande",
+      "hash": "2de26a028c550697ff02c40661150b3cde631379011a7aeaae355998303101a0"
+    },
+    "timezones.America/Cancun": {
+      "english": "America/Cancun",
+      "hash": "d146e1f1fc8812f5335dc1e06541d0a30a9bbe7b9534eb2f442e4c94f1bf409b"
+    },
+    "timezones.America/Caracas": {
+      "english": "America/Caracas",
+      "hash": "7eb53a2fe44ecfcaa41b5061afdf06268a405e56389fba9285316ac09bb48fbd"
+    },
+    "timezones.America/Catamarca": {
+      "english": "America/Catamarca",
+      "hash": "fe455d8247193ca23fd34325ed3dc9da83e703863c57a9a528935bcaf1334424"
+    },
+    "timezones.America/Cayenne": {
+      "english": "America/Cayenne",
+      "hash": "cc347c64f74da74c4d82a34dcba6adb36b2dd60bae6ac7108597a1a1a870c16d"
+    },
+    "timezones.America/Cayman": {
+      "english": "America/Cayman",
+      "hash": "75780bdb313a93da028584bc5e9fa8f34337a6764cd80d55274a5ba2982a1e90"
+    },
+    "timezones.America/Chicago": {
+      "english": "America/Chicago",
+      "hash": "a77b7136d7ecc350d85920c42820c60e5af14172c4213eba09856c2db6e35e7a"
+    },
+    "timezones.America/Chihuahua": {
+      "english": "America/Chihuahua",
+      "hash": "8c39ea6b0ab46b8a82a1cafc05dd025f5f81de23518bf5a46cbc0fda9c27552e"
+    },
+    "timezones.America/Ciudad_Juarez": {
+      "english": "America/Ciudad Juarez",
+      "hash": "7501d7dff3b8073962c1291d59710801a6cdd70280fe78b523a72efc1802a8eb"
+    },
+    "timezones.America/Coral_Harbour": {
+      "english": "America/Coral Harbour",
+      "hash": "c80bad335a1ff8ec7e225a4b656679116f612f51d4c65d047574f79bbfa3d9c2"
+    },
+    "timezones.America/Cordoba": {
+      "english": "America/Cordoba",
+      "hash": "f36baeb999c8431c2afb909aba04a5d408e1239951fd31700d2b6d86a6583902"
+    },
+    "timezones.America/Costa_Rica": {
+      "english": "America/Costa Rica",
+      "hash": "70db4eb7af7e92845a94bee317043f8bcca5c4b5de73a28d3bb8b851bd852270"
+    },
+    "timezones.America/Coyhaique": {
+      "english": "America/Coyhaique",
+      "hash": "10e97bb5a14802e11c8ebaef805cdf38e813b4e6a5c6e9acf49e415ff9b84536"
+    },
+    "timezones.America/Creston": {
+      "english": "America/Creston",
+      "hash": "bf88544b926f1bddbe94928ae3bdcc5e6ec5721e15ac0a9b01f0a1bf03ae69bf"
+    },
+    "timezones.America/Cuiaba": {
+      "english": "America/Cuiaba",
+      "hash": "5ebaa1ca743cd376c33f6c80ef5e526c604faf85ab2a33908c7317252ec3c08f"
+    },
+    "timezones.America/Curacao": {
+      "english": "America/Curacao",
+      "hash": "0166b5e299840869fcfdf6b1e3b39ec522e6cc634e9e3742fb35012e90a7b5ab"
+    },
+    "timezones.America/Danmarkshavn": {
+      "english": "America/Danmarkshavn",
+      "hash": "d1a448a62d1f64fd8d99e162b64c7471f4efb51dd4cd870b1be48c261c279445"
+    },
+    "timezones.America/Dawson": {
+      "english": "America/Dawson",
+      "hash": "650a86e5095b91f7049e7aee023b466d2c8eb255f254f512f046015efc9b50c9"
+    },
+    "timezones.America/Dawson_Creek": {
+      "english": "America/Dawson Creek",
+      "hash": "80b52b2142c7bf2a681866a2542938316450dc768cb558dfb838b6da4624d24b"
+    },
+    "timezones.America/Denver": {
+      "english": "America/Denver",
+      "hash": "9e36365b2f6cfe438a9a8ecece9a3139f6ce42d810012dfa93d3aa918e0635cb"
+    },
+    "timezones.America/Detroit": {
+      "english": "America/Detroit",
+      "hash": "034883cbbcdc28b640f894e8dc394bae9aabc9cc1cde4a9fcf3bff60a73c63cc"
+    },
+    "timezones.America/Dominica": {
+      "english": "America/Dominica",
+      "hash": "6d6eade7ca6ca98e5d67b3d54fe76fdf30b2e6f1ba7a0319510b208b26182662"
+    },
+    "timezones.America/Edmonton": {
+      "english": "America/Edmonton",
+      "hash": "58f2f20328fcc902b63cfa952a143f211e75725729a71dc51360c2bbd0aff08c"
+    },
+    "timezones.America/Eirunepe": {
+      "english": "America/Eirunepe",
+      "hash": "6ac36e16b231790724e979bd26f715e5d5a6439f3c91d5ecb6ef41ab88405543"
+    },
+    "timezones.America/El_Salvador": {
+      "english": "America/El Salvador",
+      "hash": "cfdaa1b4645421125d65364061d7fd97b67f3fd63ccce7894cca7c51109a50c3"
+    },
+    "timezones.America/Fort_Nelson": {
+      "english": "America/Fort Nelson",
+      "hash": "4b4c1390ecfddbab227c9cad37a136052c95a3bc61654a963956236ce397e404"
+    },
+    "timezones.America/Fortaleza": {
+      "english": "America/Fortaleza",
+      "hash": "1dc70db68b2bcf035a1cf7dd6d538e605f19894a0508b283919419c05ba4ca40"
+    },
+    "timezones.America/Glace_Bay": {
+      "english": "America/Glace Bay",
+      "hash": "718a91e256773c03275a9683bffafce6091ef84f138835f6d788e3601348a2e8"
+    },
+    "timezones.America/Godthab": {
+      "english": "America/Godthab",
+      "hash": "5e8c06da3febfcc4100d21a6c4d4d167c5d9c6c27b0ad1253388c0e43cbb89a8"
+    },
+    "timezones.America/Goose_Bay": {
+      "english": "America/Goose Bay",
+      "hash": "2e5e1611c8e6aa1f75a9b2a13d04de6552fdc160971f9553f0822405b25450f7"
+    },
+    "timezones.America/Grand_Turk": {
+      "english": "America/Grand Turk",
+      "hash": "bf8ddfed6a2d3ccdd40962611606d3e5b8288adf5288ee24c965a69609dfb8fc"
+    },
+    "timezones.America/Grenada": {
+      "english": "America/Grenada",
+      "hash": "fa99bd35c952d8722d07a610f3d88b726f7d0ff444d7f07f2d92865a799530f8"
+    },
+    "timezones.America/Guadeloupe": {
+      "english": "America/Guadeloupe",
+      "hash": "8f7b5f1a5bb27a9921f2d11ed56a8cad81ce2d0b6c659da5b347a9584f4efe93"
+    },
+    "timezones.America/Guatemala": {
+      "english": "America/Guatemala",
+      "hash": "83e28b1c7cce54360d2e260ec87a0b01e37e30d03e1381e5814f1fde41e8e530"
+    },
+    "timezones.America/Guayaquil": {
+      "english": "America/Guayaquil",
+      "hash": "2bb9c2965be33634f423323b05f69b3b86daac9d28e0b03d7c5d2891f6e5ebb4"
+    },
+    "timezones.America/Guyana": {
+      "english": "America/Guyana",
+      "hash": "94e1ec24f64af8f062a231ae02f7583c6a0d686438e7c283a49944b41769826d"
+    },
+    "timezones.America/Halifax": {
+      "english": "America/Halifax",
+      "hash": "9958a325c3e38a5e65b12f34cb3d03693f6a2bd65d71f14e8ada87c2471b5e67"
+    },
+    "timezones.America/Havana": {
+      "english": "America/Havana",
+      "hash": "0093ef77adba1ab76c0271ec1a0f49f053e6cf3e686be39b50a996512cd65ef4"
+    },
+    "timezones.America/Hermosillo": {
+      "english": "America/Hermosillo",
+      "hash": "7bd503343f830710abfe68c142ab62142f6ff778f38b03d8dc6a755ef81d322d"
+    },
+    "timezones.America/Indiana/Knox": {
+      "english": "America/Indiana/Knox",
+      "hash": "a7c2845512f2e1a003b22c3d1c4fd16defaf15d12cab685554725628959275b6"
+    },
+    "timezones.America/Indiana/Marengo": {
+      "english": "America/Indiana/Marengo",
+      "hash": "305c1736bbb9d662be4c3ef64b55434e8895ad01c2f057582670aecc7ecc5f0a"
+    },
+    "timezones.America/Indiana/Petersburg": {
+      "english": "America/Indiana/Petersburg",
+      "hash": "11e160f8fc01011016934fac02549f3b0672a0888c1e36c4e5aecfd71bf80118"
+    },
+    "timezones.America/Indiana/Tell_City": {
+      "english": "America/Indiana/Tell City",
+      "hash": "d8628862ccdeff9334e32d7f2cc8e7654d0be1e731f886178a9ec1bfd33d321f"
+    },
+    "timezones.America/Indiana/Vevay": {
+      "english": "America/Indiana/Vevay",
+      "hash": "9a85937e48c4bcc587ca3ce66b2843b7dc7b68929a889054b57b5d37f780ffa8"
+    },
+    "timezones.America/Indiana/Vincennes": {
+      "english": "America/Indiana/Vincennes",
+      "hash": "1d3d116d624bf51c3f4df86b538d8fb8159a136f55b75bfe68b118aae06b5ce6"
+    },
+    "timezones.America/Indiana/Winamac": {
+      "english": "America/Indiana/Winamac",
+      "hash": "42867a5628737dac436e13df1e0bfac09d356e5e254bf7db1646d8867aab2ec6"
+    },
+    "timezones.America/Indianapolis": {
+      "english": "America/Indianapolis",
+      "hash": "e2e9e4be906792f125c6cb3a77a075a948a927deacf2fefc4406d996e23bd349"
+    },
+    "timezones.America/Inuvik": {
+      "english": "America/Inuvik",
+      "hash": "51299c7c76af25d33f961edc6a02f648cc30b5376b1c8c1d4ec89d9a074879e8"
+    },
+    "timezones.America/Iqaluit": {
+      "english": "America/Iqaluit",
+      "hash": "a841c860c9029df34a4ad979de557f877ac840b4c850164ce8b08f053af88fe2"
+    },
+    "timezones.America/Jamaica": {
+      "english": "America/Jamaica",
+      "hash": "390566b0d523bff1840daea0fd61c4e7fb69d28fd494d4c116f0207987c0b4e1"
+    },
+    "timezones.America/Jujuy": {
+      "english": "America/Jujuy",
+      "hash": "61088ae4575f8d68d239136484466edebe5d2e0b80800580930d0d1a1678bdca"
+    },
+    "timezones.America/Juneau": {
+      "english": "America/Juneau",
+      "hash": "64a28b6ab0f855045bb8c15fcd4b3c3ffa14c2fa4d55b2a1b6f74a63a3991a83"
+    },
+    "timezones.America/Kentucky/Monticello": {
+      "english": "America/Kentucky/Monticello",
+      "hash": "31671ebd2d168d12517c3c589edc9344ffe14c9586fb077c4e21e88af93b2992"
+    },
+    "timezones.America/Kralendijk": {
+      "english": "America/Kralendijk",
+      "hash": "6fd0ae0167c93a538620056522e807efa74df9c9b545a768df250f42b3fdefc2"
+    },
+    "timezones.America/La_Paz": {
+      "english": "America/La Paz",
+      "hash": "f27987f388e4e5792623ccf178185ec18b644d087df7ad103680ca08272d9f2b"
+    },
+    "timezones.America/Lima": {
+      "english": "America/Lima",
+      "hash": "d4914fc8e52f2b3b7f71adfca9943c1ad343a125b3ce027da336f7de29329520"
+    },
+    "timezones.America/Los_Angeles": {
+      "english": "America/Los Angeles",
+      "hash": "0ed07c49acbcc706bb9c11500cd5d8cc6835bfa193841bca6b5fb51ef9ec9d22"
+    },
+    "timezones.America/Louisville": {
+      "english": "America/Louisville",
+      "hash": "55d8537d0b347f5c10566b4571fdd377c2cc6333d276364dce293757c45fbe02"
+    },
+    "timezones.America/Lower_Princes": {
+      "english": "America/Lower Princes",
+      "hash": "b061c920137dd8702e2e2da33cd12a46ac0d9b6d805a867597fb93c10ceffce5"
+    },
+    "timezones.America/Maceio": {
+      "english": "America/Maceio",
+      "hash": "2b4b52ed6662f7c3b9b40360b62e6ca320f8f684cd2da076b3b45de064bab913"
+    },
+    "timezones.America/Managua": {
+      "english": "America/Managua",
+      "hash": "cab62ce00581788fc11d687778e2cd08a1ca5d3033feb6c51ef63fbc0f9d39ef"
+    },
+    "timezones.America/Manaus": {
+      "english": "America/Manaus",
+      "hash": "e42c8b46eba659b8cb319fc5d9dcfc0840d41d96820d486dbf82f69e7adc3c49"
+    },
+    "timezones.America/Marigot": {
+      "english": "America/Marigot",
+      "hash": "ad2ca32e3871b16b25a5771917133515c95f9ce6e2f3dcf530a516dbe348de4d"
+    },
+    "timezones.America/Martinique": {
+      "english": "America/Martinique",
+      "hash": "7d07c17a6465dc8d16091d99efddd991fe13eeb29c4dad7a25009c5e93f28b19"
+    },
+    "timezones.America/Matamoros": {
+      "english": "America/Matamoros",
+      "hash": "1535ac2efbde387ad0eb2cd2a6389f2b84379e255ba01281fd09d57d5de17a89"
+    },
+    "timezones.America/Mazatlan": {
+      "english": "America/Mazatlan",
+      "hash": "021bd35a0bd275004db194642cee3ff05e2f5a08e4a58a2af4dacb6459f51949"
+    },
+    "timezones.America/Mendoza": {
+      "english": "America/Mendoza",
+      "hash": "5571547492b587dee1f791b5e4073a5722bd207fd66008996093977755367278"
+    },
+    "timezones.America/Menominee": {
+      "english": "America/Menominee",
+      "hash": "65e393f664b17613eac72bd17ee7456fc308d309f253784bcae7f880367c7a94"
+    },
+    "timezones.America/Merida": {
+      "english": "America/Merida",
+      "hash": "5df6de9cb5ace7746ceba9a0cb165a6ae640c6e96d7e53514330f6c8722ceb47"
+    },
+    "timezones.America/Metlakatla": {
+      "english": "America/Metlakatla",
+      "hash": "e6e6dae1f34ffc1768988d180eac96cd1db72dadaa4a35fd23abeeca4754291e"
+    },
+    "timezones.America/Mexico_City": {
+      "english": "America/Mexico City",
+      "hash": "1c95ad30ed068fbbbfc5485ba7e7fd5863445d76e1e7fd99c842bbdc999a7191"
+    },
+    "timezones.America/Miquelon": {
+      "english": "America/Miquelon",
+      "hash": "0717decf4459cb46ebb32ee17180f7ab2d899f38316b3347347ed4807fb11b8f"
+    },
+    "timezones.America/Moncton": {
+      "english": "America/Moncton",
+      "hash": "b3215ec38257b7f0e2c331ddb2b6ecf3212926c404d291457f474a098f1a0d28"
+    },
+    "timezones.America/Monterrey": {
+      "english": "America/Monterrey",
+      "hash": "4e6c351c76ec5c8040f53dccc0384b852af240229a067966ad1f468aff6cedb4"
+    },
+    "timezones.America/Montevideo": {
+      "english": "America/Montevideo",
+      "hash": "51ffc663078e203c9e028e432d1ac38457e954d91560661f66c51d9c4d87b6a7"
+    },
+    "timezones.America/Montserrat": {
+      "english": "America/Montserrat",
+      "hash": "1664fbe26abbe4622e19049af1c5f35fab9745a09f613c4e987c495a8e739f70"
+    },
+    "timezones.America/Nassau": {
+      "english": "America/Nassau",
+      "hash": "ee0edae093f3a0cd3f3ffcdaeba1d947fa617e88ab160e8a17f03087cc233585"
+    },
+    "timezones.America/New_York": {
+      "english": "America/New York",
+      "hash": "dbebe52dff200ed49746015b2abe7a84cada262428dd8dafb8c7d961698f8596"
+    },
+    "timezones.America/Nome": {
+      "english": "America/Nome",
+      "hash": "5d8d80c8d91cb73b3280febbe0140d06c6fc53b661c4150147bb26eeeabbd1a2"
+    },
+    "timezones.America/Noronha": {
+      "english": "America/Noronha",
+      "hash": "5e83381a8e4964a8add021a50a1ff771d6da608e718ef5585f10892144241993"
+    },
+    "timezones.America/North_Dakota/Beulah": {
+      "english": "America/North Dakota/Beulah",
+      "hash": "e576be6996a6ef46b94730ae9b7297571ba9eae021f72ccd1c262063eaf944e0"
+    },
+    "timezones.America/North_Dakota/Center": {
+      "english": "America/North Dakota/Center",
+      "hash": "6f28062a34b33aacf6af7282f5819fca96e1081d856d0ffaf3b76d771fc39be9"
+    },
+    "timezones.America/North_Dakota/New_Salem": {
+      "english": "America/North Dakota/New Salem",
+      "hash": "6bec47b9101a1428f0b224e660337985fda7b0e8c298e23a3317a739ce5a17eb"
+    },
+    "timezones.America/Ojinaga": {
+      "english": "America/Ojinaga",
+      "hash": "a6bec8fb1b3771b1b7921720d07d110e8c2c81cb71b5ba4565ad52b716fdc576"
+    },
+    "timezones.America/Panama": {
+      "english": "America/Panama",
+      "hash": "5008245115c3c1e3cff94e357d8142d3abb3fea2bc02450543f913adaadfab2e"
+    },
+    "timezones.America/Paramaribo": {
+      "english": "America/Paramaribo",
+      "hash": "5a046b252eab6018e7ab043f3eef790127ba22163326877e7a6ce7e6f5164e0a"
+    },
+    "timezones.America/Phoenix": {
+      "english": "America/Phoenix",
+      "hash": "b919121b45aeca028a99bba815e54d7c2b56cf854fcd7ec2dec69bdb83caca21"
+    },
+    "timezones.America/Port-au-Prince": {
+      "english": "America/Port-au-Prince",
+      "hash": "165528b666cdbc49c8da2fa8ffc2d482b47bb4ab86180d7090909ac8dd0e8885"
+    },
+    "timezones.America/Port_of_Spain": {
+      "english": "America/Port of Spain",
+      "hash": "5ca30aaa4f0a41309236e582fd5f69f8873a30f3c8ead382e3516a2b2be04c01"
+    },
+    "timezones.America/Porto_Velho": {
+      "english": "America/Porto Velho",
+      "hash": "08c4db534d3079f899e692e6f802972b7eea29d40641c503be66517c473a2387"
+    },
+    "timezones.America/Puerto_Rico": {
+      "english": "America/Puerto Rico",
+      "hash": "8ee602fa7547fc71504d5e158dfcab6226dae758b4b9aecc75369efc8b22c976"
+    },
+    "timezones.America/Punta_Arenas": {
+      "english": "America/Punta Arenas",
+      "hash": "c56b6b476c1d4d48b5becae1e711e309912d47c30cf3e030a33ff55a27bc3546"
+    },
+    "timezones.America/Rankin_Inlet": {
+      "english": "America/Rankin Inlet",
+      "hash": "0e1352a093d191b2b203de67d14a5a27a034e81eecf75ca733e7bccee20d0b62"
+    },
+    "timezones.America/Recife": {
+      "english": "America/Recife",
+      "hash": "7dd4d6f32ecd574e2591e176d6b4523b6d54d4498c39570d5bb26dca41dce836"
+    },
+    "timezones.America/Regina": {
+      "english": "America/Regina",
+      "hash": "24c66d1bae70c638e3fc2188232c1d51bd0d30250513175a4aeb17683188436c"
+    },
+    "timezones.America/Resolute": {
+      "english": "America/Resolute",
+      "hash": "a2d15c87291f18f2550796c98728e24493d9f60011acb92611729b991acf0bf7"
+    },
+    "timezones.America/Rio_Branco": {
+      "english": "America/Rio Branco",
+      "hash": "e649c8aee3600a8f64b99c0e8db6ac50fe534e9122dd749f35f3c2af513ee7c1"
+    },
+    "timezones.America/Santarem": {
+      "english": "America/Santarem",
+      "hash": "a7581d3c3f6741649b09f5b08cfe83517209241f4eeb7d3dbba96e9301af4a8b"
+    },
+    "timezones.America/Santiago": {
+      "english": "America/Santiago",
+      "hash": "58c885a79d98507ffb7c33da1c03d9717ee83e00902b882db2598bac4a7da463"
+    },
+    "timezones.America/Santo_Domingo": {
+      "english": "America/Santo Domingo",
+      "hash": "356077c5c11198ca3bf1ae74aa8596a2fcbd1463aa6cea4eef5021bddcaf2c56"
+    },
+    "timezones.America/Sao_Paulo": {
+      "english": "America/Sao Paulo",
+      "hash": "03240d3eecf422851bbe00d7f5272fc27adc803a7658f92c7c57a2bbcc086301"
+    },
+    "timezones.America/Scoresbysund": {
+      "english": "America/Scoresbysund",
+      "hash": "4c5d2fd44a2b1221aba0ef48c8bfc8aaf454cbb3b0beed2c9ebd8b299f81bec3"
+    },
+    "timezones.America/Sitka": {
+      "english": "America/Sitka",
+      "hash": "a62ed7605f1f8575f1dac7e164810a6b34cf88f9de6fb302293401fff6126620"
+    },
+    "timezones.America/St_Barthelemy": {
+      "english": "America/St Barthelemy",
+      "hash": "04366b007db18f1f4d25b2b0696fb9e4aed6d407545f11c54186395281c9735d"
+    },
+    "timezones.America/St_Johns": {
+      "english": "America/St Johns",
+      "hash": "88c7a71d39c6caa7b8dd1a5a89fce663f82533ed2d95301da6224d3b4b816456"
+    },
+    "timezones.America/St_Kitts": {
+      "english": "America/St Kitts",
+      "hash": "24f9e62383d93b12c6d7fa62eabbe06be739b317a3e75df5918e5a60e4f6193b"
+    },
+    "timezones.America/St_Lucia": {
+      "english": "America/St Lucia",
+      "hash": "a0f088a1d04e52682d3c89a5b6b0d8980ca2cee14edbe400463c2c46165a7594"
+    },
+    "timezones.America/St_Thomas": {
+      "english": "America/St Thomas",
+      "hash": "064a84708d3fd5fb305e3fa0edf60a2cb001cf271f00e369e305ae5a5cafee90"
+    },
+    "timezones.America/St_Vincent": {
+      "english": "America/St Vincent",
+      "hash": "474a94289f0b29c1f3fee56a1e8e346fb14dfb5fcc3c35ec2108b29ac5acc5cb"
+    },
+    "timezones.America/Swift_Current": {
+      "english": "America/Swift Current",
+      "hash": "dc84b1ff9c984692c5b3d12c8f82fbeeb1496baa93e18d272d94c0c493d6159e"
+    },
+    "timezones.America/Tegucigalpa": {
+      "english": "America/Tegucigalpa",
+      "hash": "da21eb2c2af548e6f191a752daf4e7a1ee79b28d00246187ac7bc809b06688c6"
+    },
+    "timezones.America/Thule": {
+      "english": "America/Thule",
+      "hash": "e9ff957d161f46ab9ebc3dc62910d176a17f52b0982032121bcee638d4388b91"
+    },
+    "timezones.America/Tijuana": {
+      "english": "America/Tijuana",
+      "hash": "73a0af6b24caae802ae4b12f1d743c381295191650c46aa3491628ac5c057e67"
+    },
+    "timezones.America/Toronto": {
+      "english": "America/Toronto",
+      "hash": "feaa40fb2ab0c6f6d7450a4d2d6007390256a6f0f32ae74878c1cca0e88503ee"
+    },
+    "timezones.America/Tortola": {
+      "english": "America/Tortola",
+      "hash": "690111cb72de627ea53c10285db266ca0dadf831337042bcf0b265f24eaffe4b"
+    },
+    "timezones.America/Vancouver": {
+      "english": "America/Vancouver",
+      "hash": "9e906781f47b12e1bc907f0cc3eba82397fee0c1c87d5c3a33a6fce49271cf39"
+    },
+    "timezones.America/Whitehorse": {
+      "english": "America/Whitehorse",
+      "hash": "1813c1b86f1a72c59bfd193c2e6782478b57616da6d903d7c3b5b087196394c3"
+    },
+    "timezones.America/Winnipeg": {
+      "english": "America/Winnipeg",
+      "hash": "05551849429fb32b67c073972056859e6c757a4bc2daedbcc0387c503342439f"
+    },
+    "timezones.America/Yakutat": {
+      "english": "America/Yakutat",
+      "hash": "90f715c40f64cdc0c7206abb436278446538e8f83341e5843626726d8fb375a1"
+    },
+    "timezones.Antarctica/Casey": {
+      "english": "Antarctica/Casey",
+      "hash": "0c4b851a6bcddb9feb330fce1b5822e29bf107c87a9c4662b50adbcaca0605d8"
+    },
+    "timezones.Antarctica/Davis": {
+      "english": "Antarctica/Davis",
+      "hash": "871eeaa9d9f7596a721588e048f3a26d213e5919dc151f303da7b76882e8004a"
+    },
+    "timezones.Antarctica/DumontDUrville": {
+      "english": "Antarctica/DumontDUrville",
+      "hash": "e5a2f75d2ae8422b4a7edca61b8dff3911c0b5f40745fa20ff85d19275ea5b11"
+    },
+    "timezones.Antarctica/Macquarie": {
+      "english": "Antarctica/Macquarie",
+      "hash": "f4296b0774661651c3f7c1583359c16ac4a2010512afb5fc763cff1c2f1fce50"
+    },
+    "timezones.Antarctica/Mawson": {
+      "english": "Antarctica/Mawson",
+      "hash": "c36592a27bd50ea1c720d1eb5ed56940a3b4f60a6ba5776b119cf2c20df95bc2"
+    },
+    "timezones.Antarctica/McMurdo": {
+      "english": "Antarctica/McMurdo",
+      "hash": "bd1de2d0b576e76de528ddd52b9254a82802941c971fa84ee2f383cc0d80a269"
+    },
+    "timezones.Antarctica/Palmer": {
+      "english": "Antarctica/Palmer",
+      "hash": "8d00e16a35ea9db73debe20a2603e8ff0443e0898ea4fc002b99b9d1ab141951"
+    },
+    "timezones.Antarctica/Rothera": {
+      "english": "Antarctica/Rothera",
+      "hash": "06aa1cba95d064f47e6dc69a45662a7fe30dbe2365b0cfc50406afbd070a1c4c"
+    },
+    "timezones.Antarctica/Syowa": {
+      "english": "Antarctica/Syowa",
+      "hash": "b2d49028a72a990e337dc46ed2572b6fcd7d4a9ef711fcd6930b0cdd1e7078b7"
+    },
+    "timezones.Antarctica/Troll": {
+      "english": "Antarctica/Troll",
+      "hash": "0c9c095685c4fdff86935bef456717e18c774e22e526d501d8accaf7d5cd643b"
+    },
+    "timezones.Antarctica/Vostok": {
+      "english": "Antarctica/Vostok",
+      "hash": "76bc8cbfd5cf2c6e348bca8ef4b536ad31599746527d5f38527373dc6c44d746"
+    },
+    "timezones.Arctic/Longyearbyen": {
+      "english": "Arctic/Longyearbyen",
+      "hash": "54b2420865695b17d1defbcade209ec51bbd02f915dd3a0bcaf28373008f5b98"
+    },
+    "timezones.Asia/Aden": {
+      "english": "Asia/Aden",
+      "hash": "49b11395442211428020d298258e5ede0d7368bff51ec6f9c8260d39a164a97a"
+    },
+    "timezones.Asia/Almaty": {
+      "english": "Asia/Almaty",
+      "hash": "7bb2ce5e75a6e0133ebb2bea1e704dcd065379b633775ec1a9c30a8313b2a77a"
+    },
+    "timezones.Asia/Amman": {
+      "english": "Asia/Amman",
+      "hash": "07e1927c3b8aa01da5d4d2e17f26e22f1a94fd8a05c6576fc284ecdcceb894fa"
+    },
+    "timezones.Asia/Anadyr": {
+      "english": "Asia/Anadyr",
+      "hash": "add02c73b19bcefd92de4b77d9a8d0020ce779e8054060dc802da965e597993d"
+    },
+    "timezones.Asia/Aqtau": {
+      "english": "Asia/Aqtau",
+      "hash": "d247a085ce344279eda1e4bf01fedc25cf650e4c39fe89c676532f48c70edc12"
+    },
+    "timezones.Asia/Aqtobe": {
+      "english": "Asia/Aqtobe",
+      "hash": "1a92c723b32270dc6016f8dbe06e2cd42c0c484c73c20deec5f7f79dcbbe2e67"
+    },
+    "timezones.Asia/Ashgabat": {
+      "english": "Asia/Ashgabat",
+      "hash": "8d3bcac67cfee2e15ddc4bc7651e074b478e23ce9de3fe29444084e73adb3f28"
+    },
+    "timezones.Asia/Atyrau": {
+      "english": "Asia/Atyrau",
+      "hash": "838f380d4b8bfc52563b4ce59868bed4e70f621c3bce781335b05272a0f259a0"
+    },
+    "timezones.Asia/Baghdad": {
+      "english": "Asia/Baghdad",
+      "hash": "cc688922b81879f5ea20e590fe7278cbbd8bd76c01d827da553967920010550b"
+    },
+    "timezones.Asia/Bahrain": {
+      "english": "Asia/Bahrain",
+      "hash": "bef0674680dc17aaea94167339cdecfefa221216c3525975f81382d969395e89"
+    },
+    "timezones.Asia/Baku": {
+      "english": "Asia/Baku",
+      "hash": "9818606cf4e6b9cf3d37885edb92e89f20c790a20bb02d9ebb6d5712572f3092"
+    },
+    "timezones.Asia/Bangkok": {
+      "english": "Asia/Bangkok",
+      "hash": "e8def32656206d2574e163cff4330221cbca79a584c6debd922546da0bb0ff74"
+    },
+    "timezones.Asia/Barnaul": {
+      "english": "Asia/Barnaul",
+      "hash": "e20e3f9d1d81c5fd512df4d8b0b5147a5b1444e524c3b87b62db847a2362a8e0"
+    },
+    "timezones.Asia/Beirut": {
+      "english": "Asia/Beirut",
+      "hash": "47d69d9dd207a12285a85f75185032a332ba037c92e2ceaf0b610d0880bdd2b6"
+    },
+    "timezones.Asia/Bishkek": {
+      "english": "Asia/Bishkek",
+      "hash": "5d78121fd7289ac6a0a6bbb99fe63779336b10f9eb65428f04f1f1c5092af36a"
+    },
+    "timezones.Asia/Brunei": {
+      "english": "Asia/Brunei",
+      "hash": "0c0ef577e60c0eef546e6f23adcdff681faca1b5fdd2f8628bb23ae817356c14"
+    },
+    "timezones.Asia/Calcutta": {
+      "english": "Asia/Calcutta",
+      "hash": "7d75e0ca00d30aaac82e36c220c3393bb86c5d9ff91f2eba6fad781fcdc75390"
+    },
+    "timezones.Asia/Chita": {
+      "english": "Asia/Chita",
+      "hash": "a241cf7f63704fe9f3026c9617477c877d2b986b3f599efb8611f2e50f33b9d6"
+    },
+    "timezones.Asia/Colombo": {
+      "english": "Asia/Colombo",
+      "hash": "aa94105757d7c7a33c1931b7f9a8692ba56b20d3204f67a2b3622770e4f6f768"
+    },
+    "timezones.Asia/Damascus": {
+      "english": "Asia/Damascus",
+      "hash": "dcc4971cdc69c52d2e0fccc14c600bf0560276afd9b4c41641e7cad123b37e8e"
+    },
+    "timezones.Asia/Dhaka": {
+      "english": "Asia/Dhaka",
+      "hash": "d2342499eace38627607c6340a75f27cbd119df296b1e5466163a7d01e509122"
+    },
+    "timezones.Asia/Dili": {
+      "english": "Asia/Dili",
+      "hash": "75316c5b67abb6d7c0286da9e9cb534f33ac4153e903b5109b0e5b25ca41d3ec"
+    },
+    "timezones.Asia/Dubai": {
+      "english": "Asia/Dubai",
+      "hash": "0cc1a975a27f0ce9980a913955fcf6f17f0aeeff142a8d5b3b6cf99c8167a7a4"
+    },
+    "timezones.Asia/Dushanbe": {
+      "english": "Asia/Dushanbe",
+      "hash": "848f466449ef22209ccbbb5bac738305a1ce0718a7e991a13f47ed2d05803fbb"
+    },
+    "timezones.Asia/Famagusta": {
+      "english": "Asia/Famagusta",
+      "hash": "2ba671b3c31cb66038a8f1081697ebb8b385e0ed5bb0638fcf9a9ac9fce5c687"
+    },
+    "timezones.Asia/Gaza": {
+      "english": "Asia/Gaza",
+      "hash": "e46bcf0835cc535d78903900015ef474a86d899017238672c519663752e801eb"
+    },
+    "timezones.Asia/Hebron": {
+      "english": "Asia/Hebron",
+      "hash": "25db6167191615568fb3935d589cf3a2ed3bf670efb2b4c5fe41da576e8e9c48"
+    },
+    "timezones.Asia/Hong_Kong": {
+      "english": "Asia/Hong Kong",
+      "hash": "b57a4e8295030be539c775a1d18d05e8691c89d712d3fef6b91cff1dc38ba6f4"
+    },
+    "timezones.Asia/Hovd": {
+      "english": "Asia/Hovd",
+      "hash": "ebfe57946e637ffb4cd2e92bc82dd01b5cee9c440f116056ce7eec9a016318aa"
+    },
+    "timezones.Asia/Irkutsk": {
+      "english": "Asia/Irkutsk",
+      "hash": "db273b1692c37258fd09dcac95291e1cd939def95174c41db82749220e9a636d"
+    },
+    "timezones.Asia/Jakarta": {
+      "english": "Asia/Jakarta",
+      "hash": "3b647dcf9395e0bc7328dccba2ec5f6d4f4842333312b5fb504d9ef89f1327f0"
+    },
+    "timezones.Asia/Jayapura": {
+      "english": "Asia/Jayapura",
+      "hash": "ba4c08f61f9802f0bf761a185bd48ede4767220c553cf0a912d534b190495beb"
+    },
+    "timezones.Asia/Jerusalem": {
+      "english": "Asia/Jerusalem",
+      "hash": "767f41f547937e73856a64ae5abc126fab75c2fe4fa6161c59de416a8419cc73"
+    },
+    "timezones.Asia/Kabul": {
+      "english": "Asia/Kabul",
+      "hash": "d87850b9aacffb2993013bec65d5c87e1c23a30597ce617de8d0e88b51913523"
+    },
+    "timezones.Asia/Kamchatka": {
+      "english": "Asia/Kamchatka",
+      "hash": "81a0aa047b39d094ab50e52444e02d318d0304944470301b0bb8275e56857fe6"
+    },
+    "timezones.Asia/Karachi": {
+      "english": "Asia/Karachi",
+      "hash": "770c7a71851ba46cd16e73c42e1f01cd5d30ea49c9d40d1aea1b6fe4f0f9ba44"
+    },
+    "timezones.Asia/Katmandu": {
+      "english": "Asia/Katmandu",
+      "hash": "4c11aad347e39fcc1885950e50d93d8eb9ad9e19b0c16601a4b28e503d8c9dd5"
+    },
+    "timezones.Asia/Khandyga": {
+      "english": "Asia/Khandyga",
+      "hash": "5e4017671a41dbd99f2e2f1f0f5e4bd2ad04082ea16cfb7cb5ef1e59856b41f6"
+    },
+    "timezones.Asia/Krasnoyarsk": {
+      "english": "Asia/Krasnoyarsk",
+      "hash": "6893f45dd7fdfefac5feca1c51e67e9e2f0435c101a9dca081f48b24551a12aa"
+    },
+    "timezones.Asia/Kuala_Lumpur": {
+      "english": "Asia/Kuala Lumpur",
+      "hash": "97a54783a4cb15a24f037e6b9ef2ab97c9ef2d237dcb2f53a496f7e291f17693"
+    },
+    "timezones.Asia/Kuching": {
+      "english": "Asia/Kuching",
+      "hash": "d67f3550bbde372679151c56af91ae5260b8e8361a1377dd934da674a8f5529c"
+    },
+    "timezones.Asia/Kuwait": {
+      "english": "Asia/Kuwait",
+      "hash": "17365c6a10dafcd0dada0a2df8338100465670f75176fdada7243669199f692f"
+    },
+    "timezones.Asia/Macau": {
+      "english": "Asia/Macau",
+      "hash": "d9151dea2b8c8a07c7ffd18043c7617c4f79c7908dbb0c0c77c976327f212292"
+    },
+    "timezones.Asia/Magadan": {
+      "english": "Asia/Magadan",
+      "hash": "1a8ae99a2a27821bed7d5dffa35605d5b1bed278cdd3b5c5e1513e5f6800c03f"
+    },
+    "timezones.Asia/Makassar": {
+      "english": "Asia/Makassar",
+      "hash": "107dc25fa434d7a11f68d0d2d14902f48cde03119fdbc8a98af8ee4edb2dbffe"
+    },
+    "timezones.Asia/Manila": {
+      "english": "Asia/Manila",
+      "hash": "c84dc54b6fda753b540e21a17543ee888e647c78d99f8a3edc3a856d30f3d79e"
+    },
+    "timezones.Asia/Muscat": {
+      "english": "Asia/Muscat",
+      "hash": "f118fca9ad29e0cdd36fe45ee5c1d36ee59af4ce734252cc342d0e790adf87e0"
+    },
+    "timezones.Asia/Nicosia": {
+      "english": "Asia/Nicosia",
+      "hash": "2f4fa03de437b272dc42b983b0c589f5354de03e3260a001a6272ef0c30b3bff"
+    },
+    "timezones.Asia/Novokuznetsk": {
+      "english": "Asia/Novokuznetsk",
+      "hash": "ec2ef7946ba75f9fa403634c4fb7ca8a7ec293c69c79916b7919a3689aec1bc0"
+    },
+    "timezones.Asia/Novosibirsk": {
+      "english": "Asia/Novosibirsk",
+      "hash": "9021e880363f577d0c8cc40d4911010f1d13b5348098d44abf6a05a22e98307b"
+    },
+    "timezones.Asia/Omsk": {
+      "english": "Asia/Omsk",
+      "hash": "41964ca79232433ad1ae0f63a81cdbff6dc31869854275884f3092cfdb01f960"
+    },
+    "timezones.Asia/Oral": {
+      "english": "Asia/Oral",
+      "hash": "6ec81cffbf80b9db5b3066d7c23b95d5307e95ddfbe645d178ab596dfc544849"
+    },
+    "timezones.Asia/Phnom_Penh": {
+      "english": "Asia/Phnom Penh",
+      "hash": "677da97edc29468914e6b4ca014c81c2eee3a22dac9fd9c03e784dbbf19d31c7"
+    },
+    "timezones.Asia/Pontianak": {
+      "english": "Asia/Pontianak",
+      "hash": "115332ec7eb26e2bbc4ebcca07be687573154f85dc87c1c89cae68e427794db5"
+    },
+    "timezones.Asia/Pyongyang": {
+      "english": "Asia/Pyongyang",
+      "hash": "8ccdf05936ed8ec2452b578806e800cae71ebd969be51f9d7ddc1f025cb84b7e"
+    },
+    "timezones.Asia/Qatar": {
+      "english": "Asia/Qatar",
+      "hash": "796751c31e4ef1b1d8e344c13d017179f3ef862a00f2127eab63a5161945a77f"
+    },
+    "timezones.Asia/Qostanay": {
+      "english": "Asia/Qostanay",
+      "hash": "2b144db819acdc80b3f26c0b6cae43d9276284283dd4460d8ca8d7e6ff67c2a8"
+    },
+    "timezones.Asia/Qyzylorda": {
+      "english": "Asia/Qyzylorda",
+      "hash": "f9e0ffbe492c3759af4661968ae3c9c3ff3a45eb46fd9d7cdea08873847976ee"
+    },
+    "timezones.Asia/Rangoon": {
+      "english": "Asia/Rangoon",
+      "hash": "d1f17e72a70ee7d4a248991c7205d7e1e6bfcacacdb518e9b8dc6ba9a5f40776"
+    },
+    "timezones.Asia/Riyadh": {
+      "english": "Asia/Riyadh",
+      "hash": "c80ce74da80b5965d866f2f22a4aac79591fe915ae4b1b44924b5aebec5e42ac"
+    },
+    "timezones.Asia/Saigon": {
+      "english": "Asia/Saigon",
+      "hash": "ffbd7b4dc45c67424ba3220d01411363d698c9240516ccdab814e0b768f0a292"
+    },
+    "timezones.Asia/Sakhalin": {
+      "english": "Asia/Sakhalin",
+      "hash": "535c83421f18109556e1344f692a5988c55cf391a46aaf2f90550e037bffe023"
+    },
+    "timezones.Asia/Samarkand": {
+      "english": "Asia/Samarkand",
+      "hash": "70e109f9b0cfa1601ce03a7f3e84d927729a05202b3862d6a27d46228f352ef8"
+    },
+    "timezones.Asia/Seoul": {
+      "english": "Asia/Seoul",
+      "hash": "a8a5fc7a91cc570e6e692d5c4d66bc8733ba7a63ee155dab427e7fbbbbfcec33"
+    },
+    "timezones.Asia/Shanghai": {
+      "english": "Asia/Shanghai",
+      "hash": "95033d34e64e9c7acc7c5ec075ac7d8ce9521aedfdeeb0a0b179978e82647361"
+    },
+    "timezones.Asia/Singapore": {
+      "english": "Asia/Singapore",
+      "hash": "4b773e48c663e2f0b7166ccb96dd6ab031a51f835443b89b4ba3050f85b338f3"
+    },
+    "timezones.Asia/Srednekolymsk": {
+      "english": "Asia/Srednekolymsk",
+      "hash": "81137566bab0aa0ede4d7b5174d5c68a3f3eae25c00346ba4c1a28c0c71b6678"
+    },
+    "timezones.Asia/Taipei": {
+      "english": "Asia/Taipei",
+      "hash": "2feef03a36ac28b23bbb36c290fe9016e8183f565034641a22ec31185386469d"
+    },
+    "timezones.Asia/Tashkent": {
+      "english": "Asia/Tashkent",
+      "hash": "10c5bc983a82d3fc5d242faae9dd6f8f15080d57e1d91f52b01c662793e6d100"
+    },
+    "timezones.Asia/Tbilisi": {
+      "english": "Asia/Tbilisi",
+      "hash": "ce4cfb47645041fbcce127bcfbec2ac841b5f36e5a012b86487941bfb3190ca9"
+    },
+    "timezones.Asia/Tehran": {
+      "english": "Asia/Tehran",
+      "hash": "23f12ca4e3cb7ec917a9c8c8b436147b2755a27b662dbe52ee40a1bbffb2407f"
+    },
+    "timezones.Asia/Thimphu": {
+      "english": "Asia/Thimphu",
+      "hash": "dd81f18038123a4285ea1097f0d7823ff06d13e5402efc4d7efbe05026d7ca3f"
+    },
+    "timezones.Asia/Tokyo": {
+      "english": "Asia/Tokyo",
+      "hash": "d03f5792f1d28c142d3238e442b9b69c1e69b76c103115b38df66a6abaa39890"
+    },
+    "timezones.Asia/Tomsk": {
+      "english": "Asia/Tomsk",
+      "hash": "107d73d97f72dcea4677f421182b158729679a501bf5f042d0d7b151d49ca4fa"
+    },
+    "timezones.Asia/Ulaanbaatar": {
+      "english": "Asia/Ulaanbaatar",
+      "hash": "5a0e82625e24dd08fa771f87567512587f0e0a37e432ff81afe40ae34d315e93"
+    },
+    "timezones.Asia/Urumqi": {
+      "english": "Asia/Urumqi",
+      "hash": "85f5a295ad098fd63a7d5db39064e892d23ecf69b3cb08e6e9df4fdf9f57c1ae"
+    },
+    "timezones.Asia/Ust-Nera": {
+      "english": "Asia/Ust-Nera",
+      "hash": "7bb0a84ba4d8744323c363aa37ec7612e13d8514c89b5e326c507b235dc1ca9e"
+    },
+    "timezones.Asia/Vientiane": {
+      "english": "Asia/Vientiane",
+      "hash": "c286c8838348efdb08d7c5fa7cc3434f0e64d26fdda5bc53b6bfce2ff3f978b8"
+    },
+    "timezones.Asia/Vladivostok": {
+      "english": "Asia/Vladivostok",
+      "hash": "126d3da5a620e6570d1772ccb1ad879e508d255c9acdfea4abff2552fb2cea72"
+    },
+    "timezones.Asia/Yakutsk": {
+      "english": "Asia/Yakutsk",
+      "hash": "85f2e910aedbe142aa859696aa63ce59aa6748ed96ce748249003b2009d0cb4b"
+    },
+    "timezones.Asia/Yekaterinburg": {
+      "english": "Asia/Yekaterinburg",
+      "hash": "2e7a548ea689b73631824add1f60c6cfcb94667970fb7c977be9af05ff91f267"
+    },
+    "timezones.Asia/Yerevan": {
+      "english": "Asia/Yerevan",
+      "hash": "1e8a75a85f5ca47dfcc969fa46b7ba041a8f0873a4169ee55a06a06e91ded510"
+    },
+    "timezones.Atlantic/Azores": {
+      "english": "Atlantic/Azores",
+      "hash": "c17e63e7a47795a4e5700ca5c2be5ec9e6c41a9809f6a3b32d935a0cf583ddff"
+    },
+    "timezones.Atlantic/Bermuda": {
+      "english": "Atlantic/Bermuda",
+      "hash": "f77d33c2e783f016a01d903074b07263674ae1c084f817ab4d7b9dfdf3d5b2ea"
+    },
+    "timezones.Atlantic/Canary": {
+      "english": "Atlantic/Canary",
+      "hash": "8d56d8ca5a18c0c9214419498a017c5e9db5008e1429f02123402a9cfc69eede"
+    },
+    "timezones.Atlantic/Cape_Verde": {
+      "english": "Atlantic/Cape Verde",
+      "hash": "181bf045fec1a4b65e5b16cd1414fb8cbbab41a5631849f449112b87c0329b5f"
+    },
+    "timezones.Atlantic/Faeroe": {
+      "english": "Atlantic/Faeroe",
+      "hash": "283e2082acb9cb8e4f646cd2102d050d393d94be838fb18721d6615ebe8e26ff"
+    },
+    "timezones.Atlantic/Madeira": {
+      "english": "Atlantic/Madeira",
+      "hash": "686b7ddda917ecf492ece38aff1c271db7bf89c3a0292f1c3473c62186d4a8d0"
+    },
+    "timezones.Atlantic/Reykjavik": {
+      "english": "Atlantic/Reykjavik",
+      "hash": "7528488f12ad40a622a8e4c5bd1fcace3febc9506feb2d6c076afdbe72da5dc2"
+    },
+    "timezones.Atlantic/South_Georgia": {
+      "english": "Atlantic/South Georgia",
+      "hash": "e1fcc30247a8689bf79a97ec3820b9e91338c5f3450fc4fb82835e7ee8790c34"
+    },
+    "timezones.Atlantic/St_Helena": {
+      "english": "Atlantic/St Helena",
+      "hash": "c59f1086a1f3b0661b1b679f2990c2c2dcb65254070c0ef9dbf62582262c8c51"
+    },
+    "timezones.Atlantic/Stanley": {
+      "english": "Atlantic/Stanley",
+      "hash": "4c05bf0a896f104046b99ee3cbd367e30e4f452db3171a33c86b865c2c6639e0"
+    },
+    "timezones.Australia/Adelaide": {
+      "english": "Australia/Adelaide",
+      "hash": "16a54973c8f7e420fd574cd8aca557d7b9f45574aebb72a564b350e8b3fd20e2"
+    },
+    "timezones.Australia/Brisbane": {
+      "english": "Australia/Brisbane",
+      "hash": "3db6e5843d96ebe8ba441e3e85a9c644b49398e7c39e42a7d699a3e2a9cc9739"
+    },
+    "timezones.Australia/Broken_Hill": {
+      "english": "Australia/Broken Hill",
+      "hash": "35ce24bf4f54fd5df39a126ecf3e794ab3d6f2b59e3a9e1b4ede58ceb29eb92c"
+    },
+    "timezones.Australia/Darwin": {
+      "english": "Australia/Darwin",
+      "hash": "234962e6dc34e147e387d9a3f90b9c917aec5619e6599ff2192150dcc5d261c4"
+    },
+    "timezones.Australia/Eucla": {
+      "english": "Australia/Eucla",
+      "hash": "5727028491e6ccdb739db131b13e88aa7ee8e97f337fa0ad4f4c570139df846c"
+    },
+    "timezones.Australia/Hobart": {
+      "english": "Australia/Hobart",
+      "hash": "81f6690a0c58899a837791ad1767d372768008bfaff374e46aae18a4352c2e8f"
+    },
+    "timezones.Australia/Lindeman": {
+      "english": "Australia/Lindeman",
+      "hash": "f1d0d2f8294397ca59cd116848219cb12a7ee2359a04ad79fd713ca0b7f809b6"
+    },
+    "timezones.Australia/Lord_Howe": {
+      "english": "Australia/Lord Howe",
+      "hash": "e055da60c7cf2236f4cba28afa6f3f89b0735cfe4bbe85101be6a6a0abaf59f0"
+    },
+    "timezones.Australia/Melbourne": {
+      "english": "Australia/Melbourne",
+      "hash": "a78ce7fd38bcc00116945609a3f0e00ea765ea08927cd6b4e3d700d68cf607e6"
+    },
+    "timezones.Australia/Perth": {
+      "english": "Australia/Perth",
+      "hash": "825144946a6bed655228b9bc8ce40efb40d63b607c237d03c2b6e1b531c79033"
+    },
+    "timezones.Australia/Sydney": {
+      "english": "Australia/Sydney",
+      "hash": "b27b602aa501cfa16752c56889d1f5a164f150021e5fb6d497895e29f0ae8a33"
+    },
+    "timezones.Europe/Amsterdam": {
+      "english": "Europe/Amsterdam",
+      "hash": "c147c70a2945af0f92f810a649b257b00cce0b49c22880fab3eb964240d27f6e"
+    },
+    "timezones.Europe/Andorra": {
+      "english": "Europe/Andorra",
+      "hash": "f7385fce07528f596980815f9dd7beee3e3273ff6e3a01bea2fe1fdc37616d9c"
+    },
+    "timezones.Europe/Astrakhan": {
+      "english": "Europe/Astrakhan",
+      "hash": "c501ce72071bd2b1f21fa832c0f89b939154c9437d32d7fcb1f8bdb21883597f"
+    },
+    "timezones.Europe/Athens": {
+      "english": "Europe/Athens",
+      "hash": "95cf9c255a8e74002085398794fad7fb292ceaeaf60a74aba7fc48d76d0dce69"
+    },
+    "timezones.Europe/Belgrade": {
+      "english": "Europe/Belgrade",
+      "hash": "d843670b72bb5c5c6ecd9cef3fbff585fbfc17fbe91a22d2ed489b1f939b51d5"
+    },
+    "timezones.Europe/Berlin": {
+      "english": "Europe/Berlin",
+      "hash": "99f0b5e419f71f7bf5badd9e9a6287c0be5046d1479ab1b6a4e7f8ff7a20d9c8"
+    },
+    "timezones.Europe/Bratislava": {
+      "english": "Europe/Bratislava",
+      "hash": "5ab4a43c9d1badb265a35bf91de74cd669cdc02d9d448bc9ee40f2823cdc6826"
+    },
+    "timezones.Europe/Brussels": {
+      "english": "Europe/Brussels",
+      "hash": "09a81d6661e555f04909d77694495c4922ffa8884344229cdb4d9fa617ae88cd"
+    },
+    "timezones.Europe/Bucharest": {
+      "english": "Europe/Bucharest",
+      "hash": "af7cd0f919c0bedcc00b19011bfe5b428d6bee145a460d5fc329b69f4c8da7a4"
+    },
+    "timezones.Europe/Budapest": {
+      "english": "Europe/Budapest",
+      "hash": "e96c0a8575b76ad63104bf1a76feee3992eb10903a54a25ad1c8dc64ae7df62a"
+    },
+    "timezones.Europe/Busingen": {
+      "english": "Europe/Busingen",
+      "hash": "a1389738cacf248bde4762293f13db33833cb8760f4bcda72dac2f15b9549992"
+    },
+    "timezones.Europe/Chisinau": {
+      "english": "Europe/Chisinau",
+      "hash": "84509ac07b3c9b22e56dc17c6249be0f57d2ae7ccc951398e23c2b0a90468f04"
+    },
+    "timezones.Europe/Copenhagen": {
+      "english": "Europe/Copenhagen",
+      "hash": "9f73c87f1649dbd848ef8d5d884044c0e401c3b72159c405e232bfa6f61770f0"
+    },
+    "timezones.Europe/Dublin": {
+      "english": "Europe/Dublin",
+      "hash": "054efa5769e8f136dc674868fc35fabd582aa75ef5492149fc03f1f6203905e9"
+    },
+    "timezones.Europe/Gibraltar": {
+      "english": "Europe/Gibraltar",
+      "hash": "23f9eb35910abbadbb43f7ea30b33dc5da8080639f1df80f1d4931ae182212fb"
+    },
+    "timezones.Europe/Guernsey": {
+      "english": "Europe/Guernsey",
+      "hash": "2ec9443d6aaee92196d04437547b4bc9dfad38c0538999fc21785b7c61cb3a06"
+    },
+    "timezones.Europe/Helsinki": {
+      "english": "Europe/Helsinki",
+      "hash": "916b96b26aae66101900f03465edff32844be9405b36f12ec533fe46f11d8447"
+    },
+    "timezones.Europe/Isle_of_Man": {
+      "english": "Europe/Isle of Man",
+      "hash": "a9ca5ff549270773ec5f41f8a79da31c9326dfc3233513ca3edf0c30d3694edc"
+    },
+    "timezones.Europe/Istanbul": {
+      "english": "Europe/Istanbul",
+      "hash": "29085b405b361886748ff2ea3274b97ffa0227094ec7738f84449352fb49f3fd"
+    },
+    "timezones.Europe/Jersey": {
+      "english": "Europe/Jersey",
+      "hash": "77cad2aa484fe78466e302f36f62b614cd084b2c98de02d1544ccedbc28e1a1e"
+    },
+    "timezones.Europe/Kaliningrad": {
+      "english": "Europe/Kaliningrad",
+      "hash": "f7caa0a98c2b38e4771321ccf83268e2f7bda7362099f80d23bdf7eb7d928c07"
+    },
+    "timezones.Europe/Kiev": {
+      "english": "Europe/Kiev",
+      "hash": "099d2adb7f9a187c25224cd49364de6d510d6e89924584c0b97d88d3f801e551"
+    },
+    "timezones.Europe/Kirov": {
+      "english": "Europe/Kirov",
+      "hash": "939cbccf4227ce38976801cbdfb849fb0b1774546b73267ed6ce7fbad8aafb03"
+    },
+    "timezones.Europe/Lisbon": {
+      "english": "Europe/Lisbon",
+      "hash": "aecadecb62cd44c9036d1f010095ab69b23ea74343395470dc418e421533f04d"
+    },
+    "timezones.Europe/Ljubljana": {
+      "english": "Europe/Ljubljana",
+      "hash": "c6ecaa19d2838d05fd7a43441e14dade1c8c6e0eb392d49b2d26d91f591ab1d0"
+    },
+    "timezones.Europe/London": {
+      "english": "Europe/London",
+      "hash": "d851b36dde76214585b560d5bb8517e5a0072f6054f04ddc01717336d46aaa5d"
+    },
+    "timezones.Europe/Luxembourg": {
+      "english": "Europe/Luxembourg",
+      "hash": "00ce06071085d3b518aaae7904cb7917d4f89b35e7333ca361c2cfa04e3e2896"
+    },
+    "timezones.Europe/Madrid": {
+      "english": "Europe/Madrid",
+      "hash": "078cabaede7e5fc33db0b20e22967892f651a82a8a613dc406b1eb18b68d54d8"
+    },
+    "timezones.Europe/Malta": {
+      "english": "Europe/Malta",
+      "hash": "3918de644fa33e739327f96c338cc95dcd495b1d8ccaf3b8718fece1fad33079"
+    },
+    "timezones.Europe/Mariehamn": {
+      "english": "Europe/Mariehamn",
+      "hash": "80eda2e80028581aeb3b0b0e998a4737aad545d85b62731ddc69c8da21f0b2ba"
+    },
+    "timezones.Europe/Minsk": {
+      "english": "Europe/Minsk",
+      "hash": "6efc4d56df0ff417db183e16b787a43c8b38105994fed50a8e18803c319fd06d"
+    },
+    "timezones.Europe/Monaco": {
+      "english": "Europe/Monaco",
+      "hash": "79da1c56a2a06e20a51552fa171f1ec0710008898d2436d3865ec161adb59306"
+    },
+    "timezones.Europe/Moscow": {
+      "english": "Europe/Moscow",
+      "hash": "cf6de567b8374ce008ffc1a95e8a2ea8f57f9a0148b876e3ee6381b6cdc2ee79"
+    },
+    "timezones.Europe/Oslo": {
+      "english": "Europe/Oslo",
+      "hash": "7c5749b6432a7d7cc4244f4d4cac2f519dcd9c86082e263fb633b0ea092f45f2"
+    },
+    "timezones.Europe/Paris": {
+      "english": "Europe/Paris",
+      "hash": "cc31b47c7e352b6428bbfc7d5e6062d6d7e72c99b9f72da980362897f4ead7f0"
+    },
+    "timezones.Europe/Podgorica": {
+      "english": "Europe/Podgorica",
+      "hash": "f0ff7b88cdf831984f5155ee1552f4e695d126213fa7bd8e07775af4841d1a37"
+    },
+    "timezones.Europe/Prague": {
+      "english": "Europe/Prague",
+      "hash": "abed61aed76ec42d7f70627f3701828dde771be4adc8a170242af516415ae9f4"
+    },
+    "timezones.Europe/Riga": {
+      "english": "Europe/Riga",
+      "hash": "e1a7cd365eb9732a46b87e1d081f43d8aa4a9b3ad445507c91956b001b678ef4"
+    },
+    "timezones.Europe/Rome": {
+      "english": "Europe/Rome",
+      "hash": "180c6afadacf781c05a790b92f306e682ad7a09d987b52ab9db261cbfd46fa3e"
+    },
+    "timezones.Europe/Samara": {
+      "english": "Europe/Samara",
+      "hash": "74c81269112d24e56c36e7dd53c3118f6ee3a908d4c51c273e3f8dbfc0bda560"
+    },
+    "timezones.Europe/San_Marino": {
+      "english": "Europe/San Marino",
+      "hash": "8bbe2c56a37ae62e5c0e29b7a0347a76e1aa295f6873c6decf9af8f3f0d55f80"
+    },
+    "timezones.Europe/Sarajevo": {
+      "english": "Europe/Sarajevo",
+      "hash": "9f3e3d8441053743aa8782f67ca1dead559f7eea9b1c3e440487752c591aa221"
+    },
+    "timezones.Europe/Saratov": {
+      "english": "Europe/Saratov",
+      "hash": "f99ef02ad92d1059395a34e55b31a4956ee047f8f4d7c9b2e7d134879e635fc5"
+    },
+    "timezones.Europe/Simferopol": {
+      "english": "Europe/Simferopol",
+      "hash": "eecdfc63db1b02a56d3d82ba6661c99ca5005ad5657df38546ff0e939b6e5b81"
+    },
+    "timezones.Europe/Skopje": {
+      "english": "Europe/Skopje",
+      "hash": "3b7d54d1d3d2b631a439cb5c63897e4350bf8a1af8223d118b0ce8a7f7e8934f"
+    },
+    "timezones.Europe/Sofia": {
+      "english": "Europe/Sofia",
+      "hash": "5be14a299ae92ce5263f120c85922609e24a637cd12c14475bd67d6a23fb88fa"
+    },
+    "timezones.Europe/Stockholm": {
+      "english": "Europe/Stockholm",
+      "hash": "e5a2653e2f236fec9320d0352a065ed70c08e8bc324ec0b61ac55b9828deb0e3"
+    },
+    "timezones.Europe/Tallinn": {
+      "english": "Europe/Tallinn",
+      "hash": "4ee3d567cef1bcc03fbafd1b63768cfb7a9dc2a85901672ddc21463ff23cf7ed"
+    },
+    "timezones.Europe/Tirane": {
+      "english": "Europe/Tirane",
+      "hash": "0a3c659cc7bd71b642fdd3eb652e875e8335fb3e2b90a8d86b2daa027a34cdd2"
+    },
+    "timezones.Europe/Ulyanovsk": {
+      "english": "Europe/Ulyanovsk",
+      "hash": "84e65db711cafdfc93e01e885fdc69a5568d91be58184d09111511128a5da1bc"
+    },
+    "timezones.Europe/Vaduz": {
+      "english": "Europe/Vaduz",
+      "hash": "8dfc0c7b9491212618faec79923c399e168fd159d5a716725f33c46569d67ab7"
+    },
+    "timezones.Europe/Vatican": {
+      "english": "Europe/Vatican",
+      "hash": "b6a92c3787b54400fbcb5b4d2d4981df93e615a64b841347c5f7f6ce21e57239"
+    },
+    "timezones.Europe/Vienna": {
+      "english": "Europe/Vienna",
+      "hash": "3db791fb847adf1eb75f34c078f9d44a83777c6e05e52ebfe16a140bfee49dd4"
+    },
+    "timezones.Europe/Vilnius": {
+      "english": "Europe/Vilnius",
+      "hash": "90310add4f39b716f06c921313b626d3e97f3ab7d6ad66c178935832c4910ed1"
+    },
+    "timezones.Europe/Volgograd": {
+      "english": "Europe/Volgograd",
+      "hash": "ef0ef114b72e8ac7422eebfbe2ea74c8f9ddfab2b04a8eaf91d891432d03539c"
+    },
+    "timezones.Europe/Warsaw": {
+      "english": "Europe/Warsaw",
+      "hash": "4b772ed0d26e19e0ee1a75c49273898f03b774753ec3d08174893582975ce744"
+    },
+    "timezones.Europe/Zagreb": {
+      "english": "Europe/Zagreb",
+      "hash": "22029f966ab85d02612ca9e5ad08095980ea66ab2801dfa60ec74d35eb9655a5"
+    },
+    "timezones.Europe/Zurich": {
+      "english": "Europe/Zurich",
+      "hash": "650575e62b1f4a4702f14c5160607144f16605d06b8c431296cd51ccd54ca79b"
+    },
+    "timezones.Indian/Antananarivo": {
+      "english": "Indian/Antananarivo",
+      "hash": "2c45287ca13922ce53a380ade07c62d282d31d7357c44168964354a7c86d4714"
+    },
+    "timezones.Indian/Chagos": {
+      "english": "Indian/Chagos",
+      "hash": "46794869967e7cf880c3d216ea087cac8c3ab3268e2d79e8c9f0bb683c6558ab"
+    },
+    "timezones.Indian/Christmas": {
+      "english": "Indian/Christmas",
+      "hash": "063a8f5b1f7fcfa593f5e656f149937c2ed0292005a100dbc715965592d498be"
+    },
+    "timezones.Indian/Cocos": {
+      "english": "Indian/Cocos",
+      "hash": "f6674d53ca79f947f313910d23f0b972ecded5dbf00fe12825ea8a30fd6ef6f6"
+    },
+    "timezones.Indian/Comoro": {
+      "english": "Indian/Comoro",
+      "hash": "74f9d1524bfd292de6ebacdeb7eebce93b426da82eb71832eb7d5ffa67656c37"
+    },
+    "timezones.Indian/Kerguelen": {
+      "english": "Indian/Kerguelen",
+      "hash": "dad832611a00e196b35c9a305bd180adceba512bff00156b0d806c5d18da8ca6"
+    },
+    "timezones.Indian/Mahe": {
+      "english": "Indian/Mahe",
+      "hash": "419803fd1d1dd26629d5298dcf4e4dffd18fc93fced92e0691adf8e4572a738c"
+    },
+    "timezones.Indian/Maldives": {
+      "english": "Indian/Maldives",
+      "hash": "7a51d39fbbc4325af32ba8cdc395cb4ddc37eb6ca9fbadfdc204a706251ce0b3"
+    },
+    "timezones.Indian/Mauritius": {
+      "english": "Indian/Mauritius",
+      "hash": "9843bc0435d26b085571a7c0eaeb370a44c763973a7e1ad9bc35f88af39adcc1"
+    },
+    "timezones.Indian/Mayotte": {
+      "english": "Indian/Mayotte",
+      "hash": "b90734cfef01688a2fd37986cdb78b4462dbe8e4f8e488284f57587210295eab"
+    },
+    "timezones.Indian/Reunion": {
+      "english": "Indian/Reunion",
+      "hash": "5bdc6ddba56253a9a5e8229121cb8ba7c00e3d2129da5f1833c853bf60a91fec"
+    },
+    "timezones.Pacific/Apia": {
+      "english": "Pacific/Apia",
+      "hash": "b122ecf95cdb6e5473df9cea22a20ef6eb52ad14b2e016421f3d20c0e6e084e2"
+    },
+    "timezones.Pacific/Auckland": {
+      "english": "Pacific/Auckland",
+      "hash": "d73daf5e9fd9586f0488724a668fe2fefe5a803c053dbecffd477e99a10d2d88"
+    },
+    "timezones.Pacific/Bougainville": {
+      "english": "Pacific/Bougainville",
+      "hash": "63b89424d179f63e214c6775a7275e0a7eb5f6222a586c42ea4cdc78497ede5e"
+    },
+    "timezones.Pacific/Chatham": {
+      "english": "Pacific/Chatham",
+      "hash": "b6a0c2c5d47edcc4d3fd625ed7049ab4f009ff44be1c8f11986dfc43fb4811aa"
+    },
+    "timezones.Pacific/Easter": {
+      "english": "Pacific/Easter",
+      "hash": "521a5bf45da863fe6b2e7b98b4862a386d0b4302c4d8076846e529bcfeb6838a"
+    },
+    "timezones.Pacific/Efate": {
+      "english": "Pacific/Efate",
+      "hash": "57a73edc8029087374e9a2d32de023e45495f747b2016462c61020b1aa1bcaa9"
+    },
+    "timezones.Pacific/Enderbury": {
+      "english": "Pacific/Enderbury",
+      "hash": "68b7bd614d01266e7dfbf18a4aa49e46d363da3125e3401cd1e64b82f587256e"
+    },
+    "timezones.Pacific/Fakaofo": {
+      "english": "Pacific/Fakaofo",
+      "hash": "139d48448805d6f46830babbc0e0e45d8b491d25e989355c302d4b63beb40adf"
+    },
+    "timezones.Pacific/Fiji": {
+      "english": "Pacific/Fiji",
+      "hash": "c305cdf6f1e0e6d572edbda7bd7aa8cdb1b7943f9ca14dd3e053c6bc67bd4f56"
+    },
+    "timezones.Pacific/Funafuti": {
+      "english": "Pacific/Funafuti",
+      "hash": "01087200ea0be65365a2804033c20ab3ca159be9f803373b3d9972c874465fac"
+    },
+    "timezones.Pacific/Galapagos": {
+      "english": "Pacific/Galapagos",
+      "hash": "159614fcc9665c6e6704da818e0bcc4042550bf3bd4cbb3af624075705624649"
+    },
+    "timezones.Pacific/Gambier": {
+      "english": "Pacific/Gambier",
+      "hash": "293890809aa95d74b7684118d6860a6fbfa39bfa2e510cfc93adfaac704f92e6"
+    },
+    "timezones.Pacific/Guadalcanal": {
+      "english": "Pacific/Guadalcanal",
+      "hash": "3ca9875e5644b745163e7f05b2774e88ae150d2243cb713daf5cd1b4da432ac7"
+    },
+    "timezones.Pacific/Guam": {
+      "english": "Pacific/Guam",
+      "hash": "0ab36cecf779eb2d18f1c934a90ec05838ab1ebcaac3f8a40d4a739d65690bc3"
+    },
+    "timezones.Pacific/Honolulu": {
+      "english": "Pacific/Honolulu",
+      "hash": "4c7b9db133f68a8ba75bdcd65a5c2bb97fae70a1e2e20879be4dc2889257872c"
+    },
+    "timezones.Pacific/Kiritimati": {
+      "english": "Pacific/Kiritimati",
+      "hash": "11e0463b051610f68255aabc1f8d080987e8e3eab0f25b989aaf121d9a294d7c"
+    },
+    "timezones.Pacific/Kosrae": {
+      "english": "Pacific/Kosrae",
+      "hash": "ff28fb2d76ad151a58442d95e7b3aa118e4289352d281af6c56bc44a8d8e822b"
+    },
+    "timezones.Pacific/Kwajalein": {
+      "english": "Pacific/Kwajalein",
+      "hash": "d5f17024c40f0e5e3c7fa7c13f433e064de06664ada0ba2f6c2851e1efb014d7"
+    },
+    "timezones.Pacific/Majuro": {
+      "english": "Pacific/Majuro",
+      "hash": "041fdd204d42a173b173b4d35de5292adacc988ea99edc8a39b760f07fe19470"
+    },
+    "timezones.Pacific/Marquesas": {
+      "english": "Pacific/Marquesas",
+      "hash": "439523787d94247dedbbb124cf73bb9069f361003b28d6611b71689becdb4768"
+    },
+    "timezones.Pacific/Midway": {
+      "english": "Pacific/Midway",
+      "hash": "5dd10bf23bf7c3c68fdfd3367095a1310d4ecb77dc588c39dafe242d79b4fdeb"
+    },
+    "timezones.Pacific/Nauru": {
+      "english": "Pacific/Nauru",
+      "hash": "94c06fa864ae8a71e22ba03ef13ab18a0124ba6be5f7d9cd772dd90f55472d63"
+    },
+    "timezones.Pacific/Niue": {
+      "english": "Pacific/Niue",
+      "hash": "2a769964df035d6e37c6dcaaac921c93685d77428f33ddd6c2ebb5ebbf898e56"
+    },
+    "timezones.Pacific/Norfolk": {
+      "english": "Pacific/Norfolk",
+      "hash": "7c0a07fd08f5a9f0ca2316d88a8ca56d41d7bd7db1ad8eb8074910af875ec408"
+    },
+    "timezones.Pacific/Noumea": {
+      "english": "Pacific/Noumea",
+      "hash": "954538862c9cc58ed037f2f10a924fa2117ca3409b49fcdf4898353e6139daec"
+    },
+    "timezones.Pacific/Pago_Pago": {
+      "english": "Pacific/Pago Pago",
+      "hash": "07b84dd43ede3edac93b7bc48caec57d7dc306fc48665bdf0947f4e4fb5f0648"
+    },
+    "timezones.Pacific/Palau": {
+      "english": "Pacific/Palau",
+      "hash": "ba881f5b96c08d4e762a1471135f7bdbd1afd1332f535f6a39830b4f0a75d55e"
+    },
+    "timezones.Pacific/Pitcairn": {
+      "english": "Pacific/Pitcairn",
+      "hash": "b0c1adb711d1750328e747a0f15a372284318bfb6f4b374446d169f1d8efe84d"
+    },
+    "timezones.Pacific/Ponape": {
+      "english": "Pacific/Ponape",
+      "hash": "e72829e89be16c5dad431362273d7ea366fe59e225cc89d54fb8908b3773f4a6"
+    },
+    "timezones.Pacific/Port_Moresby": {
+      "english": "Pacific/Port Moresby",
+      "hash": "bf1470501bbf28c9159b3932f4ef65570a2837edc13f08e6ec8e211480eec72f"
+    },
+    "timezones.Pacific/Rarotonga": {
+      "english": "Pacific/Rarotonga",
+      "hash": "9a1047399b5485eec8df446bad12c76ccf73ad9877b946b8fcb2a82f29366b14"
+    },
+    "timezones.Pacific/Saipan": {
+      "english": "Pacific/Saipan",
+      "hash": "43b465f39cfa6807200247e71fca2971c9f619ddfe269f65828aedb8893bbfe0"
+    },
+    "timezones.Pacific/Tahiti": {
+      "english": "Pacific/Tahiti",
+      "hash": "f1476a03bd08f887b91fc97815ef2ce7dccffd16216e242dfd5238bbd8103624"
+    },
+    "timezones.Pacific/Tarawa": {
+      "english": "Pacific/Tarawa",
+      "hash": "4c5bd835eeb6d9e4efcc7c26fd5e44f137363fbd83127e5f03e60c0474f0050f"
+    },
+    "timezones.Pacific/Tongatapu": {
+      "english": "Pacific/Tongatapu",
+      "hash": "e9c095f8e1ca6a07420fe1e99d9d83ff8e47f6b33df738bc74f7eb62f9cac954"
+    },
+    "timezones.Pacific/Truk": {
+      "english": "Pacific/Truk",
+      "hash": "807f83f1cf792fbc4e97387c205e998684e0759789b116f2a244e400721f31b9"
+    },
+    "timezones.Pacific/Wake": {
+      "english": "Pacific/Wake",
+      "hash": "2d650fe51ff027da42206a67d9435dfd4a122be563307dff3c4c183ef35b47cb"
+    },
+    "timezones.Pacific/Wallis": {
+      "english": "Pacific/Wallis",
+      "hash": "156d2c8f696deabde5f8d844bbec643cf635edfa98c01381b9e83073ed119c6c"
+    },
+    "metadata.title": {
+      "english": "Jack F. Portfolio",
+      "hash": "ab3b79747106e76450f397ce56555e2ed7e503b9e51a78635791c2a59e7ae34d"
+    },
+    "metadata.description": {
+      "english": "Software engineering portfolio and project tracker.",
+      "hash": "9181a1ea64be9f4b929ade5ab9a6cf68a855e57842c83dac8a1c309b4917d126"
+    },
+    "themeToggle.label": {
+      "english": "Select color theme",
+      "hash": "6066cae4edabd6a8d6307b5796ce060dfed2b891968244ea36bfb3af668e8daa"
+    },
+    "themeToggle.cycleLabel": {
+      "english": "Cycle theme",
+      "hash": "4f08fd02eaa1c7f35a78a16ecb52bd68b0eb249d0b21ce569992113473ed2199"
+    },
+    "themeToggle.options.light": {
+      "english": "Light",
+      "hash": "dbcd5e7bb7a0f538810de44c3efbd813037ee3fa358747bb71fa58e157af45f7"
+    },
+    "themeToggle.options.system": {
+      "english": "System",
+      "hash": "6725e7bbcd28f3a8a586fa34bf191fd72dde8b61756932cd3237c17a6f196f1a"
+    },
+    "themeToggle.options.dark": {
+      "english": "Dark",
+      "hash": "60acc53f13a5d1bf115878c4a785e9a43e8286c4139a8402a6ac7d23966f9153"
+    },
+    "contrastToggle.label": {
+      "english": "Select contrast preference",
+      "hash": "83bf1ff96a18d15f00084da4616eb1447f7d314b33af3e1df3379007e2991d9c"
+    },
+    "contrastToggle.cycleLabel": {
+      "english": "Cycle contrast",
+      "hash": "7eda29175cdc6072cdc953b971ca99db1894e2b4ba353c30d76a61a84f9cf812"
+    },
+    "contrastToggle.options.standard": {
+      "english": "Normal",
+      "hash": "a7248eeb45eb1ce247f81693283e22e8b39e8a50890cecd22d02e75025547d90"
+    },
+    "contrastToggle.options.system": {
+      "english": "System",
+      "hash": "6725e7bbcd28f3a8a586fa34bf191fd72dde8b61756932cd3237c17a6f196f1a"
+    },
+    "contrastToggle.options.high": {
+      "english": "High",
+      "hash": "c4ebc6d4a5832cd9415f906ad03661110c705a72381c8b8b145761d02e2dd23a"
+    },
+    "skimToggle.buttonLabelOn": {
+      "english": "Skim mode",
+      "hash": "162975138f51510bda6e284645956fc09d593d92b189c35d97b277a5ff6e6bcd"
+    },
+    "skimToggle.buttonLabelOff": {
+      "english": "Skim mode",
+      "hash": "162975138f51510bda6e284645956fc09d593d92b189c35d97b277a5ff6e6bcd"
+    },
+    "skimToggle.statusOn": {
+      "english": "ON",
+      "hash": "e8a01133b1351e5fa434167135400d1998d3daa8ce74e3dd9bb57582fa4d7b97"
+    },
+    "skimToggle.statusOff": {
+      "english": "OFF",
+      "hash": "38cca6bea010af8adaf4be7d270456fa9adef8c0252db91f2767c607d077319b"
+    },
+    "skimToggle.ariaEnable": {
+      "english": "Enable recruiter skim mode",
+      "hash": "3dd4ffa80847e63ac087a31d598a6ec304e9a6de89f16cca6dce81de470286f0"
+    },
+    "skimToggle.ariaDisable": {
+      "english": "Disable recruiter skim mode",
+      "hash": "e99d272853e509a14bde689bee1c1ea1493928ae79c1a0698cef9ac8eff4ac72"
+    },
+    "chatbot.launcherLabel": {
+      "english": "Open recruiter AI chat",
+      "hash": "5add318bfab32284d98d3428b3448d1fc918f680079835ce07b7aa07fba05fff"
+    },
+    "chatbot.panelTitle": {
+      "english": "AI recruiter assistant",
+      "hash": "93147d46f087d24b1383b68089b3db336e1e38752360b1b88375e74c1e649776"
+    },
+    "chatbot.panelSubtitle": {
+      "english": "Ask about Jack's skills, projects, or impact.",
+      "hash": "26f1750ba8a878151e3616d6b88b21f96517e4a64f8dc26a4af4838bac5090b8"
+    },
+    "chatbot.inputPlaceholder": {
+      "english": "Ask about React, cost savings, leadership, or a project...",
+      "hash": "7891a6be3c15de663930fe7b4048e0eb59ec8aa5a085345d4150a0067d855446"
+    },
+    "chatbot.exampleQuestions[0]": {
+      "english": "Can Jack use React?",
+      "hash": "0bbf7ccdd8a34ae4aca8d73ed4886649bba3403150198f352543e5256219079c"
+    },
+    "chatbot.exampleQuestions[1]": {
+      "english": "Can Jack save my company money?",
+      "hash": "1533269cebaa05b26a445740509e336deb52de47c2b45225d9830fb2940acd19"
+    },
+    "chatbot.exampleQuestions[2]": {
+      "english": "Does Jack have leadership experience?",
+      "hash": "bdd9bb4df86bf2eda49e5be04deeee969f270d3652905dd0bad9d17410b09bd4"
+    },
+    "chatbot.emptyState": {
+      "english": "Try a quick question or pick a starter prompt.",
+      "hash": "9c81662e489217eb1bd325588e0cd9d65d442b20a974ace1debc26516738606b"
+    },
+    "chatbot.loggingNotice": {
+      "english": "This chat is monitored for quality assurance.",
+      "hash": "4eef5f80aa4c4b1c57b8478e80038923f5f5d3d237af9fce257d8aa3dbdc173c"
+    },
+    "chatbot.errorMessage": {
+      "english": "Something went wrong. Try again or open the resume.",
+      "hash": "4f030b9fb23031beefd3d9fcb0989c9cfaa749175b0abe4ccb0b38caea75c81a"
+    },
+    "chatbot.fallbackCtaLabel": {
+      "english": "Open resume",
+      "hash": "35451680826e54f48789190ab5e3ec4f7c559ebc55ddb0621f843c2b0a362eb6"
+    },
+    "chatbot.captchaTitle": {
+      "english": "Quick human check",
+      "hash": "133037f82a23b19bd2229060ea6678d27799e11b05568cb7b173a14111d72f01"
+    },
+    "chatbot.captchaPrompt": {
+      "english": "Complete the captcha to continue.",
+      "hash": "bba74ad17e1f2d37bbacebf93b9ad030e032d18bcdb2fa6f91d24495e66dcccb"
+    },
+    "chatbot.rateLimitTitle": {
+      "english": "Rate limit reached",
+      "hash": "06946279b9c4689f170c785d1bd9498c30ba9d16ae3da101368e9b840bb7299e"
+    },
+    "chatbot.rateLimitMessage": {
+      "english": "You've hit the chat limit for now.",
+      "hash": "f17c116a00fc722b6cf42d9e035b7bbc70a4822ddc9a1c1aa2dec58eb1fc9e8e"
+    },
+    "chatbot.rateLimitTryAfter": {
+      "english": "Try again in about {minutes} minutes.",
+      "hash": "6b1f007ecbe78db915b0ee397790a5d9dbe01613d56058152ab44e7228394691"
+    },
+    "chatbot.thinkingLabel": {
+      "english": "Thinking…",
+      "hash": "a02f1cea3c1d6c6edc0bdf52b8807f09eb5b33ca35a5e938e49d9ff646f80969"
+    },
+    "chatbot.moderationTitle": {
+      "english": "Let's keep it professional.",
+      "hash": "2af351ac522ec62ba869accdd1bec0d6547e1fed80b411f60155817a109cf7fc"
+    },
+    "chatbot.moderationBody": {
+      "english": "I can help with Jack's roles, skills, projects, and availability.",
+      "hash": "fbae700dca3e46b667bbc29ad7c00ffc664f14a04e5dab0e38e4800a6e1fef3f"
+    },
+    "chatbot.closeLabel": {
+      "english": "Close chat",
+      "hash": "3b14c5dc986f2a367a41de958956a0c442bbaa8ef5dac3ec4e4ae27307c25002"
+    },
+    "chatbot.referencesLabel": {
+      "english": "References",
+      "hash": "69824d3b0e70ca6aaa0da1613b65fd914c442bf1f7ad1bb22bcdfbdfe1a05e39"
+    },
+    "chatbot.contextFactsLabel": {
+      "english": "Context facts ({count})",
+      "hash": "d37c03918ed4d4c19a15c917290e1ac5d7276b9194ae80094c428cc09cf8ee54"
+    },
+    "chatbot.resizeLabel": {
+      "english": "Resize",
+      "hash": "2956e06ac0651084bbd5558dfe469615e9a5fc3072f60a09a9cb3c597a19324c"
+    },
+    "chatbot.resizeAriaLabel": {
+      "english": "Resize chat",
+      "hash": "3b079e6c95dcd51f761be5c4a3116d02fd21dcc9bf2cefa378545a0f06361425"
+    },
+    "chatbot.moderationImageAlt": {
+      "english": "No Fun Allowed sign",
+      "hash": "ef1e30e3a26003a96a668656396a8f92482ff553f247ecb85b7d13578ee3927b"
+    },
+    "chatbot.sendLabel": {
+      "english": "Send",
+      "hash": "f6f4688ff23d50c67053963c251fa0ce64a925cf283537cf066b1f362cb9b778"
+    },
+    "shell.breadcrumbsLabel": {
+      "english": "Breadcrumbs",
+      "hash": "73667278486b9c9d3958f9449418af7d1caac4e1db5a70209b6d0bad7d9e301e"
+    },
+    "shell.anchorNavLabel": {
+      "english": "On-page navigation",
+      "hash": "f5e33cb234e82985373460dd1b627a716882c0467efae0a8167e7f3ce190ced2"
+    },
+    "shell.returnToTopLabel": {
+      "english": "Return to top",
+      "hash": "78caeb605c2913c2bf36327ff0adb2cb6416a70127b5df6f9ff51bccfadaa632"
+    },
+    "shell.expandAllLabel": {
+      "english": "Expand all",
+      "hash": "a3e586be3eff5fb9f768c0846035db47ccf0f0e10727b0f14d829ff3a5913324"
+    },
+    "shell.collapseAllLabel": {
+      "english": "Collapse all",
+      "hash": "25f7b3721119f1ec7fdf7c8c66e779ee9999e2049e569afc3b00a9fbdeece7db"
+    },
+    "shell.menuTitle": {
+      "english": "Menu",
+      "hash": "99af6606ff9d6cd5154d4d4e9c21e325086d3e904677cdb41d363c8a3480f862"
+    },
+    "shell.menuOpenLabel": {
+      "english": "Open menu",
+      "hash": "b40b3713b43dc702682dc967ea5c2dbe20ae414c30baf100d162a8250a928065"
+    },
+    "shell.menuCloseLabel": {
+      "english": "Close menu",
+      "hash": "6ccd5c7856042d36476ffd35a41b54518be95621cc741ac3ed55b8108ea41586"
+    },
+    "shell.menuPanelLabel": {
+      "english": "Navigation and display options",
+      "hash": "66be7e65ae6aa6d067e47943de0c015027eff0da0a1850e44e52ac036324f6c3"
+    },
+    "shell.menuCloseButtonLabel": {
+      "english": "X",
+      "hash": "4b68ab3847feda7d6c62c1fbcbeebfa35eab7351ed5e78f4ddadea5df64b8015"
+    },
+    "home.breadcrumbs.home": {
+      "english": "Home",
+      "hash": "3a78695388b38b5cceefaf6796b0137877514593543b91af2752d5a17e3d736c"
+    },
+    "home.breadcrumbs.workspace": {
+      "english": "Workspace overview",
+      "hash": "46ba244c8ee97cf365d150dfdd522baa5039b9d4a903b2f8c9bc6dcbb6f75dc6"
+    },
+    "home.skim.columnTitle": {
+      "english": "AI-assisted Fullstack Engineer",
+      "hash": "04638ec07c5625e0e5475da3a72646d9c486ddc9c8164098a18c0227436c1504"
+    },
+    "home.skim.projectManagementLabel": {
+      "english": "Project Management",
+      "hash": "58a34ff5ee9e7f084176d046f3d4a097c840081442ce8ad5fc9c2982fd59c3b5"
+    },
+    "home.skim.projectManagement": {
+      "english": "Independent and AI-augmented, turning ambiguous goals into a Work Breakdown Structure with clear deliverables and documentation.",
+      "hash": "c722a268b857f2f5fb527c8c00f384565cd09ed7432d2f817f0b2ce39d2c46df"
+    },
+    "home.skim.techStackTitle": {
+      "english": "Primary languages & tools",
+      "hash": "f6b7e21a2067c32f8c06f8df4288de3a9e2f65245ea383567d7a2ab8e28459e5"
+    },
+    "home.skim.leadershipLabel": {
+      "english": "Leadership & mentorship",
+      "hash": "8705be1332fe8b4510e7f2680a82b926cfaa91a3a4e5a2538971f2b0c4263dc8"
+    },
+    "home.skim.leadership": {
+      "english": "Rollodex co-lead Fullstack Engineer, and Teaching Assistant for Upper-level Distributed Software Systems course.",
+      "hash": "d4be659fc8fec56da0a8cd3bd2385be3c08d7d3bd1412bd2073748eed04b2b60"
+    },
+    "home.skim.leadershipRollodexLinkText": {
+      "english": "Rollodex",
+      "hash": "0cd45410eb208a33230bb0218f56e378edb2987c4b49c035c05011fb4d8ba57e"
+    },
+    "home.skim.leadershipRollodexSuffix": {
+      "english": "co-lead Fullstack Engineer, and",
+      "hash": "d61e36b1e69bead79f88a4eb7a729498af9c3b52ed11f293658eff8c1bc982e5"
+    },
+    "home.skim.leadershipTeachingAssistantLinkText": {
+      "english": "Teaching Assistant",
+      "hash": "068dbda1724d5e28c785546d42479ab4858bf44dd549667337b94442dfffa0cb"
+    },
+    "home.skim.leadershipTeachingAssistantSuffix": {
+      "english": "for Upper-level Distributed Software Systems course.",
+      "hash": "140371861f57e9391c58c362f7331f18fcfb0ebb8b27573e922d323b7a5cb133"
+    },
+    "home.skim.workAuthLabel": {
+      "english": "Work authorization",
+      "hash": "4c52237669a7a8717bc9ade2d9fcdfb8bbbad157fda4d53f681de5a6e528cfc1"
+    },
+    "home.skim.workAuthorization": {
+      "english": "Authorized to work in US with valid SSN.",
+      "hash": "52bb93c6424152d3a23f5004f344daa9902fb0e970350b9000244edf82643f8b"
+    },
+    "home.skim.timezoneLabel": {
+      "english": "Timezone & collaboration",
+      "hash": "b77dbe3b315d48236724c2ea4c70be4100cf3e5549a272f7527812120775cb7f"
+    },
+    "home.skim.timezoneLinkText": {
+      "english": "See the meetings page for scheduling.",
+      "hash": "18132b26257ae3e3734d9434255da33ad6c7117bb78ed0d6cc8c3123b217baa3"
+    },
+    "home.skim.timezone": {
+      "english": "Provided notice, I can meet most days between 3pm to 6pm NY time. See the meetings page for scheduling.",
+      "hash": "1c299dafeae87cbac53371f954e7a2ce3b07438ed2c84ce5047f8e3647aeed64"
+    },
+    "home.skim.availabilityLabel": {
+      "english": "Availability",
+      "hash": "12f67f8539c46701e62d1c50254cf025c22a992b06fea6d4c0e19705f21f4cac"
+    },
+    "home.skim.availability": {
+      "english": "Immediately available for remote part-time work. Two weeks notice required for full-time. Authorized to work in US with valid SSN.",
+      "hash": "fc4f1b8e23122365bcc44a38cb17d6594dbc3d2759f57bff14b912cab11d3da1"
+    },
+    "home.skim.emailLabel": {
+      "english": "Email",
+      "hash": "969ccbd3cf6300ecd5c880459d81ae9027df7517563184a1b8b15282db230621"
+    },
+    "home.skim.emailValue": {
+      "english": "jfstone2000@proton.me",
+      "hash": "bea04d6112247c89e243d8f81cccfd639bd05a9b10906d2230db201dd1eed8c6"
+    },
+    "home.audioPlayer.title": {
+      "english": "Portfolio background loop",
+      "hash": "e6575964e3c2e862dfbfc2b64df720debf158746af5c78c3aa6c8828cd115590"
+    },
+    "home.audioPlayer.description": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "home.audioPlayer.playLabel": {
+      "english": "Play track",
+      "hash": "b789c9c2bf6255fc7cc3679c35cafa8cf4a0700a9387bfe56e6a41a747f8cce8"
+    },
+    "home.audioPlayer.pauseLabel": {
+      "english": "Pause track",
+      "hash": "b49c7f7c43313f5e6479ad1e43125d514485fbc0b587131cd7d9c610bb9ec907"
+    },
+    "home.audioPlayer.downloadLabel": {
+      "english": "Download track",
+      "hash": "479f877e4d97f64e96b17cd9734c4258efd5d0344f7d7c57752b12e88dde5411"
+    },
+    "home.audioPlayer.closeLabel": {
+      "english": "Hide player",
+      "hash": "3fde16d2f8ffa78fadf603afeb745538c1246417fe9ccb64913271aef258d57f"
+    },
+    "home.audioPlayer.reopenLabel": {
+      "english": "Open audio player",
+      "hash": "842fc3a912a6f03b9202f48ba2bd13c73427b8162b0f7e8f12ca928a5e3bac16"
+    },
+    "home.audioPlayer.volumeLabel": {
+      "english": "Volume",
+      "hash": "b10fb966d72063f534774c7c6b404f4decca76ac283093ae65fef78d07c1b75e"
+    },
+    "home.audioPlayer.volumeShowLabel": {
+      "english": "Show volume slider",
+      "hash": "801ad46c096dd19c5d7b4ca7b0b7bf755fd6afe086cae2ac4ebbe4b0421e200f"
+    },
+    "home.audioPlayer.volumeHideLabel": {
+      "english": "Hide volume slider",
+      "hash": "0422342320d4226acee371a2e5bbd573acdea4144b5d29b3b2a7ce93511f36f2"
+    },
+    "home.hero.title": {
+      "english": "Jack Featherstone",
+      "hash": "30d324a634597737f979e4b7be70bc0b81ba98d08e430a68daf1ac3c27b76a70"
+    },
+    "home.hero.subtitle": {
+      "english": "Hi, I’m Jack—this is my software engineering portfolio. This site documents my skills and projects, and serves as a hub for professional connections. I’m seeking long-term fullstack roles involving AI that combine development and project management, and I’m also open to smaller contracts and collaborative work.",
+      "hash": "ef1a13f3db8e8c9533fc7c777d84d79ce5f57d68bd52ca07226a1cb3764dcddf"
+    },
+    "home.hero.media.image.alt": {
+      "english": "Digital artwork of Jack Featherstone exuding ki while tilling soil, farming \"tech stack\" crops.",
+      "hash": "7a9cac566d36c63b992306cc79248fd98c8004cb575ce3b9f77a8823ff04b8f7"
+    },
+    "home.hero.media.preset": {
+      "english": "hero",
+      "hash": "ae6c79d10f1fd410650790e63186ec108fa106325b52fbd88de21a43540e6f2c"
+    },
+    "home.hero.media.caption": {
+      "english": "I finish the rows I start; roots and duty run deep, so the crop stands.",
+      "hash": "23d9ef02316b4ef04921904a68e58469bbf4e4f3b857870b03dc3e1540d7808a"
+    },
+    "home.hero.cta.title": {
+      "english": "Need proof fast?",
+      "hash": "85a1c77c6159fa84ad81e54b6a0dc4d35e0bf82151199467d2b9235f4f244d1a"
+    },
+    "home.hero.cta.actions[0].label": {
+      "english": "Download resume",
+      "hash": "10e978c841c18f12e8179cf924525617fc2f4b18e9822ae665bf56701a97b320"
+    },
+    "home.hero.cta.actions[0].variant": {
+      "english": "primary",
+      "hash": "986a1b7135f4986150aa5fa0028feeaa66cdaf3ed6a00a355dd86e042f7fb494"
+    },
+    "home.hero.cta.actions[1].label": {
+      "english": "View experience",
+      "hash": "f61fffd890e8aa83b78b3853cce66d32db73beaf218559f872b61bc5d7b9f3e0"
+    },
+    "home.hero.cta.actions[1].variant": {
+      "english": "secondary",
+      "hash": "c0f69e19ba252767f183158737ab1bc44f42380d2473ece23a4f276ae7c80dff"
+    },
+    "home.hero.cta.actions[2].label": {
+      "english": "Start a conversation",
+      "hash": "258150cb3ee4ce738acc5aa1fa7289def8792bc04685cc092203702d18c5515e"
+    },
+    "home.hero.cta.actions[2].variant": {
+      "english": "ghost",
+      "hash": "ead6ef03d61ee60c533d6d450c50a1e559a8a37f6b796a4094cd0dac6b744428"
+    },
+    "home.sections.mission.eyebrow": {
+      "english": "Orientation",
+      "hash": "e3d11242200fe8f2f21c2e5334ba0e0a7aa4dcd2a4533f92f4ec921fa9ff16a4"
+    },
+    "home.sections.mission.title": {
+      "english": "Site purpose",
+      "hash": "7a3dec534007f1c26d687ab5a348860d3d022b5af71fcaaa0d1fb589b2aa6db6"
+    },
+    "home.sections.mission.description": {
+      "english": "Create distinctive evidence of my abilities for fullstack development, showcasing my capabilities to job recruiters in under three clicks.",
+      "hash": "df5fab348100caa49d4c3f8b71c724eed6402c479bcb9a856900a95f0babd5f4"
+    },
+    "home.sections.mission.overview": {
+      "english": "While the site began as a dedicated service to host my resume, it evolved into a central place for hosting my personal projects.",
+      "hash": "53f04b2761e41ded7870264cf83bf4d586c7df9e871080abd3ffb15764ecd3db"
+    },
+    "home.sections.techStack.eyebrow": {
+      "english": "Skills",
+      "hash": "66d0f523a379b2de6f8d5fba3a817ebc395f7bcaa54cc132ca9dfa665d1e9378"
+    },
+    "home.sections.techStack.title": {
+      "english": "Tech stack & skills",
+      "hash": "cb83b096c0c00a2af398b687edabd243939c725e558ea6df54ca469791d5b3c9"
+    },
+    "home.sections.techStack.description": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "home.sections.techStack.overview": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "home.sections.techStack.items[0].name": {
+      "english": "React",
+      "hash": "01fad993ff61aca9a1f2f07100c95eb1559d8b6440a00cb974a92810a6b5a2dc"
+    },
+    "home.sections.techStack.items[1].name": {
+      "english": "JavaScript",
+      "hash": "b27ad06d123c6145fba7e9217a4cfbf2488b4743810ed8c8ff14ad01a5bbe515"
+    },
+    "home.sections.techStack.items[2].name": {
+      "english": "TypeScript",
+      "hash": "ed0504f70a48ffe9ed17e7ddee02a72a9c8af602aee1f7ce11853975ce911733"
+    },
+    "home.sections.techStack.items[3].name": {
+      "english": "Codex",
+      "hash": "616efbe96852d8c957d6be5634ed41e871cf1ecf134c9b9693f614daeb15137c"
+    },
+    "home.sections.techStack.items[4].name": {
+      "english": "Java",
+      "hash": "c1ba60ce13586503a21a05e9ef0bb959f1ba74a1d37bcfcbf5fc6bfb548f684d"
+    },
+    "home.sections.techStack.items[5].name": {
+      "english": "C++",
+      "hash": "f1deb75fa21d3c47a6e7a45967b79fad2d053947066dc95322c5bcee1e9fe21c"
+    },
+    "home.sections.techStack.items[6].name": {
+      "english": "PostgreSQL",
+      "hash": "cc52d03280b7034c8e3653d2748ebd489a873ef4bbc89cb187fbfcabfbbf6873"
+    },
+    "home.sections.techStack.items[7].name": {
+      "english": "AWS",
+      "hash": "32fd72a0e0746043a1cce59f2e840490df6b9ea49e9bbcade136da5e8173d6c0"
+    },
+    "home.sections.techStack.items[8].name": {
+      "english": "C",
+      "hash": "6b23c0d5f35d1b11f9b683f0b0a617355deb11277d91ae091d399c655b87940d"
+    },
+    "home.sections.techStack.items[9].name": {
+      "english": "HTML",
+      "hash": "07239dbd2a1a1dd793be9062a205eb6be88c36af3fe7e4d6426aea45aa253815"
+    },
+    "home.sections.techStack.items[10].name": {
+      "english": "CSS",
+      "hash": "b581e46042cbfbb0af4542a858079a84fd3ae98e5563f615710191d5b3597680"
+    },
+    "home.sections.techStack.items[11].name": {
+      "english": "Linux",
+      "hash": "4828e60247c1636f57b7446a314e7f599c12b53d40061cc851a1442004354fed"
+    },
+    "home.sections.techStack.items[12].name": {
+      "english": "SQL",
+      "hash": "a7056a455639d1c7deec82ee787db24a0c1878e2792b4597709f0facf7cc7b35"
+    },
+    "home.sections.techStack.items[13].name": {
+      "english": "JSON",
+      "hash": "db1a21a0bc2ef8fbe13ac4cf044e8c9116d29137d5ed8b916ab63dcb2d4290df"
+    },
+    "home.sections.techStack.items[14].name": {
+      "english": "Bash",
+      "hash": "d1e9567da9a8a4b0c43da0791da1d2594cf5d7b78547fea132d06bccc1b06091"
+    },
+    "home.sections.techStack.items[15].name": {
+      "english": "XML",
+      "hash": "40658e9af8fd92229ae162dc98547cb75eb96999edd7dc214582ac6c23ef6585"
+    },
+    "home.sections.techStack.items[16].name": {
+      "english": "KVM",
+      "hash": "d27c7d202f214eaaa42894b132c1d4d7d778d8c297c2da06d54cec5d8dcb61c3"
+    },
+    "home.sections.techStack.items[17].name": {
+      "english": "QEMU",
+      "hash": "8620862ff8ffec9fe564de3473f7214cd48e92f3dac93e253f4c4d695bff7baf"
+    },
+    "home.sections.techStack.items[18].name": {
+      "english": "Lua",
+      "hash": "b897ce727082286d99b851bcc54df589cf3704f56d3cc76e8b389e7f336e5735"
+    },
+    "home.sections.techStack.items[19].name": {
+      "english": "Prisma",
+      "hash": "e4b88de23274e99ca98b822e9f304564c85d96333a5d35bb218b95654a03c7ab"
+    },
+    "home.sections.techStack.items[20].name": {
+      "english": "Oracle Cloud",
+      "hash": "5a6de57d969c303301a26ecaf579731df1f3718804ecd2f333b754fae9b689cf"
+    },
+    "home.sections.techStack.items[21].name": {
+      "english": "Stellaris Mods",
+      "hash": "e125d9b520beef3864dd33938363288759d4274598dbd394327f8f6f5b6e463d"
+    },
+    "home.sections.techStack.items[22].name": {
+      "english": "Minecraft Mods",
+      "hash": "52787ffc16c0aa9a7b48a55101a7cade66fdf7dea1b40c4cd8a5690199db4d3a"
+    },
+    "home.sections.techStack.carousel.label": {
+      "english": "Featured tech stack icons",
+      "hash": "c91cb65ca1f01845fe794e2262658fe30762583ebcafa31abb90a9d49da7a3ff"
+    },
+    "home.sections.techStack.carousel.previousLabel": {
+      "english": "Show previous tech stack icons",
+      "hash": "b8b62336ffd7b1403e1c59b8a020637d26f2df2412b6ec28fbc14302cc6694f0"
+    },
+    "home.sections.techStack.carousel.nextLabel": {
+      "english": "Show next tech stack icons",
+      "hash": "cd52eced67854f832884405c998126f2573b21726db03b49a95add3c00af1baa"
+    },
+    "home.sections.proof.eyebrow": {
+      "english": "Evidence",
+      "hash": "03867aea70acaf4c5dce37a76cf5a04dab1716d6ff70bf03761c439daa8be984"
+    },
+    "home.sections.proof.title": {
+      "english": "Past achievements",
+      "hash": "b89e3940fdb00c9682778ce89ac88eee84bba11d8c0cc0f1f0e7be756df1cab6"
+    },
+    "home.sections.proof.description": {
+      "english": "Highlights from the past few years.",
+      "hash": "9add546334619d276e6876bf09f423d54a279bbabb41932e78f167ded8aa99fb"
+    },
+    "home.sections.proof.overview": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "home.sections.proof.proofChips[0].title": {
+      "english": "Rollodex",
+      "hash": "0cd45410eb208a33230bb0218f56e378edb2987c4b49c035c05011fb4d8ba57e"
+    },
+    "home.sections.proof.proofChips[0].details": {
+      "english": "Co-led fullstack development of a contact management web application.",
+      "hash": "cae905031501688884eb76a4279de8cd9ed81f9fd9ef2c25a59a31e22a0606b2"
+    },
+    "home.sections.proof.proofChips[1].title": {
+      "english": "Quester2000",
+      "hash": "d8705a11c721c8c97d3906b1e6a9d121d95b12e24af700d925f8c954d531206a"
+    },
+    "home.sections.proof.proofChips[1].details": {
+      "english": "A point tracking to-do list tool for managing your work-life balance.",
+      "hash": "6797b7f9628a4fb57d262ebbe4448e641dc2b3c2cf1f61d034a226089e05c8d2"
+    },
+    "home.sections.proof.proofChips[2].title": {
+      "english": "Teaching Assistant",
+      "hash": "068dbda1724d5e28c785546d42479ab4858bf44dd549667337b94442dfffa0cb"
+    },
+    "home.sections.proof.proofChips[2].details": {
+      "english": "Supported a high level Distributed Software Systems course as a teaching assistant.",
+      "hash": "6ce51663ca91b0103aeb9668599a2dec015b41d7192d74363968e035e15d504c"
+    },
+    "home.sections.proof.proofChips[3].title": {
+      "english": "Stellaris Modding",
+      "hash": "940b7e1002159bdc7b293d54ce5002753a06ca8339a29636af57b655eb7ea3ed"
+    },
+    "home.sections.proof.proofChips[3].details": {
+      "english": "Upgraded the memory management library for Stellaris to boost performance.",
+      "hash": "be07e6ed3057e019597d8e300c7dabb39c1df5ce8d020d6055a2536c111b5412"
+    },
+    "home.sections.roadmap.eyebrow": {
+      "english": "Roadmap",
+      "hash": "92375f997ffe65ab7f04eeda8cb2d7f69ebea949a06132afd53c83fff276ef54"
+    },
+    "home.sections.roadmap.title": {
+      "english": "Current projects & plans",
+      "hash": "a6982883108ddbff7df3c0fb4039cc9cd4eb2b4be29ec00b142b71da8d27e31c"
+    },
+    "home.sections.roadmap.description": {
+      "english": "My current focus is on building some small scale projects that make a difference in my life.",
+      "hash": "b82d95e254cfd27ecc980acf5c563af499fe973f11d78b7df138a6947b2be134"
+    },
+    "home.sections.roadmap.overview": {
+      "english": "G.O.A.T.: Grind, Optimize, Automate, Thrive.",
+      "hash": "c53d372767ae8545a9b91608b73aa958ad7cac5cc74e5cc0c2a7dde687e9d51c"
+    },
+    "home.sections.roadmap.nextSteps[0]": {
+      "english": "Revisit Quester2000: Add more functionality and improve UI. Possible smartwatch integration.",
+      "hash": "5963ffd338d9101b419be564e1349595c01fbbe1aca1aaeea27a64aec7865ace"
+    },
+    "home.sections.roadmap.nextSteps[1]": {
+      "english": "The Four Horsemen: Develop a new mod for Stellaris to spawn an end-game crisis, compatible with Gigastructural Engineering.",
+      "hash": "990e4eace1cc7f3f54977758494e3231e53c4c25c0b218d029517c390d6b8e84"
+    },
+    "home.sections.roadmap.nextSteps[2]": {
+      "english": "Pixelmon Problem: Continue work to backport an update to Minecraft Pixelmon to fix a periodic client-side crash on my private server.",
+      "hash": "76a19aac47c3486baf2e10e3ef684bc684334e0d33712380c650c435ff71632c"
+    },
+    "home.sections.roadmap.nextSteps[3]": {
+      "english": "C++ Game Engine: Continue work on a private game / engine. An abstract loosely-autobiographical RPG adventure.",
+      "hash": "20cc90900052e85875434288c00cc2fd50a0aaeff2128ddd8d8fd9e2fe9fd326"
+    },
+    "home.sections.roadmap.nextSteps[4]": {
+      "english": "Social Networking: Find events to meet people in industry. Considering indie games conventions in NYC.",
+      "hash": "332e5410ed87a41f552c796e80d94a40b8b40ecbe92e18b723a43493f842b056"
+    },
+    "home.footer.heading": {
+      "english": "Jack Featherstone - Software Engineering Portfolio",
+      "hash": "34eac439df7aa262b27a96162aae603e8a8dd867a743139a25d0770d25b62b0c"
+    },
+    "home.footer.body": {
+      "english": "Digital extension of my resume, documenting skills, projects, and experience.",
+      "hash": "0b99bafc748c322eec87c51fab675c1dbcebb87528ade59f97e2a81561d7325e"
+    },
+    "home.footer.email": {
+      "english": "jfstone2000@proton.me",
+      "hash": "bea04d6112247c89e243d8f81cccfd639bd05a9b10906d2230db201dd1eed8c6"
+    },
+    "home.footer.notesLabel": {
+      "english": "Engineering notes",
+      "hash": "fb996fc8cc7a241a079d37c527f20d0f725983cefdf4baa82d8a52d6ce9c803a"
+    },
+    "home.footer.resumeLabel": {
+      "english": "Resume (PDF)",
+      "hash": "91681e230da433e3d51708d91f71d13fe4ccdfd7986f5264a224d47770df575f"
+    },
+    "home.footer.closing": {
+      "english": "2025. Jack Featherstone. Built with Codex, Next.js, pnpm, and my spiritual pressure.",
+      "hash": "2b0ce0cadb26894bd3cb703533e8b901fb434da8ad2b46d8e531ed4bf4b091e8"
+    },
+    "notes.index.title": {
+      "english": "Engineering notes",
+      "hash": "fb996fc8cc7a241a079d37c527f20d0f725983cefdf4baa82d8a52d6ce9c803a"
+    },
+    "notes.index.subtitle": {
+      "english": "Long-form breakdowns of delivery choices, instrumentation tactics, and operating agreements behind the portfolio effort.",
+      "hash": "4722567a15eeb1dcc5af6ff8634843dd97f32bee71f2d89ee4ce062c38a8898b"
+    },
+    "notes.index.empty": {
+      "english": "Notes are on the way.",
+      "hash": "af39fea64ac73a6738a41ecde17c890b03cfcd8d2ffe4a3b8e7922f838c0f533"
+    },
+    "notes.detail.backLabel": {
+      "english": "Back to notes",
+      "hash": "2687ec1d6b28c778d3e6ab68871ecf25ec9cb0d6041fbd3b81451e419bae032c"
+    },
+    "notes.detail.tocLabel": {
+      "english": "On this page",
+      "hash": "b5658fc8edda24f9c94eabac9e536e0a18e3055a8ca255f9d1b8f256ea02a6cc"
+    },
+    "experience.metadataTitle": {
+      "english": "Jack F. Experience",
+      "hash": "f94d7968c1ad06a06d3731aaeccd5c7bed8e9acaaeae63aca276d47877d5cb7f"
+    },
+    "experience.title": {
+      "english": "Experience",
+      "hash": "8eab0f09df013b1bd69655991bb824cfa822d383b482905789153d4df8bfda78"
+    },
+    "experience.subtitle": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "experience.section1title": {
+      "english": "Projects",
+      "hash": "04e2a9728af7584043c5d58ae29e7cd811883e8dab15fc6287675270669a3ada"
+    },
+    "experience.section1subtitle": {
+      "english": "Important projects and roles that have shaped my current skills.",
+      "hash": "428fdc62232d37cc4c727e1387c4739455274642401cc52ddad09761341cccd8"
+    },
+    "experience.section2title": {
+      "english": "Tech stack",
+      "hash": "279174dbea275266408951f811de550e2b8ccb1c1351a8d626772f5fb7eb7a2c"
+    },
+    "experience.section2subtitle": {
+      "english": "Relevant experience with each technology.",
+      "hash": "5bfbc7e91fce2da73e14c5f8c4bf8e2b6221a1a9928c3a6c66993678c3f4a6e9"
+    },
+    "experience.section2empty": {
+      "english": "Tech stack details are coming soon.",
+      "hash": "09ad0a4a3e0181c398579d4f411b9be4d428aa7f7a2a8c75c4c6f6383574753f"
+    },
+    "experience.entries[0].company": {
+      "english": "Rollodex for Appy.yo",
+      "hash": "ed2ab3bffd587bf690e03b9e09057d48645a13a0d1627b1f2b6372bf38a9568a"
+    },
+    "experience.entries[0].role": {
+      "english": "Co-lead Fullstack Developer",
+      "hash": "aa8256690b2f816aa857521657bdcaa007d1ec106a107f1097c7a17a8580ac33"
+    },
+    "experience.entries[0].timeframe": {
+      "english": "2024–2025 (capstone)",
+      "hash": "a8f2b0ad8c58291a87b49976f9d60bfaffd7733189d0685919d05014f119e678"
+    },
+    "experience.entries[0].summary": {
+      "english": "Co-led a remote fullstack development team, developing a contact management tool. Took ownership of API/data integrations and accessibility, while maintaining the repo as Git master across two-week Scrum releases.",
+      "hash": "0a757c4ed6242bf6a414bb3c5b2e3d3a31577106ebb42a62339de13789297d0b"
+    },
+    "experience.entries[0].highlights[0]": {
+      "english": "Designed APIs and database schemas, templated forms, and rebuilt search/filter logic & UI.",
+      "hash": "5eee1ea1c5c510281f20d07023b20f99c31f9468365dda89c21fdab4abbbcd33"
+    },
+    "experience.entries[0].highlights[1]": {
+      "english": "Cut search latency from ~5s to ~200ms while maintaining repo practices, docs, and two-week sprints.",
+      "hash": "53526bd38d184b5ae8d363a4bf72d99ef40bb653034b2b61dc4da09e82c6c49b"
+    },
+    "experience.entries[1].company": {
+      "english": "Quester2000 - Personal project",
+      "hash": "842914790fb536c2f3ee842f9d8ba4e517b0504d10b51eb93c0931303ac3f798"
+    },
+    "experience.entries[1].role": {
+      "english": "Fullstack Engineer",
+      "hash": "de4e2b7f2be6b217eb42160bd06c6f3d76e73e5fab25c3a36cdda1c477203081"
+    },
+    "experience.entries[1].timeframe": {
+      "english": "Ongoing",
+      "hash": "a90620097624cae57edb193379e4a70f87b34096acc7c5d0b07d957b947a3e22"
+    },
+    "experience.entries[1].summary": {
+      "english": "Created a point tracking to-do list tool that promotes self discipline and rewarding.",
+      "hash": "9449afc9664705afc789438a0eb7b9c86779fc1ce8e75902a7aa46316bdb07d7"
+    },
+    "experience.entries[1].highlights[0]": {
+      "english": "Designed a database schema for storing user credentials, custom quests, and custom items.",
+      "hash": "98ab1879eab69221444f229bc2c264d945e07d5a1ca23ec218c0f6cde1a9a345"
+    },
+    "experience.entries[1].highlights[1]": {
+      "english": "Implemented a flexible frontend UI, designed to work on a variety of systems.",
+      "hash": "14ed1f28e306f8eaa01d7b269f9a8430684f335faf8ff40adc559cfd49954249"
+    },
+    "experience.entries[1].highlights[2]": {
+      "english": "Became familiar with modern tooling used to create a modern web app.",
+      "hash": "31a48a5e8597137257302ff88e384b2fdf3b5086dba7982cbea06627a5053df9"
+    },
+    "experience.entries[2].company": {
+      "english": "SER 321 at Arizona State University",
+      "hash": "5876bf1d8c791013d745a778ca664812d90a829a0006976b4393c8e0b298eb56"
+    },
+    "experience.entries[2].role": {
+      "english": "Undergraduate Teaching Assistant for Distributed Software Systems course",
+      "hash": "f8cb8c99594fb4fc4ba6e51ef08a1e3c733fe719e0facd5c1633b105877a6c04"
+    },
+    "experience.entries[2].timeframe": {
+      "english": "March – May 2024",
+      "hash": "a0c786bc530ffbc9fcec74549244377e2acf6004c0af54c2798efef6c63f25c8"
+    },
+    "experience.entries[2].summary": {
+      "english": "Designed and coded an assignment; a “Wheel of Fortune” Java server supporting a dynamic amount of concurrent clients. Mentored students in designing distributed systems hosted on AWS and debugging client-server architectures.",
+      "hash": "e08156059b1d84a83fd213c07b77db955dcbfa759aa2ab0b6020aa38ecead8d3"
+    },
+    "experience.entries[2].highlights[0]": {
+      "english": "Actively answered student questions on Slack discussion boards, and hosted office hours once per week.",
+      "hash": "e239000d288ea16326ab0fd9309126244a5ab103676118992e570f94999c3471"
+    },
+    "experience.entries[2].highlights[1]": {
+      "english": "Assisted in debugging complex issues with code logic, networking, threading, AWS deployment, Ubuntu, and virtualization.",
+      "hash": "f854e86a0a50d3ac89563fd92f012662deb4f1c60e0faa64bcbe1e8bde812da1"
+    },
+    "experience.entries[3].company": {
+      "english": "Indie game development",
+      "hash": "f2af2bb56699a47422ea62b3f39fbf29344f17da5f86c6eea180616d938a20ef"
+    },
+    "experience.entries[3].role": {
+      "english": "Fullstack Engineer",
+      "hash": "de4e2b7f2be6b217eb42160bd06c6f3d76e73e5fab25c3a36cdda1c477203081"
+    },
+    "experience.entries[3].timeframe": {
+      "english": "Ongoing",
+      "hash": "a90620097624cae57edb193379e4a70f87b34096acc7c5d0b07d957b947a3e22"
+    },
+    "experience.entries[3].summary": {
+      "english": "Building a C++ game engine and story driven RPG adventure.",
+      "hash": "322975ba1c7df614afd8eef1051f5ac8ca1f4c636038d3b6d42282199de72177"
+    },
+    "experience.entries[3].highlights[0]": {
+      "english": "Implemented core engine loops, asset loading, vertex buffers, and JSON data structures.",
+      "hash": "ce20b9f9be543652026a50a1ed5c5763c1eca9925f0aea9d315a6e3915dcafa4"
+    },
+    "experience.entries[3].highlights[1]": {
+      "english": "Experimented with tooling such as OpenGL, SDL, and Dear ImGui.",
+      "hash": "5de53c01f63fa69bd71cae0cc149656dbbe9d6fe52b253ba475cc45fd00ccaf8"
+    },
+    "experience.entries[4].company": {
+      "english": "Freelance / Mods",
+      "hash": "264eab9e52aee1693f3fdf676e9e16baccb45daf90b13bd6cd854527580b4676"
+    },
+    "experience.entries[4].role": {
+      "english": "Mod developer (Stellaris & Minecraft)",
+      "hash": "08590e206fb617326410b375a85b3a8b4f034f245ba32956335d1d22e94b4c0b"
+    },
+    "experience.entries[4].timeframe": {
+      "english": "Ongoing",
+      "hash": "a90620097624cae57edb193379e4a70f87b34096acc7c5d0b07d957b947a3e22"
+    },
+    "experience.entries[4].summary": {
+      "english": "Maintain a handful of Minecraft and Stellaris mods, plus high performance heavily modded private servers.",
+      "hash": "2b024342e64c34c23edaca4e65197d1f276c553bc4fbd8191591db3b1bccaf44"
+    },
+    "experience.entries[4].highlights[0]": {
+      "english": "Built custom mod features and balance tweaks for Stellaris and Minecraft.",
+      "hash": "f10d251b58eadda1f3d758ee024aa35422148c3bc02254d6538f647529dabf2a"
+    },
+    "experience.entries[4].highlights[1]": {
+      "english": "Operate game servers and customize modpacks with ongoing profiling and tuning.",
+      "hash": "794f7b697582d1382eda8953d0f16526634babe443ba47ec32a8d886f3490481"
+    },
+    "experience.entries[5].company": {
+      "english": "Portfolio (this website) - Personal project",
+      "hash": "a6f9e304e20f8213d29aba58b03d80b2818e98e73a268625fad05f1008bf5abe"
+    },
+    "experience.entries[5].role": {
+      "english": "Solo AI-Assisted Fullstack Engineer",
+      "hash": "df8f919d1262e499d0bf2aadef0a7601753935a3d9c37c201d8d4c6127bfade6"
+    },
+    "experience.entries[5].timeframe": {
+      "english": "October - December 2025",
+      "hash": "6a2a737d74d35bfa74fbea0b619ff5383315ae361812697ce0ef02dcc6616e4c"
+    },
+    "experience.entries[5].summary": {
+      "english": "Designed and built a personalized engineering portfolio with localization, accessibility, basic telemetry, and custom UI components.",
+      "hash": "0b56b0e720879c9c084802ed574e12db4a5613edcd839341612734c13a7e32dd"
+    },
+    "experience.entries[5].highlights[0]": {
+      "english": "Instructed Codex to perform complex tasks based on high level documentation and a detailed Work Breakdown Structure.",
+      "hash": "8eedf2f8e9bfeba9d9ecba2fdeaca5e9432b8f91d2833082f97df521ab2b0aa4"
+    },
+    "experience.entries[5].highlights[1]": {
+      "english": "Full en/ja/zh localization with centralized content definitions to keep information consistent.",
+      "hash": "3381f7b672ccd5640f938c6d4630dfda67e125fa81f824840a8f4befda23f8c4"
+    },
+    "experience.entries[5].highlights[2]": {
+      "english": "Built a custom component set with theme/contrast controls and accessibility guardrails.",
+      "hash": "97aa31a87848bef9bea76a3cf935321a19d93e736ce4b4bdc24ddfa4116fbe3e"
+    },
+    "experience.entries[5].highlights[3]": {
+      "english": "Centered performance and observability with critical CSS, edge rendering, and structured data.",
+      "hash": "d16a4919a5d492cc486c923565dd9c9979cb72401850cb49d6131600a001c5d0"
+    },
+    "experience.techStack[0].title": {
+      "english": "React",
+      "hash": "01fad993ff61aca9a1f2f07100c95eb1559d8b6440a00cb974a92810a6b5a2dc"
+    },
+    "experience.techStack[0].context": {
+      "english": "2 years of experience",
+      "hash": "806d7e0cc5792c324ad8ad6b9bf5406a49a7dde9115ed1d9713f9b6465ef7394"
+    },
+    "experience.techStack[0].summary": {
+      "english": "Frontend design for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
+      "hash": "bd9e4e518612632bf2dd405e1fd93c707c4ec1d24e8cf5f724cfbf1c631c504d"
+    },
+    "experience.techStack[0].highlights[0]": {
+      "english": "Rollodex - Implemented various components to build templated forms and redesign search/filter UI.",
+      "hash": "a0d38fd0b56bf59e47649261c42fefa60491f247b90668d4b32f6818581aa291"
+    },
+    "experience.techStack[0].highlights[1]": {
+      "english": "Portfolio - Implemented a wide suite of custom UI components.",
+      "hash": "ba264799cd8886dfecb73ae3b163919af60c98f9364903f0addb59968e23e243"
+    },
+    "experience.techStack[1].title": {
+      "english": "JavaScript",
+      "hash": "b27ad06d123c6145fba7e9217a4cfbf2488b4743810ed8c8ff14ad01a5bbe515"
+    },
+    "experience.techStack[1].context": {
+      "english": "3 years of experience",
+      "hash": "9acf58ee81cf3729d030c4a720563421182863302c7ef7532657cfd6e47ca734"
+    },
+    "experience.techStack[1].summary": {
+      "english": "Backend logic for Software Portfolio (this website), Rollodex Capstone, Quester2000.",
+      "hash": "a3f39a67db94f4288b676290a8eba9bf9ebb39f937a4711e88d273df242e0d4c"
+    },
+    "experience.techStack[1].highlights[0]": {
+      "english": "Built client/server logic to power complex features, such as menu interfaces, search filtering, and form templates.",
+      "hash": "05ca52ee75e5fa396154c6926771f2b3ee042cba6ac99e4c9bb9ccbbe45bb503"
+    },
+    "experience.techStack[2].title": {
+      "english": "TypeScript",
+      "hash": "ed0504f70a48ffe9ed17e7ddee02a72a9c8af602aee1f7ce11853975ce911733"
+    },
+    "experience.techStack[2].context": {
+      "english": "6 months of experience",
+      "hash": "39060a13b00b124677526ecc30d098dea56fccdef0c0ee6ad31f8bad82a4f752"
+    },
+    "experience.techStack[2].summary": {
+      "english": "Backend logic for Software Portfolio (this website), Quester2000.",
+      "hash": "4f526f273fb332e2cb667bf56babde7df51d7f1c4d26afb52718c4ea442c0bdc"
+    },
+    "experience.techStack[2].highlights[0]": {
+      "english": "Built web apps meant to run on cloud services.",
+      "hash": "35d10a276903a706b4bf8b428739b86e12260bfa939adc99b68a672c32ec6814"
+    },
+    "experience.techStack[3].title": {
+      "english": "Codex",
+      "hash": "616efbe96852d8c957d6be5634ed41e871cf1ecf134c9b9693f614daeb15137c"
+    },
+    "experience.techStack[3].context": {
+      "english": "6 months of experience",
+      "hash": "39060a13b00b124677526ecc30d098dea56fccdef0c0ee6ad31f8bad82a4f752"
+    },
+    "experience.techStack[3].summary": {
+      "english": "AI-assisted development for Software Portfolio (this website), Quester2000",
+      "hash": "a9401c465c7b0c8c5b501f85f17511fa2947be672810e9a6b988eaf3c02bb8c6"
+    },
+    "experience.techStack[3].highlights[0]": {
+      "english": "Instructed Codex to perform complex tasks based on high level documentation and a detailed Work Breakdown Structure.",
+      "hash": "8eedf2f8e9bfeba9d9ecba2fdeaca5e9432b8f91d2833082f97df521ab2b0aa4"
+    },
+    "experience.techStack[3].highlights[1]": {
+      "english": "Broke tasks into small chunks that Codex could handle, and verified stability of solutions.",
+      "hash": "09dd46d66cfe13d67ff6a70861f5a6be876a319624d23b0b35b2fbf034130068"
+    },
+    "experience.techStack[4].title": {
+      "english": "Java",
+      "hash": "c1ba60ce13586503a21a05e9ef0bb959f1ba74a1d37bcfcbf5fc6bfb548f684d"
+    },
+    "experience.techStack[4].context": {
+      "english": "7 years of experience",
+      "hash": "5e71f0757965e4f56aae012f54fbcd98132c568b625b186a85d7a53a23e3a951"
+    },
+    "experience.techStack[4].summary": {
+      "english": "Distributed systems teaching, Minecraft modding, Various courses/projects.",
+      "hash": "5530a33d18c78943d1f1d634f4de34564cddb960629fd7286d74bde4579690d4"
+    },
+    "experience.techStack[4].highlights[0]": {
+      "english": "Built a Wheel of Fortune Java client/server assignment for students.",
+      "hash": "ba5d7973ce3bc468643f6ad55c5cf57b53286acd364c51a5e525f1ba7f7ed66c"
+    },
+    "experience.techStack[4].highlights[1]": {
+      "english": "Decompiled code to patch a crash and reassemble.",
+      "hash": "4c03c2c8ac44a1157dd74612731c2c11de3ed41679b893997895f34986de38b0"
+    },
+    "experience.techStack[5].title": {
+      "english": "C++",
+      "hash": "f1deb75fa21d3c47a6e7a45967b79fad2d053947066dc95322c5bcee1e9fe21c"
+    },
+    "experience.techStack[5].context": {
+      "english": "7 years of experience",
+      "hash": "5e71f0757965e4f56aae012f54fbcd98132c568b625b186a85d7a53a23e3a951"
+    },
+    "experience.techStack[5].summary": {
+      "english": "Core language foundation. Used for custom game engine and many small projects.",
+      "hash": "165984db512f12bbf95ebcbe5e4cb4e9c64f7ccf93a0665be8e5bb9c4a6da0c2"
+    },
+    "experience.techStack[5].highlights[0]": {
+      "english": "Developed a custom game engine for a current project. (Limited information disclosure)",
+      "hash": "59604e1d17ab40435e9c1c78bfd8e6ea0fea0d396219517c75b18254f7f28d16"
+    },
+    "experience.techStack[5].highlights[1]": {
+      "english": "The language that I first learned and my top preference.",
+      "hash": "e39ef31542c56736f3ae74bae1294b6eeb6f5bf2cffa532b2487f391afddfb20"
+    },
+    "experience.techStack[6].title": {
+      "english": "PostgreSQL",
+      "hash": "cc52d03280b7034c8e3653d2748ebd489a873ef4bbc89cb187fbfcabfbbf6873"
+    },
+    "experience.techStack[6].context": {
+      "english": "2 years of experience",
+      "hash": "806d7e0cc5792c324ad8ad6b9bf5406a49a7dde9115ed1d9713f9b6465ef7394"
+    },
+    "experience.techStack[6].summary": {
+      "english": "Rollodex, Quester2000",
+      "hash": "fa62191934e4bf695e5621b46e972a823bfee94712b3795fc4d48e579e2e950f"
+    },
+    "experience.techStack[6].highlights[0]": {
+      "english": "Modeled contact/search data to support fast filtering.",
+      "hash": "935de62d0b5213285b5f10e392a6ea53ab2de7fb39ee1135111eaf13492993a5"
+    },
+    "experience.techStack[6].highlights[1]": {
+      "english": "Stored app data for user accounts.",
+      "hash": "0f6d6a5ee921926f73b542c3f223269b6178f68f97f7db1f7326df38adc07354"
+    },
+    "experience.techStack[7].title": {
+      "english": "AWS",
+      "hash": "32fd72a0e0746043a1cce59f2e840490df6b9ea49e9bbcade136da5e8173d6c0"
+    },
+    "experience.techStack[7].context": {
+      "english": "2 years of experience",
+      "hash": "806d7e0cc5792c324ad8ad6b9bf5406a49a7dde9115ed1d9713f9b6465ef7394"
+    },
+    "experience.techStack[7].summary": {
+      "english": "Server deployment for various projects",
+      "hash": "c74116d22b9791f77763b89958d8bf21dceb374bc67d98e5c8b4d7511843fcea"
+    },
+    "experience.techStack[7].highlights[0]": {
+      "english": "Used to host client-server applications for SER321.",
+      "hash": "162e516e7c60924eb4cb4a155505d5abd39b71c6d1591faf0c9584295c09f97c"
+    },
+    "experience.techStack[8].title": {
+      "english": "C",
+      "hash": "6b23c0d5f35d1b11f9b683f0b0a617355deb11277d91ae091d399c655b87940d"
+    },
+    "experience.techStack[8].context": {
+      "english": "3 years of experience",
+      "hash": "9acf58ee81cf3729d030c4a720563421182863302c7ef7532657cfd6e47ca734"
+    },
+    "experience.techStack[8].summary": {
+      "english": "Coursework for various courses.",
+      "hash": "fe5da398dbb46d3ed49f1a85f00b15bc590df6ef0397324c4d3a732067d4184d"
+    },
+    "experience.techStack[8].highlights[0]": {
+      "english": "SER334 - Built a Loadable Kernel Module that uses Linux data structures to display details about the processes executing in the kernel.",
+      "hash": "b077871fd127273cae15f0ab6e19328443a627cebd94bb51c7930901712ec597"
+    },
+    "experience.techStack[8].highlights[1]": {
+      "english": "Applied scripting for various topics such as thread/compiler optimization, page replacement, image processing, and scheduling algorithms.",
+      "hash": "05b1cb9772287f5140bc00041e84ad09b479bc5ea62a032aaf03f3dd94e4d924"
+    },
+    "experience.techStack[9].title": {
+      "english": "HTML",
+      "hash": "07239dbd2a1a1dd793be9062a205eb6be88c36af3fe7e4d6426aea45aa253815"
+    },
+    "experience.techStack[9].context": {
+      "english": "5 years of experience",
+      "hash": "6c85b9555aee7012f221aaaf6e8fa6408d6b8b4402cfcb0252dde3ba65a49cd6"
+    },
+    "experience.techStack[9].summary": {
+      "english": "Web design for Web Development & Design Foundations coursework, Software Portfolio (this website), Rollodex Capstone, Quester2000.",
+      "hash": "3e52e8e6c2ed5300d79090b90750fb5327faeba6c84a354d253623cd677199b0"
+    },
+    "experience.techStack[9].highlights[0]": {
+      "english": "Built legacy style websites using HTML and CSS to display information and navigate between pages.",
+      "hash": "9939c6496d7404a9dfa56b4a5d1384962c7cc7d8fac3ec323a3956908ab4c14a"
+    },
+    "experience.techStack[9].highlights[1]": {
+      "english": "Integrated with JavaScript, TypeScript, and React to build complex web apps.",
+      "hash": "deaa1104f604c40aeb6d25e6ae9ccda3c2e7ab033ef8e24bb4f72fdb089861cb"
+    },
+    "experience.techStack[10].title": {
+      "english": "CSS",
+      "hash": "b581e46042cbfbb0af4542a858079a84fd3ae98e5563f615710191d5b3597680"
+    },
+    "experience.techStack[10].context": {
+      "english": "5 years of experience",
+      "hash": "6c85b9555aee7012f221aaaf6e8fa6408d6b8b4402cfcb0252dde3ba65a49cd6"
+    },
+    "experience.techStack[10].summary": {
+      "english": "UI design for Software Portfolio (this website), Rollodex Capstone, Quester2000, Various courses.",
+      "hash": "1b25499b1faf8329936aafcbeef3b168d3cf41fa6a5e91b5d611f482111fdd09"
+    },
+    "experience.techStack[10].highlights[0]": {
+      "english": "Created themes for web applications to customize and improve accessibility.",
+      "hash": "fa3c58f414b2ac2adc71800deaf614f07c5f3714bca3b886ffcd30fb5de7b44f"
+    },
+    "experience.techStack[11].title": {
+      "english": "Linux",
+      "hash": "4828e60247c1636f57b7446a314e7f599c12b53d40061cc851a1442004354fed"
+    },
+    "experience.techStack[11].context": {
+      "english": "7 years of experience",
+      "hash": "5e71f0757965e4f56aae012f54fbcd98132c568b625b186a85d7a53a23e3a951"
+    },
+    "experience.techStack[11].summary": {
+      "english": "My daily driver kernel, set up on many systems. Also used for various courses.",
+      "hash": "c3b5ea70c0a38475b5e2511d17d80140c2d47e0a458da8959c6c9ae3b2000cd1"
+    },
+    "experience.techStack[11].highlights[0]": {
+      "english": "Actively maintaining Nextcloud and game servers with backups and monitoring.",
+      "hash": "216e5b08b00804e73923a6b15fa35fb06a95d080e375f4324148c1306d6c06df"
+    },
+    "experience.techStack[11].highlights[1]": {
+      "english": "Configured VFIO and kernel tuning for GPU passthrough to VMs.",
+      "hash": "db0f345bbc0a3008541509d589dde393ad3357f5405b1870a02b49e3d3859ec9"
+    },
+    "experience.techStack[12].title": {
+      "english": "SQL",
+      "hash": "a7056a455639d1c7deec82ee787db24a0c1878e2792b4597709f0facf7cc7b35"
+    },
+    "experience.techStack[12].context": {
+      "english": "2 years of experience",
+      "hash": "806d7e0cc5792c324ad8ad6b9bf5406a49a7dde9115ed1d9713f9b6465ef7394"
+    },
+    "experience.techStack[12].summary": {
+      "english": "Rollodex, SER322 - Database Management course",
+      "hash": "29dee2202e1e1281f6d64f3b2204c01f601609bc2961e2f539062fdd6fe87240"
+    },
+    "experience.techStack[12].highlights[0]": {
+      "english": "Designed Retail Inventory Management system for SER322.",
+      "hash": "1ff42a3336c6cb1ab45df0e7bbbca1188786b9449c9d91ac5901dcb5484fb66c"
+    },
+    "experience.techStack[12].highlights[1]": {
+      "english": "Used queries to troubleshoot and speed up search for Rollodex.",
+      "hash": "53b541c009db3be1fc1b5d86aa0fe695683ed24aa4c3b35968d4b5b2c9e7abcd"
+    },
+    "experience.techStack[13].title": {
+      "english": "JSON",
+      "hash": "db1a21a0bc2ef8fbe13ac4cf044e8c9116d29137d5ed8b916ab63dcb2d4290df"
+    },
+    "experience.techStack[13].context": {
+      "english": "5 years of experience",
+      "hash": "6c85b9555aee7012f221aaaf6e8fa6408d6b8b4402cfcb0252dde3ba65a49cd6"
+    },
+    "experience.techStack[13].summary": {
+      "english": "Modding, Game Engine, Various courses.",
+      "hash": "b57bdc70fb402392b07ba10d26a14212227b779d4fed7ac372dc2af5d1aa2bfc"
+    },
+    "experience.techStack[13].highlights[0]": {
+      "english": "Stored complex application objects to file, and read them back upon application reload.",
+      "hash": "41be8fe03a2f1a074a0a26c8bf588d98a14b10ed6115af4d2ee8363523cab30d"
+    },
+    "experience.techStack[13].highlights[1]": {
+      "english": "Commonly used when modding Stellaris and Minecraft.",
+      "hash": "275ab485f53ba51b5c4c6fb7a6d487b451ff014bead00a00664736fd5ebf1fec"
+    },
+    "experience.techStack[14].title": {
+      "english": "Bash",
+      "hash": "d1e9567da9a8a4b0c43da0791da1d2594cf5d7b78547fea132d06bccc1b06091"
+    },
+    "experience.techStack[14].context": {
+      "english": "5 years of experience",
+      "hash": "6c85b9555aee7012f221aaaf6e8fa6408d6b8b4402cfcb0252dde3ba65a49cd6"
+    },
+    "experience.techStack[14].summary": {
+      "english": "Local tooling on Linux systems",
+      "hash": "2c3531706a179f83c1019271f920424cdfdaae8e52a9df9e7837680b6556a8bb"
+    },
+    "experience.techStack[14].highlights[0]": {
+      "english": "Scripting to modify various behaviors of Linux machines.",
+      "hash": "8491e2ce8a7dfb084db4c277187db5ef55ade8fe4ebec7284f7a12badfe8056b"
+    },
+    "experience.techStack[14].highlights[1]": {
+      "english": "Used heavily during application development.",
+      "hash": "7ef674746a84a88dc8ab97525c0612178de4405f07c901f46d90c989e261e69e"
+    },
+    "experience.techStack[15].title": {
+      "english": "XML",
+      "hash": "40658e9af8fd92229ae162dc98547cb75eb96999edd7dc214582ac6c23ef6585"
+    },
+    "experience.techStack[15].context": {
+      "english": "5 years of experience",
+      "hash": "6c85b9555aee7012f221aaaf6e8fa6408d6b8b4402cfcb0252dde3ba65a49cd6"
+    },
+    "experience.techStack[15].summary": {
+      "english": "Game mod configuration, Various courses",
+      "hash": "700200925828c8b8b1407ffc3f38df24dc178ea055f101bff8079feff75ae2d5"
+    },
+    "experience.techStack[15].highlights[0]": {
+      "english": "Patched Minecraft config XMLs to optimize servers and align with modpack updates.",
+      "hash": "946adcd6bec10476376aedce8c3df2c163a960f3a492ab4350b00ef793d8f277"
+    },
+    "experience.techStack[15].highlights[1]": {
+      "english": "Deploy virtual machines and optimize them.",
+      "hash": "56209b89ade38a43d91e2ea7a04f8884cbf9ca5d08cb739927f3bb379cef9b8a"
+    },
+    "experience.techStack[16].title": {
+      "english": "KVM",
+      "hash": "d27c7d202f214eaaa42894b132c1d4d7d778d8c297c2da06d54cec5d8dcb61c3"
+    },
+    "experience.techStack[16].context": {
+      "english": "4 years of experience",
+      "hash": "8a4d8c417422365839b71ad83f597b2f84c26de4d30b166d98cd18eb42e6d759"
+    },
+    "experience.techStack[16].summary": {
+      "english": "Virtualize Windows on Linux systems",
+      "hash": "394dec99b56609bcf20da597df7631eaf5711e5c378845234ccb93357975be87"
+    },
+    "experience.techStack[16].highlights[0]": {
+      "english": "Set up Windows 10 virtual machines optimized for gaming, with GPU passthrough.",
+      "hash": "c81738cbe21513503628c1533c3e3e48d493f98ffd2edda5b68a2b03e39aa5e2"
+    },
+    "experience.techStack[16].highlights[1]": {
+      "english": "Used with QEMU.",
+      "hash": "81e54ea1c4b1794df8f25a87674873bdceb966340e8cefde7c6414dc6e2b05d5"
+    },
+    "experience.techStack[17].title": {
+      "english": "QEMU",
+      "hash": "8620862ff8ffec9fe564de3473f7214cd48e92f3dac93e253f4c4d695bff7baf"
+    },
+    "experience.techStack[17].context": {
+      "english": "4 years of experience",
+      "hash": "8a4d8c417422365839b71ad83f597b2f84c26de4d30b166d98cd18eb42e6d759"
+    },
+    "experience.techStack[17].summary": {
+      "english": "Virtualize Windows on Linux systems",
+      "hash": "394dec99b56609bcf20da597df7631eaf5711e5c378845234ccb93357975be87"
+    },
+    "experience.techStack[17].highlights[0]": {
+      "english": "Set up Windows 10 virtual machines optimized for gaming, with GPU passthrough.",
+      "hash": "c81738cbe21513503628c1533c3e3e48d493f98ffd2edda5b68a2b03e39aa5e2"
+    },
+    "experience.techStack[17].highlights[1]": {
+      "english": "Used with KVM.",
+      "hash": "40e0c1dc7a4d691e4734bb444a14a2b13c4c88684e322246899ad6e3ffb91400"
+    },
+    "experience.techStack[18].title": {
+      "english": "Lua",
+      "hash": "b897ce727082286d99b851bcc54df589cf3704f56d3cc76e8b389e7f336e5735"
+    },
+    "experience.techStack[18].context": {
+      "english": "2 years of experience",
+      "hash": "806d7e0cc5792c324ad8ad6b9bf5406a49a7dde9115ed1d9713f9b6465ef7394"
+    },
+    "experience.techStack[18].summary": {
+      "english": "Stellaris Modding",
+      "hash": "940b7e1002159bdc7b293d54ce5002753a06ca8339a29636af57b655eb7ea3ed"
+    },
+    "experience.techStack[18].highlights[0]": {
+      "english": "Built gameplay scripts and UI hooks for custom content.",
+      "hash": "9351c48faa4014dedb90ed8176842456b4eb5504253e9b21370f98370f424a85"
+    },
+    "experience.techStack[18].highlights[1]": {
+      "english": "Iterated on mod changes to improve balance.",
+      "hash": "f2d4dacf0388a5de07a08488ac8daa1484ad66bf4af843947ab1453863784aec"
+    },
+    "experience.techStack[19].title": {
+      "english": "Prisma",
+      "hash": "e4b88de23274e99ca98b822e9f304564c85d96333a5d35bb218b95654a03c7ab"
+    },
+    "experience.techStack[19].context": {
+      "english": "2 years of experience",
+      "hash": "806d7e0cc5792c324ad8ad6b9bf5406a49a7dde9115ed1d9713f9b6465ef7394"
+    },
+    "experience.techStack[19].summary": {
+      "english": "Rollodex, Quester2000",
+      "hash": "fa62191934e4bf695e5621b46e972a823bfee94712b3795fc4d48e579e2e950f"
+    },
+    "experience.techStack[19].highlights[0]": {
+      "english": "Managed schema migrations and models for database structure.",
+      "hash": "d6456a8445087ecd87691f69c419e3093b4e2653ca56242fe4fec76b9d93c29f"
+    },
+    "experience.techStack[20].title": {
+      "english": "Oracle Cloud",
+      "hash": "5a6de57d969c303301a26ecaf579731df1f3718804ecd2f333b754fae9b689cf"
+    },
+    "experience.techStack[20].context": {
+      "english": "2 years of experience",
+      "hash": "806d7e0cc5792c324ad8ad6b9bf5406a49a7dde9115ed1d9713f9b6465ef7394"
+    },
+    "experience.techStack[20].summary": {
+      "english": "WireGuard experiments with intermediate IP",
+      "hash": "d4a4e86d743564112cf60cbb9f5ae987054fcbf561a6fff1874670dc5be85db4"
+    },
+    "experience.techStack[20].highlights[0]": {
+      "english": "Set up a ping point to create a secure connection to my home server.",
+      "hash": "ea55dd33aabc3759265f43193b57a5ff9605ccd6a85db42eb911136ff084ba72"
+    },
+    "experience.techStack[21].title": {
+      "english": "Stellaris Mods",
+      "hash": "e125d9b520beef3864dd33938363288759d4274598dbd394327f8f6f5b6e463d"
+    },
+    "experience.techStack[21].context": {
+      "english": "3 years of experience",
+      "hash": "9acf58ee81cf3729d030c4a720563421182863302c7ef7532657cfd6e47ca734"
+    },
+    "experience.techStack[21].summary": {
+      "english": "Repeated bandaging of a broken modpack to encourage a desired storyline.",
+      "hash": "745494ad1a5c20ddf6042e3a90ec0e997ed06a18282684b4c2b491d155556392"
+    },
+    "experience.techStack[21].highlights[0]": {
+      "english": "Built custom Stellaris mechanics and memory optimizing scripts.",
+      "hash": "75740c5289ccff2c09283c482cafdb75a6e9e62cbc748e6509b1e3c12fff0164"
+    },
+    "experience.techStack[22].title": {
+      "english": "Minecraft Mods",
+      "hash": "52787ffc16c0aa9a7b48a55101a7cade66fdf7dea1b40c4cd8a5690199db4d3a"
+    },
+    "experience.techStack[22].context": {
+      "english": "5 years of experience",
+      "hash": "6c85b9555aee7012f221aaaf6e8fa6408d6b8b4402cfcb0252dde3ba65a49cd6"
+    },
+    "experience.techStack[22].summary": {
+      "english": "10+ high performance modded servers.",
+      "hash": "2725b490790da36ee131544b5acba67268afbee0128813346fca32bc5c019abc"
+    },
+    "experience.techStack[22].highlights[0]": {
+      "english": "Backporting of crash fixes to patch a semi-common client side disconnect.",
+      "hash": "fd34810ad039574e4a0903142df8cc07e0e4fc6a3ce6e84a54651aae9e2ac2bf"
+    },
+    "experience.techStack[22].highlights[1]": {
+      "english": "Added new features with custom mods, and optimized modpacks.",
+      "hash": "5c9c016183cec74ee58b3dafd7758d7b0d866c19b64ba4db088d57b92d4be9e8"
+    },
+    "meetings.metadataTitle": {
+      "english": "Jack F. Contact",
+      "hash": "0f883ee9f189ae28ff29afb33e324afee79ba5a683362209b51060c3c7afa42a"
+    },
+    "meetings.title": {
+      "english": "Contact",
+      "hash": "2b5c3d26721ae9c350cf3009318b626f0fc8a90b4a2ac0ca8099c05aa849282e"
+    },
+    "meetings.subtitle": {
+      "english": "Have questions? Let’s start a conversation.",
+      "hash": "8714b9d33b36ab9f97836cd30887eba61fcb4d75032ebbe93cd5bceaf9a40646"
+    },
+    "meetings.section1title": {
+      "english": "Availability",
+      "hash": "12f67f8539c46701e62d1c50254cf025c22a992b06fea6d4c0e19705f21f4cac"
+    },
+    "meetings.section1subtitle": {
+      "english": "I am commonly able to schedule a short meeting during the hours listed below. (colored tiles)",
+      "hash": "4059946c917076f890f72a456c99224cd15e41135a9d34ba2d308d59bf7d99d2"
+    },
+    "meetings.intro": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "meetings.availability.alt": {
+      "english": "Interactive availability map showing weekly time blocks with recurring openings.",
+      "hash": "f38cb0fb215e83d368a62432d4c62333b15c470c8524dc9f362c51ff687d599c"
+    },
+    "meetings.availability.description": {
+      "english": "Weekly snapshot of common availability.",
+      "hash": "3e9af5c53202321c5a2af9bdeee5a6a932da37424596c78a4bc875ec8ef45087"
+    },
+    "meetings.availability.legend": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "meetings.availability.primaryLabel": {
+      "english": "Converted timezone",
+      "hash": "c8290311c20b7f471ed52600e6f30e0045e4b51184f64dab70c0f6ea8dd9878e"
+    },
+    "meetings.availability.referenceLabel": {
+      "english": "Reference (New York)",
+      "hash": "c8d467cd179d0979ca7a121659259c1eddf32fa01ee1f21a2cac70c9995ce432"
+    },
+    "meetings.availability.referenceButtonLabel": {
+      "english": "View New York reference",
+      "hash": "ce052e2b634d1b3bd36b84a20eafcb7e4d02ce800a2d6b488a1b16f0417d8d5b"
+    },
+    "meetings.availability.referenceDialogTitle": {
+      "english": "Reference availability",
+      "hash": "9775709d0fdfbdfd0845b1dd4a8bbdb516e31fc5f0bacc7f3d8027f25066b55f"
+    },
+    "meetings.availability.referenceDialogDescription": {
+      "english": "Compare against the original New York time blocks.",
+      "hash": "2db1f47a1bbb69d35962bfec86fd1547712885152a69a1ba5a59638bd94e0db1"
+    },
+    "meetings.availability.referenceCloseLabel": {
+      "english": "Close reference",
+      "hash": "889936ebb6aa750a0ec3af92be5cbcc7ebae3005f4ef64dc17ece412e4ac1150"
+    },
+    "meetings.availability.timezoneDropdownLabel": {
+      "english": "View in another timezone",
+      "hash": "fb85ca1f89002ab6fd3176e5b25661b47f52494ccb62ca2393610ed352da4540"
+    },
+    "meetings.availability.dropdownDescription": {
+      "english": "\"\"",
+      "hash": "12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126"
+    },
+    "meetings.availability.timezoneSearchPlaceholder": {
+      "english": "Search timezones",
+      "hash": "5882a30ecafc4288d64e0409d5bd833ddc887f324c2364fed10adcacc2e8b5b8"
+    },
+    "meetings.availability.timezoneSearchLabel": {
+      "english": "Search timezones",
+      "hash": "5882a30ecafc4288d64e0409d5bd833ddc887f324c2364fed10adcacc2e8b5b8"
+    },
+    "meetings.availability.timezonePickerPinnedLabel": {
+      "english": "Pinned",
+      "hash": "f20c879465551f0d1457a13d4390d0f1ece456b115d75463169c5d55341b9b1e"
+    },
+    "meetings.availability.timezonePickerAllLabel": {
+      "english": "All timezones",
+      "hash": "e751e9dd6d8c82b30fc6130c23511db508a96da5d39896d121e06c8fee013452"
+    },
+    "meetings.availability.timezonePickerSelectedLabel": {
+      "english": "Selected",
+      "hash": "57fd7a0cf33f2666eede69e44f8857159653f2f28e4fd7482a5e16d4af628d2a"
+    },
+    "meetings.availability.timezonePickerNoMatchesLabel": {
+      "english": "No matches",
+      "hash": "2df01a03ff43400b2c833c81b6240c1878abdfc99b258c624bc1605329255f6f"
+    },
+    "meetings.availability.windowLabelPrefix": {
+      "english": "Visible hours:",
+      "hash": "7e15db796294a55dd259c20d3db6aa7a015bfdeaa10e83323784239266aa985b"
+    },
+    "meetings.availability.availableLabel": {
+      "english": "commonly available",
+      "hash": "e20d8abc3fb3ba0536af08fc5457ed47e623e278568d1881d4874d9c428a6215"
+    },
+    "meetings.availability.unavailableLabel": {
+      "english": "typically unavailable",
+      "hash": "a489faf4ffd991ea3b642e9a3034b115ed613c73517b798f0f90a6baf6c1edf3"
+    },
+    "meetings.availability.noAvailabilityLabel": {
+      "english": "No recurring availability.",
+      "hash": "0f0566b18e4fb213ec64c64c2b78008002c971bb7069eabc7ee7e779636e7d73"
+    },
+    "meetings.availability.timeColumnLabel": {
+      "english": "Time",
+      "hash": "33b93476cf597a3330653b66a658983d892ac264b5d6029a2dc642b9b1f30870"
+    },
+    "meetings.availability.dayLabels.sun.short": {
+      "english": "Sun",
+      "hash": "db18f17fe532007616d0d0fcc303281c35aafc940b13e6af55e63f8fed304718"
+    },
+    "meetings.availability.dayLabels.sun.long": {
+      "english": "Sunday",
+      "hash": "873fef760e5d001ba0a843bf1846713fd92538699f323ef00d51f97a2ad2756c"
+    },
+    "meetings.availability.dayLabels.mon.short": {
+      "english": "Mon",
+      "hash": "f40d7f51f69edfaffa29c42910fbc6af6a822f1279162d486b4a7e11c3e0ae9b"
+    },
+    "meetings.availability.dayLabels.mon.long": {
+      "english": "Monday",
+      "hash": "6a00dfc1dc867e8454c2c8856e1512d9bf02a76710e3411c0972aec886c76c61"
+    },
+    "meetings.availability.dayLabels.tue.short": {
+      "english": "Tue",
+      "hash": "d1eb39b09bf52b68d1c4cb75b98211855dcff0bb908c62c7b969b04ef9ce81f0"
+    },
+    "meetings.availability.dayLabels.tue.long": {
+      "english": "Tuesday",
+      "hash": "7d8af1de1262f150187d5938bf649d6c35726970685f916d1ec6392a801b9762"
+    },
+    "meetings.availability.dayLabels.wed.short": {
+      "english": "Wed",
+      "hash": "58339f45df960408051cce029b5b76f049c70c0cb1059b97ff3d4d6ed7a68644"
+    },
+    "meetings.availability.dayLabels.wed.long": {
+      "english": "Wednesday",
+      "hash": "c0a6cc829cd08735294765c75938a7da2b0f222d52e98bff13cb237cd99deaac"
+    },
+    "meetings.availability.dayLabels.thu.short": {
+      "english": "Thu",
+      "hash": "7da11212ed340ea7976a39891c56c6f1e791a175a4bad537ba1cf21f5c83f6fd"
+    },
+    "meetings.availability.dayLabels.thu.long": {
+      "english": "Thursday",
+      "hash": "fc2662062ffdef9610020183ea2b087c21d71150d78a7c7463be8a9050bd3ac9"
+    },
+    "meetings.availability.dayLabels.fri.short": {
+      "english": "Fri",
+      "hash": "66dab40cea1dea5c070c83f775b1ebc2b612b1b9cca1c62ad38815c4ff47b25d"
+    },
+    "meetings.availability.dayLabels.fri.long": {
+      "english": "Friday",
+      "hash": "e21f3f372a46d4be7b49f6809fc91baefeadae004af06485518e124a142c0271"
+    },
+    "meetings.availability.dayLabels.sat.short": {
+      "english": "Sat",
+      "hash": "fdeb71b569e0034d827041c354d2a609ee60b2d3ab71eb0e390faa70c10e36e1"
+    },
+    "meetings.availability.dayLabels.sat.long": {
+      "english": "Saturday",
+      "hash": "dbe35c7363c2f7ec747b902fb240907fc58ae00b98f107be2d4c7b9cd7f6226e"
+    },
+    "meetings.availability.timezoneLabel": {
+      "english": "Check the current New York time",
+      "hash": "0aeb03a4645a62e83f8ceaedfb31e6ea5450f7edd5198966fe2b2e30da83de72"
+    },
+    "meetings.slots[0].title": {
+      "english": "Portfolio walkthrough",
+      "hash": "5ebf15ed20e726e3473f65b530ae61b452b0448ba9c71fedf82df2e593664cf6"
+    },
+    "meetings.slots[0].description": {
+      "english": "Fast skim of the site, tech stack, and anything you would like me to expand on (resume, telemetry, project management, etc.).",
+      "hash": "e792021cd33d6df2c6b046de5b3ccc355c8bdcb9b800eda79d5954f1ad4a0096"
+    },
+    "meetings.slots[1].title": {
+      "english": "Project deep dive",
+      "hash": "764c50fd6c5ba032ee13715ca4737bb9ba4bf57b502d8531527b98f7ff5721ff"
+    },
+    "meetings.slots[1].description": {
+      "english": "Focus on a single project, such as Rollodex, Quester2000, or a mod. Discuss the tradeoffs, timelines, and lessons learned.",
+      "hash": "5ecce0cad92170b5e183dd6c1b1d5108b4bc60b4b9591bca940712dc667dc8d9"
+    },
+    "meetings.slots[2].title": {
+      "english": "Open Q&A",
+      "hash": "52ad91d8a05e074a0b4e3e4e19286f84ed880c760cd4a453c7bc822b40e79837"
+    },
+    "meetings.slots[2].description": {
+      "english": "Need a second opinion on a tech issue or just want to chat? I am happy to help you without a formal agenda. Async may fit better for this case!",
+      "hash": "e7ef891284a4b6457ba57bbbba338a504111adab6655d5cc50c14e9e36e177da"
+    },
+    "meetings.contactLabel": {
+      "english": "Email to confirm: jfstone2000@proton.me",
+      "hash": "5def14b26618a927a76e69e16d454bed5a796e22ae1da24b4d58af04359c8048"
+    },
+    "meetings.contactNote": {
+      "english": "Available on multiple messaging platforms! Suggest something that works for you. You can typically expect an async reply within 24 hours.",
+      "hash": "58d78bef9d503a7cb7bb3f6b9e7d236dc0b1b34b51a8525f96ecc2fd14569ca1"
+    }
+  }
+}

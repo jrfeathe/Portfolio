@@ -10,7 +10,7 @@ try {
   parsedBaseURL = undefined;
 }
 const resolvedPort = process.env.PLAYWRIGHT_PORT ?? parsedBaseURL?.port;
-const serverPort = Number(resolvedPort || "3001");
+const serverPort = Number(resolvedPort || "3002");
 const baseURL = explicitBaseURL ?? `http://127.0.0.1:${serverPort}`;
 const workerCount = Number(process.env.PLAYWRIGHT_WORKERS ?? "1");
 const webServerCommand =

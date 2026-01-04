@@ -10,6 +10,7 @@ import {
   parseLocale,
   type Locale
 } from "../../../src/utils/i18n";
+import { resolveOpenGraphLocale } from "../../../src/lib/seo/opengraph-locale";
 import {
   ResponsiveShellLayout,
   type ShellSection
@@ -89,10 +90,24 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
   const locale = ensureLocale(params.locale);
   const dictionary = getDictionary(locale);
+  const languages = Object.fromEntries(
+    locales.map((entry) => [entry, `/${entry}/meetings`])
+  );
 
   return {
     title: dictionary.meetings.metadataTitle,
-    description: dictionary.meetings.subtitle
+    description: dictionary.meetings.subtitle,
+    alternates: {
+      canonical: `/${locale}/meetings`,
+      languages
+    },
+    openGraph: {
+      title: dictionary.meetings.metadataTitle,
+      description: dictionary.meetings.subtitle,
+      type: "website",
+      locale: resolveOpenGraphLocale(locale),
+      images: [`/${locale}/meetings/opengraph-image`]
+    }
   };
 }
 
@@ -117,6 +132,8 @@ export default function MeetingsPage({ params }: PageParams) {
       breadcrumbs={breadcrumbs}
       sections={sections}
       showSkimToggle={false}
+      shellCopy={dictionary.shell}
+      footerContent={dictionary.home.footer}
       locale={locale}
     />
   );

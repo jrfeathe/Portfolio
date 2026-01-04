@@ -18,6 +18,7 @@ import { headers } from "next/headers";
 import { StructuredData } from "../../src/components/seo/StructuredData";
 import { getResumeProfile } from "../../src/lib/resume/profile";
 import { buildHomePageJsonLd } from "../../src/lib/seo/jsonld";
+import { resolveOpenGraphLocale } from "../../src/lib/seo/opengraph-locale";
 import { extractNonceFromHeaders } from "../../src/utils/csp";
 import { TechStackCarousel } from "../../src/components/TechStackCarousel";
 import { DesktopSkimLayout } from "../../src/components/DesktopSkimLayout";
@@ -120,7 +121,7 @@ function buildSections(dictionary: AppDictionary, locale: Locale) {
       content: (
         <>
           <p>{sections.techStack.overview}</p>
-          <TechStackCarousel items={techStackItems} />
+          <TechStackCarousel items={techStackItems} labels={sections.techStack.carousel} />
         </>
       )
     },
@@ -247,6 +248,7 @@ function buildSkimSections(
     summaryItems,
     techStackTitle: skim.techStackTitle,
     techStackItems,
+    techStackCarouselLabels: sections.techStack.carousel,
     availabilityLabel: skim.availabilityLabel,
     availability: skim.availability
   };
@@ -268,13 +270,31 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export function generateMetadata({ params }: PageParams): Metadata {
+export function generateMetadata({ params, searchParams }: PageProps): Metadata {
   const locale = ensureLocale(params.locale);
   const dictionary = getDictionary(locale);
+  const skimModeEnabled = resolveSkimMode(searchParams);
+  const openGraphImage = skimModeEnabled
+    ? `/${locale}/opengraph-skim`
+    : `/${locale}/opengraph-image`;
+  const languages = Object.fromEntries(
+    locales.map((entry) => [entry, `/${entry}`])
+  );
 
   return {
     title: dictionary.metadata.title,
-    description: dictionary.metadata.description
+    description: dictionary.metadata.description,
+    alternates: {
+      canonical: `/${locale}`,
+      languages
+    },
+    openGraph: {
+      title: dictionary.metadata.title,
+      description: dictionary.metadata.description,
+      type: "website",
+      locale: resolveOpenGraphLocale(locale),
+      images: [openGraphImage]
+    }
   };
 }
 
@@ -292,7 +312,7 @@ export default function HomePage({ params, searchParams }: PageProps) {
   const {
     hero: { title, subtitle, cta, media }
   } = dictionary.home;
-  const resumeProfile = getResumeProfile();
+  const resumeProfile = getResumeProfile(locale);
   const resumeDownloadFilename = `jack-featherstone-resume-${resumeProfile.resumeVersion}.pdf`;
   const structuredData = buildHomePageJsonLd({
     locale,
@@ -320,6 +340,7 @@ export default function HomePage({ params, searchParams }: PageProps) {
           mobileSections={mobileSections}
           anchorItems={anchorItems}
           skimModeEnabled={skimModeEnabled}
+          shellCopy={dictionary.shell}
           locale={locale}
           footerContent={dictionary.home.footer}
           cta={
@@ -395,6 +416,9 @@ export default function HomePage({ params, searchParams }: PageProps) {
             downloadLabel={dictionary.home.audioPlayer.downloadLabel}
             closeLabel={dictionary.home.audioPlayer.closeLabel}
             reopenLabel={dictionary.home.audioPlayer.reopenLabel}
+            volumeLabel={dictionary.home.audioPlayer.volumeLabel}
+            volumeShowLabel={dictionary.home.audioPlayer.volumeShowLabel}
+            volumeHideLabel={dictionary.home.audioPlayer.volumeHideLabel}
             locale={locale}
             trackId={dictionary.home.audioPlayer.trackId}
           />

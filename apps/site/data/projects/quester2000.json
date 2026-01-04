@@ -3,8 +3,8 @@
   "names": {
     "proofTitle": {
       "en": "Quester2000",
-      "ja": "",
-      "zh": ""
+      "ja": "Quester2000",
+      "zh": "Quester2000"
     },
     "techStackTitle": {
       "en": "",
@@ -15,13 +15,13 @@
   "home": {
     "proofDetails": {
       "en": "A point tracking to-do list tool for managing your work-life balance.",
-      "ja": "",
-      "zh": ""
+      "ja": "仕事と生活のバランスを管理するための、ポイント制ToDoリストツールです。",
+      "zh": "用于管理工作与生活平衡的积分制待办清单工具。"
     },
     "roadmapNextStep": {
       "en": "Revisit Quester2000: Add more functionality and improve UI. Possible smartwatch integration.",
-      "ja": "",
-      "zh": ""
+      "ja": "Quester2000を再訪：機能追加とUI改善を行います。スマートウォッチ連携の可能性も検討します。",
+      "zh": "重访 Quester2000：增加更多功能并改进 UI。可能会集成智能手表。"
     }
   },
   "techStack": {
@@ -62,23 +62,23 @@
     "id": "quester2000",
     "company": {
       "en": "Quester2000 - Personal project",
-      "ja": "",
-      "zh": ""
+      "ja": "Quester2000 - 個人プロジェクト",
+      "zh": "Quester2000 - 个人项目"
     },
     "role": {
       "en": "Fullstack Engineer",
-      "ja": "",
-      "zh": ""
+      "ja": "フルスタックエンジニア",
+      "zh": "全栈工程师"
     },
     "timeframe": {
       "en": "Ongoing",
-      "ja": "",
-      "zh": ""
+      "ja": "継続中",
+      "zh": "进行中"
     },
     "summary": {
       "en": "Created a point tracking to-do list tool that promotes self discipline and rewarding.",
-      "ja": "",
-      "zh": ""
+      "ja": "自制心を促し、達成を報酬化するポイント制ToDoリストツールを制作しました。",
+      "zh": "制作了一个积分制待办清单工具，鼓励自律并提供奖励感。"
     },
     "highlights": {
       "en": [
@@ -86,8 +86,16 @@
         "Implemented a flexible frontend UI, designed to work on a variety of systems.",
         "Became familiar with modern tooling used to create a modern web app."
       ],
-      "ja": [],
-      "zh": []
+      "ja": [
+        "ユーザー認証情報、カスタムクエスト、カスタムアイテムを保存するためのDBスキーマを設計しました。",
+        "さまざまな環境で動作するよう設計した、柔軟なフロントエンドUIを実装しました。",
+        "モダンなWebアプリ開発ツールへの理解を深めました。"
+      ],
+      "zh": [
+        "设计了用于存储用户凭证、自定义任务和自定义物品的数据库模式。",
+        "实现了灵活的前端 UI，设计为可在多种系统上运行。",
+        "熟悉了用于构建现代 Web 应用的现代化工具链。"
+      ]
     }
   }
 }

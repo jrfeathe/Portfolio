@@ -32,11 +32,11 @@ This WBS locks the launch scope after the REVOLT audit, trims feature creep, and
 | F3.6 | JSON-LD spot checks           | Re-run rich results checks for home/notes/experience after copy changes.                                                                                            | Validation screenshots/notes; tests passing.                 |
 
 ### F4 — Localization (LC)
-| ID   | Task                  | Scope / Notes                                                                                                 | Deliverable / DoD                                                     |
-|------|-----------------------|---------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|
-| F4.1 | Dictionary completion | Finish EN/JA/ZH copy for home/experience/meetings/skim/resume.json; align resume filenames per locale.        | Dictionaries updated; lint/tests pass; spot-check of key pages.       |
-| F4.2 | Tone/consistency QA   | Tone-check localized strings and ensure formatting consistency (dates, numbers, availability labels).         | QA notes; fixes applied; screenshots per locale.                      |
-| F4.3 | Chatbot localization  | Localize chatbot system prompts/UI text; ensure allowed links + moderation copy respect locale.               | Chatbot renders correctly per locale; rate-limit/captcha UX verified. |
+| ID   | Task                  | Scope / Notes                                                                                                 | Deliverable / DoD                                               |
+|------|-----------------------|---------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| F4.1 | Dictionary completion | Finish EN/JA/ZH copy for home/experience/meetings/skim/resume.json; align resume filenames per locale.        | Dictionaries updated; lint/tests pass; spot-check of key pages. |
+| F4.2 | Tone/consistency QA   | Tone-check localized strings and ensure formatting consistency (dates, numbers, availability labels).         | QA notes; fixes applied; screenshots per locale.                |
+| F4.3 | Chatbot localization  | Localize chatbot system prompts/UI text; ensure allowed links + moderation copy respect locale.               | Chatbot renders correctly per locale; captcha UX verified.      |
 
 ### F5 — Deployment (LC)
 | ID   | Task                | Scope / Notes                                                                     | Deliverable / DoD                             |

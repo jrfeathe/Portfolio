@@ -36,3 +36,16 @@
 - Day 1: Home + Skim mode audit, file any issues.
 - Day 2: Experience + Meetings + chatbot/audio flows; regress Skim if fixes land.
 - Day 3 (buffer): Re-test fixed items; finalize notes.
+
+## Audit log
+
+### 2026-Jan-05
+- Scope: /[locale], /[locale]/experience, /[locale]/meetings, and ?skim.
+- Evidence: tab order per page in `WBS/Task_F3.1_Tab_Order.txt`.
+- Result: No P0/P1 outstanding (user-verified SR pass + keyboard flow).
+- Fixes linked:
+  - `apps/site/src/components/Shell/Layout.tsx` (tab order alignment).
+  - `apps/site/src/components/Shell/MobileShellLayout.tsx` (tab order slot for chatbot).
+  - `apps/site/src/components/chat/ChatbotPortalMount.tsx` (chat launcher placement).
+  - `apps/site/src/components/AudioPlayer.tsx` (prevent hidden focusable controls).
+  - `apps/site/src/components/meetings/AvailabilitySection.tsx` (remove grid cell tab stops).

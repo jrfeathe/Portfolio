@@ -17,6 +17,11 @@ export type ShellFooterProps = {
 };
 
 export function ShellFooter({ className, content }: ShellFooterProps) {
+  const startYear = 2025;
+  const currentYear = new Date().getFullYear();
+  const yearRange = `${startYear} - ${currentYear}`;
+  const closingCopy = content.closing.replace(/^2025/, yearRange);
+
   return (
     <footer
       className={clsx(
@@ -54,7 +59,7 @@ export function ShellFooter({ className, content }: ShellFooterProps) {
           </div>
         </div>
         <div className="mt-6 text-xs text-textMuted dark:text-dark-textMuted">
-          {content.closing}
+          {closingCopy}
         </div>
       </div>
     </footer>

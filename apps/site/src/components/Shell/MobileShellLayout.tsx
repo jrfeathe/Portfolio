@@ -29,6 +29,7 @@ type MobileShellLayoutParams = {
   sections: MobileShellLayoutProps["sections"];
   anchorItems?: AnchorNavItem[];
   cta?: MobileShellLayoutProps["cta"];
+  floatingWidget?: MobileShellLayoutProps["floatingWidget"];
   footer?: MobileShellLayoutProps["footer"];
   footerContent?: ShellFooterContent;
   className?: string;
@@ -50,6 +51,7 @@ export function MobileShellLayout({
   sections,
   anchorItems,
   cta,
+  floatingWidget,
   footer,
   footerContent,
   className,
@@ -276,6 +278,9 @@ export function MobileShellLayout({
           </div>
         </div>
       </header>
+
+      <div id="chatbot-slot" data-chatbot-slot="true" />
+      {floatingWidget}
 
       <div
         className={clsx(

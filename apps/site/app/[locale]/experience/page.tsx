@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Button } from "@portfolio/ui";
 
 import {
   getDictionary,
@@ -10,9 +11,11 @@ import {
   parseLocale,
   type Locale
 } from "../../../src/utils/i18n";
+import { getResumeProfile } from "../../../src/lib/resume/profile";
 import { resolveOpenGraphLocale } from "../../../src/lib/seo/opengraph-locale";
 import {
   ResponsiveShellLayout,
+  StickyCTA,
   type ShellSection,
   type AnchorNavItem
 } from "../../../src/components/Shell";
@@ -179,6 +182,12 @@ export default function ExperiencePage({ params }: PageParams) {
       label: dictionary.experience.title
     }
   ];
+  const resumeProfile = getResumeProfile(locale);
+  const resumeDownloadFilename = `jack-featherstone-resume-${resumeProfile.resumeVersion}.pdf`;
+  const homeCta = dictionary.home.hero.cta;
+  const filteredActions = homeCta.actions.filter(
+    (action) => !action.href || !action.href.startsWith(`/${locale}/experience`)
+  );
 
   return (
     <ResponsiveShellLayout
@@ -187,6 +196,40 @@ export default function ExperiencePage({ params }: PageParams) {
       breadcrumbs={breadcrumbs}
       sections={sections}
       anchorItems={anchorItems}
+      cta={
+        <div className="shell-stacked-sidebar space-y-4 lg:sticky lg:top-24">
+          <StickyCTA
+            title={homeCta.title}
+            description={homeCta.description}
+            sticky={false}
+          >
+            {filteredActions.map((action) =>
+              action.href ? (
+                <Button
+                  key={`${action.label}-${action.variant}`}
+                  variant={action.variant}
+                  href={action.href}
+                  className="w-full"
+                  data-variant={action.variant}
+                  download={action.download ? resumeDownloadFilename : undefined}
+                  rel={action.href.startsWith("http") ? "noreferrer noopener" : undefined}
+                >
+                  {action.label}
+                </Button>
+              ) : (
+                <Button
+                  key={`${action.label}-${action.variant}`}
+                  variant={action.variant}
+                  className="w-full"
+                  data-variant={action.variant}
+                >
+                  {action.label}
+                </Button>
+              )
+            )}
+          </StickyCTA>
+        </div>
+      }
       showSkimToggle={false}
       shellCopy={dictionary.shell}
       footerContent={dictionary.home.footer}

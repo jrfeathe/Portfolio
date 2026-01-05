@@ -192,6 +192,7 @@ export function AudioPlayerOverlay({
       ? "translate-y-full opacity-0 pointer-events-none"
       : "pointer-events-none opacity-0"
     : "";
+  const hiddenTabIndex = isHidden ? -1 : undefined;
   const spacerHeight = isHidden ? 0 : playerHeight;
 
   useEffect(() => {
@@ -249,6 +250,7 @@ export function AudioPlayerOverlay({
                 variant="primary"
                 className="h-10 w-10 rounded-full border-2 border-border text-base font-black leading-none shadow-lg dark:border-dark-border"
                 aria-label={isPlaying ? pauseLabel : playLabel}
+                tabIndex={hiddenTabIndex}
               >
                 {isPlaying ? "❚❚" : "▶"}
               </Button>
@@ -257,6 +259,7 @@ export function AudioPlayerOverlay({
                 onClick={handleHide}
                 aria-label={closeLabel}
                 className="h-9 w-9 rounded-full border-2 border-border text-base shadow-md hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+                tabIndex={hiddenTabIndex}
               >
                 {"▾"}
               </Button>
@@ -271,6 +274,7 @@ export function AudioPlayerOverlay({
                 onClick={handleVolumeToggle}
                 className="rounded-full border border-border px-3 py-2 text-xs font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
                 aria-label={showVolume ? volumeHideLabel : volumeShowLabel}
+                tabIndex={hiddenTabIndex}
               >
                 {volume === 0 ? "🔇" : "🔊"}
               </button>
@@ -285,6 +289,7 @@ export function AudioPlayerOverlay({
                     onChange={handleVolumeChange}
                     className="w-full accent-accent dark:accent-dark-accent contrast-more:accent-[var(--light-hc-accent)] dark:contrast-more:accent-[var(--dark-hc-accent)]"
                     aria-label={volumeLabel}
+                    tabIndex={hiddenTabIndex}
                   />
                 </div>
               ) : null}
@@ -293,6 +298,7 @@ export function AudioPlayerOverlay({
                 download
                 variant="secondary"
                 className="h-9 rounded-full border border-border px-3 font-semibold shadow-md hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+                tabIndex={hiddenTabIndex}
               >
                 ↓
               </Button>
@@ -307,6 +313,7 @@ export function AudioPlayerOverlay({
             preload="metadata"
             controls
             className="sr-only"
+            tabIndex={-1}
           >
             {downloadLabel}
           </audio>
@@ -357,6 +364,7 @@ export function AudioPlayerOverlay({
               onClick={handleHide}
               aria-label={closeLabel}
               className="h-8 w-8 rounded-xl border-2 border-border dark:border-dark-border shadow-md"
+              tabIndex={hiddenTabIndex}
             >
               {">"}
             </Button>
@@ -367,6 +375,7 @@ export function AudioPlayerOverlay({
                 variant="primary"
                 className="h-10 w-10 rounded-full border-2 border-border text-base font-black leading-none shadow-lg dark:border-dark-border"
                 aria-label={isPlaying ? pauseLabel : playLabel}
+                tabIndex={hiddenTabIndex}
               >
                 {isPlaying ? "❚❚" : "▶"}
               </Button>
@@ -385,6 +394,7 @@ export function AudioPlayerOverlay({
               onClick={handleVolumeToggle}
               className="rounded-full border-2 border-border px-2 py-1 text-xs font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
               aria-label={showVolume ? volumeHideLabel : volumeShowLabel}
+              tabIndex={hiddenTabIndex}
             >
               {volume === 0 ? "🔇" : "🔊"}
             </button>
@@ -393,6 +403,7 @@ export function AudioPlayerOverlay({
               download
               variant="secondary"
               className="w-8 h-7 rounded-full border-2 border-border font-semibold shadow-md hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+              tabIndex={hiddenTabIndex}
             >
               ↓
             </Button>
@@ -408,6 +419,7 @@ export function AudioPlayerOverlay({
                 onChange={handleVolumeChange}
                 className="w-full accent-accent dark:accent-dark-accent contrast-more:accent-[var(--light-hc-accent)] dark:contrast-more:accent-[var(--dark-hc-accent)]"
                 aria-label={volumeLabel}
+                tabIndex={hiddenTabIndex}
               />
             </div>
           ) : null}
@@ -421,6 +433,7 @@ export function AudioPlayerOverlay({
           preload="metadata"
           controls
           className="sr-only"
+          tabIndex={-1}
         >
           {downloadLabel}
         </audio>

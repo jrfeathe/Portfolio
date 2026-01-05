@@ -36,6 +36,7 @@ export type ShellLayoutProps = {
   sections: ShellSection[];
   anchorItems?: AnchorNavItem[];
   cta?: ReactNode;
+  floatingWidget?: ReactNode;
   footer?: ReactNode;
   footerContent?: ShellFooterContent;
   className?: string;
@@ -57,6 +58,7 @@ export function ShellLayout({
   sections,
   anchorItems,
   cta,
+  floatingWidget,
   footer,
   footerContent,
   className,
@@ -112,11 +114,13 @@ export function ShellLayout({
   const ctaContainerClassName = clsx(
     "shell-sidebar space-y-6",
     hasNavItems ? "lg:col-start-3" : "lg:col-start-2",
+    "lg:row-start-1",
     skimModeEnabled ? "pt-6" : null
   );
   const mainClassName = clsx(
     "flex flex-col gap-16",
-    hasNavItems ? "lg:col-start-2" : "lg:col-start-1"
+    hasNavItems ? "lg:col-start-2" : "lg:col-start-1",
+    "lg:row-start-1"
   );
 
   return (
@@ -193,7 +197,32 @@ export function ShellLayout({
           ) : null}
         </div>
       </header>
+      <div id="chatbot-slot" data-chatbot-slot="true" />
       <div className={contentGridClassName}>
+        <div className={ctaContainerClassName}>
+          {cta}
+          {floatingWidget}
+        </div>
+
+        {navItems.length ? (
+          <div className="hidden lg:col-start-1 lg:row-start-1 lg:block">
+            <div className="sticky top-24 space-y-3">
+              <AnchorControlPanel
+                enabled={hasNestedAnchors}
+                expandLabel={shellCopy.expandAllLabel}
+                collapseLabel={shellCopy.collapseAllLabel}
+              />
+              <AnchorNav items={navItems} ariaLabel={shellCopy.anchorNavLabel} />
+              <a
+                href="#top"
+                className="inline-flex w-full items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+              >
+                {shellCopy.returnToTopLabel}
+              </a>
+            </div>
+          </div>
+        ) : null}
+
         <main className={mainClassName}>
           {sections.map((section) => (
             <section
@@ -232,29 +261,6 @@ export function ShellLayout({
             </section>
           ))}
         </main>
-
-        <div className={ctaContainerClassName}>
-          {cta}
-        </div>
-
-        {navItems.length ? (
-          <div className="hidden lg:col-start-1 lg:row-start-1 lg:block">
-            <div className="sticky top-24 space-y-3">
-              <AnchorControlPanel
-                enabled={hasNestedAnchors}
-                expandLabel={shellCopy.expandAllLabel}
-                collapseLabel={shellCopy.collapseAllLabel}
-              />
-              <AnchorNav items={navItems} ariaLabel={shellCopy.anchorNavLabel} />
-              <a
-                href="#top"
-                className="inline-flex w-full items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
-              >
-                {shellCopy.returnToTopLabel}
-              </a>
-            </div>
-          </div>
-        ) : null}
       </div>
       {footer ?? (footerContent ? <ShellFooter content={footerContent} /> : null)}
     </div>

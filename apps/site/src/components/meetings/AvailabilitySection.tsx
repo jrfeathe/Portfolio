@@ -477,7 +477,7 @@ function AvailabilityGrid({
                     <div
                       key={`${day}-${meta.index}`}
                       role="gridcell"
-                      tabIndex={isAvailable ? 0 : -1}
+                      tabIndex={-1}
                       aria-label={ariaLabel}
                       className={`h-2 w-full border border-border/40 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
                         isAvailable

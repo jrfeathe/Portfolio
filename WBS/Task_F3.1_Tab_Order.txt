@@ -28,9 +28,7 @@ Achievements
 View experience CTA
 Start a conversation CTA
 nav sidebar
-email
-notes link
-resume link
+footer = {email, notes link, resume link}
 audio player    --> focus trap when closed
 invisible selection ? (it is the audioplayer's volume)
 browser
@@ -41,7 +39,7 @@ chatbot
 skim toggle
 settings
 Rollodex link
-Taching Assistant link
+Teaching Assistant link
 meetings page link
 tech stack
 View experience CTA
@@ -51,7 +49,7 @@ footer
 browser
 
 TAB ORDER experience
-chatbot  
+chatbot
 breadcrumb
 settings
 nav sidebar
@@ -59,7 +57,7 @@ footer
 browser
 
 TAB ORDER meetings
-chatbot  
+chatbot
 breadcrumb
 settings
 timezone picker
@@ -80,4 +78,82 @@ content
 nav sidebar
 footer
 browser
+
+##NEW ORDER:
+
+TAB ORDER home
+settings = {Light -> System -> Dark, Normal -> System -> High, JA -> EN -> ZH}
+skim toggle
+chatbot
+Download Resume CTA
+View experience CTA
+Start a conversation CTA
+audio player
+nav sidebar
+Tech stack (24 Tab presses)
+Achievements
+footer
+browser
+
+TAB ORDER home skim
+settings
+skim toggle
+chatbot
+Download resume CTA
+View experience CTA
+Start a conversation CTA
+email CTA
+Rollodex link
+Teaching Assistant link
+meetings page link
+tech stack
+footer
+browser
+
+TAB ORDER experience
+breadcrumb
+settings
+chatbot
+nav sidebar
+footer
+browser
+
+TAB ORDER meetings
+breadcrumb
+settings
+chatbot
+nav sidebar
+timezone picker
+DISABLE matrix (useless highlight)
+DISABLE every green item in matrix (1 million useless highlights)
+view reference
+check NY time
+mailto email
+footer
+browser
+
+TAB ORDER notes
+breadcrumb
+settings
+chatbot
+nav sidebar
+content
+footer
+browser
+
+
+
+
+##BROKEN UI FIX Notes:
+
+home - content and CTA are pushed down. They do not share horizontal space anymore. nav shows on a y plane, then CTA on another plane, then content below that plane.
+
+home skim - similar issues. skim toggle is jammed to the right of settings. CTA is taking ownership of an entire horizontal plane. content shows below CTA's plane.
+
+experience - side nav takes ownership of an entire horizontal plane. The problem worsens when expanding the tree.
+
+meetings - side nav takes ownership of entire horizontal plane.
+
+notes - side nav takes ownership of entire horizontal plane.
+
 

@@ -343,21 +343,36 @@ export default function HomePage({ params, searchParams }: PageProps) {
           shellCopy={dictionary.shell}
           locale={locale}
           footerContent={dictionary.home.footer}
+          floatingWidget={
+            !skimModeEnabled ? (
+              <ResponsiveAudioPlayer
+                src={dictionary.home.audioPlayer.src}
+                title={dictionary.home.audioPlayer.title}
+                description={dictionary.home.audioPlayer.description}
+                playLabel={dictionary.home.audioPlayer.playLabel}
+                pauseLabel={dictionary.home.audioPlayer.pauseLabel}
+                downloadLabel={dictionary.home.audioPlayer.downloadLabel}
+                closeLabel={dictionary.home.audioPlayer.closeLabel}
+                reopenLabel={dictionary.home.audioPlayer.reopenLabel}
+                volumeLabel={dictionary.home.audioPlayer.volumeLabel}
+                volumeShowLabel={dictionary.home.audioPlayer.volumeShowLabel}
+                volumeHideLabel={dictionary.home.audioPlayer.volumeHideLabel}
+                locale={locale}
+                trackId={dictionary.home.audioPlayer.trackId}
+              />
+            ) : null
+          }
           cta={
             <div
-              className={
-                skimModeEnabled
-                  ? "shell-stacked-sidebar space-y-4 lg:sticky lg:top-24"
-                  : "shell-stacked-sidebar space-y-4"
-              }
+              className="shell-stacked-sidebar space-y-4 lg:sticky lg:top-24"
             >
               <StickyCTA
                 title={cta.title}
                 description={cta.description}
-                sticky={!skimModeEnabled}
+                sticky={false}
                 className={skimModeEnabled ? "pl-6 pr-6 py-6" : undefined}
               >
-                {cta.actions.map((action, index) =>
+                {cta.actions.map((action) =>
                   action.href ? (
                     <Button
                       key={`${action.label}-${action.variant}`}
@@ -365,7 +380,6 @@ export default function HomePage({ params, searchParams }: PageProps) {
                       href={action.href}
                       className="w-full"
                       data-variant={action.variant}
-                      tabIndex={index === 0 ? 1 : undefined}
                       download={
                         action.download ? resumeDownloadFilename : undefined
                       }
@@ -383,7 +397,6 @@ export default function HomePage({ params, searchParams }: PageProps) {
                       variant={action.variant}
                       className="w-full"
                       data-variant={action.variant}
-                      tabIndex={index === 0 ? 1 : undefined}
                     >
                       {action.label}
                     </Button>
@@ -406,23 +419,6 @@ export default function HomePage({ params, searchParams }: PageProps) {
             </div>
           }
         />
-        {!skimModeEnabled ? (
-          <ResponsiveAudioPlayer
-            src={dictionary.home.audioPlayer.src}
-            title={dictionary.home.audioPlayer.title}
-            description={dictionary.home.audioPlayer.description}
-            playLabel={dictionary.home.audioPlayer.playLabel}
-            pauseLabel={dictionary.home.audioPlayer.pauseLabel}
-            downloadLabel={dictionary.home.audioPlayer.downloadLabel}
-            closeLabel={dictionary.home.audioPlayer.closeLabel}
-            reopenLabel={dictionary.home.audioPlayer.reopenLabel}
-            volumeLabel={dictionary.home.audioPlayer.volumeLabel}
-            volumeShowLabel={dictionary.home.audioPlayer.volumeShowLabel}
-            volumeHideLabel={dictionary.home.audioPlayer.volumeHideLabel}
-            locale={locale}
-            trackId={dictionary.home.audioPlayer.trackId}
-          />
-        ) : null}
       </div>
     </>
   );

@@ -21,7 +21,7 @@ test.describe("Accessibility preference handling", () => {
 
     const ctaButton = page.getByRole("link", { name: "Download resume" });
 
-    for (let attempt = 0; attempt < 10; attempt += 1) {
+    for (let attempt = 0; attempt < 30; attempt += 1) {
       await page.keyboard.press("Tab");
       const isActive = await ctaButton.evaluate(
         (element) => document.activeElement === element

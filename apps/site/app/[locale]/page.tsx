@@ -23,6 +23,7 @@ import { extractNonceFromHeaders } from "../../src/utils/csp";
 import { TechStackCarousel } from "../../src/components/TechStackCarousel";
 import { DesktopSkimLayout } from "../../src/components/DesktopSkimLayout";
 import { MobileSkimLayout } from "../../src/components/MobileSkimLayout";
+import { SocialLinks } from "../../src/components/SocialLinks";
 
 const ResponsiveAudioPlayer = dynamicImport(
   () => import("../../src/components/AudioPlayer").then((mod) => mod.ResponsiveAudioPlayer),
@@ -340,6 +341,7 @@ export default function HomePage({ params, searchParams }: PageProps) {
           mobileSections={mobileSections}
           anchorItems={anchorItems}
           skimModeEnabled={skimModeEnabled}
+          socialLinks={<SocialLinks />}
           shellCopy={dictionary.shell}
           locale={locale}
           footerContent={dictionary.home.footer}

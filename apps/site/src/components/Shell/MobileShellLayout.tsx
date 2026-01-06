@@ -33,6 +33,7 @@ type MobileShellLayoutParams = {
   footer?: MobileShellLayoutProps["footer"];
   footerContent?: ShellFooterContent;
   className?: string;
+  socialLinks?: MobileShellLayoutProps["socialLinks"];
   heroMedia?: {
     image: ImageDescriptor;
     preset?: ResponsiveImagePreset;
@@ -55,6 +56,7 @@ export function MobileShellLayout({
   footer,
   footerContent,
   className,
+  socialLinks,
   heroMedia,
   skimModeEnabled = false,
   showSkimToggle = true,
@@ -91,6 +93,7 @@ export function MobileShellLayout({
   const shouldShowNavSkimToggle = showSkimToggle && skimModeEnabled && menuEnabled;
   const shouldRenderHeaderCta = !!cta && !skimModeEnabled;
   const shouldRenderAfterContentCta = !!cta && skimModeEnabled;
+  const navSkimToggleClassName = "w-full justify-center";
 
   const handleExpandAllNav = () => {
     document.dispatchEvent(new Event("shell-anchor-expand-all"));
@@ -131,34 +134,40 @@ export function MobileShellLayout({
             aria-label={shellCopy.menuCloseLabel}
             onClick={() => setMenuOpen(false)}
           />
+          <button
+            type="button"
+            aria-label={shellCopy.menuCloseLabel}
+            aria-expanded="true"
+            aria-controls="mobile-preferences"
+            className="fixed left-4 z-40 inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-text transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border dark:border-dark-border dark:text-dark-text"
+            style={{ top: menuButtonTop ?? 16 }}
+            onClick={() => setMenuOpen(false)}
+          >
+            {shellCopy.menuCloseButtonLabel}
+          </button>
           <aside
             id="mobile-preferences"
             className="relative z-10 mr-auto flex h-full w-72 max-w-[85vw] flex-col gap-6 border-r border-border bg-surface p-5 shadow-2xl dark:border-dark-border dark:bg-dark-surface"
             aria-label={shellCopy.menuPanelLabel}
           >
-            <div className="flex items-center justify-between">
-              <p className="text-sm font-semibold text-text dark:text-dark-text">
-                {shellCopy.menuTitle}
-              </p>
-              <button
-                type="button"
-                className="rounded-full border border-border h-6 w-6 text-xs font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
-                onClick={() => setMenuOpen(false)}
-              >
-                {shellCopy.menuCloseButtonLabel}
-              </button>
-            </div>
+            {socialLinks ? (
+              <div className="mr-2 flex items-center justify-end [&_[data-social-links]]:gap-8">
+                {socialLinks}
+              </div>
+            ) : null}
             {menuEnabled ? (
               <div className="flex min-h-0 flex-1 flex-col gap-3">
                 <div className="space-y-4">
                   <ThemeToggle locale={locale} />
                   <ContrastToggle locale={locale} />
                   {shouldShowNavSkimToggle ? (
-                    <SkimToggleButton
-                      active={skimModeEnabled}
-                      locale={locale}
-                      className="w-full justify-center"
-                    />
+                    <div className="flex flex-col gap-2">
+                      <SkimToggleButton
+                        active={skimModeEnabled}
+                        locale={locale}
+                        className={navSkimToggleClassName}
+                      />
+                    </div>
                   ) : null}
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -247,7 +256,9 @@ export function MobileShellLayout({
               ) : null}
             </div>
             {shouldShowSkimToggle ? (
-              <SkimToggleButton active={skimModeEnabled} locale={locale} />
+              <div className="inline-flex flex-col items-start gap-3">
+                <SkimToggleButton active={skimModeEnabled} locale={locale} />
+              </div>
             ) : null}
             {heroMedia ? (
               <figure

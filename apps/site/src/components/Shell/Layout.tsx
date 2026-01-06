@@ -40,6 +40,7 @@ export type ShellLayoutProps = {
   footer?: ReactNode;
   footerContent?: ShellFooterContent;
   className?: string;
+  socialLinks?: ReactNode;
   heroMedia?: {
     image: ImageDescriptor;
     preset?: ResponsiveImagePreset;
@@ -62,6 +63,7 @@ export function ShellLayout({
   footer,
   footerContent,
   className,
+  socialLinks,
   heroMedia,
   skimModeEnabled = false,
   showSkimToggle = true,
@@ -81,7 +83,7 @@ export function ShellLayout({
   const showHeroSkimToggle = showSkimToggle && !skimModeEnabled;
   const headerClassName = clsx(
     "border-b border-border bg-surface dark:border-dark-border dark:bg-dark-surface",
-    skimModeEnabled ? "pb-2 pt-4" : "pb-8 pt-10"
+    skimModeEnabled ? "pb-1 pt-4" : "pb-5 pt-10"
   );
   const headerInnerClassName = clsx(
     "mx-auto flex w-full max-w-6xl flex-col px-4",
@@ -134,7 +136,14 @@ export function ShellLayout({
             <div className="flex flex-1 items-center gap-3">
               {showHeaderSkimToggle ? (
                 <div className="min-w-[150px] flex-1 md:flex-none">
-                  <SkimToggleButton active={skimModeEnabled} locale={locale} />
+                  <div className="flex items-center gap-3">
+                    <SkimToggleButton active={skimModeEnabled} locale={locale} />
+                    {socialLinks ? (
+                      <div className="flex items-center pl-1">
+                        {socialLinks}
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
               ) : null}
               {breadcrumbs.length ? (
@@ -161,8 +170,15 @@ export function ShellLayout({
                   {subtitle}
                 </p>
               ) : null}
-              {showHeroSkimToggle ? (
-                <SkimToggleButton active={skimModeEnabled} locale={locale} />
+                {showHeroSkimToggle ? (
+                  <div className="inline-flex flex-col items-start gap-3">
+                    <SkimToggleButton active={skimModeEnabled} locale={locale} />
+                    {socialLinks ? (
+                      <div className="flex items-center pt-2 pl-4">
+                        {socialLinks}
+                      </div>
+                    ) : null}
+                  </div>
               ) : null}
             </div>
             {heroMedia ? (

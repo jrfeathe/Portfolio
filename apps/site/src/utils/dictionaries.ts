@@ -595,7 +595,7 @@ const en: AppDictionary = {
     menuOpenLabel: "Open menu",
     menuCloseLabel: "Close menu",
     menuPanelLabel: "Navigation and display options",
-    menuCloseButtonLabel: "X"
+    menuCloseButtonLabel: "✕"
   },
   home: {
     breadcrumbs: {
@@ -887,7 +887,7 @@ const ja: AppDictionary = {
     menuOpenLabel: "メニューを開く",
     menuCloseLabel: "メニューを閉じる",
     menuPanelLabel: "ナビゲーションと表示オプション",
-    menuCloseButtonLabel: "X"
+    menuCloseButtonLabel: "✕"
   },
   home: {
     breadcrumbs: {
@@ -1181,7 +1181,7 @@ const zh: AppDictionary = {
     menuOpenLabel: "打开菜单",
     menuCloseLabel: "关闭菜单",
     menuPanelLabel: "导航和显示选项",
-    menuCloseButtonLabel: "X"
+    menuCloseButtonLabel: "✕"
   },
   home: {
     breadcrumbs: {
@@ -1228,7 +1228,7 @@ const zh: AppDictionary = {
     hero: {
       title: "Jack Featherstone",
       subtitle:
-        "你好，我是 Jack——这是我的软件工程作品集。本网站记录了我的技能和项目，并作为职业交流的中心。我正在寻找结合开发与项目管理的、涉及 AI 的长期全栈岗位，同时也欢迎较小规模的合同和合作。",
+        "你好，我是 Jack—这是我的软件工程作品集。本网站记录了我的技能和项目，并作为职业交流的中心。我正在寻找结合开发与项目管理的、涉及 AI 的长期全栈岗位，同时也欢迎较小规模的合同和合作。",
       media: {
         image: {
           ...HERO_IMAGE_BASE,

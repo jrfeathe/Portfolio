@@ -11,6 +11,56 @@ type AudioSource = {
   type?: string;
 };
 
+const AUDIO_ELEMENT_ID = "portfolio-audio-player";
+let sharedAudioElement: HTMLAudioElement | null = null;
+
+function resolvePreferredSource(
+  audioEl: HTMLAudioElement,
+  sources: AudioSource[]
+): string | null {
+  if (!sources.length) {
+    return null;
+  }
+  for (const source of sources) {
+    if (!source.type) {
+      return source.src;
+    }
+    const canPlay = audioEl.canPlayType(source.type);
+    if (canPlay === "probably" || canPlay === "maybe") {
+      return source.src;
+    }
+  }
+  return sources[0]?.src ?? null;
+}
+
+function ensureSharedAudioElement(): HTMLAudioElement | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+  const existing = document.getElementById(AUDIO_ELEMENT_ID);
+  if (existing instanceof HTMLAudioElement) {
+    sharedAudioElement = existing;
+    return existing;
+  }
+  if (sharedAudioElement && document.body.contains(sharedAudioElement)) {
+    return sharedAudioElement;
+  }
+  const audioEl = document.createElement("audio");
+  audioEl.id = AUDIO_ELEMENT_ID;
+  audioEl.preload = "metadata";
+  audioEl.controls = true;
+  audioEl.className = "sr-only";
+  audioEl.tabIndex = -1;
+  audioEl.setAttribute("data-audio-player-media", "true");
+  document.body.appendChild(audioEl);
+  sharedAudioElement = audioEl;
+  return audioEl;
+}
+
+function shouldPersistAcrossRoute(pathname: string): boolean {
+  return Boolean(pathname);
+}
+
 export type AudioPlayerOverlayProps = {
   src?: string;
   sources?: AudioSource[];
@@ -25,6 +75,7 @@ export type AudioPlayerOverlayProps = {
   volumeLabel: string;
   volumeShowLabel: string;
   volumeHideLabel: string;
+  isSkimMode?: boolean;
   locale: string;
   trackId?: string;
   loop?: boolean;
@@ -68,6 +119,7 @@ export function AudioPlayerOverlay({
   volumeLabel,
   volumeShowLabel,
   volumeHideLabel,
+  isSkimMode,
   locale,
   trackId = "jack-portfolio-suno",
   loop = true,
@@ -76,16 +128,20 @@ export function AudioPlayerOverlay({
 }: AudioPlayerOverlayProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const playerContainerRef = useRef<HTMLDivElement | null>(null);
-  const resolvedSources = sources?.length ? sources : src ? [{ src }] : [];
+  const resolvedSources = useMemo(
+    () => (sources?.length ? sources : src ? [{ src }] : []),
+    [sources, src]
+  );
   const primarySrc = resolvedSources[0]?.src;
   const hasSource = resolvedSources.length > 0;
   const downloadHref = downloadSrc ?? primarySrc ?? "";
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const [isHidden, setIsHidden] = useState(false);
+  const [isHidden, setIsHidden] = useState(() => Boolean(isSkimMode));
   const [volume, setVolume] = useState(1);
   const [showVolume, setShowVolume] = useState(false);
+  const [audioReady, setAudioReady] = useState(false);
   const [playerOffset, setPlayerOffset] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [isVolumeTrayDown, setIsVolumeTrayDown] = useState(false);
@@ -95,6 +151,8 @@ export function AudioPlayerOverlay({
     originX: number;
     originY: number;
   } | null>(null);
+  const prevSkimModeRef = useRef(Boolean(isSkimMode));
+  const hiddenBeforeSkimRef = useRef<boolean | null>(null);
 
   const telemetryPayload = useMemo(
     () => ({ locale, trackId, src: primarySrc }),
@@ -102,10 +160,60 @@ export function AudioPlayerOverlay({
   );
 
   useEffect(() => {
-    const audioEl = audioRef.current;
+    const audioEl = ensureSharedAudioElement();
     if (!audioEl) {
       return;
     }
+    audioRef.current = audioEl;
+    audioEl.loop = loop;
+    const preferredSrc = resolvePreferredSource(audioEl, resolvedSources);
+    if (preferredSrc) {
+      const nextUrl = new URL(preferredSrc, window.location.href).href;
+      const currentUrl = audioEl.currentSrc || audioEl.src;
+      if (currentUrl !== nextUrl) {
+        const wasPlaying = !audioEl.paused;
+        audioEl.src = preferredSrc;
+        audioEl.load();
+        if (wasPlaying) {
+          audioEl.play().catch(() => {
+            // Ignore resume errors.
+          });
+        }
+      }
+    }
+    setAudioReady(true);
+    return () => {
+      if (typeof window === "undefined") {
+        return;
+      }
+      if (!shouldPersistAcrossRoute(window.location.pathname)) {
+        audioEl.pause();
+        audioEl.remove();
+        if (sharedAudioElement === audioEl) {
+          sharedAudioElement = null;
+        }
+      }
+    };
+  }, [loop, resolvedSources]);
+
+  useEffect(() => {
+    const audioEl = audioRef.current;
+    if (!audioEl || !audioReady) {
+      return;
+    }
+
+    const syncFromAudio = () => {
+      const nextDuration = Number.isFinite(audioEl.duration)
+        ? audioEl.duration
+        : 0;
+      const nextTime = Number.isFinite(audioEl.currentTime)
+        ? audioEl.currentTime
+        : 0;
+      setDuration(nextDuration);
+      setCurrentTime(nextTime);
+      setIsPlaying(!audioEl.paused);
+      setVolume(Number.isFinite(audioEl.volume) ? audioEl.volume : 1);
+    };
 
     audioEl.loop = loop;
 
@@ -144,6 +252,7 @@ export function AudioPlayerOverlay({
     audioEl.addEventListener("pause", handlePause);
     audioEl.addEventListener("ended", handleEnded);
     audioEl.addEventListener("error", handleError);
+    syncFromAudio();
 
     return () => {
       audioEl.removeEventListener("loadedmetadata", handleLoadedMetadata);
@@ -153,7 +262,7 @@ export function AudioPlayerOverlay({
       audioEl.removeEventListener("ended", handleEnded);
       audioEl.removeEventListener("error", handleError);
     };
-  }, [loop, telemetryPayload, variant]);
+  }, [audioReady, loop, telemetryPayload, variant]);
 
   const handleToggle = useCallback(async () => {
     const audioEl = audioRef.current;
@@ -189,6 +298,22 @@ export function AudioPlayerOverlay({
       setShowVolume(false);
     }
   }, [isHidden, showVolume]);
+
+  useEffect(() => {
+    const nextSkimMode = Boolean(isSkimMode);
+    const prevSkimMode = prevSkimModeRef.current;
+    if (!prevSkimMode && nextSkimMode) {
+      hiddenBeforeSkimRef.current = isHidden;
+      setIsHidden(true);
+    } else if (prevSkimMode && !nextSkimMode) {
+      const restoreHidden = hiddenBeforeSkimRef.current;
+      if (restoreHidden !== null) {
+        setIsHidden(restoreHidden);
+      }
+      hiddenBeforeSkimRef.current = null;
+    }
+    prevSkimModeRef.current = nextSkimMode;
+  }, [isHidden, isSkimMode]);
 
   const handleVolumeToggle = useCallback(() => {
     setShowVolume((prev) => !prev);
@@ -385,9 +510,9 @@ export function AudioPlayerOverlay({
           >
             {"✕"}
           </button>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
             <div
-              className="mx-auto h-1.5 w-10 cursor-grab touch-none rounded-full bg-border/70 shadow-sm active:cursor-grabbing dark:bg-dark-border/70"
+              className="relative z-10 mx-auto -mb-2 h-1.5 w-10 cursor-grab touch-none rounded-full bg-border/70 shadow-sm active:cursor-grabbing dark:bg-dark-border/70"
               aria-hidden="true"
               data-drag-handle="true"
             />
@@ -468,25 +593,6 @@ export function AudioPlayerOverlay({
               </div>
             </div>
           </div>
-
-          {/* Instrumental loop without spoken content; captions track is not applicable. */}
-          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-          <audio
-            ref={audioRef}
-            preload="metadata"
-            controls
-            className="sr-only"
-            tabIndex={-1}
-          >
-            {resolvedSources.map((source) => (
-              <source
-                key={`${source.src}-${source.type ?? "audio"}`}
-                src={source.src}
-                type={source.type}
-              />
-            ))}
-            {downloadLabel}
-          </audio>
         </div>
 
         {isHidden ? (
@@ -605,24 +711,6 @@ export function AudioPlayerOverlay({
           ) : null}
         </div>
 
-        {/* Instrumental loop without spoken content; captions track is not applicable. */}
-        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-        <audio
-          ref={audioRef}
-          preload="metadata"
-          controls
-          className="sr-only"
-          tabIndex={-1}
-        >
-          {resolvedSources.map((source) => (
-            <source
-              key={`${source.src}-${source.type ?? "audio"}`}
-              src={source.src}
-              type={source.type}
-            />
-          ))}
-          {downloadLabel}
-        </audio>
       </div>
 
         {isHidden ? (
@@ -643,10 +731,12 @@ export function AudioPlayerOverlay({
 
 type ResponsiveAudioPlayerProps = Omit<AudioPlayerOverlayProps, "variant"> & {
   mobileBreakpoint?: number;
+  forceVariant?: "floating" | "bottom";
 };
 
 export function ResponsiveAudioPlayer({
   mobileBreakpoint = DEFAULT_MOBILE_BREAKPOINT,
+  forceVariant,
   ...props
 }: ResponsiveAudioPlayerProps) {
   const [isMobile, setIsMobile] = useState(false);
@@ -664,10 +754,12 @@ export function ResponsiveAudioPlayer({
     };
   }, [mobileBreakpoint]);
 
+  const resolvedVariant = forceVariant ?? (isMobile ? "bottom" : "floating");
+
   return (
     <AudioPlayerOverlay
       {...props}
-      variant={isMobile ? "bottom" : "floating"}
+      variant={resolvedVariant}
     />
   );
 }

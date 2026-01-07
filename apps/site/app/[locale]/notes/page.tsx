@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import dynamicImport from "next/dynamic";
 import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 
@@ -18,6 +19,11 @@ import {
 import { StructuredData } from "../../../src/components/seo/StructuredData";
 import { buildNotesIndexJsonLd } from "../../../src/lib/seo/jsonld";
 import { extractNonceFromHeaders } from "../../../src/utils/csp";
+
+const ResponsiveAudioPlayer = dynamicImport(
+  () => import("../../../src/components/AudioPlayer").then((mod) => mod.ResponsiveAudioPlayer),
+  { ssr: false, loading: () => null }
+);
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -92,6 +98,20 @@ export default async function NotesIndexPage({ params }: PageParams) {
     dictionary
   });
   const nonce = extractNonceFromHeaders(headers());
+  const audioSources = [
+    {
+      src: dictionary.home.audioPlayer.src,
+      type: "audio/ogg; codecs=opus"
+    },
+    ...(dictionary.home.audioPlayer.fallbackSrc
+      ? [
+          {
+            src: dictionary.home.audioPlayer.fallbackSrc,
+            type: "audio/mpeg"
+          }
+        ]
+      : [])
+  ];
 
   return (
     <>
@@ -101,6 +121,27 @@ export default async function NotesIndexPage({ params }: PageParams) {
         subtitle={dictionary.notes.index.subtitle}
         breadcrumbs={breadcrumbs}
         sections={sections}
+        floatingWidget={
+          <ResponsiveAudioPlayer
+            sources={audioSources}
+            downloadSrc={
+              dictionary.home.audioPlayer.fallbackSrc ??
+              dictionary.home.audioPlayer.src
+            }
+            title={dictionary.home.audioPlayer.title}
+            description={dictionary.home.audioPlayer.description}
+            playLabel={dictionary.home.audioPlayer.playLabel}
+            pauseLabel={dictionary.home.audioPlayer.pauseLabel}
+            downloadLabel={dictionary.home.audioPlayer.downloadLabel}
+            closeLabel={dictionary.home.audioPlayer.closeLabel}
+            reopenLabel={dictionary.home.audioPlayer.reopenLabel}
+            volumeLabel={dictionary.home.audioPlayer.volumeLabel}
+            volumeShowLabel={dictionary.home.audioPlayer.volumeShowLabel}
+            volumeHideLabel={dictionary.home.audioPlayer.volumeHideLabel}
+            locale={locale}
+            trackId={dictionary.home.audioPlayer.trackId}
+          />
+        }
         shellCopy={dictionary.shell}
         footerContent={dictionary.home.footer}
         locale={locale}

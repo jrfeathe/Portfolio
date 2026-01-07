@@ -1,3 +1,5 @@
+import Link from "next/link";
+import type { Route } from "next";
 import clsx from "clsx";
 
 export type ShellFooterContent = {
@@ -21,6 +23,8 @@ export function ShellFooter({ className, content }: ShellFooterProps) {
   const currentYear = new Date().getFullYear();
   const yearRange = `${startYear} - ${currentYear}`;
   const closingCopy = content.closing.replace(/^2025/, yearRange);
+  const notesIsInternal =
+    content.notesHref.startsWith("/") && !content.notesHref.startsWith("//");
 
   return (
     <footer
@@ -44,14 +48,25 @@ export function ShellFooter({ className, content }: ShellFooterProps) {
             >
               {content.email}
             </a>
-            <a
-              href={content.notesHref}
-              className="hover:text-text dark:hover:text-dark-text"
-            >
-              {content.notesLabel}
-            </a>
+            {notesIsInternal ? (
+              <Link
+                href={content.notesHref as Route}
+                className="hover:text-text dark:hover:text-dark-text"
+              >
+                {content.notesLabel}
+              </Link>
+            ) : (
+              <a
+                href={content.notesHref}
+                className="hover:text-text dark:hover:text-dark-text"
+              >
+                {content.notesLabel}
+              </a>
+            )}
             <a
               href={content.resumeHref}
+              target="_blank"
+              rel="noreferrer noopener"
               className="hover:text-text dark:hover:text-dark-text"
             >
               {content.resumeLabel}

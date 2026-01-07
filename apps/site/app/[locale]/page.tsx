@@ -1,5 +1,5 @@
 import { Button } from "@portfolio/ui";
-import type { Metadata } from "next";
+import type { Metadata, Route } from "next";
 import Link from "next/link";
 import dynamicImport from "next/dynamic";
 import { notFound } from "next/navigation";
@@ -98,6 +98,10 @@ function toUrlObject(href: string): UrlObject {
   return hash
     ? { pathname, hash: `#${hash}` }
     : { pathname };
+}
+
+function isInternalHref(href: string): boolean {
+  return href.startsWith("/") && !href.startsWith("//");
 }
 
 function buildSections(dictionary: AppDictionary, locale: Locale) {
@@ -360,27 +364,27 @@ export default function HomePage({ params, searchParams }: PageProps) {
           locale={locale}
           footerContent={dictionary.home.footer}
           floatingWidget={
-            !skimModeEnabled ? (
-              <ResponsiveAudioPlayer
-                sources={audioSources}
-                downloadSrc={
-                  dictionary.home.audioPlayer.fallbackSrc ??
-                  dictionary.home.audioPlayer.src
-                }
-                title={dictionary.home.audioPlayer.title}
-                description={dictionary.home.audioPlayer.description}
-                playLabel={dictionary.home.audioPlayer.playLabel}
-                pauseLabel={dictionary.home.audioPlayer.pauseLabel}
-                downloadLabel={dictionary.home.audioPlayer.downloadLabel}
-                closeLabel={dictionary.home.audioPlayer.closeLabel}
-                reopenLabel={dictionary.home.audioPlayer.reopenLabel}
-                volumeLabel={dictionary.home.audioPlayer.volumeLabel}
-                volumeShowLabel={dictionary.home.audioPlayer.volumeShowLabel}
-                volumeHideLabel={dictionary.home.audioPlayer.volumeHideLabel}
-                locale={locale}
-                trackId={dictionary.home.audioPlayer.trackId}
-              />
-            ) : null
+            <ResponsiveAudioPlayer
+              sources={audioSources}
+              downloadSrc={
+                dictionary.home.audioPlayer.fallbackSrc ??
+                dictionary.home.audioPlayer.src
+              }
+              forceVariant={skimModeEnabled ? "bottom" : undefined}
+              isSkimMode={skimModeEnabled}
+              title={dictionary.home.audioPlayer.title}
+              description={dictionary.home.audioPlayer.description}
+              playLabel={dictionary.home.audioPlayer.playLabel}
+              pauseLabel={dictionary.home.audioPlayer.pauseLabel}
+              downloadLabel={dictionary.home.audioPlayer.downloadLabel}
+              closeLabel={dictionary.home.audioPlayer.closeLabel}
+              reopenLabel={dictionary.home.audioPlayer.reopenLabel}
+              volumeLabel={dictionary.home.audioPlayer.volumeLabel}
+              volumeShowLabel={dictionary.home.audioPlayer.volumeShowLabel}
+              volumeHideLabel={dictionary.home.audioPlayer.volumeHideLabel}
+              locale={locale}
+              trackId={dictionary.home.audioPlayer.trackId}
+            />
           }
           cta={
             <div
@@ -394,23 +398,41 @@ export default function HomePage({ params, searchParams }: PageProps) {
               >
                 {cta.actions.map((action) =>
                   action.href ? (
-                    <Button
-                      key={`${action.label}-${action.variant}`}
-                      variant={action.variant}
-                      href={action.href}
-                      className="w-full"
-                      data-variant={action.variant}
-                      download={
-                        action.download ? resumeDownloadFilename : undefined
-                      }
-                      rel={
-                        action.href.startsWith("http")
-                          ? "noreferrer noopener"
-                          : undefined
-                      }
-                    >
-                      {action.label}
-                    </Button>
+                    isInternalHref(action.href) && !action.download ? (
+                      <Link
+                        key={`${action.label}-${action.variant}`}
+                        href={action.href as Route}
+                        passHref
+                        legacyBehavior
+                      >
+                        <Button
+                          variant={action.variant}
+                          href={action.href}
+                          className="w-full"
+                          data-variant={action.variant}
+                        >
+                          {action.label}
+                        </Button>
+                      </Link>
+                    ) : (
+                      <Button
+                        key={`${action.label}-${action.variant}`}
+                        variant={action.variant}
+                        href={action.href}
+                        className="w-full"
+                        data-variant={action.variant}
+                        download={
+                          action.download ? resumeDownloadFilename : undefined
+                        }
+                        rel={
+                          action.href.startsWith("http")
+                            ? "noreferrer noopener"
+                            : undefined
+                        }
+                      >
+                        {action.label}
+                      </Button>
+                    )
                   ) : (
                     <Button
                       key={`${action.label}-${action.variant}`}

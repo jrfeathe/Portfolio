@@ -1,7 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
+import type { Route } from "next";
 import clsx from "clsx";
+import Link from "next/link";
 
 export type BreadcrumbItem = {
   label: ReactNode;
@@ -29,14 +31,27 @@ export function Breadcrumbs({ items, ariaLabel, className }: BreadcrumbsProps) {
       <ol className="flex flex-wrap items-center gap-2">
         {items.map((item, index) => {
           const isLast = index === lastIndex;
+          const isInternalHref =
+            typeof item.href === "string" &&
+            item.href.startsWith("/") &&
+            !item.href.startsWith("//");
           const content =
             item.href && !isLast ? (
-              <a
-                href={item.href}
-                className="transition hover:text-text dark:hover:text-dark-text"
-              >
-                {item.label}
-              </a>
+              isInternalHref ? (
+                <Link
+                  href={item.href as Route}
+                  className="transition hover:text-text dark:hover:text-dark-text"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  href={item.href}
+                  className="transition hover:text-text dark:hover:text-dark-text"
+                >
+                  {item.label}
+                </a>
+              )
             ) : (
               <span aria-current={isLast ? "page" : undefined}>
                 {item.label}

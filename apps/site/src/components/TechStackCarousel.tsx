@@ -1,6 +1,8 @@
 'use client';
 
 import Image from "next/image";
+import Link from "next/link";
+import type { Route } from "next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import type { AppDictionary } from "../utils/dictionaries";
@@ -195,15 +197,13 @@ export function TechStackCarousel({
                 key={`${slide[0]?.name ?? "slide"}-${slideIndex}`}
                 className="grid min-w-full grid-cols-4 grid-rows-2 gap-x-5 gap-y-5 text-center text-xs font-medium text-text dark:text-dark-text"
               >
-                {slide.map((item) => (
-                  <li key={item.name}>
-                    <a
-                      href={item.href}
-                      className="group flex h-full flex-col items-center gap-2 rounded-[1.75rem] border border-transparent bg-transparent px-0 py-0 transition hover:-translate-y-0.5"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      data-tech-stack-item
-                    >
+                {slide.map((item) => {
+                  const isInternalHref =
+                    item.href.startsWith("/") || item.href.startsWith("#");
+                  const itemClassName =
+                    "group flex h-full flex-col items-center gap-2 rounded-[1.75rem] border border-transparent bg-transparent px-0 py-0 transition hover:-translate-y-0.5";
+                  const itemContent = (
+                    <>
                       <span
                         className="flex h-16 w-16 items-center justify-center rounded-[1.25rem] border border-border/40 bg-surfaceMuted text-accent shadow-sm transition group-hover:border-accent group-hover:text-accent dark:border-dark-border/40 dark:bg-dark-surfaceMuted"
                         data-tech-stack-icon={item.assetId}
@@ -226,9 +226,31 @@ export function TechStackCarousel({
                         )}
                       </span>
                       <span className="truncate text-center font-semibold">{item.name}</span>
-                    </a>
-                  </li>
-                ))}
+                    </>
+                  );
+
+                  return (
+                    <li key={item.name}>
+                      {isInternalHref ? (
+                        <Link
+                          href={item.href as Route}
+                          className={itemClassName}
+                          data-tech-stack-item
+                        >
+                          {itemContent}
+                        </Link>
+                      ) : (
+                        <a
+                          href={item.href}
+                          className={itemClassName}
+                          data-tech-stack-item
+                        >
+                          {itemContent}
+                        </a>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             );
           })}

@@ -327,6 +327,20 @@ export default function HomePage({ params, searchParams }: PageProps) {
   const anchorItems = skimModeEnabled ? [] : undefined;
   const emailValue = dictionary.home.skim.emailValue;
   const emailHref = dictionary.home.skim.emailHref;
+  const audioSources = [
+    {
+      src: dictionary.home.audioPlayer.src,
+      type: "audio/ogg; codecs=opus"
+    },
+    ...(dictionary.home.audioPlayer.fallbackSrc
+      ? [
+          {
+            src: dictionary.home.audioPlayer.fallbackSrc,
+            type: "audio/mpeg"
+          }
+        ]
+      : [])
+  ];
 
   return (
     <>
@@ -348,7 +362,11 @@ export default function HomePage({ params, searchParams }: PageProps) {
           floatingWidget={
             !skimModeEnabled ? (
               <ResponsiveAudioPlayer
-                src={dictionary.home.audioPlayer.src}
+                sources={audioSources}
+                downloadSrc={
+                  dictionary.home.audioPlayer.fallbackSrc ??
+                  dictionary.home.audioPlayer.src
+                }
                 title={dictionary.home.audioPlayer.title}
                 description={dictionary.home.audioPlayer.description}
                 playLabel={dictionary.home.audioPlayer.playLabel}

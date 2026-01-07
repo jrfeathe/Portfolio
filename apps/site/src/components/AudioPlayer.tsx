@@ -6,8 +6,15 @@ import { Button } from "@portfolio/ui";
 
 import { DEFAULT_MOBILE_BREAKPOINT } from "./Shell/constants";
 
+type AudioSource = {
+  src: string;
+  type?: string;
+};
+
 export type AudioPlayerOverlayProps = {
   src?: string;
+  sources?: AudioSource[];
+  downloadSrc?: string;
   title: string;
   description?: string;
   playLabel: string;
@@ -50,6 +57,8 @@ function emitTelemetry(eventName: string, detail: Record<string, unknown>) {
 
 export function AudioPlayerOverlay({
   src,
+  sources,
+  downloadSrc,
   title,
   playLabel,
   pauseLabel,
@@ -60,24 +69,36 @@ export function AudioPlayerOverlay({
   volumeShowLabel,
   volumeHideLabel,
   locale,
-  trackId = "portfolio-loop",
+  trackId = "jack-portfolio-suno",
   loop = true,
   className,
   variant = "floating"
 }: AudioPlayerOverlayProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const playerContainerRef = useRef<HTMLDivElement | null>(null);
+  const resolvedSources = sources?.length ? sources : src ? [{ src }] : [];
+  const primarySrc = resolvedSources[0]?.src;
+  const hasSource = resolvedSources.length > 0;
+  const downloadHref = downloadSrc ?? primarySrc ?? "";
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [isHidden, setIsHidden] = useState(false);
   const [volume, setVolume] = useState(1);
   const [showVolume, setShowVolume] = useState(false);
-  const [playerHeight, setPlayerHeight] = useState(0);
+  const [playerOffset, setPlayerOffset] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [isVolumeTrayDown, setIsVolumeTrayDown] = useState(false);
+  const dragStartRef = useRef<{
+    startX: number;
+    startY: number;
+    originX: number;
+    originY: number;
+  } | null>(null);
 
   const telemetryPayload = useMemo(
-    () => ({ locale, trackId, src }),
-    [locale, src, trackId]
+    () => ({ locale, trackId, src: primarySrc }),
+    [locale, primarySrc, trackId]
   );
 
   useEffect(() => {
@@ -132,11 +153,11 @@ export function AudioPlayerOverlay({
       audioEl.removeEventListener("ended", handleEnded);
       audioEl.removeEventListener("error", handleError);
     };
-  }, [loop, telemetryPayload]);
+  }, [loop, telemetryPayload, variant]);
 
   const handleToggle = useCallback(async () => {
     const audioEl = audioRef.current;
-    if (!audioEl || !src) {
+    if (!audioEl || !hasSource) {
       return;
     }
 
@@ -152,19 +173,22 @@ export function AudioPlayerOverlay({
     } catch (error) {
       console.error("Audio playback failed:", error);
     }
-  }, [isPlaying, loop, src]);
+  }, [hasSource, isPlaying, loop]);
 
   const handleHide = useCallback(() => {
-    const audioEl = audioRef.current;
-    if (audioEl) {
-      audioEl.pause();
-    }
     setIsHidden(true);
   }, []);
 
   const handleShow = useCallback(() => {
+    setPlayerOffset({ x: 0, y: 0 });
     setIsHidden(false);
   }, []);
+
+  useEffect(() => {
+    if (isHidden && showVolume) {
+      setShowVolume(false);
+    }
+  }, [isHidden, showVolume]);
 
   const handleVolumeToggle = useCallback(() => {
     setShowVolume((prev) => !prev);
@@ -184,46 +208,147 @@ export function AudioPlayerOverlay({
     []
   );
 
+  const handleSeekChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const next = Number(event.target.value);
+      if (!Number.isFinite(next)) {
+        return;
+      }
+      const clamped = Math.min(Math.max(next, 0), duration || 0);
+      setCurrentTime(clamped);
+      const audioEl = audioRef.current;
+      if (audioEl) {
+        audioEl.currentTime = clamped;
+      }
+    },
+    [duration]
+  );
+
+  const handleDragStart = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      if (isHidden) {
+        return;
+      }
+      const targetNode = event.target;
+      const targetElement =
+        targetNode instanceof Element
+          ? targetNode
+          : targetNode instanceof Node
+            ? targetNode.parentElement
+            : null;
+      if (
+        targetElement?.closest(
+          "button, a, input, textarea, select, [role='button']"
+        )
+      ) {
+        return;
+      }
+      dragStartRef.current = {
+        startX: event.clientX,
+        startY: event.clientY,
+        originX: playerOffset.x,
+        originY: playerOffset.y
+      };
+      setIsDragging(true);
+      event.preventDefault();
+      event.currentTarget.setPointerCapture(event.pointerId);
+    },
+    [isHidden, playerOffset]
+  );
+
+  const handleDragMove = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      const drag = dragStartRef.current;
+      if (!drag) {
+        return;
+      }
+      const container = playerContainerRef.current;
+      if (!container) {
+        return;
+      }
+      const rect = container.getBoundingClientRect();
+      const margin = 16;
+      const baseX = margin;
+      const baseY = window.innerHeight - rect.height - margin;
+      const minX = margin - baseX;
+      const maxX = Math.max(
+        minX,
+        window.innerWidth - rect.width - margin - baseX
+      );
+      const minY = margin - baseY;
+      const maxY = Math.max(
+        minY,
+        window.innerHeight - rect.height - margin - baseY
+      );
+      const nextX = Math.min(
+        Math.max(drag.originX + (event.clientX - drag.startX), minX),
+        maxX
+      );
+      const nextY = Math.min(
+        Math.max(drag.originY + (event.clientY - drag.startY), minY),
+        maxY
+      );
+      setPlayerOffset({ x: nextX, y: nextY });
+    },
+    []
+  );
+
+  const handleDragEnd = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      if (!dragStartRef.current) {
+        return;
+      }
+      dragStartRef.current = null;
+      setIsDragging(false);
+      try {
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      } catch {
+        // Ignore pointer capture errors.
+      }
+    },
+    []
+  );
+
+  const updateVolumeTrayDirection = useCallback(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    const container = playerContainerRef.current;
+    if (!container) {
+      return;
+    }
+    const rect = container.getBoundingClientRect();
+    const threshold = window.innerHeight * 0.3;
+    setIsVolumeTrayDown(rect.top <= threshold);
+  }, []);
+
   const formattedCurrent = formatTime(currentTime);
   const formattedDuration = formatTime(duration);
   const isBottomVariant = variant === "bottom";
   const playerVisibilityClass = isHidden
     ? isBottomVariant
-      ? "translate-y-full opacity-0 pointer-events-none"
+      ? "opacity-0 pointer-events-none"
       : "pointer-events-none opacity-0"
     : "";
+  const scrubMax = duration > 0 ? duration : 1;
+  const scrubValue =
+    duration > 0 ? Math.min(currentTime, duration) : 0;
+  const playerTransform = `translate3d(${playerOffset.x}px, ${playerOffset.y + (isHidden ? 24 : 0)}px, 0)`;
   const hiddenTabIndex = isHidden ? -1 : undefined;
-  const spacerHeight = isHidden ? 0 : playerHeight;
 
   useEffect(() => {
-    if (!isBottomVariant) {
+    if (!isBottomVariant || !showVolume) {
       return;
     }
-
-    const container = playerContainerRef.current;
-    if (!container) {
-      return;
-    }
-
-    const updateHeight = () => {
-      setPlayerHeight(container.getBoundingClientRect().height);
-    };
-
-    updateHeight();
-
-    if (typeof ResizeObserver !== "undefined") {
-      const observer = new ResizeObserver(updateHeight);
-      observer.observe(container);
-      return () => observer.disconnect();
-    }
-
-    window.addEventListener("resize", updateHeight);
+    updateVolumeTrayDirection();
+    const handleResize = () => updateVolumeTrayDirection();
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener("resize", updateHeight);
+      window.removeEventListener("resize", handleResize);
     };
-  }, [isBottomVariant]);
+  }, [isBottomVariant, showVolume, playerOffset, updateVolumeTrayDirection]);
 
-  if (!src) {
+  if (!hasSource) {
     return null;
   }
 
@@ -232,10 +357,18 @@ export function AudioPlayerOverlay({
       <>
         <div
           className={clsx(
-            "fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface/95 shadow-2xl backdrop-blur-md transition-all duration-200 dark:border-dark-border dark:bg-dark-surface/95",
+            "fixed bottom-4 left-4 z-40 w-[calc(100%_-_6.5rem)] max-w-[420px] touch-none rounded-3xl border border-border/70 bg-gradient-to-br from-surface/95 via-surface/90 to-surfaceMuted/90 p-3 shadow-2xl backdrop-blur-md dark:border-dark-border/70 dark:from-dark-surface/95 dark:via-dark-surface/90 dark:to-dark-surfaceMuted/90",
+            isDragging
+              ? "transition-none"
+              : "transition-[transform,opacity] duration-200 ease-out motion-reduce:transition-none",
             playerVisibilityClass,
             className
           )}
+          style={{ transform: playerTransform }}
+          onPointerDown={handleDragStart}
+          onPointerMove={handleDragMove}
+          onPointerUp={handleDragEnd}
+          onPointerCancel={handleDragEnd}
           ref={playerContainerRef}
           data-audio-player="true"
           data-variant="bottom"
@@ -243,65 +376,96 @@ export function AudioPlayerOverlay({
           aria-label={title}
           aria-hidden={isHidden}
         >
-          <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3">
+          <button
+            type="button"
+            onClick={handleHide}
+            aria-label={closeLabel}
+            className="absolute -left-2 -top-2 z-10 flex h-6 w-6 items-center justify-center rounded-full border border-border/70 bg-surface text-[10px] font-semibold text-text shadow-md transition hover:bg-surfaceMuted dark:border-dark-border/70 dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+            tabIndex={hiddenTabIndex}
+          >
+            {"✕"}
+          </button>
+          <div className="flex flex-col gap-2">
+            <div
+              className="mx-auto h-1.5 w-10 cursor-grab touch-none rounded-full bg-border/70 shadow-sm active:cursor-grabbing dark:bg-dark-border/70"
+              aria-hidden="true"
+              data-drag-handle="true"
+            />
             <div className="flex items-center gap-3">
               <Button
                 onClick={handleToggle}
                 variant="primary"
-                className="h-10 w-10 rounded-full border-2 border-border text-base font-black leading-none shadow-lg dark:border-dark-border"
+                className="h-10 w-10 shrink-0 rounded-full border-2 border-border text-base font-black leading-none shadow-lg dark:border-dark-border"
                 aria-label={isPlaying ? pauseLabel : playLabel}
                 tabIndex={hiddenTabIndex}
               >
                 {isPlaying ? "❚❚" : "▶"}
               </Button>
-              <Button
-                variant="secondary"
-                onClick={handleHide}
-                aria-label={closeLabel}
-                className="h-9 w-9 rounded-full border-2 border-border text-base shadow-md hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
-                tabIndex={hiddenTabIndex}
-              >
-                {"▾"}
-              </Button>
-              <span
-                className="rounded-xl border-2 border-border px-2 py-1 text-[11px] font-semibold uppercase tracking-wide text-textMuted shadow-sm dark:border-dark-border dark:text-dark-textMuted"
-                data-time-chip="true"
-              >
-                {formattedCurrent} / {formattedDuration}
-              </span>
-              <button
-                type="button"
-                onClick={handleVolumeToggle}
-                className="rounded-full border border-border px-3 py-2 text-xs font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
-                aria-label={showVolume ? volumeHideLabel : volumeShowLabel}
-                tabIndex={hiddenTabIndex}
-              >
-                {volume === 0 ? "🔇" : "🔊"}
-              </button>
-              {showVolume ? (
-                <div className="flex min-w-[160px] flex-1 items-center gap-2">
-                  <input
-                    type="range"
-                    min="0"
-                    max="1"
-                    step="0.01"
-                    value={volume}
-                    onChange={handleVolumeChange}
-                    className="w-full accent-accent dark:accent-dark-accent contrast-more:accent-[var(--light-hc-accent)] dark:contrast-more:accent-[var(--dark-hc-accent)]"
-                    aria-label={volumeLabel}
-                    tabIndex={hiddenTabIndex}
-                  />
+              <div className="flex min-w-0 flex-1 flex-col gap-1">
+                <div className="flex items-center justify-between text-[11px] font-semibold tabular-nums text-textMuted dark:text-dark-textMuted">
+                  <span>{formattedCurrent}</span>
+                  <span>{formattedDuration}</span>
                 </div>
-              ) : null}
-              <Button
-                href={src}
-                download
-                variant="secondary"
-                className="h-9 rounded-full border border-border px-3 font-semibold shadow-md hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
-                tabIndex={hiddenTabIndex}
-              >
-                ↓
-              </Button>
+                <input
+                  type="range"
+                  min="0"
+                  max={scrubMax}
+                  step="0.1"
+                  value={scrubValue}
+                  onChange={handleSeekChange}
+                  className="h-1.5 w-full cursor-pointer accent-accent disabled:cursor-not-allowed disabled:opacity-60 dark:accent-dark-accent contrast-more:accent-[var(--light-hc-accent)] dark:contrast-more:accent-[var(--dark-hc-accent)]"
+                  aria-label={title}
+                  aria-valuetext={`${formattedCurrent} / ${formattedDuration}`}
+                  tabIndex={hiddenTabIndex}
+                  disabled={duration <= 0}
+                />
+              </div>
+              <div className="flex shrink-0 items-center gap-2">
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={handleVolumeToggle}
+                    className="h-9 w-9 rounded-full border border-border/70 text-sm font-semibold text-text shadow-sm transition hover:bg-surfaceMuted dark:border-dark-border/70 dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+                    aria-label={showVolume ? volumeHideLabel : volumeShowLabel}
+                    tabIndex={hiddenTabIndex}
+                  >
+                    {volume === 0 ? "🔇" : "🔊"}
+                  </button>
+                  {showVolume ? (
+                    <div
+                      className={clsx(
+                        "absolute right-0 flex h-32 w-10 items-center justify-center rounded-2xl border border-border/70 bg-surface/95 p-2 shadow-xl backdrop-blur-md dark:border-dark-border/70 dark:bg-dark-surface/95",
+                        isVolumeTrayDown ? "top-full mt-3" : "bottom-full mb-3"
+                      )}
+                    >
+                      <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value={volume}
+                        onChange={handleVolumeChange}
+                        className="h-24 w-24 -rotate-90 cursor-pointer accent-accent dark:accent-dark-accent contrast-more:accent-[var(--light-hc-accent)] dark:contrast-more:accent-[var(--dark-hc-accent)]"
+                        aria-label={volumeLabel}
+                        aria-orientation="vertical"
+                        tabIndex={hiddenTabIndex}
+                      />
+                    </div>
+                  ) : null}
+                </div>
+                {downloadHref ? (
+                  <Button
+                    href={downloadHref}
+                    download
+                    variant="ghost"
+                    className="h-9 w-9 p-0 border border-border/70 text-sm font-semibold text-text shadow-sm hover:bg-surfaceMuted dark:border-dark-border/70 dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+                    tabIndex={hiddenTabIndex}
+                    aria-label={downloadLabel}
+                  >
+                    {"💾"}
+                  </Button>
+                ) : null}
+              </div>
             </div>
           </div>
 
@@ -309,36 +473,35 @@ export function AudioPlayerOverlay({
           {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
           <audio
             ref={audioRef}
-            src={src}
             preload="metadata"
             controls
             className="sr-only"
             tabIndex={-1}
           >
+            {resolvedSources.map((source) => (
+              <source
+                key={`${source.src}-${source.type ?? "audio"}`}
+                src={source.src}
+                type={source.type}
+              />
+            ))}
             {downloadLabel}
           </audio>
         </div>
 
         {isHidden ? (
-          <div className="fixed bottom-4 right-4 z-50">
-            <Button
-              variant="secondary"
+          <div className="fixed bottom-4 left-4 z-50">
+            <button
+              type="button"
               onClick={handleShow}
               aria-label={reopenLabel}
-              className="h-11 rounded-full border border-border px-4 text-sm font-semibold shadow-lg hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-lg font-semibold text-text shadow-lg transition hover:border-accent hover:text-accent dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
             >
-              {"▴"}
-            </Button>
+              {"🔊"}
+            </button>
           </div>
         ) : null}
 
-        {spacerHeight > 0 ? (
-          <div
-            aria-hidden
-            className="block md:hidden"
-            style={{ height: spacerHeight }}
-          />
-        ) : null}
       </>
     );
   }
@@ -366,7 +529,7 @@ export function AudioPlayerOverlay({
               className="h-8 w-8 rounded-xl border-2 border-border dark:border-dark-border shadow-md"
               tabIndex={hiddenTabIndex}
             >
-              {">"}
+              {"✕"}
             </Button>
           </div>
 
@@ -380,13 +543,28 @@ export function AudioPlayerOverlay({
                 {isPlaying ? "❚❚" : "▶"}
               </Button>
 
-          <div className="flex items-center text-sm font-medium text-text dark:text-dark-text">
+          <div className="flex w-full flex-col items-center gap-1 text-sm font-medium text-text dark:text-dark-text">
             <span
               className="rounded-xl border-2 border-border px-1.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-textMuted shadow-sm dark:border-dark-border dark:text-dark-textMuted"
               data-time-chip="true"
             >
               {formattedCurrent} / {formattedDuration}
             </span>
+            <div className="w-full px-1">
+              <input
+                type="range"
+                min="0"
+                max={scrubMax}
+                step="0.1"
+                value={scrubValue}
+                onChange={handleSeekChange}
+                className="h-1.5 w-full cursor-pointer accent-accent disabled:cursor-not-allowed disabled:opacity-60 dark:accent-dark-accent contrast-more:accent-[var(--light-hc-accent)] dark:contrast-more:accent-[var(--dark-hc-accent)]"
+                aria-label={title}
+                aria-valuetext={`${formattedCurrent} / ${formattedDuration}`}
+                tabIndex={hiddenTabIndex}
+                disabled={duration <= 0}
+              />
+            </div>
           </div>
           <div className="flex items-center gap-2 text-sm font-medium text-text dark:text-dark-text">
             <button
@@ -398,15 +576,17 @@ export function AudioPlayerOverlay({
             >
               {volume === 0 ? "🔇" : "🔊"}
             </button>
-            <Button
-              href={src}
-              download
-              variant="secondary"
-              className="w-8 h-7 rounded-full border-2 border-border font-semibold shadow-md hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
-              tabIndex={hiddenTabIndex}
-            >
-              ↓
-            </Button>
+            {downloadHref ? (
+              <Button
+                href={downloadHref}
+                download
+                variant="secondary"
+                className="w-8 h-7 rounded-full border-2 border-border font-semibold shadow-md hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+                tabIndex={hiddenTabIndex}
+              >
+                {"💾"}
+              </Button>
+            ) : null}
           </div>
           {showVolume ? (
             <div className="w-full px-1">
@@ -429,28 +609,34 @@ export function AudioPlayerOverlay({
         {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
         <audio
           ref={audioRef}
-          src={src}
           preload="metadata"
           controls
           className="sr-only"
           tabIndex={-1}
         >
+          {resolvedSources.map((source) => (
+            <source
+              key={`${source.src}-${source.type ?? "audio"}`}
+              src={source.src}
+              type={source.type}
+            />
+          ))}
           {downloadLabel}
         </audio>
       </div>
 
-      {isHidden ? (
-        <div className="fixed right-0 top-1/2 z-50 -translate-y-1/2">
-          <Button
-            variant="secondary"
-            onClick={handleShow}
-            aria-label={reopenLabel}
-            className="h-10 w-10 rounded-xl border-2 border-border shadow-lg hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
-          >
-            {"<"}
-          </Button>
-        </div>
-      ) : null}
+        {isHidden ? (
+          <div className="fixed right-0 top-1/2 z-50 -translate-y-1/2">
+            <Button
+              variant="secondary"
+              onClick={handleShow}
+              aria-label={reopenLabel}
+              className="h-10 w-10 rounded-xl border-2 border-border shadow-lg hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+            >
+              {"🔊"}
+            </Button>
+          </div>
+        ) : null}
     </>
   );
 }

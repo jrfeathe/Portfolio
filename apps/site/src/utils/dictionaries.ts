@@ -173,6 +173,7 @@ export type AppDictionary = {
       title: string;
       description: string;
       src: string;
+      fallbackSrc?: string;
       playLabel: string;
       pauseLabel: string;
       downloadLabel: string;
@@ -628,7 +629,8 @@ const en: AppDictionary = {
     audioPlayer: {
       title: "Portfolio background loop",
       description: "",
-      src: "/media/audio/portfolio-loop.mp3",
+      src: "/media/audio/jack_portfolio_suno.opus",
+      fallbackSrc: "/media/audio/jack_portfolio_suno.mp3",
       playLabel: "Play track",
       pauseLabel: "Pause track",
       downloadLabel: "Download track",
@@ -637,7 +639,7 @@ const en: AppDictionary = {
       volumeLabel: "Volume",
       volumeShowLabel: "Show volume slider",
       volumeHideLabel: "Hide volume slider",
-      trackId: "portfolio-loop"
+      trackId: "jack-portfolio-suno"
     },
     hero: {
       title: "Jack Featherstone",
@@ -920,7 +922,8 @@ const ja: AppDictionary = {
     audioPlayer: {
       title: "ポートフォリオ背景ループ",
       description: "",
-      src: "/media/audio/portfolio-loop.mp3",
+      src: "/media/audio/jack_portfolio_suno.opus",
+      fallbackSrc: "/media/audio/jack_portfolio_suno.mp3",
       playLabel: "再生",
       pauseLabel: "一時停止",
       downloadLabel: "トラックをダウンロード",
@@ -929,7 +932,7 @@ const ja: AppDictionary = {
       volumeLabel: "音量",
       volumeShowLabel: "音量スライダーを表示",
       volumeHideLabel: "音量スライダーを非表示",
-      trackId: "portfolio-loop"
+      trackId: "jack-portfolio-suno"
     },
     hero: {
       title: "Jack Featherstone",
@@ -1214,7 +1217,8 @@ const zh: AppDictionary = {
     audioPlayer: {
       title: "作品集背景循环音轨",
       description: "",
-      src: "/media/audio/portfolio-loop.mp3",
+      src: "/media/audio/jack_portfolio_suno.opus",
+      fallbackSrc: "/media/audio/jack_portfolio_suno.mp3",
       playLabel: "播放",
       pauseLabel: "暂停",
       downloadLabel: "下载音轨",
@@ -1223,7 +1227,7 @@ const zh: AppDictionary = {
       volumeLabel: "音量",
       volumeShowLabel: "显示音量滑块",
       volumeHideLabel: "隐藏音量滑块",
-      trackId: "portfolio-loop"
+      trackId: "jack-portfolio-suno"
     },
     hero: {
       title: "Jack Featherstone",

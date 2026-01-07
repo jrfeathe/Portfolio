@@ -25,7 +25,7 @@ export function ShellFooter({ className, content }: ShellFooterProps) {
   return (
     <footer
       className={clsx(
-        "shell-footer border-t border-border bg-surface py-10 text-sm text-textMuted dark:border-dark-border dark:bg-dark-surface dark:text-dark-textMuted",
+        "shell-footer footer-mobile-pad border-t border-border bg-surface py-10 text-sm text-textMuted dark:border-dark-border dark:bg-dark-surface dark:text-dark-textMuted",
         className
       )}
     >

@@ -611,6 +611,11 @@ body {
     accent-color: var(--dark-hc-accent);
   }
 
+  @media (max-width: 639px) {
+    .shell-footer.footer-mobile-pad {
+      padding-bottom: 6rem;
+    }
+  }
 
   @media (forced-colors: active) {
     :is(button, a, input, select, textarea, [role="button"], [role="tab"], [role="menuitem"]) {

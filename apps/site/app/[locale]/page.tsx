@@ -370,7 +370,7 @@ export default function HomePage({ params, searchParams }: PageProps) {
                 dictionary.home.audioPlayer.fallbackSrc ??
                 dictionary.home.audioPlayer.src
               }
-              forceVariant={skimModeEnabled ? "bottom" : undefined}
+              forceVariant={skimModeEnabled ? "horizontal" : undefined}
               isSkimMode={skimModeEnabled}
               title={dictionary.home.audioPlayer.title}
               description={dictionary.home.audioPlayer.description}

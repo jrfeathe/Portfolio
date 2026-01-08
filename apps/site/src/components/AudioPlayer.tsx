@@ -80,7 +80,7 @@ export type AudioPlayerOverlayProps = {
   trackId?: string;
   loop?: boolean;
   className?: string;
-  variant?: "floating" | "bottom";
+  variant?: "vertical" | "horizontal";
 };
 
 function formatTime(value: number): string {
@@ -124,7 +124,7 @@ export function AudioPlayerOverlay({
   trackId = "jack-portfolio-suno",
   loop = true,
   className,
-  variant = "floating"
+  variant = "vertical"
 }: AudioPlayerOverlayProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const playerContainerRef = useRef<HTMLDivElement | null>(null);
@@ -153,6 +153,7 @@ export function AudioPlayerOverlay({
   } | null>(null);
   const prevSkimModeRef = useRef(Boolean(isSkimMode));
   const hiddenBeforeSkimRef = useRef<boolean | null>(null);
+  const isHorizontalMode = variant === "horizontal";
 
   const telemetryPayload = useMemo(
     () => ({ locale, trackId, src: primarySrc }),
@@ -315,6 +316,10 @@ export function AudioPlayerOverlay({
     prevSkimModeRef.current = nextSkimMode;
   }, [isHidden, isSkimMode]);
 
+  useEffect(() => {
+    setPlayerOffset({ x: 0, y: 0 });
+  }, [variant]);
+
   const handleVolumeToggle = useCallback(() => {
     setShowVolume((prev) => !prev);
   }, []);
@@ -392,18 +397,19 @@ export function AudioPlayerOverlay({
         return;
       }
       const rect = container.getBoundingClientRect();
-      const margin = 16;
-      const baseX = margin;
-      const baseY = window.innerHeight - rect.height - margin;
-      const minX = margin - baseX;
+      const marginX = isHorizontalMode ? 16 : 6;
+      const marginY = 16;
+      const baseX = rect.left - playerOffset.x;
+      const baseY = rect.top - playerOffset.y;
+      const minX = marginX - baseX;
       const maxX = Math.max(
         minX,
-        window.innerWidth - rect.width - margin - baseX
+        window.innerWidth - rect.width - marginX - baseX
       );
-      const minY = margin - baseY;
+      const minY = marginY - baseY;
       const maxY = Math.max(
         minY,
-        window.innerHeight - rect.height - margin - baseY
+        window.innerHeight - rect.height - marginY - baseY
       );
       const nextX = Math.min(
         Math.max(drag.originX + (event.clientX - drag.startX), minX),
@@ -415,7 +421,7 @@ export function AudioPlayerOverlay({
       );
       setPlayerOffset({ x: nextX, y: nextY });
     },
-    []
+    [isHorizontalMode, playerOffset]
   );
 
   const handleDragEnd = useCallback(
@@ -449,20 +455,20 @@ export function AudioPlayerOverlay({
 
   const formattedCurrent = formatTime(currentTime);
   const formattedDuration = formatTime(duration);
-  const isBottomVariant = variant === "bottom";
   const playerVisibilityClass = isHidden
-    ? isBottomVariant
+    ? isHorizontalMode
       ? "opacity-0 pointer-events-none"
       : "pointer-events-none opacity-0"
     : "";
   const scrubMax = duration > 0 ? duration : 1;
   const scrubValue =
     duration > 0 ? Math.min(currentTime, duration) : 0;
-  const playerTransform = `translate3d(${playerOffset.x}px, ${playerOffset.y + (isHidden ? 24 : 0)}px, 0)`;
+  const horizontalTransform = `translate3d(${playerOffset.x}px, ${playerOffset.y + (isHidden ? 24 : 0)}px, 0)`;
+  const verticalTransform = `translate3d(${playerOffset.x}px, ${playerOffset.y}px, 0) translateY(-50%)`;
   const hiddenTabIndex = isHidden ? -1 : undefined;
 
   useEffect(() => {
-    if (!isBottomVariant || !showVolume) {
+    if (!isHorizontalMode || !showVolume) {
       return;
     }
     updateVolumeTrayDirection();
@@ -471,13 +477,13 @@ export function AudioPlayerOverlay({
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [isBottomVariant, showVolume, playerOffset, updateVolumeTrayDirection]);
+  }, [isHorizontalMode, showVolume, playerOffset, updateVolumeTrayDirection]);
 
   if (!hasSource) {
     return null;
   }
 
-  if (isBottomVariant) {
+  if (isHorizontalMode) {
     return (
       <>
         <div
@@ -489,14 +495,14 @@ export function AudioPlayerOverlay({
             playerVisibilityClass,
             className
           )}
-          style={{ transform: playerTransform }}
+          style={{ transform: horizontalTransform }}
           onPointerDown={handleDragStart}
           onPointerMove={handleDragMove}
           onPointerUp={handleDragEnd}
           onPointerCancel={handleDragEnd}
           ref={playerContainerRef}
           data-audio-player="true"
-          data-variant="bottom"
+          data-variant="horizontal"
           role="complementary"
           aria-label={title}
           aria-hidden={isHidden}
@@ -505,7 +511,7 @@ export function AudioPlayerOverlay({
             type="button"
             onClick={handleHide}
             aria-label={closeLabel}
-            className="absolute -left-2 -top-2 z-10 flex h-6 w-6 items-center justify-center rounded-full border border-border/70 bg-surface text-[10px] font-semibold text-text shadow-md transition hover:bg-surfaceMuted dark:border-dark-border/70 dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+            className="absolute -left-2 -top-2 z-10 flex h-6 w-6 items-center justify-center rounded-full border border-border/70 bg-surface p-0 text-[10px] font-semibold text-text shadow-md transition hover:bg-surfaceMuted dark:border-dark-border/70 dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
             tabIndex={hiddenTabIndex}
           >
             {"✕"}
@@ -583,7 +589,7 @@ export function AudioPlayerOverlay({
                     href={downloadHref}
                     download
                     variant="ghost"
-                    className="h-9 w-9 p-0 border border-border/70 text-sm font-semibold text-text shadow-sm hover:bg-surfaceMuted dark:border-dark-border/70 dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+                    className="h-9 w-9 border border-border/70 text-sm font-semibold text-text shadow-sm hover:bg-surfaceMuted dark:border-dark-border/70 dark:text-dark-text dark:hover:bg-dark-surfaceMuted !p-0 !min-w-0 !min-h-0"
                     tabIndex={hiddenTabIndex}
                     aria-label={downloadLabel}
                   >
@@ -616,12 +622,21 @@ export function AudioPlayerOverlay({
     <>
       <div
         className={clsx(
-          "fixed right-0 top-1/2 z-40 w-[min(100px,calc(100%-1.5rem))] max-w-[100px] -translate-y-1/2 rounded-2xl border border-border/60 bg-surface/95 p-2 shadow-2xl backdrop-blur-md dark:border-dark-border/60 dark:bg-dark-surface/95",
+          "fixed right-1.5 top-1/2 z-40 w-[min(100px,calc(100%-1.5rem))] max-w-[100px] touch-none rounded-3xl border border-border/70 bg-gradient-to-br from-surface/95 via-surface/90 to-surfaceMuted/90 p-2 shadow-2xl backdrop-blur-md dark:border-dark-border/70 dark:from-dark-surface/95 dark:via-dark-surface/90 dark:to-dark-surfaceMuted/90",
+          isDragging
+            ? "transition-none"
+            : "transition-[transform,opacity] duration-200 ease-out motion-reduce:transition-none",
           playerVisibilityClass,
           className
         )}
+        style={{ transform: verticalTransform }}
+        onPointerDown={handleDragStart}
+        onPointerMove={handleDragMove}
+        onPointerUp={handleDragEnd}
+        onPointerCancel={handleDragEnd}
+        ref={playerContainerRef}
         data-audio-player="true"
-        data-variant="floating"
+        data-variant="vertical"
         role="complementary"
         aria-label={title}
         aria-hidden={isHidden}
@@ -632,22 +647,27 @@ export function AudioPlayerOverlay({
               variant="secondary"
               onClick={handleHide}
               aria-label={closeLabel}
-              className="h-8 w-8 rounded-xl border-2 border-border dark:border-dark-border shadow-md"
+              className="h-8 w-8 rounded-full border-2 border-border !p-0 !min-w-0 !min-h-0 text-xs font-semibold shadow-none dark:border-dark-border"
               tabIndex={hiddenTabIndex}
             >
               {"✕"}
             </Button>
           </div>
+          <div
+            className="mx-auto mb-1 h-1.5 w-10 cursor-grab touch-none rounded-full bg-border/70 shadow-sm active:cursor-grabbing dark:bg-dark-border/70"
+            aria-hidden="true"
+            data-drag-handle="true"
+          />
 
-              <Button
-                onClick={handleToggle}
-                variant="primary"
-                className="h-10 w-10 rounded-full border-2 border-border text-base font-black leading-none shadow-lg dark:border-dark-border"
-                aria-label={isPlaying ? pauseLabel : playLabel}
-                tabIndex={hiddenTabIndex}
-              >
-                {isPlaying ? "❚❚" : "▶"}
-              </Button>
+          <Button
+            onClick={handleToggle}
+            variant="primary"
+            className="h-10 w-10 rounded-full border-2 border-border text-base font-black leading-none shadow-lg dark:border-dark-border"
+            aria-label={isPlaying ? pauseLabel : playLabel}
+            tabIndex={hiddenTabIndex}
+          >
+            {isPlaying ? "❚❚" : "▶"}
+          </Button>
 
           <div className="flex w-full flex-col items-center gap-1 text-sm font-medium text-text dark:text-dark-text">
             <span
@@ -676,7 +696,7 @@ export function AudioPlayerOverlay({
             <button
               type="button"
               onClick={handleVolumeToggle}
-              className="rounded-full border-2 border-border px-2 py-1 text-xs font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-border text-xs font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
               aria-label={showVolume ? volumeHideLabel : volumeShowLabel}
               tabIndex={hiddenTabIndex}
             >
@@ -686,8 +706,8 @@ export function AudioPlayerOverlay({
               <Button
                 href={downloadHref}
                 download
-                variant="secondary"
-                className="w-8 h-7 rounded-full border-2 border-border font-semibold shadow-md hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+                variant="ghost"
+                className="h-8 w-8 rounded-full border-2 border-border text-xs font-semibold hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted !p-0 !min-w-0 !min-h-0"
                 tabIndex={hiddenTabIndex}
               >
                 {"💾"}
@@ -714,12 +734,12 @@ export function AudioPlayerOverlay({
       </div>
 
         {isHidden ? (
-          <div className="fixed right-0 top-1/2 z-50 -translate-y-1/2">
+          <div className="fixed right-1.5 top-1/2 z-50 -translate-y-1/2">
             <Button
               variant="secondary"
               onClick={handleShow}
               aria-label={reopenLabel}
-              className="h-10 w-10 rounded-xl border-2 border-border shadow-lg hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+              className="h-10 w-10 rounded-full border-2 border-border shadow-lg hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
             >
               {"🔊"}
             </Button>
@@ -731,7 +751,7 @@ export function AudioPlayerOverlay({
 
 type ResponsiveAudioPlayerProps = Omit<AudioPlayerOverlayProps, "variant"> & {
   mobileBreakpoint?: number;
-  forceVariant?: "floating" | "bottom";
+  forceVariant?: "vertical" | "horizontal";
 };
 
 export function ResponsiveAudioPlayer({
@@ -754,7 +774,7 @@ export function ResponsiveAudioPlayer({
     };
   }, [mobileBreakpoint]);
 
-  const resolvedVariant = forceVariant ?? (isMobile ? "bottom" : "floating");
+  const resolvedVariant = forceVariant ?? (isMobile ? "horizontal" : "vertical");
 
   return (
     <AudioPlayerOverlay

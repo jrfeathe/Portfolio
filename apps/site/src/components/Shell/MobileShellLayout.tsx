@@ -130,7 +130,7 @@ export function MobileShellLayout({
         <div className="fixed inset-0 z-50 flex">
           <button
             type="button"
-            className="absolute inset-0 bg-black/30"
+            className="absolute inset-0 bg-text/30 dark:bg-dark-background/30"
             aria-label={shellCopy.menuCloseLabel}
             onClick={() => setMenuOpen(false)}
           />

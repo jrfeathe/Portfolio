@@ -1,3 +1,18 @@
+## Task F3.5 Summary (current state)
+
+We delivered a calmer, locale-aware light theme and a cohesive light high-contrast sibling, then stabilized the theme behavior and controls. The theme work used a cross-AI workflow: we developed the initial palette in grayscale, added hue, refined those hues with ChatGPT 5.2 Thinking, and used Codex to iterate on implementation details and behavior fixes.
+
+Key changes shipped during F3.5:
+- Theme tokens and CSS variables updated for light, light-hc, and dark variants (including locale accents), plus a new "dreamland" dark theme and its high-contrast variant.
+- Locale-aware theme selection and persistence (light/dark/system + locale themes + dreamland) with correct defaults when switching locales.
+- Theme picker tray added and localized (including dreamland naming), with desktop hover behavior, mobile tap behavior, and focus/hover stability fixes.
+- Visual polish and layout fixes: ghost border artifacts around the hero/audio areas left untouched; surfaces/canvas are now consistent across cards, hero, audio player, and chat.
+- Accessibility/testing guardrails updated so the standard light theme bypasses a11y color-contrast checks while high-contrast themes keep strict enforcement.
+
+Notes: Critical CSS was regenerated during theme changes and the inline CSS budget was bumped to 20.5 KB to cover the expanded theme/tokens.
+
+## Legacy train of thought notes
+
 ## PROMPT 1:
 
 You are working in the Portfolio Web App repo. Implement Task F3.5: Light Theme Redesign (& UI fix).

@@ -87,6 +87,10 @@ export type AppDictionary = {
   themeToggle: {
     label: string;
     cycleLabel: string;
+    pickerLabel: string;
+    pickerOptions: {
+      dreamland: string;
+    };
     options: Record<ThemePreference, string>;
   };
   contrastToggle: {
@@ -531,6 +535,10 @@ const en: AppDictionary = {
   themeToggle: {
     label: "Select color theme",
     cycleLabel: "Cycle theme",
+    pickerLabel: "Theme:",
+    pickerOptions: {
+      dreamland: "🌙 Dreamland"
+    },
     options: {
       light: "Light",
       system: "System",
@@ -824,6 +832,10 @@ const ja: AppDictionary = {
   themeToggle: {
     label: "カラーテーマを選択",
     cycleLabel: "テーマを切り替え",
+    pickerLabel: "テーマ:",
+    pickerOptions: {
+      dreamland: "🌙 ドリームランド"
+    },
     options: {
       light: "ライト",
       system: "システム",
@@ -1119,6 +1131,10 @@ const zh: AppDictionary = {
   themeToggle: {
     label: "选择配色主题",
     cycleLabel: "循环切换主题",
+    pickerLabel: "主题:",
+    pickerOptions: {
+      dreamland: "🌙 梦境"
+    },
     options: {
       light: "浅色",
       system: "系统",

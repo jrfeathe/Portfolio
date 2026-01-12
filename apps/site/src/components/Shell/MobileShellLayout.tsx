@@ -173,6 +173,7 @@ export function MobileShellLayout({
                 <div className="flex flex-wrap gap-2">
                   <a
                     href="#top"
+                    data-mobile-action="true"
                     className="inline-flex flex-1 items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
                   >
                     {shellCopy.returnToTopLabel}
@@ -183,6 +184,7 @@ export function MobileShellLayout({
                     <button
                       type="button"
                       onClick={handleExpandAllNav}
+                      data-mobile-action="true"
                       className="inline-flex flex-1 items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
                     >
                       {shellCopy.expandAllLabel}
@@ -190,6 +192,7 @@ export function MobileShellLayout({
                     <button
                       type="button"
                       onClick={handleCollapseAllNav}
+                      data-mobile-action="true"
                       className="inline-flex flex-1 items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
                     >
                       {shellCopy.collapseAllLabel}

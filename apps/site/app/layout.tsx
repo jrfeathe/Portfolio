@@ -20,8 +20,11 @@ import {
   type ContrastPreference
 } from "../src/utils/contrast";
 import {
+  isThemeLocale,
   isThemePreference,
   themeCookieName,
+  themeLocaleCookieName,
+  type ThemeLocale,
   type ThemePreference
 } from "../src/utils/theme";
 import { CriticalCss } from "./CriticalCss";
@@ -77,6 +80,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const storedTheme: ThemePreference = isThemePreference(storedThemeCookie)
     ? storedThemeCookie
     : "system";
+  const storedThemeLocaleCookie = cookieStore.get(themeLocaleCookieName)?.value;
+  const storedThemeLocale: ThemeLocale = isThemeLocale(storedThemeLocaleCookie)
+    ? storedThemeLocaleCookie
+    : locale;
   const storedContrastCookie = cookieStore.get(contrastCookieName)?.value;
   const storedContrast: ContrastPreference = isContrastPreference(storedContrastCookie)
     ? storedContrastCookie
@@ -100,7 +107,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     JSON.stringify(themeCookieName)
   )};const contrastCookie=${escapeUnsafeChars(
     JSON.stringify(contrastCookieName)
-  )};const root=document.documentElement;const getCookie=function(name){const match=document.cookie.split('; ').find((row)=>row.startsWith(name+'='));return match?match.split('=')[1]:undefined;};const resolveTheme=function(mode){if(mode==='system'){return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}return mode;};const applyTheme=function(mode){const resolved=resolveTheme(mode);root.classList.toggle('dark',resolved==='dark');root.dataset.theme=mode;};let storedTheme=getCookie(cookieName);if(storedTheme!=='light'&&storedTheme!=='dark'&&storedTheme!=='system'){storedTheme='system';}applyTheme(storedTheme);const themeMedia=window.matchMedia('(prefers-color-scheme: dark)');const themeListener=function(){const current=getCookie(cookieName);if(!current||current==='system'){applyTheme('system');}};if(typeof themeMedia.addEventListener==='function'){themeMedia.addEventListener('change',themeListener);}else if(typeof themeMedia.addListener==='function'){themeMedia.addListener(themeListener);}const resolveContrast=function(mode){if(mode==='system'){return window.matchMedia('(prefers-contrast: more)').matches?'high':'standard';}return mode;};const applyContrast=function(mode){const resolved=resolveContrast(mode);root.classList.toggle('contrast-high',resolved==='high');root.dataset.contrast=mode;};let storedContrast=getCookie(contrastCookie);if(storedContrast!=='high'&&storedContrast!=='standard'&&storedContrast!=='system'){storedContrast='system';}applyContrast(storedContrast);const contrastMedia=window.matchMedia('(prefers-contrast: more)');const contrastListener=function(){const current=getCookie(contrastCookie);if(!current||current==='system'){applyContrast('system');}};if(typeof contrastMedia.addEventListener==='function'){contrastMedia.addEventListener('change',contrastListener);}else if(typeof contrastMedia.addListener==='function'){contrastMedia.addListener(contrastListener);}window.__portfolioTheme={get:function(){const value=getCookie(cookieName);return value==='light'||value==='dark'||value==='system'?value:'system';},set:function(mode){const value=mode==='light'||mode==='dark'?mode:'system';document.cookie=cookieName+'='+value+'; path=/; max-age=31536000; SameSite=Lax';applyTheme(value);}};window.__portfolioContrast={get:function(){const value=getCookie(contrastCookie);return value==='high'||value==='standard'||value==='system'?value:'system';},set:function(mode){const value=mode==='high'||mode==='standard'?mode:'system';document.cookie=contrastCookie+'='+value+'; path=/; max-age=31536000; SameSite=Lax';applyContrast(value);}};})();`;
+  )};const themeLocaleCookie=${escapeUnsafeChars(
+    JSON.stringify(themeLocaleCookieName)
+  )};const themeLocaleFallback=${escapeUnsafeChars(
+    JSON.stringify(locale)
+  )};const root=document.documentElement;const getCookie=function(name){const match=document.cookie.split('; ').find((row)=>row.startsWith(name+'='));return match?match.split('=')[1]:undefined;};const resolveTheme=function(mode){if(mode==='system'){return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}return mode;};const applyTheme=function(mode){const resolved=resolveTheme(mode);root.classList.toggle('dark',resolved==='dark');root.dataset.theme=mode;};let storedTheme=getCookie(cookieName);if(storedTheme!=='light'&&storedTheme!=='dark'&&storedTheme!=='system'){storedTheme='system';}applyTheme(storedTheme);const applyThemeLocale=function(locale){root.dataset.themeLocale=locale;};let storedThemeLocale=getCookie(themeLocaleCookie);if(storedThemeLocale!=='en'&&storedThemeLocale!=='ja'&&storedThemeLocale!=='zh'&&storedThemeLocale!=='dreamland'){storedThemeLocale=themeLocaleFallback;}applyThemeLocale(storedThemeLocale);const themeMedia=window.matchMedia('(prefers-color-scheme: dark)');const themeListener=function(){const current=getCookie(cookieName);if(!current||current==='system'){applyTheme('system');}};if(typeof themeMedia.addEventListener==='function'){themeMedia.addEventListener('change',themeListener);}else if(typeof themeMedia.addListener==='function'){themeMedia.addListener(themeListener);}const resolveContrast=function(mode){if(mode==='system'){return window.matchMedia('(prefers-contrast: more)').matches?'high':'standard';}return mode;};const applyContrast=function(mode){const resolved=resolveContrast(mode);root.classList.toggle('contrast-high',resolved==='high');root.dataset.contrast=mode;};let storedContrast=getCookie(contrastCookie);if(storedContrast!=='high'&&storedContrast!=='standard'&&storedContrast!=='system'){storedContrast='system';}applyContrast(storedContrast);const contrastMedia=window.matchMedia('(prefers-contrast: more)');const contrastListener=function(){const current=getCookie(contrastCookie);if(!current||current==='system'){applyContrast('system');}};if(typeof contrastMedia.addEventListener==='function'){contrastMedia.addEventListener('change',contrastListener);}else if(typeof contrastMedia.addListener==='function'){contrastMedia.addListener(contrastListener);}window.__portfolioTheme={get:function(){const value=getCookie(cookieName);return value==='light'||value==='dark'||value==='system'?value:'system';},set:function(mode){const value=mode==='light'||mode==='dark'?mode:'system';document.cookie=cookieName+'='+value+'; path=/; max-age=31536000; SameSite=Lax';applyTheme(value);}};window.__portfolioThemeLocale={get:function(){const value=getCookie(themeLocaleCookie);return value==='en'||value==='ja'||value==='zh'||value==='dreamland'?value:themeLocaleFallback;},set:function(locale){const value=locale==='en'||locale==='ja'||locale==='zh'||locale==='dreamland'?locale:themeLocaleFallback;document.cookie=themeLocaleCookie+'='+value+'; path=/; max-age=31536000; SameSite=Lax';applyThemeLocale(value);}};window.__portfolioContrast={get:function(){const value=getCookie(contrastCookie);return value==='high'||value==='standard'||value==='system'?value:'system';},set:function(mode){const value=mode==='high'||mode==='standard'?mode:'system';document.cookie=contrastCookie+'='+value+'; path=/; max-age=31536000; SameSite=Lax';applyContrast(value);}};})();`;
 
   return (
     <html
@@ -108,6 +119,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       dir={getLocaleDirection(locale)}
       className={clsx(initialThemeClass, initialContrastClass)}
       data-theme={storedTheme}
+      data-theme-locale={storedThemeLocale}
       data-contrast={storedContrast}
     >
       <body

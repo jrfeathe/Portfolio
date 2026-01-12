@@ -25,6 +25,13 @@ for (const locale of locales) {
   }
 }
 
+const standaloneThemes = ["dreamland", "dreamland-hc"];
+for (const theme of standaloneThemes) {
+  if (colors[theme]) {
+    sections.push([theme, colors[theme]]);
+  }
+}
+
 if (colors.print) {
   sections.push(["print", colors.print]);
 }

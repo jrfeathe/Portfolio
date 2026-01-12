@@ -65,9 +65,18 @@ export function LanguageSwitcher({ className }: LanguageSwitcherProps) {
     const nextPath = segments.join("/") || "/";
     const search = searchParams.toString();
     const nextUrl = (search ? `${nextPath}?${search}` : nextPath) as Route;
+    const themePreference = window.__portfolioTheme?.get?.() ?? "system";
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const resolvedTheme =
+      themePreference === "system" ? (prefersDark ? "dark" : "light") : themePreference;
+    const themeLocale = window.__portfolioThemeLocale?.get?.();
+    const shouldSyncThemeLocale = themeLocale !== "dreamland";
 
     startTransition(() => {
       document.cookie = `${localeCookieName}=${nextLocale}; path=/`;
+      if (shouldSyncThemeLocale && (resolvedTheme === "light" || resolvedTheme === "dark")) {
+        window.__portfolioThemeLocale?.set(nextLocale);
+      }
       router.replace(nextUrl);
     });
   };

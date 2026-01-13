@@ -6,8 +6,7 @@ export const HYBRID_LABEL = "Hybrid";
 export const DEFAULT_COUNTRY = "US";
 export const REQUIRED_SAME_AS = [
   "https://github.com/jrfeathe",
-  "https://linkedin.com/in/jrfeathe",
-  "https://placeholder.onion"
+  "https://linkedin.com/in/jrfeathe"
 ];
 
 type ResumeJson = typeof resumeSource;

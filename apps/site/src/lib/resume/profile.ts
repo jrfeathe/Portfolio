@@ -7,8 +7,7 @@ const HYBRID_LABEL = "Hybrid";
 const DEFAULT_COUNTRY = "US";
 const REQUIRED_SAME_AS = [
   "https://github.com/jrfeathe",
-  "https://linkedin.com/in/jrfeathe",
-  "https://placeholder.onion"
+  "https://linkedin.com/in/jrfeathe"
 ];
 
 type LocalizedString = string | Partial<Record<Locale, string>>;
@@ -205,7 +204,8 @@ function buildProfile(locale: Locale): ResumeProfile {
     },
     roles: mapRoles(resumeData, locale)
   };
-}
+}import type { ResumeProfile } from "../resume/profile";
+
 
 const cachedProfiles = new Map<Locale, ResumeProfile>();
 

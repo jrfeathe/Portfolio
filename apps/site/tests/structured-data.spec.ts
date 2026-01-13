@@ -31,18 +31,4 @@ test.describe("Structured data", () => {
       expect.arrayContaining(["Person", "WebSite", "WebPage", "BreadcrumbList"])
     );
   });
-
-  test.skip("notes index models the collection page (pending writeup revamp)", async ({ request }) => {
-    const payload = await readStructuredData(request, "/en/notes");
-    const types = collectTypes(payload["@graph"] ?? []);
-    expect(types).toEqual(
-      expect.arrayContaining(["CollectionPage", "BreadcrumbList", "WebSite"])
-    );
-  });
-
-  test.skip("note detail emits article schema (pending writeup revamp)", async ({ request }) => {
-    const payload = await readStructuredData(request, "/en/notes/mdx-pipeline");
-    const types = collectTypes(payload["@graph"] ?? []);
-    expect(types).toContain("Article");
-  });
 });

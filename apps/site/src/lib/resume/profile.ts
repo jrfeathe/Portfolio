@@ -204,8 +204,7 @@ function buildProfile(locale: Locale): ResumeProfile {
     },
     roles: mapRoles(resumeData, locale)
   };
-}import type { ResumeProfile } from "../resume/profile";
-
+}
 
 const cachedProfiles = new Map<Locale, ResumeProfile>();
 

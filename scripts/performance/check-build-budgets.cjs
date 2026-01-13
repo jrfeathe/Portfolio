@@ -165,15 +165,12 @@ function loadCriticalCssManifest() {
   }
 
   const manifest = readJson(CRITICAL_MANIFEST_PATH);
-  const routes = manifest.routes;
-
-  if (!routes || typeof routes !== "object") {
-    throw new Error(
-      "critical-css.manifest.json is malformed. Expected a `routes` object."
-    );
-  }
-
-  return Object.entries(routes)
+  const routes =
+    manifest.routes && typeof manifest.routes === "object"
+      ? manifest.routes
+      : null;
+  const entries = routes
+    ? Object.entries(routes)
     .map(([route, entry]) => {
       if (!route || typeof route !== "string" || !entry) {
         return null;
@@ -196,7 +193,34 @@ function loadCriticalCssManifest() {
         matcher: getRouteMatcher(getRouteRegex(route))
       };
     })
-    .filter(Boolean);
+    .filter(Boolean)
+    : [];
+
+  if (manifest.shared && typeof manifest.shared === "object") {
+    const shared = manifest.shared;
+    const kilobytes =
+      typeof shared.kilobytes === "number"
+        ? shared.kilobytes
+        : typeof shared.bytes === "number"
+        ? Number((shared.bytes / 1024).toFixed(2))
+        : null;
+
+    if (kilobytes != null) {
+      entries.push({
+        route: "shared",
+        kilobytes,
+        matcher: () => true
+      });
+    }
+  }
+
+  if (entries.length === 0) {
+    throw new Error(
+      "critical-css.manifest.json is malformed. Expected `shared` or `routes` entries."
+    );
+  }
+
+  return entries;
 }
 
 function formatRow(row) {

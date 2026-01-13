@@ -70,20 +70,35 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   const cookieStore = cookies();
   const storedLocale = cookieStore.get(localeCookieName)?.value;
-  const locale = isLocale(storedLocale) ? storedLocale : defaultLocale;
+  const headerList = getHeaders();
+  const headerLocale = headerList.get("x-portfolio-locale");
+  const locale = isLocale(headerLocale)
+    ? headerLocale
+    : isLocale(storedLocale)
+      ? storedLocale
+      : defaultLocale;
   const browserOtelEnabled =
     typeof process.env.NEXT_PUBLIC_ENABLE_OTEL_BROWSER === "string" &&
     process.env.NEXT_PUBLIC_ENABLE_OTEL_BROWSER !== "";
-  const headerList = getHeaders();
   const nonce = extractNonceFromHeaders(headerList);
   const storedThemeCookie = cookieStore.get(themeCookieName)?.value;
   const storedTheme: ThemePreference = isThemePreference(storedThemeCookie)
     ? storedThemeCookie
     : "system";
   const storedThemeLocaleCookie = cookieStore.get(themeLocaleCookieName)?.value;
-  const storedThemeLocale: ThemeLocale = isThemeLocale(storedThemeLocaleCookie)
-    ? storedThemeLocaleCookie
-    : locale;
+  const themeLocaleValid = isThemeLocale(storedThemeLocaleCookie);
+  const themeLocaleValue = themeLocaleValid ? storedThemeLocaleCookie : null;
+  const shouldSyncThemeLocale =
+    themeLocaleValue !== "dreamland" &&
+    (!isLocale(storedLocale) ||
+      !themeLocaleValid ||
+      (isLocale(storedLocale) &&
+        isLocale(headerLocale) &&
+        storedLocale !== headerLocale &&
+        themeLocaleValue === storedLocale));
+  const storedThemeLocale: ThemeLocale = shouldSyncThemeLocale
+    ? locale
+    : themeLocaleValue ?? locale;
   const storedContrastCookie = cookieStore.get(contrastCookieName)?.value;
   const storedContrast: ContrastPreference = isContrastPreference(storedContrastCookie)
     ? storedContrastCookie

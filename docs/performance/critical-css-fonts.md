@@ -4,10 +4,10 @@ Inline critical CSS and self-hosted font subsets keep the portfolio inside Task 
 
 ## Current state
 
-- Inline payload: **14.8 KB** per locale (English/Japanese/Chinese — Simplified) covering the home header, hero shell, CTA buttons, and top-level navigation.
-- Manifest: `apps/site/app/critical-css.manifest.json` stores per-route base64 CSS plus metadata (`bytes`, `kilobytes`) for `/en`, `/ja`, and `/zh`, plus a combined payload.
+- Inline payload: **20.1 KB** shared across locales (English/Japanese/Chinese — Simplified), covering the home header, hero shell, CTA buttons, and top-level navigation.
+- Manifest: `apps/site/app/critical-css.manifest.json` stores one shared base64 CSS blob plus metadata (`bytes`, `kilobytes`).
 - Fonts: `Ubuntu` (weights 400/500/700) and `Ubuntu Mono` (400/700) live under `apps/site/public/fonts/**` and are registered via `next/font/local` with `font-display: swap`.
-- Budgets: `performance-budgets.json` caps inline CSS at **16 KB** via the build guardrail (`pnpm --filter @portfolio/site run build:budgets`).
+- Budgets: `performance-budgets.json` caps inline CSS at **20.5 KB** via the build guardrail (`pnpm --filter @portfolio/site run build:budgets`).
 
 ## Regenerating critical CSS
 

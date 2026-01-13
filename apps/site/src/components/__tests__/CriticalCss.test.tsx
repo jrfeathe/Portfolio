@@ -6,27 +6,20 @@ import { CriticalCss, type CriticalCssManifest } from "../../../app/CriticalCss"
 const manifest = rawManifest as CriticalCssManifest;
 
 describe("CriticalCss", () => {
-  it("inlines the combined critical CSS payload", () => {
+  it("inlines the shared critical CSS payload", () => {
     const { container } = render(<CriticalCss />);
     const styleElement = container.querySelector("style[data-critical-css]");
 
     expect(styleElement).not.toBeNull();
 
-    const expectedBytes = manifest.combined?.bytes ?? 0;
+    const expectedBytes = manifest.shared?.bytes ?? 0;
 
+    expect(styleElement?.getAttribute("data-critical-css")).toBe(
+      manifest.shared?.id
+    );
     expect(styleElement?.getAttribute("data-critical-bytes")).toBe(
       String(expectedBytes)
     );
     expect(styleElement?.textContent).toBeTruthy();
-  });
-
-  it("renders route-specific CSS when provided", () => {
-    const { container } = render(<CriticalCss route="/en" />);
-    const styleElement = container.querySelector("style[data-critical-css]");
-
-    expect(styleElement).not.toBeNull();
-    expect(styleElement?.getAttribute("data-critical-css")).toBe(
-      manifest.routes["/en"].id
-    );
   });
 });

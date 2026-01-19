@@ -1,0 +1,123 @@
+{
+  "id": "portfolio-writeup",
+  "title": "Portfolio writeup",
+  "sections": [
+    {
+      "code": "preamble",
+      "title": "1. THE PUSH. Summer 2025. (Preamble)",
+      "content": [
+        "My initial goal was to find a job utilizing my freshly slaved-over degree in Software Engineering. After graduating, I was overwhelmed by the current hiring landscape and morale was fading fast. Out of my 300+ applications, I received four rejection notices! The silence was deafening, and burnout was setting in as I started spending hours tailoring my resume for each application. My sanity suffered. Maddening silence repudiated my years of discipline as it continued to berate me. My resume remained one page but kept getting denser and denser. I was told to leave it in an elevator by a Ring doorbell. More effort, denser. Some of my closest allies told me to give up on my goals. The white sheet turned to black ink. I had had enough.",
+        "I replied to an ad on Instagram for a company called Frontend Simplified, making grandiose promises about helping people break into tech and make huge salaries for fully-remote frontend work. I was desperate at this point; I needed to speak to an actual person. I was immediately contacted by a rep of theirs, which struck me as unusual. It instantly occurred to me that these people were hungry for my moth-ravaged wallet, trying to sell me skills that I already had for exorbitant fees. Regardless, I scheduled an initial “interview” and spoke with a charming fellow.",
+        "The conversation quickly soured; we had different goals for the interaction. He showed me a flashy example portfolio site from their internal content to get me excited, continually asking “Why haven’t you made something like this yet?” Our introductory conversation about life, family, and goals was turned into venom. The facade of brotherhoodly empathy led me to exposing my weaknesses and drive; honest words then transmuted and used as a weapon to cut me deeply. He wanted an admission that I couldn’t make a website without help, continually probing at my personal information to bleed a reaction out of me. “What might happen if you don’t get my help today?” Loaded questions meant to domesticate me only fueled my virtue. I called off further questioning and thanked him for his time.",
+        "As the sting of this interaction wore off, I had a new perspective. It was clear that I needed recruiter-accessible proof of my skills. I needed to network. I needed some projects. I decided to take a break from job applications. I began working on [Quester2000](https://github.com/jrfeathe/Quester2000), an idea that I had long had but never had the time to implement. I started bringing my laptop to work and multi-tasking to maximize my time efficiency.",
+        "That little app was quite fun to implement, and sparked my first delve into using ChatGPT Codex. I was astounded at how many tasks I was able to complete in just a few hours, and my interest in AI-assisted programming grew. I decided to go even further beyond. Once I grew accustomed to AI-assisted programming, I began to feel like I could solve any engineering problem that I faced if I put in enough time and effort."
+      ]
+    },
+    {
+      "code": "building",
+      "title": "2. LIMIT BREAK. October 2025. (Building the site)",
+      "content": [
+        "(WARNING: Tech-talk ahead! Non-programmers may get bored here. Many of the important tasks are already documented in the WBS folder, so these are just my key takeaways.)"
+      ],
+      "sections": [
+        {
+          "code": "epic0",
+          "title": "EPIC 0: Program & Repo. WHERE AM I? (10月22–23日)",
+          "content": []
+        },
+        {
+          "code": "epic1",
+          "title": "EPIC 1: Content & Positioning. THE CROP STANDS. (10月23日)",
+          "content": []
+        },
+        {
+          "code": "epic2",
+          "title": "EPIC 2: Design System. GOING THROUGH THE MOTIONS. (10月24-26日)",
+          "content": []
+        },
+        {
+          "code": "epic3",
+          "title": "EPIC 3: Architecture. GETTING SOMEWHERE. (10月26-27日)",
+          "content": []
+        },
+        {
+          "code": "epic4",
+          "title": "EPIC 4: Unit Testing & Continuous Integration. NECESSARY EVIL. (10月27-28日)",
+          "content": []
+        },
+        {
+          "code": "epic5",
+          "title": "EPIC 5: Observability. SPYING ON ME? (10月28日)",
+          "content": []
+        },
+        {
+          "code": "epic6",
+          "title": "EPIC 6: Security. GOOD INTENTIONS, SPOOKY EXECUTION. (10月30-31日)",
+          "content": []
+        },
+        {
+          "code": "epic7",
+          "title": "EPIC 7: Accessibility. なるほど。(11月1日)",
+          "content": []
+        },
+        {
+          "code": "epic8",
+          "title": "EPIC 8: Performance. MAKE THE COMMON CASE FAST. (11月3-5日)",
+          "content": []
+        },
+        {
+          "code": "epic9",
+          "title": "EPIC 9: Schema & Resume. WHAT THE HELL ARE YOU GUYS DOING? (11月6日)",
+          "content": []
+        },
+        {
+          "code": "epic10a",
+          "title": "EPIC 10a: Tasks 10a.0 \u2013 10a.3. Personalization. E = MC<sup>2</sup> + AI. (11月7-13日)",
+          "content": []
+        }
+      ]
+    },
+    {
+      "code": "launch-pivot",
+      "title": "3. It's meaningless to just live, it's meaningless to just fight, I WANT TO WIN. December 2025.",
+      "content": [],
+      "sections": [
+        {
+          "code": "epicf1",
+          "title": "EPIC F1: REVOLT Return to Order. WHERE AM I\u2026 AGAIN? (12月8-16日)",
+          "content": []
+        },
+        {
+          "code": "epicf2",
+          "title": "EPIC F2: Skim Mode. YOU KNOW THAT FELLAS CAN\u2019T READ. (12月17-22日)",
+          "content": []
+        },
+        {
+          "code": "taskf3_4",
+          "title": "TASK F3.4: Search Engine Optimization 1. DON\u2019T BE ~~EVIL~~ A GRINCH. (12月23日)",
+          "content": []
+        },
+        {
+          "code": "taskf3_2",
+          "title": "TASK F3.2: Part 1. Add Codex to Tech Stack. I LOVE ELVES. (12月24日)",
+          "content": []
+        },
+        {
+          "code": "epicf4",
+          "title": "EPIC F4: Localization. AN IDIOT ABROAD. (2025年12月27日 ー 2026年1月3日)",
+          "content": []
+        },
+        {
+          "code": "epicf3",
+          "title": "EPIC F3: Frontend Refinement. FRONTEND SIMPLIFIED. (1月5-？？？日)",
+          "content": []
+        }
+      ]
+    },
+    {
+      "code": "writeup",
+      "title": "4. The Writeup. YOU ARE HERE. (1月13-15日)",
+      "content": []
+    }
+  ]
+}

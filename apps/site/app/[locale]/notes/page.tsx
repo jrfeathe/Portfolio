@@ -13,8 +13,10 @@ import {
 } from "../../../src/utils/i18n";
 import {
   ResponsiveShellLayout,
-  type ShellSection
+  type ShellSection,
+  type AnchorNavItem
 } from "../../../src/components/Shell";
+import { getNote, type Note } from "../../../src/lib/mdx";
 
 const ResponsiveAudioPlayer = dynamicImport(
   () => import("../../../src/components/AudioPlayer").then((mod) => mod.ResponsiveAudioPlayer),
@@ -39,18 +41,95 @@ function ensureLocale(value: string): Locale {
 }
 
 function buildSections(
-  dictionary: AppDictionary
+  dictionary: AppDictionary,
+  locale: Locale,
+  note: Note | null
 ): ShellSection[] {
+  const contentClassName =
+    "mx-auto w-full max-w-[8.5in] space-y-6 text-base leading-relaxed text-text dark:text-dark-text";
+  const englishOnlyNoticeByLocale: Partial<Record<Locale, string>> = {
+    ja: "申し訳ありませんが、この文章は現在英語のみです。後日手作業でローカライズする予定です。",
+    zh: "抱歉，这篇写作目前只有英文版本。我会在之后手动进行本地化。"
+  };
+
+  if (locale === "en" && note) {
+    return [
+      {
+        id: "notes",
+        title: "",
+        description: null,
+        content: (
+          <article className={contentClassName}>
+            {note.content}
+          </article>
+        )
+      }
+    ];
+  }
+
+  const englishOnlyNotice =
+    locale === "en"
+      ? dictionary.notes.index.empty
+      : englishOnlyNoticeByLocale[locale] ??
+        "Sorry, this writeup is only available in English for now. I plan to localize it by hand later.";
+
   return [
     {
       id: "notes",
-      title: dictionary.notes.index.title,
-      description: dictionary.notes.index.subtitle,
+      title: "",
+      description: null,
       content: (
-        <div className="space-y-6 text-base leading-relaxed text-text dark:text-dark-text">
-          <p>{dictionary.notes.index.body}</p>
+        <div className={contentClassName}>
+          <p>{englishOnlyNotice}</p>
         </div>
       )
+    }
+  ];
+}
+
+function buildAnchorItems(locale: Locale, note: Note | null): AnchorNavItem[] {
+  if (locale !== "en" || !note) {
+    return [];
+  }
+
+  return [
+    {
+      label: "Preamble",
+      href: "#preamble"
+    },
+    {
+      label: "Building the site",
+      href: "#building",
+      children: [
+        { label: "Epic 0", href: "#epic0" },
+        { label: "Epic 1", href: "#epic1" },
+        { label: "Epic 2", href: "#epic2" },
+        { label: "Epic 3", href: "#epic3" },
+        { label: "Epic 4", href: "#epic4" },
+        { label: "Epic 5", href: "#epic5" },
+        { label: "Epic 6", href: "#epic6" },
+        { label: "Epic 7", href: "#epic7" },
+        { label: "Epic 8", href: "#epic8" },
+        { label: "Epic 9", href: "#epic9" },
+        { label: "Epic 10a.0-3", href: "#epic10a_0-3" },
+        { label: "Epic 10a.KING", href: "#epic10a_KING" }
+      ]
+    },
+    {
+      label: "Launch pivot",
+      href: "#launch-pivot",
+      children: [
+        { label: "Epic F1", href: "#epicf1" },
+        { label: "Epic F2", href: "#epicf2" },
+        { label: "Task F3.4", href: "#taskf3_4" },
+        { label: "Task F3.2", href: "#taskf3_2" },
+        { label: "Epic F4", href: "#epicf4" },
+        { label: "Epic F3", href: "#epicf3" }
+      ]
+    },
+    {
+      label: "Writeup",
+      href: "#writeup"
     }
   ];
 }
@@ -76,10 +155,20 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   };
 }
 
+async function loadNoteOrNull(slug: string) {
+  try {
+    return await getNote(slug);
+  } catch {
+    return null;
+  }
+}
+
 export default async function NotesIndexPage({ params }: PageParams) {
   const locale = ensureLocale(params.locale);
   const dictionary = getDictionary(locale);
-  const sections = buildSections(dictionary);
+  const note = locale === "en" ? await loadNoteOrNull("portfolio-writeup") : null;
+  const sections = buildSections(dictionary, locale, note);
+  const anchorItems = buildAnchorItems(locale, note);
   const breadcrumbs = [
     {
       label: dictionary.home.breadcrumbs.home,
@@ -103,6 +192,8 @@ export default async function NotesIndexPage({ params }: PageParams) {
         ]
       : [])
   ];
+  const layoutClassName =
+    "!max-w-[80.3rem] lg:!grid-cols-[200px_minmax(0,1fr)_220px] lg:!px-4";
 
   return (
     <ResponsiveShellLayout
@@ -110,6 +201,9 @@ export default async function NotesIndexPage({ params }: PageParams) {
       subtitle={dictionary.notes.index.subtitle}
       breadcrumbs={breadcrumbs}
       sections={sections}
+      anchorItems={anchorItems}
+      showSkimToggle={false}
+      className={layoutClassName}
       floatingWidget={
         <ResponsiveAudioPlayer
           sources={audioSources}

@@ -24,10 +24,43 @@ const CONTRAST_PRIMARY_DARK = "var(--dark-hc-accent)";
 const CONTRAST_ON_PRIMARY = "var(--light-hc-accentOn)";
 const CONTRAST_ON_PRIMARY_STRONG = "var(--dark-hc-accentOn)";
 const ATTENTION_SURFACE = "var(--attention-surface)";
+const CHAT_DEFAULT_SIZE = { width: 420, height: 520 };
+const CHAT_COMPACT_SIZE = { width: 320, height: 550 };
+const CHAT_MIN_SIZE = { width: 320, height: 360 };
+const CHAT_COMPACT_MIN_SIZE = { width: 280, height: 420 };
+const COMPACT_VIEWPORT_MAX = 360;
+const CHAT_WIDTH_MARGIN = 48;
+const CHAT_COMPACT_WIDTH_MARGIN = 28;
+const CHAT_HEIGHT_OFFSET = 96;
+const CHAT_COMPACT_HEIGHT_OFFSET = 94;
 const LazyHCaptchaWidget = dynamic(
   () => import("./HCaptchaWidget").then((mod) => mod.HCaptchaWidget),
   { ssr: false, loading: () => null }
 );
+
+type ChatSizing = {
+  base: { width: number; height: number };
+  min: { width: number; height: number };
+  widthMargin: number;
+  heightOffset: number;
+};
+
+function getChatSizing(): ChatSizing {
+  if (typeof window === "undefined") {
+    return {
+      base: CHAT_DEFAULT_SIZE,
+      min: CHAT_MIN_SIZE,
+      heightOffset: CHAT_HEIGHT_OFFSET
+    };
+  }
+  const isCompact = window.innerWidth <= COMPACT_VIEWPORT_MAX;
+  return {
+    base: isCompact ? CHAT_COMPACT_SIZE : CHAT_DEFAULT_SIZE,
+    min: isCompact ? CHAT_COMPACT_MIN_SIZE : CHAT_MIN_SIZE,
+    widthMargin: isCompact ? CHAT_COMPACT_WIDTH_MARGIN : CHAT_WIDTH_MARGIN,
+    heightOffset: isCompact ? CHAT_COMPACT_HEIGHT_OFFSET : CHAT_HEIGHT_OFFSET
+  };
+}
 
 export type ChatbotCopy = {
   launcherLabel: string;
@@ -609,8 +642,20 @@ function ChatFloatingWidget() {
   const { state, toggle, sendMessage, copy, solveCaptcha, locale } = useChatbot();
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const [chatSize, setChatSize] = useState<{ width: number; height: number }>({ width: 420, height: 520 });
+  const [chatSize, setChatSize] = useState<{ width: number; height: number }>(() => {
+    const { base } = getChatSizing();
+    return { width: base.width, height: base.height };
+  });
+  const [minChatSize, setMinChatSize] = useState<{ width: number; height: number }>(() => {
+    const { min } = getChatSizing();
+    return { width: min.width, height: min.height };
+  });
+  const [widthMargin, setWidthMargin] = useState(() => getChatSizing().widthMargin);
+  const [heightOffset, setHeightOffset] = useState(() => getChatSizing().heightOffset);
   const chatSizeRef = useRef(chatSize);
+  const minChatSizeRef = useRef(minChatSize);
+  const heightOffsetRef = useRef(getChatSizing().heightOffset);
+  const widthMarginRef = useRef(getChatSizing().widthMargin);
   const dragRef = useRef<{
     startX: number;
     startY: number;
@@ -651,8 +696,6 @@ function ChatFloatingWidget() {
       forcedColorAdjust: "none" as const
     };
   }, [isCloseHover, isForcedColors]);
-  const MIN_CHAT_WIDTH = 320;
-  const MIN_CHAT_HEIGHT = 360;
   const rateLimitActive = isRateLimitActive(state.rateLimit);
   const retryAfterMinutes = state.rateLimit?.retryAfterMs
     ? Math.max(1, Math.ceil(state.rateLimit.retryAfterMs / 60000))
@@ -667,6 +710,10 @@ function ChatFloatingWidget() {
   useEffect(() => {
     chatSizeRef.current = chatSize;
   }, [chatSize]);
+
+  useEffect(() => {
+    minChatSizeRef.current = minChatSize;
+  }, [minChatSize]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -690,25 +737,40 @@ function ChatFloatingWidget() {
     observer.observe(root, { attributes: true, attributeFilter: ["class", "data-contrast"] });
 
     const clampSize = (width: number, height: number) => {
-      const maxWidth = Math.max(MIN_CHAT_WIDTH, window.innerWidth - 48); // leave margins around the widget
-      const maxHeight = Math.max(MIN_CHAT_HEIGHT, window.innerHeight - 96); // avoid covering the whole viewport
+      const minSize = minChatSizeRef.current;
+      const maxWidth = Math.max(minSize.width, window.innerWidth - widthMarginRef.current); // leave margins around the widget
+      const maxHeight = Math.max(
+        minSize.height,
+        window.innerHeight - heightOffsetRef.current
+      ); // avoid covering the whole viewport
       return {
-        width: Math.min(Math.max(width, MIN_CHAT_WIDTH), maxWidth),
-        height: Math.min(Math.max(height, MIN_CHAT_HEIGHT), maxHeight)
+        width: Math.min(Math.max(width, minSize.width), maxWidth),
+        height: Math.min(Math.max(height, minSize.height), maxHeight)
       };
     };
 
-    setChatSize((prev) => clampSize(prev.width, prev.height));
+    const syncSizing = () => {
+      const { min, heightOffset, widthMargin } = getChatSizing();
+      minChatSizeRef.current = min;
+      heightOffsetRef.current = heightOffset;
+      widthMarginRef.current = widthMargin;
+      setMinChatSize({ width: min.width, height: min.height });
+      setWidthMargin(widthMargin);
+      setHeightOffset(heightOffset);
+      setChatSize((prev) => clampSize(prev.width, prev.height));
+    };
+
+    syncSizing();
 
     const handleResize = () => {
-      setChatSize((prev) => clampSize(prev.width, prev.height));
+      syncSizing();
     };
 
     window.addEventListener("resize", handleResize);
     return () => {
       forcedColors.removeEventListener("change", handleForced);
       prefersContrast.removeEventListener("change", handleContrast);
-        observer.disconnect();
+      observer.disconnect();
       window.removeEventListener("resize", handleResize);
     };
   }, []);
@@ -774,16 +836,18 @@ function ChatFloatingWidget() {
       const nextHeight = drag.startHeight + deltaY;
 
       if (typeof window !== "undefined") {
-        const maxWidth = Math.max(MIN_CHAT_WIDTH, window.innerWidth - 48);
-        const maxHeight = Math.max(MIN_CHAT_HEIGHT, window.innerHeight - 96);
+        const minSize = minChatSizeRef.current;
+        const maxWidth = Math.max(minSize.width, window.innerWidth - widthMarginRef.current);
+        const maxHeight = Math.max(minSize.height, window.innerHeight - heightOffsetRef.current);
         setChatSize({
-          width: Math.min(Math.max(nextWidth, MIN_CHAT_WIDTH), maxWidth),
-          height: Math.min(Math.max(nextHeight, MIN_CHAT_HEIGHT), maxHeight)
+          width: Math.min(Math.max(nextWidth, minSize.width), maxWidth),
+          height: Math.min(Math.max(nextHeight, minSize.height), maxHeight)
         });
       } else {
+        const minSize = minChatSizeRef.current;
         setChatSize({
-          width: Math.max(nextWidth, MIN_CHAT_WIDTH),
-          height: Math.max(nextHeight, MIN_CHAT_HEIGHT)
+          width: Math.max(nextWidth, minSize.width),
+          height: Math.max(nextHeight, minSize.height)
         });
       }
     };
@@ -820,7 +884,10 @@ function ChatFloatingWidget() {
     : false;
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div
+      className="pointer-events-auto fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3"
+      data-chat-shell="true"
+    >
       <style jsx global>{`
         html.contrast-high [data-user-bubble="true"] {
           background-color: var(--light-hc-accent) !important;
@@ -852,10 +919,10 @@ function ChatFloatingWidget() {
           style={{
             width: chatSize.width,
             height: chatSize.height,
-            minWidth: MIN_CHAT_WIDTH,
-            minHeight: MIN_CHAT_HEIGHT,
-            maxWidth: "calc(100vw - 2rem)",
-            maxHeight: "calc(100vh - 4rem)"
+            minWidth: minChatSize.width,
+            minHeight: minChatSize.height,
+            maxWidth: `calc(100vw - ${widthMargin}px)`,
+            maxHeight: `calc(100vh - ${heightOffset}px)`
           }}
         >
           <div className="flex items-center gap-2.5 border-b border-border bg-surface px-4 py-2.5 dark:border-dark-border dark:bg-dark-surface">

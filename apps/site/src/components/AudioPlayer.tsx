@@ -488,7 +488,7 @@ export function AudioPlayerOverlay({
       <>
         <div
           className={clsx(
-            "fixed bottom-4 left-4 z-40 w-[calc(100%_-_6.5rem)] max-w-[420px] touch-none rounded-3xl border border-border/70 bg-gradient-to-br from-surface/95 via-surface/90 to-surfaceMuted/90 p-3 shadow-2xl backdrop-blur-md dark:border-dark-border/70 dark:from-dark-surface/95 dark:via-dark-surface/90 dark:to-dark-surfaceMuted/90",
+            "pointer-events-auto fixed bottom-4 left-4 z-40 w-[calc(100%_-_6.5rem)] max-w-[420px] touch-none rounded-3xl border border-border/70 bg-gradient-to-br from-surface/95 via-surface/90 to-surfaceMuted/90 p-3 shadow-2xl backdrop-blur-md dark:border-dark-border/70 dark:from-dark-surface/95 dark:via-dark-surface/90 dark:to-dark-surfaceMuted/90",
             isDragging
               ? "transition-none"
               : "transition-[transform,opacity] duration-200 ease-out motion-reduce:transition-none",
@@ -602,7 +602,10 @@ export function AudioPlayerOverlay({
         </div>
 
         {isHidden ? (
-          <div className="fixed bottom-4 left-4 z-50">
+          <div
+            className="pointer-events-auto fixed bottom-4 left-4 z-50"
+            data-audio-player-reopen="true"
+          >
             <button
               type="button"
               onClick={handleShow}
@@ -622,7 +625,7 @@ export function AudioPlayerOverlay({
     <>
       <div
         className={clsx(
-          "fixed right-1.5 top-1/2 z-40 w-[min(100px,calc(100%-1.5rem))] max-w-[100px] touch-none rounded-3xl border border-border/70 bg-gradient-to-br from-surface/95 via-surface/90 to-surfaceMuted/90 p-2 shadow-2xl backdrop-blur-md dark:border-dark-border/70 dark:from-dark-surface/95 dark:via-dark-surface/90 dark:to-dark-surfaceMuted/90",
+          "pointer-events-auto fixed right-1.5 top-1/2 z-40 w-[min(100px,calc(100%-1.5rem))] max-w-[100px] touch-none rounded-3xl border border-border/70 bg-gradient-to-br from-surface/95 via-surface/90 to-surfaceMuted/90 p-2 shadow-2xl backdrop-blur-md dark:border-dark-border/70 dark:from-dark-surface/95 dark:via-dark-surface/90 dark:to-dark-surfaceMuted/90",
           isDragging
             ? "transition-none"
             : "transition-[transform,opacity] duration-200 ease-out motion-reduce:transition-none",
@@ -734,7 +737,10 @@ export function AudioPlayerOverlay({
       </div>
 
         {isHidden ? (
-          <div className="fixed right-1.5 top-1/2 z-50 -translate-y-1/2">
+          <div
+            className="pointer-events-auto fixed right-1.5 top-1/2 z-50 -translate-y-1/2"
+            data-audio-player-reopen="true"
+          >
             <Button
               variant="secondary"
               onClick={handleShow}

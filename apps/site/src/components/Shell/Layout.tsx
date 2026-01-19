@@ -46,6 +46,8 @@ export type ShellLayoutProps = {
     preset?: ResponsiveImagePreset;
     caption?: ReactNode;
   };
+  mobileNavMaxHeightClassName?: string;
+  mobileScrollContainer?: boolean;
   skimModeEnabled?: boolean;
   showSkimToggle?: boolean;
   shellCopy: ShellCopy;
@@ -222,19 +224,28 @@ export function ShellLayout({
 
         {navItems.length ? (
           <div className="hidden lg:col-start-1 lg:row-start-1 lg:block">
-            <div className="sticky top-24 space-y-3">
-              <AnchorControlPanel
-                enabled={hasNestedAnchors}
-                expandLabel={shellCopy.expandAllLabel}
-                collapseLabel={shellCopy.collapseAllLabel}
-              />
-              <AnchorNav items={navItems} ariaLabel={shellCopy.anchorNavLabel} />
-              <a
-                href="#top"
-                className="inline-flex w-full items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
-              >
-                {shellCopy.returnToTopLabel}
-              </a>
+            <div className="sticky top-24">
+              <div className="flex max-h-[calc(100vh-6rem)] flex-col gap-3 pb-3">
+                <AnchorControlPanel
+                  enabled={hasNestedAnchors}
+                  expandLabel={shellCopy.expandAllLabel}
+                  collapseLabel={shellCopy.collapseAllLabel}
+                />
+                <div className="min-h-0 flex-1 overflow-y-auto rounded-2xl border border-border bg-surface/80 pr-1 shadow-sm backdrop-blur dark:border-dark-border dark:bg-dark-surface/80">
+                  <AnchorNav
+                    items={navItems}
+                    ariaLabel={shellCopy.anchorNavLabel}
+                    scrollable={false}
+                    className="!border-0 !bg-transparent !shadow-none !backdrop-blur-0"
+                  />
+                </div>
+                <a
+                  href="#top"
+                  className="inline-flex w-full items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+                >
+                  {shellCopy.returnToTopLabel}
+                </a>
+              </div>
             </div>
           </div>
         ) : null}

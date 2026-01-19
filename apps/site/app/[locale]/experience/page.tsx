@@ -221,6 +221,7 @@ export default function ExperiencePage({ params }: PageParams) {
       breadcrumbs={breadcrumbs}
       sections={sections}
       anchorItems={anchorItems}
+      mobileBreakpoint={960}
       floatingWidget={
         <ResponsiveAudioPlayer
           sources={audioSources}

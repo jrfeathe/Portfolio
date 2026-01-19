@@ -64,12 +64,12 @@ export const mdxComponents: MDXComponents = {
     />
   ),
   IndentedParagraph: ({ className, style, ...props }) => (
-    <p
+    <div
       className={clsx(
-        "leading-relaxed text-text dark:text-dark-text",
+        "mdx-indented leading-relaxed text-text dark:text-dark-text",
         className
       )}
-      style={{ textIndent: "3em", ...style }}
+      style={style}
       {...props}
     />
   ),

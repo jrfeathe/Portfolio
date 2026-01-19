@@ -840,6 +840,48 @@ body {
     }
   }
 
+  @media (max-width: 1024px) {
+    [data-floating-layer="true"],
+    [data-menu-layer="true"] {
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100svh;
+    }
+
+    [data-floating-layer="true"] {
+      pointer-events: none;
+    }
+
+    [data-floating-layer="true"] .chatbot-placeholder,
+    [data-floating-layer="true"] [data-menu-toggle="true"],
+    [data-floating-layer="true"] [data-chat-shell="true"],
+    [data-floating-layer="true"] [data-audio-player="true"],
+    [data-floating-layer="true"] [data-audio-player-reopen="true"] {
+      pointer-events: auto;
+    }
+
+    [data-floating-layer="true"] .chatbot-placeholder,
+    [data-floating-layer="true"] [data-chat-shell="true"] {
+      position: absolute;
+      right: 1.5rem;
+      bottom: 1.5rem;
+    }
+
+    [data-floating-layer="true"] [data-menu-toggle="true"] {
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+    }
+
+    [data-floating-layer="true"] [data-audio-player="true"][data-variant="horizontal"] {
+      position: absolute;
+      left: 1rem;
+      bottom: 1rem;
+    }
+  }
+
   .contrast-high.dark,
   .contrast-high.dark body {
     color: var(--dark-hc-text);
@@ -878,6 +920,10 @@ body {
 
   .contrast-high.dark [data-audio-player="true"] input[type="range"] {
     accent-color: var(--dark-hc-accent);
+  }
+
+  .mdx-indented > p {
+    text-indent: 3em;
   }
 
   @media (max-width: 639px) {

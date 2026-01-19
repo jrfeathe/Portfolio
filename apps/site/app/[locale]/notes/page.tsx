@@ -202,6 +202,8 @@ export default async function NotesIndexPage({ params }: PageParams) {
       breadcrumbs={breadcrumbs}
       sections={sections}
       anchorItems={anchorItems}
+      mobileNavMaxHeightClassName="max-h-[45vh]"
+      mobileScrollContainer
       showSkimToggle={false}
       className={layoutClassName}
       floatingWidget={

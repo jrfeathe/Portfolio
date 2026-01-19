@@ -26,7 +26,9 @@ const journeys = [
       await page.waitForLoadState("networkidle");
       await expect(page.getByRole("heading", { level: 1, name: /Engineering notes/i })).toBeVisible();
       await expect(
-        page.getByText(/single narrative that explains how the portfolio was built/i)
+        page.getByText(
+          /fantastic tale of how the portfolio was turned from concept to reality/i
+        )
       ).toBeVisible();
     }
   }

@@ -1,5 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Route } from "next";
+import dynamicImport from "next/dynamic";
 import { notFound } from "next/navigation";
+import Link from "next/link";
+import { Button } from "@portfolio/ui";
 
 import {
   getDictionary,
@@ -10,12 +13,19 @@ import {
   parseLocale,
   type Locale
 } from "../../../src/utils/i18n";
+import { getResumeProfile } from "../../../src/lib/resume/profile";
 import { resolveOpenGraphLocale } from "../../../src/lib/seo/opengraph-locale";
 import {
   ResponsiveShellLayout,
+  StickyCTA,
   type ShellSection
 } from "../../../src/components/Shell";
 import { AvailabilitySection } from "../../../src/components/meetings/AvailabilitySection";
+
+const ResponsiveAudioPlayer = dynamicImport(
+  () => import("../../../src/components/AudioPlayer").then((mod) => mod.ResponsiveAudioPlayer),
+  { ssr: false, loading: () => null }
+);
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -32,6 +42,10 @@ function ensureLocale(value: string): Locale {
     notFound();
   }
   return locale;
+}
+
+function isInternalHref(href: string): boolean {
+  return href.startsWith("/") && !href.startsWith("//");
 }
 
 function buildSections(dictionary: AppDictionary, locale: Locale): ShellSection[] {
@@ -124,6 +138,26 @@ export default function MeetingsPage({ params }: PageParams) {
       label: dictionary.meetings.title
     }
   ];
+  const resumeProfile = getResumeProfile(locale);
+  const resumeDownloadFilename = `jack-featherstone-resume-${resumeProfile.resumeVersion}.pdf`;
+  const homeCta = dictionary.home.hero.cta;
+  const filteredActions = homeCta.actions.filter(
+    (action) => !action.href || !action.href.startsWith(`/${locale}/meetings`)
+  );
+  const audioSources = [
+    {
+      src: dictionary.home.audioPlayer.src,
+      type: "audio/ogg; codecs=opus"
+    },
+    ...(dictionary.home.audioPlayer.fallbackSrc
+      ? [
+          {
+            src: dictionary.home.audioPlayer.fallbackSrc,
+            type: "audio/mpeg"
+          }
+        ]
+      : [])
+  ];
 
   return (
     <ResponsiveShellLayout
@@ -131,6 +165,79 @@ export default function MeetingsPage({ params }: PageParams) {
       subtitle={dictionary.meetings.subtitle}
       breadcrumbs={breadcrumbs}
       sections={sections}
+      floatingWidget={
+        <ResponsiveAudioPlayer
+          sources={audioSources}
+          downloadSrc={
+            dictionary.home.audioPlayer.fallbackSrc ??
+            dictionary.home.audioPlayer.src
+          }
+          title={dictionary.home.audioPlayer.title}
+          description={dictionary.home.audioPlayer.description}
+          playLabel={dictionary.home.audioPlayer.playLabel}
+          pauseLabel={dictionary.home.audioPlayer.pauseLabel}
+          downloadLabel={dictionary.home.audioPlayer.downloadLabel}
+          closeLabel={dictionary.home.audioPlayer.closeLabel}
+          reopenLabel={dictionary.home.audioPlayer.reopenLabel}
+          volumeLabel={dictionary.home.audioPlayer.volumeLabel}
+          volumeShowLabel={dictionary.home.audioPlayer.volumeShowLabel}
+          volumeHideLabel={dictionary.home.audioPlayer.volumeHideLabel}
+          locale={locale}
+          trackId={dictionary.home.audioPlayer.trackId}
+        />
+      }
+      cta={
+        <div className="shell-stacked-sidebar space-y-4 lg:sticky lg:top-24">
+          <StickyCTA
+            title={homeCta.title}
+            description={homeCta.description}
+            sticky={false}
+          >
+            {filteredActions.map((action) =>
+              action.href ? (
+                isInternalHref(action.href) && !action.download ? (
+                  <Link
+                    key={`${action.label}-${action.variant}`}
+                    href={action.href as Route}
+                    passHref
+                    legacyBehavior
+                  >
+                    <Button
+                      variant={action.variant}
+                      href={action.href}
+                      className="w-full"
+                      data-variant={action.variant}
+                    >
+                      {action.label}
+                    </Button>
+                  </Link>
+                ) : (
+                  <Button
+                    key={`${action.label}-${action.variant}`}
+                    variant={action.variant}
+                    href={action.href}
+                    className="w-full"
+                    data-variant={action.variant}
+                    download={action.download ? resumeDownloadFilename : undefined}
+                    rel={action.href.startsWith("http") ? "noreferrer noopener" : undefined}
+                  >
+                    {action.label}
+                  </Button>
+                )
+              ) : (
+                <Button
+                  key={`${action.label}-${action.variant}`}
+                  variant={action.variant}
+                  className="w-full"
+                  data-variant={action.variant}
+                >
+                  {action.label}
+                </Button>
+              )
+            )}
+          </StickyCTA>
+        </div>
+      }
       showSkimToggle={false}
       shellCopy={dictionary.shell}
       footerContent={dictionary.home.footer}

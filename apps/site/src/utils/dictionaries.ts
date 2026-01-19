@@ -87,6 +87,10 @@ export type AppDictionary = {
   themeToggle: {
     label: string;
     cycleLabel: string;
+    pickerLabel: string;
+    pickerOptions: {
+      dreamland: string;
+    };
     options: Record<ThemePreference, string>;
   };
   contrastToggle: {
@@ -173,6 +177,7 @@ export type AppDictionary = {
       title: string;
       description: string;
       src: string;
+      fallbackSrc?: string;
       playLabel: string;
       pauseLabel: string;
       downloadLabel: string;
@@ -530,6 +535,10 @@ const en: AppDictionary = {
   themeToggle: {
     label: "Select color theme",
     cycleLabel: "Cycle theme",
+    pickerLabel: "Theme:",
+    pickerOptions: {
+      dreamland: "🌙 Dreamland"
+    },
     options: {
       light: "Light",
       system: "System",
@@ -595,7 +604,7 @@ const en: AppDictionary = {
     menuOpenLabel: "Open menu",
     menuCloseLabel: "Close menu",
     menuPanelLabel: "Navigation and display options",
-    menuCloseButtonLabel: "X"
+    menuCloseButtonLabel: "✕"
   },
   home: {
     breadcrumbs: {
@@ -628,7 +637,8 @@ const en: AppDictionary = {
     audioPlayer: {
       title: "Portfolio background loop",
       description: "",
-      src: "/media/audio/portfolio-loop.mp3",
+      src: "/media/audio/jack_portfolio_suno.opus",
+      fallbackSrc: "/media/audio/jack_portfolio_suno.mp3",
       playLabel: "Play track",
       pauseLabel: "Pause track",
       downloadLabel: "Download track",
@@ -637,7 +647,7 @@ const en: AppDictionary = {
       volumeLabel: "Volume",
       volumeShowLabel: "Show volume slider",
       volumeHideLabel: "Hide volume slider",
-      trackId: "portfolio-loop"
+      trackId: "jack-portfolio-suno"
     },
     hero: {
       title: "Jack Featherstone",
@@ -726,7 +736,7 @@ const en: AppDictionary = {
     index: {
       title: "Engineering notes",
       subtitle:
-        "Long-form breakdowns of delivery choices, instrumentation tactics, and operating agreements behind the portfolio effort.",
+        "A fantastic tale of how the portfolio was turned from concept to reality.",
       body:
         "This page is now a single narrative that explains how the portfolio was built, from planning and constraints through accessibility, performance, and release operations. The goal is a cohesive end-to-end write-up that focuses on decisions, tradeoffs, and what I would change next time.",
       empty: "Notes are on the way."
@@ -822,6 +832,10 @@ const ja: AppDictionary = {
   themeToggle: {
     label: "カラーテーマを選択",
     cycleLabel: "テーマを切り替え",
+    pickerLabel: "テーマ:",
+    pickerOptions: {
+      dreamland: "🌙 ドリームランド"
+    },
     options: {
       light: "ライト",
       system: "システム",
@@ -887,7 +901,7 @@ const ja: AppDictionary = {
     menuOpenLabel: "メニューを開く",
     menuCloseLabel: "メニューを閉じる",
     menuPanelLabel: "ナビゲーションと表示オプション",
-    menuCloseButtonLabel: "X"
+    menuCloseButtonLabel: "✕"
   },
   home: {
     breadcrumbs: {
@@ -920,7 +934,8 @@ const ja: AppDictionary = {
     audioPlayer: {
       title: "ポートフォリオ背景ループ",
       description: "",
-      src: "/media/audio/portfolio-loop.mp3",
+      src: "/media/audio/jack_portfolio_suno.opus",
+      fallbackSrc: "/media/audio/jack_portfolio_suno.mp3",
       playLabel: "再生",
       pauseLabel: "一時停止",
       downloadLabel: "トラックをダウンロード",
@@ -929,7 +944,7 @@ const ja: AppDictionary = {
       volumeLabel: "音量",
       volumeShowLabel: "音量スライダーを表示",
       volumeHideLabel: "音量スライダーを非表示",
-      trackId: "portfolio-loop"
+      trackId: "jack-portfolio-suno"
     },
     hero: {
       title: "Jack Featherstone",
@@ -1017,7 +1032,7 @@ const ja: AppDictionary = {
     index: {
       title: "エンジニアリングノート",
       subtitle:
-        "本ポートフォリオ制作の裏側にある設計判断、計測手法、運用方針を詳しく解説します。",
+        "ポートフォリオが構想から現実へと形になるまでの素晴らしい物語です。",
       body:
         "このページは、ポートフォリオ構築の過程を一続きの物語としてまとめた長文メモです。計画と制約から、アクセシビリティ、性能、運用までを通して、判断とトレードオフ、次に改善したい点を記録します。",
       empty: "ノートは準備中です。"
@@ -1116,6 +1131,10 @@ const zh: AppDictionary = {
   themeToggle: {
     label: "选择配色主题",
     cycleLabel: "循环切换主题",
+    pickerLabel: "主题:",
+    pickerOptions: {
+      dreamland: "🌙 梦境"
+    },
     options: {
       light: "浅色",
       system: "系统",
@@ -1181,7 +1200,7 @@ const zh: AppDictionary = {
     menuOpenLabel: "打开菜单",
     menuCloseLabel: "关闭菜单",
     menuPanelLabel: "导航和显示选项",
-    menuCloseButtonLabel: "X"
+    menuCloseButtonLabel: "✕"
   },
   home: {
     breadcrumbs: {
@@ -1214,7 +1233,8 @@ const zh: AppDictionary = {
     audioPlayer: {
       title: "作品集背景循环音轨",
       description: "",
-      src: "/media/audio/portfolio-loop.mp3",
+      src: "/media/audio/jack_portfolio_suno.opus",
+      fallbackSrc: "/media/audio/jack_portfolio_suno.mp3",
       playLabel: "播放",
       pauseLabel: "暂停",
       downloadLabel: "下载音轨",
@@ -1223,12 +1243,12 @@ const zh: AppDictionary = {
       volumeLabel: "音量",
       volumeShowLabel: "显示音量滑块",
       volumeHideLabel: "隐藏音量滑块",
-      trackId: "portfolio-loop"
+      trackId: "jack-portfolio-suno"
     },
     hero: {
       title: "Jack Featherstone",
       subtitle:
-        "你好，我是 Jack——这是我的软件工程作品集。本网站记录了我的技能和项目，并作为职业交流的中心。我正在寻找结合开发与项目管理的、涉及 AI 的长期全栈岗位，同时也欢迎较小规模的合同和合作。",
+        "你好，我是 Jack—这是我的软件工程作品集。本网站记录了我的技能和项目，并作为职业交流的中心。我正在寻找结合开发与项目管理的、涉及 AI 的长期全栈岗位，同时也欢迎较小规模的合同和合作。",
       media: {
         image: {
           ...HERO_IMAGE_BASE,
@@ -1311,7 +1331,7 @@ const zh: AppDictionary = {
     index: {
       title: "工程笔记",
       subtitle:
-        "对该作品集背后的交付选择、观测手段和运行约定的长文解析。",
+        "一段精彩的故事，讲述作品集如何从概念变为现实。",
       body:
         "这个页面现在是一篇完整的长文，按时间线讲述作品集的构建过程：从规划与约束，到可访问性、性能和发布运维。重点是记录关键决策、权衡取舍，以及下一次会改进的地方。",
       empty: "笔记即将上线。"

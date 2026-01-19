@@ -1,0 +1,159 @@
+• Here’s how to execute Task F3.1, based on the project’s own guidance in WBS/Task_F3.1_Manual_A11y_Audit.md and the a11y runbook in docs/testing.md:
+
+  - Prep: pick your SR tool(s) (VoiceOver on macOS, NVDA/JAWS on Windows if available), decide desktop + mobile coverage, and plan to toggle light/dark + high‑contrast modes. Run pnpm test:a11y if you want a quick baseline
+    before the manual pass (docs/testing.md).
+  - Create a simple audit log (markdown is fine): record page/feature, issue, severity (P0–P3), repro steps, and link to fix/issue.
+  - Keyboard pass (all pages): for /[locale], /[locale]/experience, /[locale]/meetings, and ?skim:
+      - Tab/shift‑tab through the full flow; ensure focus order matches the visual layout and no “dead ends.”
+      - Verify focus visibility/contrast in light/dark/high‑contrast and forced‑colors.
+      - Open/close chatbot and audio player: ensure focus is trapped only when open, ESC closes, and focus returns to the launcher.
+      - Check skip/anchor nav (if present) and CTA/anchor states.
+  - Screen reader pass (same pages):
+      - Confirm landmarks and heading hierarchy are sensible and navigable.
+      - Check button/link labels, ARIA on nav/accordions, and live regions for async states (chat/captcha).
+      - Spot‑check locale switching for SR labels/headings.
+  - Skim mode: verify skim rules don’t break tab order or anchors; resume/CTA/email/chatbot still behave correctly; no hidden nav traps.
+  - Close‑out: fix or file P2/P3 issues and link them; re‑test changed areas. Final DoD is no P0/P1 outstanding with audit notes + links.
+
+  If you want, I can draft a lightweight audit‑log template in a file (e.g., docs/a11y-audit-F3.1.md) or walk through the first page together.
+
+
+TAB ORDER home
+Download Resume CTA
+chatbot
+settings = {Light -> System -> Dark, Normal -> System -> High, JA -> EN -> ZH}
+Skim Mode
+Tech stack (24 Tab presses)
+Achievements
+View experience CTA
+Start a conversation CTA
+nav sidebar
+footer = {email, notes link, resume link}
+audio player    --> focus trap when closed
+invisible selection ? (it is the audioplayer's volume)
+browser
+
+TAB ORDER home skim
+Download resume CTA
+chatbot
+skim toggle
+settings
+Rollodex link
+Teaching Assistant link
+meetings page link
+tech stack
+View experience CTA
+Start a conversation CTA
+email CTA
+footer
+browser
+
+TAB ORDER experience
+chatbot
+breadcrumb
+settings
+nav sidebar
+footer
+browser
+
+TAB ORDER meetings
+chatbot
+breadcrumb
+settings
+timezone picker
+matrix (useless highlight)
+every green item in matrix (1 million useless highlights)
+view reference
+check NY time
+mailto email
+nav sidebar
+footer
+browser
+
+TAB ORDER notes
+chatbot
+breadcrumb
+settings
+content
+nav sidebar
+footer
+browser
+
+##NEW ORDER:
+
+TAB ORDER home
+settings = {Light -> System -> Dark, Normal -> System -> High, JA -> EN -> ZH}
+skim toggle
+chatbot
+Download Resume CTA
+View experience CTA
+Start a conversation CTA
+audio player
+nav sidebar
+Tech stack (24 Tab presses)
+Achievements
+footer
+browser
+
+TAB ORDER home skim
+settings
+skim toggle
+chatbot
+Download resume CTA
+View experience CTA
+Start a conversation CTA
+email CTA
+Rollodex link
+Teaching Assistant link
+meetings page link
+tech stack
+footer
+browser
+
+TAB ORDER experience
+breadcrumb
+settings
+chatbot
+nav sidebar
+footer
+browser
+
+TAB ORDER meetings
+breadcrumb
+settings
+chatbot
+nav sidebar
+timezone picker
+DISABLE matrix (useless highlight)
+DISABLE every green item in matrix (1 million useless highlights)
+view reference
+check NY time
+mailto email
+footer
+browser
+
+TAB ORDER notes
+breadcrumb
+settings
+chatbot
+nav sidebar
+content
+footer
+browser
+
+
+
+
+##BROKEN UI FIX Notes:
+
+home - content and CTA are pushed down. They do not share horizontal space anymore. nav shows on a y plane, then CTA on another plane, then content below that plane.
+
+home skim - similar issues. skim toggle is jammed to the right of settings. CTA is taking ownership of an entire horizontal plane. content shows below CTA's plane.
+
+experience - side nav takes ownership of an entire horizontal plane. The problem worsens when expanding the tree.
+
+meetings - side nav takes ownership of entire horizontal plane.
+
+notes - side nav takes ownership of entire horizontal plane.
+
+

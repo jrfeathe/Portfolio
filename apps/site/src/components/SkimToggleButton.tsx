@@ -3,6 +3,7 @@
 import { FOCUS_VISIBLE_RING } from "@portfolio/ui";
 import clsx from "clsx";
 import type { Route } from "next";
+import Link from "next/link";
 import {
   usePathname,
   useRouter,
@@ -126,21 +127,35 @@ export function SkimToggleButton({ active, className, locale }: SkimToggleButton
 
   const handleClick = () => {
     setOptimisticActive((current) => !current);
-    router.push(targetUrl as Route, { scroll: false });
     scheduleFallbackNavigation(targetUrl);
   };
 
   return (
-    <button
-      type="button"
+    <Link
+      href={targetUrl as Route}
+      scroll={false}
+      prefetch={false}
       className={clsx(
         "inline-flex items-center gap-3 rounded-full border border-border bg-surface/70 px-4 py-2 text-sm font-semibold text-text shadow-sm transition hover:bg-surface dark:border-dark-border dark:bg-dark-surface/80 dark:text-dark-text",
         FOCUS_VISIBLE_RING,
         className
       )}
+      role="button"
       aria-pressed={optimisticActive}
       aria-label={label}
-      onClick={handleClick}
+      onClick={(event) => {
+        if (
+          event.defaultPrevented ||
+          event.button !== 0 ||
+          event.metaKey ||
+          event.altKey ||
+          event.ctrlKey ||
+          event.shiftKey
+        ) {
+          return;
+        }
+        handleClick();
+      }}
       onPointerEnter={prefetchNextUrl}
       onFocus={prefetchNextUrl}
       data-testid="skim-toggle"
@@ -175,6 +190,6 @@ export function SkimToggleButton({ active, className, locale }: SkimToggleButton
         </span>
       </span>
       <span className="sr-only">{label}</span>
-    </button>
+    </Link>
   );
 }

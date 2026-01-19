@@ -1,33 +1,31 @@
 const tokens = require("../../ui/tokens.json");
 
 const { colors, typography, spacing, radius, shadows } = tokens;
-const light = colors.light;
-const dark = colors.dark;
 const print = colors.print;
-const lightHc = colors["light-hc"] || {};
-const darkHc = colors["dark-hc"] || {};
-const focusLight = lightHc.accent;
-const focusDark = darkHc.accent;
-const attentionSurface = light.attention;
 const printDivider = print.divider;
+const withAlpha = (name) => `rgb(var(--${name}-rgb) / <alpha-value>)`;
+const lightVar = (token) => withAlpha(`light-${token}`);
+const darkVar = (token) => withAlpha(`dark-${token}`);
+const lightHcVar = (token) => withAlpha(`light-hc-${token}`);
+const darkHcVar = (token) => withAlpha(`dark-hc-${token}`);
 
 module.exports = {
   darkMode: "class",
   theme: {
     extend: {
       colors: {
-        background: light.background,
-        surface: light.surface,
-        surfaceMuted: light.surfaceMuted,
-        border: light.border,
-        text: light.text,
-        textMuted: light.textMuted,
-        accent: light.accent,
-        accentHover: light.accentHover,
-        accentOn: light.accentOn,
-        danger: light.danger,
-        focus: focusLight,
-        attention: attentionSurface,
+        background: lightVar("background"),
+        surface: lightVar("surface"),
+        surfaceMuted: lightVar("surfaceMuted"),
+        border: lightVar("border"),
+        text: lightVar("text"),
+        textMuted: lightVar("textMuted"),
+        accent: lightVar("accent"),
+        accentHover: lightVar("accentHover"),
+        accentOn: lightVar("accentOn"),
+        danger: lightVar("danger"),
+        focus: lightHcVar("accent"),
+        attention: lightVar("attention"),
         print: {
           background: print.background,
           surface: print.surface,
@@ -42,17 +40,17 @@ module.exports = {
           focus: print.focus
         },
         dark: {
-          background: dark.background,
-          surface: dark.surface,
-          surfaceMuted: dark.surfaceMuted,
-          border: dark.border,
-          text: dark.text,
-          textMuted: dark.textMuted,
-          accent: dark.accent,
-          accentHover: dark.accentHover,
-          accentOn: dark.accentOn,
-          danger: dark.danger,
-          focus: focusDark
+          background: darkVar("background"),
+          surface: darkVar("surface"),
+          surfaceMuted: darkVar("surfaceMuted"),
+          border: darkVar("border"),
+          text: darkVar("text"),
+          textMuted: darkVar("textMuted"),
+          accent: darkVar("accent"),
+          accentHover: darkVar("accentHover"),
+          accentOn: darkVar("accentOn"),
+          danger: darkVar("danger"),
+          focus: darkHcVar("accent")
         }
       },
       fontFamily: {

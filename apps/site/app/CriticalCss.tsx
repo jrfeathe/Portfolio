@@ -12,12 +12,8 @@ type RouteEntry = {
 export type CriticalCssManifest = {
   version: number;
   generatedAt: string;
-  routes: Record<string, RouteEntry>;
-  combined?: {
-    bytes: number;
-    kilobytes: number;
-    cssBase64: string;
-  };
+  routes?: Record<string, RouteEntry>;
+  shared?: RouteEntry | null;
 };
 
 const manifest = manifestJson as CriticalCssManifest;
@@ -44,14 +40,16 @@ for (const [route, entry] of Object.entries(manifest.routes ?? {})) {
   });
 }
 
-const combinedEntry = manifest.combined?.cssBase64
+const sharedEntry = manifest.shared?.cssBase64
   ? {
-      id: "combined",
-      bytes: manifest.combined.bytes,
-      kilobytes: manifest.combined.kilobytes,
-      css: Buffer.from(manifest.combined.cssBase64, "base64").toString("utf8")
+      id: manifest.shared.id,
+      bytes: manifest.shared.bytes,
+      kilobytes: manifest.shared.kilobytes,
+      css: Buffer.from(manifest.shared.cssBase64, "base64").toString("utf8")
     }
   : null;
+const defaultEntry =
+  sharedEntry ?? decodedRoutes.values().next().value ?? null;
 
 export function CriticalCss({
   route,
@@ -61,7 +59,7 @@ export function CriticalCss({
   nonce?: string;
 }) {
   const selected =
-    (route ? decodedRoutes.get(route) : undefined) ?? combinedEntry;
+    (route ? decodedRoutes.get(route) : undefined) ?? defaultEntry;
 
   if (!selected?.css) {
     return null;

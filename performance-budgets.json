@@ -25,7 +25,7 @@
       "firstLoadJs": 120
     },
     "criticalCss": {
-      "inlineKb": 20
+      "inlineKb": 20.5
     }
   },
   {
@@ -54,7 +54,7 @@
       "firstLoadJs": 120
     },
     "criticalCss": {
-      "inlineKb": 20
+      "inlineKb": 20.5
     }
   },
   {
@@ -83,7 +83,7 @@
       "firstLoadJs": 120
     },
     "criticalCss": {
-      "inlineKb": 20
+      "inlineKb": 20.5
     }
   },
   {

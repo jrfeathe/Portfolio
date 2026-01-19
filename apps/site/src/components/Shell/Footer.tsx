@@ -1,3 +1,5 @@
+import Link from "next/link";
+import type { Route } from "next";
 import clsx from "clsx";
 
 export type ShellFooterContent = {
@@ -17,10 +19,17 @@ export type ShellFooterProps = {
 };
 
 export function ShellFooter({ className, content }: ShellFooterProps) {
+  const startYear = 2025;
+  const currentYear = new Date().getFullYear();
+  const yearRange = `${startYear} - ${currentYear}`;
+  const closingCopy = content.closing.replace(/^2025/, yearRange);
+  const notesIsInternal =
+    content.notesHref.startsWith("/") && !content.notesHref.startsWith("//");
+
   return (
     <footer
       className={clsx(
-        "shell-footer border-t border-border bg-surface py-10 text-sm text-textMuted dark:border-dark-border dark:bg-dark-surface dark:text-dark-textMuted",
+        "shell-footer footer-mobile-pad border-t border-border bg-surface py-10 text-sm text-textMuted dark:border-dark-border dark:bg-dark-surface dark:text-dark-textMuted",
         className
       )}
     >
@@ -39,14 +48,25 @@ export function ShellFooter({ className, content }: ShellFooterProps) {
             >
               {content.email}
             </a>
-            <a
-              href={content.notesHref}
-              className="hover:text-text dark:hover:text-dark-text"
-            >
-              {content.notesLabel}
-            </a>
+            {notesIsInternal ? (
+              <Link
+                href={content.notesHref as Route}
+                className="hover:text-text dark:hover:text-dark-text"
+              >
+                {content.notesLabel}
+              </Link>
+            ) : (
+              <a
+                href={content.notesHref}
+                className="hover:text-text dark:hover:text-dark-text"
+              >
+                {content.notesLabel}
+              </a>
+            )}
             <a
               href={content.resumeHref}
+              target="_blank"
+              rel="noreferrer noopener"
               className="hover:text-text dark:hover:text-dark-text"
             >
               {content.resumeLabel}
@@ -54,7 +74,7 @@ export function ShellFooter({ className, content }: ShellFooterProps) {
           </div>
         </div>
         <div className="mt-6 text-xs text-textMuted dark:text-dark-textMuted">
-          {content.closing}
+          {closingCopy}
         </div>
       </div>
     </footer>

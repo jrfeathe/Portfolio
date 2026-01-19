@@ -1,0 +1,240 @@
+{
+  "generatedAt": "2026-01-13T16:40:09.118Z",
+  "baseUrl": "http://127.0.0.1:3010",
+  "routes": {
+    "/en": {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://jrfeathe.com/#person",
+          "name": "Jack R. Featherstone",
+          "jobTitle": "Software Engineer focused on fullstack development, reliable services, and accessibility",
+          "url": "https://jrfeathe.com",
+          "sameAs": [
+            "https://linkedin.com/in/jrfeathe",
+            "https://github.com/jrfeathe"
+          ],
+          "knowsLanguage": [
+            "English (native)",
+            "Japanese (JLPT N5)",
+            "Chinese (Simplified) (HSK1)"
+          ],
+          "homeLocation": {
+            "@type": "AdministrativeArea",
+            "name": "Upstate New York",
+            "addressCountry": "US"
+          },
+          "availableLocation": [
+            {
+              "@type": "City",
+              "name": "New York City",
+              "description": "Hybrid availability"
+            }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://jrfeathe.com/#website",
+          "url": "https://jrfeathe.com",
+          "name": "Jack F. Portfolio",
+          "description": "Software engineering portfolio and project tracker.",
+          "inLanguage": "en",
+          "publisher": {
+            "@id": "https://jrfeathe.com/#person"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://jrfeathe.com/en#breadcrumbs",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://jrfeathe.com/en"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Workspace overview"
+            }
+          ]
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://jrfeathe.com/en#webpage",
+          "url": "https://jrfeathe.com/en",
+          "name": "Jack F. Portfolio",
+          "description": "Software engineering portfolio and project tracker.",
+          "inLanguage": "en",
+          "isPartOf": {
+            "@id": "https://jrfeathe.com/#website"
+          },
+          "about": {
+            "@id": "https://jrfeathe.com/#person"
+          },
+          "breadcrumb": {
+            "@id": "https://jrfeathe.com/en#breadcrumbs"
+          }
+        }
+      ]
+    },
+    "/ja": {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://jrfeathe.com/#person",
+          "name": "Jack R. Featherstone",
+          "jobTitle": "フルスタック開発、信頼性の高いサービス、アクセシビリティに注力するソフトウェアエンジニア",
+          "url": "https://jrfeathe.com",
+          "sameAs": [
+            "https://linkedin.com/in/jrfeathe",
+            "https://github.com/jrfeathe"
+          ],
+          "knowsLanguage": [
+            "英語 (ネイティブ)",
+            "日本語 (JLPT N5)",
+            "中国語（簡体字） (HSK1)"
+          ],
+          "homeLocation": {
+            "@type": "AdministrativeArea",
+            "name": "Upstate New York",
+            "addressCountry": "US"
+          },
+          "availableLocation": [
+            {
+              "@type": "City",
+              "name": "New York City",
+              "description": "Hybrid availability"
+            }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://jrfeathe.com/#website",
+          "url": "https://jrfeathe.com",
+          "name": "Jack F. ポートフォリオ",
+          "description": "ソフトウェアエンジニアリングのポートフォリオおよびプロジェクトトラッカーです。",
+          "inLanguage": "ja",
+          "publisher": {
+            "@id": "https://jrfeathe.com/#person"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://jrfeathe.com/ja#breadcrumbs",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "ホーム",
+              "item": "https://jrfeathe.com/ja"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "ワークスペース概要"
+            }
+          ]
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://jrfeathe.com/ja#webpage",
+          "url": "https://jrfeathe.com/ja",
+          "name": "Jack F. ポートフォリオ",
+          "description": "ソフトウェアエンジニアリングのポートフォリオおよびプロジェクトトラッカーです。",
+          "inLanguage": "ja",
+          "isPartOf": {
+            "@id": "https://jrfeathe.com/#website"
+          },
+          "about": {
+            "@id": "https://jrfeathe.com/#person"
+          },
+          "breadcrumb": {
+            "@id": "https://jrfeathe.com/ja#breadcrumbs"
+          }
+        }
+      ]
+    },
+    "/zh": {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://jrfeathe.com/#person",
+          "name": "Jack R. Featherstone",
+          "jobTitle": "专注于全栈开发、可靠服务与无障碍的软件工程师",
+          "url": "https://jrfeathe.com",
+          "sameAs": [
+            "https://linkedin.com/in/jrfeathe",
+            "https://github.com/jrfeathe"
+          ],
+          "knowsLanguage": [
+            "英语 (母语)",
+            "日语 (JLPT N5)",
+            "中文（简体） (HSK1)"
+          ],
+          "homeLocation": {
+            "@type": "AdministrativeArea",
+            "name": "Upstate New York",
+            "addressCountry": "US"
+          },
+          "availableLocation": [
+            {
+              "@type": "City",
+              "name": "New York City",
+              "description": "Hybrid availability"
+            }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://jrfeathe.com/#website",
+          "url": "https://jrfeathe.com",
+          "name": "Jack F. 作品集",
+          "description": "软件工程作品集与项目跟踪器。",
+          "inLanguage": "zh",
+          "publisher": {
+            "@id": "https://jrfeathe.com/#person"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://jrfeathe.com/zh#breadcrumbs",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "首页",
+              "item": "https://jrfeathe.com/zh"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "工作区概览"
+            }
+          ]
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://jrfeathe.com/zh#webpage",
+          "url": "https://jrfeathe.com/zh",
+          "name": "Jack F. 作品集",
+          "description": "软件工程作品集与项目跟踪器。",
+          "inLanguage": "zh",
+          "isPartOf": {
+            "@id": "https://jrfeathe.com/#website"
+          },
+          "about": {
+            "@id": "https://jrfeathe.com/#person"
+          },
+          "breadcrumb": {
+            "@id": "https://jrfeathe.com/zh#breadcrumbs"
+          }
+        }
+      ]
+    }
+  }
+}

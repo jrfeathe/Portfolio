@@ -477,11 +477,11 @@ function AvailabilityGrid({
                     <div
                       key={`${day}-${meta.index}`}
                       role="gridcell"
-                      tabIndex={isAvailable ? 0 : -1}
+                      tabIndex={-1}
                       aria-label={ariaLabel}
                       className={`h-2 w-full border border-border/40 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
                         isAvailable
-                          ? "bg-accent/80 text-white dark:bg-dark-accent/70"
+                          ? "bg-accent/80 text-accentOn dark:bg-dark-accent/70 dark:text-dark-accentOn"
                           : "bg-transparent dark:border-dark-border/40"
                       }`}
                     />
@@ -646,7 +646,7 @@ function ReferenceDialog({ open, onClose, title, description, closeLabel, dialog
   const descriptionId = description ? `${dialogId}-description` : undefined;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-text/60 px-4 py-8 dark:bg-dark-background/60">
       <div
         role="dialog"
         aria-modal="true"

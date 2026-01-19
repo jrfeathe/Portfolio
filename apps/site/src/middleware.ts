@@ -6,6 +6,7 @@ import {
   isLocale,
   localeCookieName
 } from "./utils/i18n";
+import { isThemeLocale, themeLocaleCookieName } from "./utils/theme";
 import {
   registerEdgeInstrumentation,
   withEdgeSpan
@@ -62,10 +63,18 @@ export async function middleware(request: NextRequest) {
       redirectUrl.pathname = `/${defaultLocale}${pathnameSuffix}`;
 
       const response = NextResponse.redirect(redirectUrl);
+      const existingThemeLocale = request.cookies.get(themeLocaleCookieName)?.value;
       response.cookies.set(localeCookieName, defaultLocale, {
         path: "/",
         sameSite: "lax"
       });
+      if (existingThemeLocale !== "dreamland") {
+        response.cookies.set(themeLocaleCookieName, defaultLocale, {
+          path: "/",
+          sameSite: "lax",
+          maxAge: 31536000
+        });
+      }
       applySecurityHeaders(response.headers, { nonce, request });
       response.headers.set("x-nonce", nonce);
       response.headers.set("x-nextjs-csp-nonce", nonce);
@@ -73,17 +82,34 @@ export async function middleware(request: NextRequest) {
       return response;
     }
 
+    const existingLocale = request.cookies.get(localeCookieName)?.value;
+    const existingThemeLocale = request.cookies.get(themeLocaleCookieName)?.value;
+    const themeLocaleValid = isThemeLocale(existingThemeLocale);
+    const shouldSyncThemeLocale =
+      existingThemeLocale !== "dreamland" &&
+      (!isLocale(existingLocale) ||
+        !themeLocaleValid ||
+        (existingLocale !== localeInPath && existingThemeLocale === existingLocale));
+
+    requestHeaders.set("x-portfolio-locale", localeInPath);
     const response = NextResponse.next({
       request: {
         headers: requestHeaders
       }
     });
-    const existingLocale = request.cookies.get(localeCookieName)?.value;
 
     if (existingLocale !== localeInPath) {
       response.cookies.set(localeCookieName, localeInPath, {
         path: "/",
         sameSite: "lax"
+      });
+    }
+
+    if (shouldSyncThemeLocale) {
+      response.cookies.set(themeLocaleCookieName, localeInPath, {
+        path: "/",
+        sameSite: "lax",
+        maxAge: 31536000
       });
     }
 

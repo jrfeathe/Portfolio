@@ -36,9 +36,11 @@ export type ShellLayoutProps = {
   sections: ShellSection[];
   anchorItems?: AnchorNavItem[];
   cta?: ReactNode;
+  floatingWidget?: ReactNode;
   footer?: ReactNode;
   footerContent?: ShellFooterContent;
   className?: string;
+  socialLinks?: ReactNode;
   heroMedia?: {
     image: ImageDescriptor;
     preset?: ResponsiveImagePreset;
@@ -57,9 +59,11 @@ export function ShellLayout({
   sections,
   anchorItems,
   cta,
+  floatingWidget,
   footer,
   footerContent,
   className,
+  socialLinks,
   heroMedia,
   skimModeEnabled = false,
   showSkimToggle = true,
@@ -79,7 +83,7 @@ export function ShellLayout({
   const showHeroSkimToggle = showSkimToggle && !skimModeEnabled;
   const headerClassName = clsx(
     "border-b border-border bg-surface dark:border-dark-border dark:bg-dark-surface",
-    skimModeEnabled ? "pb-2 pt-4" : "pb-8 pt-10"
+    skimModeEnabled ? "pb-1 pt-4" : "pb-5 pt-10"
   );
   const headerInnerClassName = clsx(
     "mx-auto flex w-full max-w-6xl flex-col px-4",
@@ -112,11 +116,13 @@ export function ShellLayout({
   const ctaContainerClassName = clsx(
     "shell-sidebar space-y-6",
     hasNavItems ? "lg:col-start-3" : "lg:col-start-2",
+    "lg:row-start-1",
     skimModeEnabled ? "pt-6" : null
   );
   const mainClassName = clsx(
     "flex flex-col gap-16",
-    hasNavItems ? "lg:col-start-2" : "lg:col-start-1"
+    hasNavItems ? "lg:col-start-2" : "lg:col-start-1",
+    "lg:row-start-1"
   );
 
   return (
@@ -130,7 +136,14 @@ export function ShellLayout({
             <div className="flex flex-1 items-center gap-3">
               {showHeaderSkimToggle ? (
                 <div className="min-w-[150px] flex-1 md:flex-none">
-                  <SkimToggleButton active={skimModeEnabled} locale={locale} />
+                  <div className="flex items-center gap-3">
+                    <SkimToggleButton active={skimModeEnabled} locale={locale} />
+                    {socialLinks ? (
+                      <div className="flex items-center pl-1">
+                        {socialLinks}
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
               ) : null}
               {breadcrumbs.length ? (
@@ -157,8 +170,15 @@ export function ShellLayout({
                   {subtitle}
                 </p>
               ) : null}
-              {showHeroSkimToggle ? (
-                <SkimToggleButton active={skimModeEnabled} locale={locale} />
+                {showHeroSkimToggle ? (
+                  <div className="inline-flex flex-col items-start gap-3">
+                    <SkimToggleButton active={skimModeEnabled} locale={locale} />
+                    {socialLinks ? (
+                      <div className="flex items-center pt-2 pl-4">
+                        {socialLinks}
+                      </div>
+                    ) : null}
+                  </div>
               ) : null}
             </div>
             {heroMedia ? (
@@ -193,7 +213,32 @@ export function ShellLayout({
           ) : null}
         </div>
       </header>
+      <div id="chatbot-slot" data-chatbot-slot="true" />
       <div className={contentGridClassName}>
+        <div className={ctaContainerClassName}>
+          {cta}
+          {floatingWidget}
+        </div>
+
+        {navItems.length ? (
+          <div className="hidden lg:col-start-1 lg:row-start-1 lg:block">
+            <div className="sticky top-24 space-y-3">
+              <AnchorControlPanel
+                enabled={hasNestedAnchors}
+                expandLabel={shellCopy.expandAllLabel}
+                collapseLabel={shellCopy.collapseAllLabel}
+              />
+              <AnchorNav items={navItems} ariaLabel={shellCopy.anchorNavLabel} />
+              <a
+                href="#top"
+                className="inline-flex w-full items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+              >
+                {shellCopy.returnToTopLabel}
+              </a>
+            </div>
+          </div>
+        ) : null}
+
         <main className={mainClassName}>
           {sections.map((section) => (
             <section
@@ -232,29 +277,6 @@ export function ShellLayout({
             </section>
           ))}
         </main>
-
-        <div className={ctaContainerClassName}>
-          {cta}
-        </div>
-
-        {navItems.length ? (
-          <div className="hidden lg:col-start-1 lg:row-start-1 lg:block">
-            <div className="sticky top-24 space-y-3">
-              <AnchorControlPanel
-                enabled={hasNestedAnchors}
-                expandLabel={shellCopy.expandAllLabel}
-                collapseLabel={shellCopy.collapseAllLabel}
-              />
-              <AnchorNav items={navItems} ariaLabel={shellCopy.anchorNavLabel} />
-              <a
-                href="#top"
-                className="inline-flex w-full items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
-              >
-                {shellCopy.returnToTopLabel}
-              </a>
-            </div>
-          </div>
-        ) : null}
       </div>
       {footer ?? (footerContent ? <ShellFooter content={footerContent} /> : null)}
     </div>

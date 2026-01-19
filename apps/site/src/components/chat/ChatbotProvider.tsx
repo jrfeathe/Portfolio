@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, colors as designColors } from "@portfolio/ui";
+import { Button } from "@portfolio/ui";
 import clsx from "clsx";
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -19,12 +19,11 @@ import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
 
 import type { Locale } from "../../utils/i18n";
-const CONTRAST_PRIMARY = designColors["light-hc"]?.accent;
-const CONTRAST_PRIMARY_DARK = designColors["dark-hc"]?.accent;
-const CONTRAST_ON_PRIMARY = designColors["light-hc"]?.accentOn;
-const CONTRAST_ON_PRIMARY_DARK = designColors["dark-hc"]?.accentOn;
-const CONTRAST_ON_PRIMARY_STRONG = designColors["dark-hc"]?.accentOn ?? CONTRAST_ON_PRIMARY_DARK;
-const ATTENTION_SURFACE = designColors.light.attention;
+const CONTRAST_PRIMARY = "var(--light-hc-accent)";
+const CONTRAST_PRIMARY_DARK = "var(--dark-hc-accent)";
+const CONTRAST_ON_PRIMARY = "var(--light-hc-accentOn)";
+const CONTRAST_ON_PRIMARY_STRONG = "var(--dark-hc-accentOn)";
+const ATTENTION_SURFACE = "var(--attention-surface)";
 const LazyHCaptchaWidget = dynamic(
   () => import("./HCaptchaWidget").then((mod) => mod.HCaptchaWidget),
   { ssr: false, loading: () => null }
@@ -512,7 +511,7 @@ function ContextFactsPanel({ facts, labelTemplate }: { facts: ContextFact[]; lab
     : labelTemplate;
 
   return (
-    <details className="mt-2 rounded-lg border border-slate-200 bg-white/80 px-3 py-2 text-xs text-text shadow-sm transition dark:border-slate-700 dark:bg-dark-surface dark:text-dark-text">
+    <details className="mt-2 rounded-lg border border-border bg-surface/80 px-3 py-2 text-xs text-text shadow-sm transition dark:border-dark-border dark:bg-dark-surface dark:text-dark-text">
       <summary className="cursor-pointer select-none font-semibold text-text dark:text-dark-text">
         {label}
       </summary>
@@ -521,7 +520,7 @@ function ContextFactsPanel({ facts, labelTemplate }: { facts: ContextFact[]; lab
           <a
             key={`${fact.title}-${index}`}
             href={fact.href}
-            className="flex items-start justify-between gap-3 rounded-md px-2 py-1 text-text transition hover:bg-slate-100 hover:no-underline dark:text-dark-text dark:hover:bg-slate-800"
+            className="flex items-start justify-between gap-3 rounded-md px-2 py-1 text-text transition hover:bg-surfaceMuted hover:no-underline dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
           >
             <span className="font-semibold">{fact.title}</span>
             <span className="text-[11px] text-textMuted dark:text-dark-textMuted">{fact.detail}</span>

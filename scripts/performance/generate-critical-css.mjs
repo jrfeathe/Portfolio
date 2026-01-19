@@ -28,26 +28,11 @@ const CRITICAL_CONTENT_GLOBS = [
   "../../packages/ui/src/lib/Button.tsx"
 ];
 
-const CRITICAL_ROUTES = [
-  {
-    id: "home-en",
-    path: "/en",
-    contentGlobs: CRITICAL_CONTENT_GLOBS,
-    output: OUTPUT_CSS
-  },
-  {
-    id: "home-ja",
-    path: "/ja",
-    contentGlobs: CRITICAL_CONTENT_GLOBS,
-    output: OUTPUT_CSS
-  },
-  {
-    id: "home-zh",
-    path: "/zh",
-    contentGlobs: CRITICAL_CONTENT_GLOBS,
-    output: OUTPUT_CSS
-  }
-];
+const SHARED_CRITICAL = {
+  id: "shared",
+  contentGlobs: CRITICAL_CONTENT_GLOBS,
+  output: OUTPUT_CSS
+};
 
 function ensureInputs() {
   if (!existsSync(INPUT_CSS)) {
@@ -88,41 +73,27 @@ function main() {
   const manifest = {
     version: 1,
     generatedAt: new Date().toISOString(),
-    routes: {}
+    shared: null
   };
-  let combinedCss = "";
-  let combinedBytes = 0;
 
-  for (const route of CRITICAL_ROUTES) {
-    console.log(`Generating critical CSS for ${route.path}`);
-    runTailwind(route);
+  console.log("Generating shared critical CSS");
+  runTailwind(SHARED_CRITICAL);
 
-    const rawCss = readFileSync(route.output, "utf8");
-    const css = rawCss.replace(/\/\*!.*?\*\//s, "").trim();
-    const bytes = Buffer.byteLength(css, "utf8");
-    const cssBase64 = Buffer.from(css, "utf8").toString("base64");
+  const rawCss = readFileSync(SHARED_CRITICAL.output, "utf8");
+  const css = rawCss.replace(/\/\*!.*?\*\//s, "").trim();
+  const bytes = Buffer.byteLength(css, "utf8");
+  const cssBase64 = Buffer.from(css, "utf8").toString("base64");
 
-    manifest.routes[route.path] = {
-      id: route.id,
-      bytes,
-      kilobytes: Number((bytes / 1024).toFixed(2)),
-      cssBase64
-    };
+  manifest.shared = {
+    id: SHARED_CRITICAL.id,
+    bytes,
+    kilobytes: Number((bytes / 1024).toFixed(2)),
+    cssBase64
+  };
 
-    console.log(
-      `Inline CSS ready for ${route.path}: ${(bytes / 1024).toFixed(2)} KB`
-    );
-    combinedCss += css;
-    combinedBytes += bytes;
-  }
-
-  if (combinedCss) {
-    manifest.combined = {
-      bytes: combinedBytes,
-      kilobytes: Number((combinedBytes / 1024).toFixed(2)),
-      cssBase64: Buffer.from(combinedCss, "utf8").toString("base64")
-    };
-  }
+  console.log(
+    `Inline CSS ready: ${(bytes / 1024).toFixed(2)} KB`
+  );
 
   writeFileSync(MANIFEST_PATH, JSON.stringify(manifest, null, 2));
 }

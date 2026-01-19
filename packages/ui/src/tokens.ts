@@ -32,14 +32,23 @@ type TypographyTokens = {
 
 type ColorAliases = Record<string, string>;
 
+type ThemeKey =
+  | "light-en"
+  | "light-hc-en"
+  | "dark-en"
+  | "dark-hc-en"
+  | "light-ja"
+  | "light-hc-ja"
+  | "dark-ja"
+  | "dark-hc-ja"
+  | "light-zh"
+  | "light-hc-zh"
+  | "dark-zh"
+  | "dark-hc-zh"
+  | "print";
+
 type DesignTokens = {
-  colors: {
-    light: ModeColors;
-    dark: ModeColors;
-    print: ModeColors;
-    "light-hc"?: ModeColors;
-    "dark-hc"?: ModeColors;
-  };
+  colors: Record<ThemeKey, ModeColors>;
   colorAliases?: ColorAliases;
   typography: TypographyTokens;
   spacing: Record<string, string>;

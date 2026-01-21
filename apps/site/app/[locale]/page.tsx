@@ -197,6 +197,9 @@ function buildSkimSections(
 
   const leadershipValue = (
     <>
+      {skim.leadershipRollodexPrefix ? (
+        <span>{skim.leadershipRollodexPrefix}</span>
+      ) : null}
       <Link
         href={`/${locale}/experience#rollodex`}
         className="inline-flex text-base font-semibold text-accent underline-offset-4 hover:underline dark:text-dark-accent"
@@ -327,7 +330,16 @@ export default function HomePage({ params, searchParams }: PageProps) {
   const nonce = extractNonceFromHeaders(headers());
   const pageTitle = skimModeEnabled ? undefined : title;
   const pageSubtitle = skimModeEnabled ? undefined : subtitle;
-  const heroMedia = skimModeEnabled ? undefined : media;
+  const heroMedia =
+    skimModeEnabled || !media
+      ? undefined
+      : {
+          ...media,
+          caption:
+            locale === "en" && media.caption
+              ? <em>{media.caption}</em>
+              : media.caption
+        };
   const anchorItems = skimModeEnabled ? [] : undefined;
   const emailValue = dictionary.home.skim.emailValue;
   const emailHref = dictionary.home.skim.emailHref;

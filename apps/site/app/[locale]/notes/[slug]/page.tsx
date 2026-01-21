@@ -103,7 +103,10 @@ export default async function NoteDetailPage({ params }: PageParams) {
             </Link>
           </div>
           <NoteHeader frontmatter={note.frontmatter} locale={locale} />
-          <article className="space-y-6 text-base leading-relaxed text-text dark:text-dark-text">
+          <article
+            className="space-y-6 text-base leading-relaxed text-text dark:text-dark-text"
+            data-mdx-content="true"
+          >
             {note.content}
           </article>
         </div>

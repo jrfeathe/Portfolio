@@ -556,7 +556,7 @@ export function AudioPlayerOverlay({
                   <button
                     type="button"
                     onClick={handleVolumeToggle}
-                    className="h-9 w-9 rounded-full border border-border/70 text-sm font-semibold text-text shadow-sm transition hover:bg-surfaceMuted dark:border-dark-border/70 dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+                    className="h-9 w-9 rounded-full border border-border/70 bg-accent text-sm font-semibold text-accentOn shadow-sm transition hover:border-accentHover hover:bg-accentHover dark:border-dark-border/70 dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
                     aria-label={showVolume ? volumeHideLabel : volumeShowLabel}
                     tabIndex={hiddenTabIndex}
                   >
@@ -589,7 +589,7 @@ export function AudioPlayerOverlay({
                     href={downloadHref}
                     download
                     variant="ghost"
-                    className="h-9 w-9 border border-border/70 text-sm font-semibold text-text shadow-sm hover:bg-surfaceMuted dark:border-dark-border/70 dark:text-dark-text dark:hover:bg-dark-surfaceMuted !p-0 !min-w-0 !min-h-0"
+                    className="h-9 w-9 border border-border/70 !bg-accent text-sm font-semibold !text-accentOn shadow-sm hover:border-accentHover hover:!bg-accentHover dark:border-dark-border/70 dark:!bg-dark-surface dark:!text-dark-text dark:hover:!bg-dark-surfaceMuted !p-0 !min-w-0 !min-h-0"
                     tabIndex={hiddenTabIndex}
                     aria-label={downloadLabel}
                   >
@@ -610,7 +610,7 @@ export function AudioPlayerOverlay({
               type="button"
               onClick={handleShow}
               aria-label={reopenLabel}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-lg font-semibold text-text shadow-lg transition hover:border-accent hover:text-accent dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-accent text-lg font-semibold text-accentOn shadow-lg transition hover:border-accentHover hover:bg-accentHover dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
             >
               {"🔊"}
             </button>
@@ -699,7 +699,7 @@ export function AudioPlayerOverlay({
             <button
               type="button"
               onClick={handleVolumeToggle}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-border text-xs font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-border bg-accent text-xs font-semibold text-accentOn transition hover:border-accentHover hover:bg-accentHover dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
               aria-label={showVolume ? volumeHideLabel : volumeShowLabel}
               tabIndex={hiddenTabIndex}
             >
@@ -710,7 +710,7 @@ export function AudioPlayerOverlay({
                 href={downloadHref}
                 download
                 variant="ghost"
-                className="h-8 w-8 rounded-full border-2 border-border text-xs font-semibold hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted !p-0 !min-w-0 !min-h-0"
+                className="h-8 w-8 rounded-full border-2 border-border !bg-accent text-xs font-semibold !text-accentOn hover:border-accentHover hover:!bg-accentHover dark:border-dark-border dark:!bg-dark-surface dark:!text-dark-text dark:hover:!bg-dark-surfaceMuted !p-0 !min-w-0 !min-h-0"
                 tabIndex={hiddenTabIndex}
               >
                 {"💾"}
@@ -745,7 +745,7 @@ export function AudioPlayerOverlay({
               variant="secondary"
               onClick={handleShow}
               aria-label={reopenLabel}
-              className="h-10 w-10 rounded-full border-2 border-border shadow-lg hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+              className="h-10 w-10 rounded-full border-2 border-border !bg-accent !text-accentOn shadow-lg hover:border-accentHover hover:!bg-accentHover dark:border-dark-border dark:!bg-dark-surface dark:!text-dark-text dark:hover:!bg-dark-surfaceMuted"
             >
               {"🔊"}
             </Button>

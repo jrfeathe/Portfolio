@@ -11,12 +11,7 @@ function createHeading(level: 2 | 3 | 4) {
   const Heading = ({ className, ...props }: ComponentPropsWithoutRef<typeof Component>) => (
     <Component
       className={clsx(
-        "group scroll-mt-32 font-semibold tracking-tight text-text dark:text-dark-text",
-        {
-          "text-3xl": level === 2,
-          "text-2xl": level === 3,
-          "text-xl": level === 4
-        },
+        "group scroll-mt-32 text-base font-semibold leading-snug tracking-tight text-text underline underline-offset-4 decoration-border/70 dark:text-dark-text dark:decoration-dark-border/70",
         className
       )}
       {...props}
@@ -76,18 +71,20 @@ export const mdxComponents: MDXComponents = {
   ul: ({ className, ...props }) => (
     <ul
       className={clsx(
-        "list-disc space-y-2 pl-5 text-text dark:text-dark-text",
+        "list-disc space-y-2 text-text dark:text-dark-text",
         className
       )}
+      data-mdx-list="true"
       {...props}
     />
   ),
   ol: ({ className, ...props }) => (
     <ol
       className={clsx(
-        "list-decimal space-y-2 pl-5 text-text dark:text-dark-text",
+        "list-decimal space-y-2 text-text dark:text-dark-text",
         className
       )}
+      data-mdx-list="true"
       {...props}
     />
   ),
@@ -97,6 +94,7 @@ export const mdxComponents: MDXComponents = {
         "leading-relaxed",
         className
       )}
+      data-mdx-list-item="true"
       {...props}
     />
   ),

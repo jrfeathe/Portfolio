@@ -59,9 +59,9 @@ function buildSections(
         title: "",
         description: null,
         content: (
-          <article className={contentClassName}>
-            {note.content}
-          </article>
+        <article className={contentClassName} data-mdx-content="true">
+          {note.content}
+        </article>
         )
       }
     ];
@@ -79,7 +79,7 @@ function buildSections(
       title: "",
       description: null,
       content: (
-        <div className={contentClassName}>
+        <div className={contentClassName} data-mdx-content="true">
           <p>{englishOnlyNotice}</p>
         </div>
       )

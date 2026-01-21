@@ -240,14 +240,24 @@ export function AvailabilitySection({ copy, locale }: AvailabilitySectionProps) 
                   <div className="max-h-64 overflow-y-auto py-1">
                     {!isSearching ? (
                       <>
-                        <div className="px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
-                          {copy.timezonePickerPinnedLabel}
+                        <div className="px-3 py-1">
+                          <span
+                            data-timezone-group-label="true"
+                            className="inline-flex items-center rounded-full border border-accent/60 px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide text-accent dark:border-dark-accent/60 dark:text-dark-accent contrast-more:text-black dark:contrast-more:text-white"
+                          >
+                            {copy.timezonePickerPinnedLabel}
+                          </span>
                         </div>
                         {pinnedOptions.map((value) => renderOption(value, true))}
                       </>
                     ) : null}
-                    <div className="px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
-                      {copy.timezonePickerAllLabel}
+                    <div className="px-3 py-1">
+                      <span
+                        data-timezone-group-label="true"
+                        className="inline-flex items-center rounded-full border border-accent/60 px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-wide text-accent dark:border-dark-accent/60 dark:text-dark-accent contrast-more:text-black dark:contrast-more:text-white"
+                      >
+                        {copy.timezonePickerAllLabel}
+                      </span>
                     </div>
                     {remainingOptions.length ? (
                       remainingOptions.map((value) => renderOption(value, false))

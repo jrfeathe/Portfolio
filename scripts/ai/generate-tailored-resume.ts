@@ -182,6 +182,79 @@ function normalizeText(value: string): string {
   return value.replace(/\s+/g, " ").trim();
 }
 
+type ParsedEnvLine = {
+  key: string;
+  value: string;
+};
+
+function parseEnvLine(line: string): ParsedEnvLine | null {
+  let trimmed = line.trim();
+  if (!trimmed || trimmed.startsWith("#")) return null;
+  if (trimmed.startsWith("export ")) {
+    trimmed = trimmed.slice("export ".length).trim();
+  }
+
+  const separatorIndex = trimmed.indexOf("=");
+  if (separatorIndex === -1) return null;
+
+  const key = trimmed.slice(0, separatorIndex).trim();
+  let value = trimmed.slice(separatorIndex + 1).trim();
+  if (!key) return null;
+
+  if (!value) {
+    return { key, value: "" };
+  }
+
+  const quote = value[0];
+  if (quote === '"' || quote === "'") {
+    const endIndex = value.lastIndexOf(quote);
+    value = endIndex > 0 ? value.slice(1, endIndex) : value.slice(1);
+    if (quote === '"') {
+      value = value
+        .replace(/\\n/g, "\n")
+        .replace(/\\r/g, "\r")
+        .replace(/\\t/g, "\t")
+        .replace(/\\"/g, '"')
+        .replace(/\\\\/g, "\\");
+    }
+    return { key, value };
+  }
+
+  const commentIndex = value.search(/\s#/);
+  if (commentIndex !== -1) {
+    value = value.slice(0, commentIndex).trim();
+  }
+
+  return { key, value };
+}
+
+function loadEnvFile(filePath: string): boolean {
+  if (!fs.existsSync(filePath)) return false;
+  const raw = fs.readFileSync(filePath, "utf8");
+  for (const line of raw.split(/\r?\n/)) {
+    const parsed = parseEnvLine(line);
+    if (!parsed) continue;
+    if (process.env[parsed.key] === undefined) {
+      process.env[parsed.key] = parsed.value;
+    }
+  }
+  return true;
+}
+
+function loadLocalEnv(): void {
+  const repoRoot = resolveRepoRoot();
+  const envFiles = [
+    path.join(repoRoot, "apps", "site", ".env.local"),
+    path.join(repoRoot, "apps", "site", ".env"),
+    path.join(repoRoot, ".env.local"),
+    path.join(repoRoot, ".env")
+  ];
+
+  for (const envPath of envFiles) {
+    loadEnvFile(envPath);
+  }
+}
+
 function trimWords(value: string, maxWords: number): string {
   const words = normalizeText(value).split(" ").filter(Boolean);
   if (words.length <= maxWords) {
@@ -508,6 +581,7 @@ async function main() {
   if (!jobDescription) {
     throw new Error("Job description is empty.");
   }
+  loadLocalEnv();
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) {
     throw new Error("Missing OPENROUTER_API_KEY environment variable.");

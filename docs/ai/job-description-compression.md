@@ -48,3 +48,5 @@ Constraints (if any: location, clearance, travel, schedule):
    node .tmp/chatbot-build/generate-tailored-resume.js --job content/job-description-compact.txt --out content/tailored-resume.md
    ```
 
+node scripts/ai/generate-tailored-resume.ts --job content/job-description-compact.txt --out content/tailored-resume.md
+

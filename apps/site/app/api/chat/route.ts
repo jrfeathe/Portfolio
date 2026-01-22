@@ -290,9 +290,25 @@ function buildChatLogPayload(params: {
   finishReason?: string;
   usedFallback: boolean;
   unprofessional: boolean;
+  pass1Blocked: boolean;
+  pass2Ran: boolean;
   moderation: Record<string, unknown>;
   extras?: Record<string, unknown>;
 }) {
+  const response: Record<string, unknown> = {
+    reply: params.reply,
+    unprofessional: params.unprofessional
+  };
+
+  if (!params.pass1Blocked) {
+    response.references = params.references;
+    response.contextFacts = params.contextFacts ?? [];
+    response.model = params.model;
+    response.modelReplyRaw = params.modelReplyRaw ?? undefined;
+    response.finishReason = params.finishReason;
+    response.usedFallback = params.usedFallback;
+  }
+
   return {
     session: params.session,
     ip: params.ip,
@@ -300,16 +316,9 @@ function buildChatLogPayload(params: {
     counts: { prompt: params.promptCount },
     usage: { rateLimitRemaining: params.rateLimitRemaining },
     request: { message: params.message },
-    response: {
-      reply: params.reply,
-      references: params.references,
-      contextFacts: params.contextFacts ?? [],
-      model: params.model,
-      modelReplyRaw: params.modelReplyRaw ?? undefined,
-      finishReason: params.finishReason,
-      usedFallback: params.usedFallback,
-      unprofessional: params.unprofessional
-    },
+    response,
+    pass1Blocked: params.pass1Blocked,
+    pass2Ran: params.pass2Ran,
     moderation: params.moderation,
     ...(params.extras ?? {})
   };
@@ -761,23 +770,6 @@ export async function POST(request: Request) {
   const sessionHash = hashValue(sessionId);
   const ipHash = hashValue(ip);
 
-  const rate = enforceRateLimit(ip);
-  if (!rate.allowed) {
-    return NextResponse.json(
-      {
-        error: "rate_limited",
-        message: "Rate limit reached. Try again soon.",
-        retryAfterMs: rate.retryAfterMs
-      },
-      {
-        status: 429,
-        headers: {
-          "Retry-After": Math.ceil((rate.retryAfterMs ?? 0) / 1000).toString()
-        }
-      }
-    );
-  }
-
   const hasOpenRouterKey = Boolean(process.env.OPENROUTER_API_KEY);
   const promptCount = sessionPromptCounts.get(sessionId) ?? 0;
   const requireCaptcha = shouldRequireCaptcha(sessionId, promptCount);
@@ -830,6 +822,23 @@ export async function POST(request: Request) {
     captchaSolved.set(sessionId, Date.now() + CAPTCHA_SOLVED_TTL_MS);
   }
 
+  const rate = enforceRateLimit(ip);
+  if (!rate.allowed) {
+    return NextResponse.json(
+      {
+        error: "rate_limited",
+        message: "Rate limit reached. Try again soon.",
+        retryAfterMs: rate.retryAfterMs
+      },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": Math.ceil((rate.retryAfterMs ?? 0) / 1000).toString()
+        }
+      }
+    );
+  }
+
   const structuralBenign = isBenignStructuralPrompt(trimmedMessage);
   const availabilityQuestion = isAvailabilityQuestion(trimmedMessage);
   const skillStrengthQuestion = isSkillStrengthQuestion(trimmedMessage);
@@ -850,6 +859,8 @@ export async function POST(request: Request) {
         references: [],
         usedFallback: true,
         unprofessional: false,
+        pass1Blocked: false,
+        pass2Ran: false,
         moderation: {
           label: "safe",
           reason: "structural_bypass",
@@ -944,18 +955,20 @@ export async function POST(request: Request) {
         buildChatLogPayload({
           session: sessionHash,
           ip: ipHash,
-          promptCount: promptCount + 1,
-          locale,
-          rateLimitRemaining: rate.remaining,
-          message: trimmedMessage,
-          reply,
-          references: [],
-          usedFallback: true,
-          unprofessional: true,
-          model: moderationDecision?.model ?? "moderation-block",
-          modelReplyRaw: moderationDecision?.raw ?? "FLAG_NO_FUN (moderation-block)",
-          finishReason: moderationDecision?.finishReason ?? "blocked",
-          moderation: {
+        promptCount: promptCount + 1,
+        locale,
+        rateLimitRemaining: rate.remaining,
+        message: trimmedMessage,
+        reply,
+        references: [],
+        usedFallback: true,
+        unprofessional: true,
+        pass1Blocked: true,
+        pass2Ran: false,
+        model: moderationDecision?.model ?? "moderation-block",
+        modelReplyRaw: moderationDecision?.raw ?? "FLAG_NO_FUN (moderation-block)",
+        finishReason: moderationDecision?.finishReason ?? "blocked",
+        moderation: {
             label: moderationEffectiveLabel ?? "blocked",
             modelLabel: moderationModelLabel,
             confidence: moderationDecision?.confidence,
@@ -1015,18 +1028,20 @@ export async function POST(request: Request) {
         buildChatLogPayload({
           session: sessionHash,
           ip: ipHash,
-          promptCount: promptCount + 1,
-          locale,
-          rateLimitRemaining: rate.remaining,
-          message: trimmedMessage,
-          reply,
-          references: [],
-          usedFallback: true,
-          unprofessional: true,
-          model: "moderation-block",
-          modelReplyRaw: "FLAG_NO_FUN (local-moderation)",
-          finishReason: "blocked",
-          moderation: {
+        promptCount: promptCount + 1,
+        locale,
+        rateLimitRemaining: rate.remaining,
+        message: trimmedMessage,
+        reply,
+        references: [],
+        usedFallback: true,
+        unprofessional: true,
+        pass1Blocked: true,
+        pass2Ran: false,
+        model: "moderation-block",
+        modelReplyRaw: "FLAG_NO_FUN (local-moderation)",
+        finishReason: "blocked",
+        moderation: {
             label: moderationEffectiveLabel ?? "blocked",
             modelLabel: moderationModelLabel,
             reason: "local_fallback_block",
@@ -1241,6 +1256,8 @@ export async function POST(request: Request) {
       contextFacts: workEducationFacts,
       usedFallback,
       unprofessional: shouldEnforceNoFun,
+      pass1Blocked: false,
+      pass2Ran: true,
       model: modelReply?.model ?? selectedModel,
       modelReplyRaw: rawReplyText,
       finishReason: modelReply?.finishReason,

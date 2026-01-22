@@ -402,7 +402,7 @@ export function ChatbotProvider(props: ChatbotProviderProps) {
       if (payload.unprofessional) {
         setState((prev) => ({
           ...prev,
-          messages: prev.messages.filter((msg) => msg.id !== messageId),
+          messages: prev.messages,
           pending: false,
           error: undefined,
           notice: payload.notice ?? prev.notice,
@@ -868,6 +868,7 @@ function ChatFloatingWidget() {
   }, []);
 
   const moderationRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!state.isOpen || state.moderation !== "unprofessional") return;
@@ -877,6 +878,15 @@ function ChatFloatingWidget() {
       target.scrollIntoView({ behavior: "smooth", block: "nearest" });
     });
   }, [state.isOpen, state.moderation]);
+
+  useEffect(() => {
+    if (!state.isOpen || !state.captchaSiteKey) return;
+    const container = scrollContainerRef.current;
+    if (!container) return;
+    requestAnimationFrame(() => {
+      container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
+    });
+  }, [state.isOpen, state.captchaSiteKey]);
 
   const noticeText = state.notice?.trim() ?? "";
   const hideServerNotice = noticeText
@@ -954,7 +964,10 @@ function ChatFloatingWidget() {
               ✕
             </button>
           </div>
-          <div className="flex flex-1 flex-col gap-3 overflow-y-auto px-4 py-3">
+          <div
+            className="flex flex-1 flex-col gap-3 overflow-y-auto px-4 py-3"
+            ref={scrollContainerRef}
+          >
             {state.messages.length === 0 ? (
               <div className="space-y-3 rounded-xl border border-border bg-surfaceMuted/50 p-4 text-sm text-textMuted dark:border-dark-border dark:bg-dark-surfaceMuted/50 dark:text-dark-textMuted">
                 <p>{copy.emptyState}</p>

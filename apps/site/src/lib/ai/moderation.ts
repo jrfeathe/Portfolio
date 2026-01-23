@@ -1,6 +1,6 @@
 import { Filter, type CheckProfanityResult, type Language } from "glin-profanity";
 import { loadLdnoobwWords } from "./ldnoobw";
-import { loadSafePhrases } from "./safePhrases";
+import { loadSafePhrases, loadSafePhrasePatterns } from "./safePhrases";
 
 export type LocalModerationResult = {
   flagged: boolean;
@@ -230,6 +230,32 @@ export function normalizeForModeration(text: string): string {
   return deLeeted.replace(/\s+/g, " ").trim().toLowerCase();
 }
 
+function buildSafePhraseVariants(normalized: string): string[] {
+  if (!normalized) return [];
+  const variants = new Set<string>([normalized]);
+  const expanded = normalized
+    .replace(/\byou'?re\b/g, "you are")
+    .replace(/\byou'?ve\b/g, "you have")
+    .replace(/\bwe'?ve\b/g, "we have")
+    .replace(/\bi'?ve\b/g, "i have")
+    .replace(/\bcan'?t\b/g, "cannot")
+    .replace(/\bwon'?t\b/g, "will not")
+    .replace(/\bwhat'?s\b/g, "what is")
+    .replace(/\bit'?s\b/g, "it is")
+    .replace(/\bdo you\b/g, "does jack")
+    .replace(/\bare you\b/g, "is jack")
+    .replace(/\bcan you\b/g, "can jack")
+    .replace(/\bcould you\b/g, "could jack")
+    .replace(/\bwould you\b/g, "would jack")
+    .replace(/\bshould you\b/g, "should jack")
+    .replace(/\byour\b/g, "jack's")
+    .replace(/\byou\b/g, "jack")
+    .replace(/\bhe\b/g, "jack")
+    .replace(/\bhis\b/g, "jack's");
+  variants.add(expanded);
+  return Array.from(variants);
+}
+
 export function selectProfanityLanguages(text: string): Language[] {
   const languages: Language[] = ["english"];
   const hasKana = /[\p{Script=Hiragana}\p{Script=Katakana}]/u.test(text);
@@ -281,7 +307,11 @@ export function isBenignLocationQuestion(normalized: string): boolean {
 export function runLocalModeration(message: string): LocalModerationResult {
   const normalized = normalizeForModeration(message);
   const safePhrases = loadSafePhrases();
-  const safePhraseHit = safePhrases.some((phrase) => phrase && normalized.includes(phrase));
+  const safePhrasePatterns = loadSafePhrasePatterns();
+  const safePhraseVariants = buildSafePhraseVariants(normalized);
+  const safePhraseHit =
+    safePhrasePatterns.some((pattern) => safePhraseVariants.some((variant) => pattern.test(variant))) ||
+    safePhraseVariants.some((variant) => safePhrases.some((phrase) => phrase && variant.includes(phrase)));
   const glinText = normalized
     .replace(/[^\p{L}\p{N}\s]/gu, " ")
     .replace(/\bpenises\b/g, "penis")

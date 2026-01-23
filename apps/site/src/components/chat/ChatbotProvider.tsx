@@ -182,8 +182,24 @@ function persistSession(state: ChatState, sessionId: string) {
 }
 
 function buildHistory(messages: ChatMessage[]) {
-  const trimmed = messages.slice(-6).filter((msg) => msg.role === "user" || msg.role === "assistant");
-  return trimmed.map((msg) => ({ role: msg.role, content: msg.content }));
+  const pairs: Array<{ role: "user" | "assistant"; content: string }> = [];
+  let pendingUser: ChatMessage | null = null;
+
+  for (const message of messages) {
+    if (message.role === "user") {
+      pendingUser = message;
+      continue;
+    }
+    if (message.role === "assistant" && pendingUser) {
+      pairs.push(
+        { role: "user", content: pendingUser.content },
+        { role: "assistant", content: message.content }
+      );
+      pendingUser = null;
+    }
+  }
+
+  return pairs.slice(-6);
 }
 
 function isRateLimitActive(rateLimit?: { retryAt?: number }) {
@@ -869,6 +885,15 @@ function ChatFloatingWidget() {
 
   const moderationRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const scrollEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = useCallback(() => {
+    const target = scrollEndRef.current;
+    if (!target) return;
+    requestAnimationFrame(() => {
+      target.scrollIntoView({ behavior: "smooth", block: "end" });
+    });
+  }, []);
 
   useEffect(() => {
     if (!state.isOpen || state.moderation !== "unprofessional") return;
@@ -880,13 +905,10 @@ function ChatFloatingWidget() {
   }, [state.isOpen, state.moderation]);
 
   useEffect(() => {
-    if (!state.isOpen || !state.captchaSiteKey) return;
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    requestAnimationFrame(() => {
-      container.scrollTo({ top: container.scrollHeight, behavior: "smooth" });
-    });
-  }, [state.isOpen, state.captchaSiteKey]);
+    if (!state.isOpen) return;
+    if (!state.captchaSiteKey && state.messages.length === 0) return;
+    scrollToBottom();
+  }, [state.isOpen, state.messages.length, state.captchaSiteKey, scrollToBottom]);
 
   const noticeText = state.notice?.trim() ?? "";
   const hideServerNotice = noticeText
@@ -969,7 +991,7 @@ function ChatFloatingWidget() {
             ref={scrollContainerRef}
           >
             {state.messages.length === 0 ? (
-              <div className="space-y-3 rounded-xl border border-border bg-surfaceMuted/50 p-4 text-sm text-textMuted dark:border-dark-border dark:bg-dark-surfaceMuted/50 dark:text-dark-textMuted">
+              <div className="space-y-3 rounded-xl border border-border bg-surface p-4 text-sm text-textMuted dark:border-dark-border dark:bg-dark-surface dark:text-dark-textMuted">
                 <p>{copy.emptyState}</p>
                 <div className="flex flex-wrap gap-2">
                   {copy.exampleQuestions.map((example) => (
@@ -1058,11 +1080,13 @@ function ChatFloatingWidget() {
                 <LazyHCaptchaWidget
                   siteKey={state.captchaSiteKey}
                   onVerify={handleCaptchaVerify}
+                  onReady={scrollToBottom}
                   locale={locale}
                   disabled={state.pending}
                 />
               </div>
             ) : null}
+            <div ref={scrollEndRef} aria-hidden="true" className="h-px w-full" />
           </div>
           <div className="relative border-t border-border bg-surface px-4 py-3 pb-4 dark:border-dark-border dark:bg-dark-surface">
             <label className="sr-only" htmlFor="chatbot-input">

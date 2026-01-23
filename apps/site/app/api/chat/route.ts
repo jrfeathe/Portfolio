@@ -235,9 +235,25 @@ function summarizeHistory(history: ChatMessage[]): ChatMessage[] {
   if (!Array.isArray(history) || !history.length) {
     return [];
   }
-  return history
+  const pairs: ChatMessage[] = [];
+  let pendingUser: ChatMessage | null = null;
+
+  for (const entry of history) {
+    if (entry.role === "user") {
+      pendingUser = entry;
+      continue;
+    }
+    if (entry.role === "assistant" && pendingUser) {
+      pairs.push(
+        { role: "user", content: pendingUser.content },
+        { role: "assistant", content: entry.content }
+      );
+      pendingUser = null;
+    }
+  }
+
+  return pairs
     .slice(-MAX_HISTORY)
-    .filter((entry) => entry.role === "user" || entry.role === "assistant")
     .map((entry) => ({
       role: entry.role,
       content: sanitizeText(entry.content).slice(0, 1200)
@@ -392,12 +408,26 @@ function stripBracketedUrls(text: string): string {
   return text.replace(/\s*\[[^\]]*(?:https?:\/\/|\/)[^\]]*\]/g, "");
 }
 
+function stripRawUrls(text: string): string {
+  return text
+    .replace(/\((https?:\/\/[^\s)]+)\)/g, "")
+    .replace(/https?:\/\/[^\s)]+/g, "")
+    .replace(/\bwww\.[^\s)]+/g, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 function normalizeParens(text: string): string {
-  return text.replace(/\)\s*\)/g, ")").trim();
+  return text.replace(/\(\s*\)/g, "").replace(/\)\s*\)/g, ")").replace(/\s{2,}/g, " ").trim();
 }
 
 function isWorkEducationQuestion(message: string): boolean {
   return WORK_EDU_PATTERNS.some((pattern) => pattern.test(message));
+}
+
+function isResumeOnlyQuestion(message: string): boolean {
+  return /\b(resume|cv|curriculum\s+vitae|resume\s+pdf|download\s+resume)\b/i.test(message) ||
+    /(履歴書|職務経歴書|简历|履历)/i.test(message);
 }
 
 async function verifyHCaptchaToken(token: string, ip: string | undefined) {
@@ -470,6 +500,7 @@ async function callOpenRouter(
   hits: RetrievalHit[],
   history: ChatMessage[],
   anchors: AnchorEntry[],
+  safeIntent: boolean,
   retryHint?: string
 ): Promise<ModelResult | null> {
   const apiKey = process.env.OPENROUTER_API_KEY;
@@ -532,18 +563,29 @@ async function callOpenRouter(
 
   const systemPrompt =
     `${instructions.trim()}\n\n` +
-    "Operate as Jack's recruiter-facing assistant. Keep replies concise (2–5 sentences), " +
-    "lead with a confident yes/solution, ground claims in the provided context, include links, " +
-    "stay professional, avoid salary/PII, and mention the logging notice when relevant. " +
+    "Operate as Jack's portfolio assistant. Keep replies concise (2–5 sentences), " +
+    "lead with a confident yes/solution, ground claims in the provided context, offer a next step, " +
+    "avoid raw URLs in the reply body (links are shown separately), stay professional, avoid salary/PII, " +
+    "and mention the logging notice when relevant. " +
+    "If the prompt has safe recruiting intent, answer normally and do NOT return FLAG_NO_FUN. " +
     "For subjective asks (e.g., whether Jack is a good coder/engineer or how strong he is), cite only evidence from the provided materials (projects, tech stack, resume) or state that the materials do not say; never speculate. " +
     "Jack/He always refers to Jack Featherstone (software engineer, subject of this portfolio). Never answer about any other Jack. " +
     "Use ONLY the retrieved context snippets and the allowed-link list; if the answer is not in the provided context, say it is not available in the provided materials and point to the resume link if available. Do NOT use world knowledge, training data, or guess missing facts. " +
+    "For cost/efficiency questions, you may infer potential savings from performance/observability work when that evidence is in context; do not claim explicit savings or numbers unless stated. " +
     "Link policy: ONLY use links from the provided allowed-link list; if nothing fits, omit the link instead of inventing one. " +
     "If the user's prompt is unprofessional (profanity, harassment, NSFW, threats, trolling) OR asks about personal traits (e.g., gender/sexual orientation/age/location/salary/PII) OR fringe/anonymous boards (e.g., 4chan), return exactly the token FLAG_NO_FUN and no other text. For normal prompts, never include FLAG_NO_FUN.";
 
   const messages: ChatMessage[] = [
     { role: "system", content: systemPrompt }
   ];
+
+  if (safeIntent) {
+    messages.push({
+      role: "system",
+      content:
+        "Safe-intent hint: this is a standard recruiting/portfolio question about Jack. Answer normally; do NOT return FLAG_NO_FUN."
+    });
+  }
 
   const retryNote = retryHint ? `\n\nRetry note: ${retryHint}` : "";
   const skillHint = skillStrengthQuestion
@@ -555,10 +597,11 @@ async function callOpenRouter(
     {
       role: "user",
       content:
-        `Locale: ${locale}. Use markdown links for references. Stay concise (2–5 sentences). ` +
+        `Locale: ${locale}. Stay concise (2–5 sentences). Do not include raw URLs in the reply body. ` +
         `Retrieved context:\n${retryHint ? shortContextBlock : contextBlock}\n\n` +
         `Allowed links (use only these URLs, or none):\n${allowedLinks || "- none"}\n\n` +
         `Answer ONLY using the retrieved context above and allowed links. If the answer is not in that context, say it is not available in the provided materials and point to the resume link if present; do not guess or rely on any outside knowledge. ` +
+        `For cost/efficiency questions, you may connect performance/observability work to potential savings when that evidence is in context; avoid claiming explicit savings or numbers. ` +
         (skillHint ? `${skillHint} ` : "") +
         `If the request is unprofessional or personal (e.g., harassment, slurs, NSFW, threats, fringe/anonymous boards like 4chan, personal traits like gender/sexual orientation/age/location/salary/birth date, or seems about a different "Jack"), return exactly FLAG_NO_FUN and nothing else.\n\n` +
         `Question: ${question}${retryNote}`
@@ -643,7 +686,9 @@ async function moderateWithOpenRouter(
     ? '{ "intent": "professional/tech Q&A about Jack\'s skills" }'
     : '{ "intent": "unspecified" }';
   const systemPrompt =
-    "Portfolio chatbot safety check. Safe topics: Jack's skills, tech stack, experience, availability. " +
+    "Portfolio chatbot safety check. Safe topics include: Jack's identity/role, skills, tech stack, projects, experience, " +
+    "availability/timezone, role preferences (remote/contract/relocation), start timeline, contact/resume/GitHub/LinkedIn, " +
+    "and site meta questions (analytics/cookies, what the chatbot can answer). " +
     "Block only harassment/trolling, profanity/slurs, sexual innuendo or explicit body parts, requests to expose non-public personal data (addresses/IDs/phone/coordinates), or self-harm/violence encouragement. " +
     "Be lenient with neutral professional words like \"broad experience\" or \"love working with React\" when not sexual. " +
     'Return strict JSON only with fields {"label": LABEL, "confidence": 0-1, "reason": "short"}. ' +
@@ -908,7 +953,8 @@ export async function POST(request: Request) {
   let moderationDowngraded = false;
   let shouldBlockModeration = false;
   let moderationModelLabel: ModerationLabel | undefined;
-  const shouldModerate = hasOpenRouterKey && !structuralBenign;
+  const safePhraseBypass = localModeration.reasons.includes("safe_phrase");
+  const shouldModerate = hasOpenRouterKey && !structuralBenign && !safePhraseBypass;
 
   if (shouldModerate) {
     moderationDecision = await moderateWithOpenRouter(
@@ -1102,10 +1148,24 @@ export async function POST(request: Request) {
 
   const selectedModel = process.env.OPENROUTER_MODEL ?? "openrouter/auto";
 
-  let filteredHits =
-    workEduQuestion && hits.some((hit) => hit.chunk.href.startsWith("/resume.pdf"))
-      ? hits.filter((hit) => hit.chunk.href.startsWith("/resume.pdf"))
-      : hits;
+  let filteredHits = hits;
+  if (workEduQuestion) {
+    if (isResumeOnlyQuestion(trimmedMessage)) {
+      const resumeHits = hits.filter((hit) => hit.chunk.href.startsWith("/resume.pdf"));
+      if (resumeHits.length) {
+        filteredHits = resumeHits;
+      }
+    } else {
+      const preferred = hits.filter((hit) =>
+        hit.chunk.sourceType === "experience" ||
+        hit.chunk.sourceType === "education" ||
+        hit.chunk.sourceType === "resume"
+      );
+      if (preferred.length) {
+        filteredHits = preferred;
+      }
+    }
+  }
 
   if (skillStrengthQuestion) {
     let narrowed = filteredHits.filter((hit) => hit.chunk.sourceType === "tech" || hit.chunk.sourceType === "resume");
@@ -1143,6 +1203,7 @@ export async function POST(request: Request) {
     referenceHrefs.add(resumeAnchor.href);
   }
 
+  const safeIntent = safePhraseBypass || localModeration.professionalIntent;
   let repromptAttempted = false;
   let modelReply = await callOpenRouter(
     request,
@@ -1151,7 +1212,8 @@ export async function POST(request: Request) {
     locale,
     filteredHits,
     history,
-    resources.anchors
+    resources.anchors,
+    safeIntent
   );
 
   if (!modelReply?.text?.trim()) {
@@ -1164,6 +1226,7 @@ export async function POST(request: Request) {
       filteredHits,
       history,
       resources.anchors,
+      safeIntent,
       "Previous model response was empty. Provide a 2–5 sentence answer with allowed links; do not return blank content."
     );
   }
@@ -1174,7 +1237,9 @@ export async function POST(request: Request) {
     : { text: rawReplyText, flagged: false };
   const resolvedReplyText =
     cleanedReply && cleanedReply.trim().length > 0
-      ? normalizeParens(stripBracketedUrls(ensureLinkSpacing(applyBrandCorrections(cleanedReply))))
+      ? normalizeParens(
+          stripRawUrls(stripBracketedUrls(ensureLinkSpacing(applyBrandCorrections(cleanedReply))))
+        )
       : null;
   const meetingHref = resources.anchors.find((anchor) => anchor.category === "availability" && anchor.locale === locale)?.href;
   const driftedPersona =

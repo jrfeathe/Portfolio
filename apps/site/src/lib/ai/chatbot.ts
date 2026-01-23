@@ -337,6 +337,22 @@ function expandTokens(tokens: string[]): string[] {
       case "ta":
         addAll(["ta", "teaching", "assistant", "mentor", "mentoring"]);
         break;
+      case "cost":
+      case "costs":
+      case "saving":
+      case "savings":
+      case "save":
+      case "spend":
+      case "budget":
+      case "efficiency":
+      case "efficient":
+      case "optimize":
+      case "optimization":
+      case "reduce":
+      case "reducing":
+      case "money":
+        addAll(["performance", "reliability", "observability", "efficiency"]);
+        break;
       default:
         break;
     }
@@ -685,6 +701,30 @@ function buildBridgeHints(
   const leadershipMatch = queryTokens.some((token) =>
     ["leadership", "leader", "lead", "mentor", "mentoring", "ta", "teaching", "assistant", "team"].includes(token)
   );
+  const costMatch = queryTokens.some((token) =>
+    [
+      "cost",
+      "costs",
+      "saving",
+      "savings",
+      "save",
+      "spend",
+      "budget",
+      "money",
+      "efficiency",
+      "efficient",
+      "optimize",
+      "optimization",
+      "reduce",
+      "reducing",
+      "コスト",
+      "節約",
+      "削減",
+      "成本",
+      "节省",
+      "节约"
+    ].includes(token)
+  );
 
   if (kubernetesMatch) {
     const anchor =
@@ -753,6 +793,40 @@ function buildBridgeHints(
         score: 0.34
       });
     }
+  }
+
+  if (costMatch) {
+    const portfolioAnchor =
+      anchorById.get(`portfolio-site-${locale}`) ??
+      anchorById.get(`portfolio-site-${defaultLocale}`);
+    const href = portfolioAnchor?.href ?? `/${locale}/experience#portfolio-site`;
+    const title = portfolioAnchor?.name ?? "Performance & observability focus";
+    const text =
+      "Centered performance and observability with critical CSS, edge rendering, and structured data.";
+
+    hits.push({
+      chunk: {
+        id: `bridge-cost-efficiency-${locale}`,
+        locale,
+        title,
+        href,
+        sourceType: "experience",
+        sourceId: "portfolio-site",
+        tokens: [
+          "performance",
+          "observability",
+          "efficiency",
+          "optimization",
+          "cost",
+          "savings",
+          "save",
+          "budget",
+          "spend"
+        ],
+        text
+      },
+      score: 0.36
+    });
   }
 
   return hits;

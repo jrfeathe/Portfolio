@@ -174,3 +174,43 @@ has he worked in the beverage industry
 杰克能处理事故响应吗
 杰克会用Redux管理状态吗
 杰克能实现响应式设计吗
+who are you and what kind of engineer are you
+what kinds of roles are you looking for right now
+are you open to contract or freelance work
+what is your strongest skill set in one sentence
+what is your current tech stack
+what programming languages do you use the most
+what frameworks do you use for frontend work
+what do you use for backend services and apis
+what databases have you worked with in production
+what cloud platforms have you deployed to
+what is a project you are most proud of and why
+what is the best project to review if i only have 2 minutes
+can you summarize your top 3 projects
+which project best demonstrates full stack ownership
+what is the hardest bug you have solved recently
+what tradeoffs did you make in your architecture decisions
+how do you approach code quality and maintainability
+what is your approach to testing unit integration e2e
+how do you handle ci cd and releases
+how do you handle performance optimization
+how do you approach accessibility a11y in ui work
+do you have experience with localization i18n
+what is your approach to product requirements and planning
+have you led or owned project planning end to end
+how do you use ai tools if at all in your workflow
+what is your preferred working style async pairing etc
+what kind of team environment do you thrive in
+what are you currently learning or improving
+what is your timeline for starting a new role
+where are you based time zone
+are you willing to relocate or travel
+are you open to remote only roles
+can i see your resume
+where can i find your github
+where can i find your linkedin
+what is the best way to contact you email or a meeting
+can i book a short intro call with you
+what is your availability like for interviews next week
+does this site collect analytics or set cookies
+what is this chatbot able to answer and what cannot it answer

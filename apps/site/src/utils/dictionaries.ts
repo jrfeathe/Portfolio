@@ -565,7 +565,7 @@ const en: AppDictionary = {
   },
   chatbot: {
     launcherLabel: "Open recruiter AI chat",
-    panelTitle: "AI recruiter assistant",
+    panelTitle: "Portfolio Assistant",
     panelSubtitle: "Ask about Jack's skills, projects, or impact.",
     inputPlaceholder: "Ask about React, cost savings, leadership, or a project...",
     exampleQuestions: [
@@ -863,7 +863,7 @@ const ja: AppDictionary = {
   },
   chatbot: {
     launcherLabel: "採用担当AIチャットを開く",
-    panelTitle: "AI 採用アシスタント",
+    panelTitle: "ポートフォリオ・アシスタント",
     panelSubtitle: "Jack のスキル、プロジェクト、成果について質問してください。",
     inputPlaceholder: "React、コスト削減、リーダーシップ、またはプロジェクトについて質問してください…",
     exampleQuestions: [
@@ -1163,7 +1163,7 @@ const zh: AppDictionary = {
   },
   chatbot: {
     launcherLabel: "打开招聘 AI 聊天",
-    panelTitle: "AI 招聘助手",
+    panelTitle: "作品集助手",
     panelSubtitle: "询问 Jack 的技能、项目或影响。",
     inputPlaceholder: "询问 React、成本节省、领导力或某个项目……",
     exampleQuestions: [

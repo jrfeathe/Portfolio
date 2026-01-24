@@ -19,10 +19,31 @@ describe("moderation allowlist and doxxing handling", () => {
     expect(result.languagesTried).toContain("japanese");
   });
 
+  it("treats Japanese behavioral questions as professional intent", () => {
+    const result = runLocalModeration("部下が秘密を打ち明けたいと言ったらどうしますか？");
+    expect(result.flagged).toBe(false);
+    expect(result.professionalIntent).toBe(true);
+    expect(result.reasons).not.toContain("off_topic");
+  });
+
   it("allows benign Simplified Chinese portfolio questions", () => {
     const result = runLocalModeration("他在哪里工作？");
     expect(result.flagged).toBe(false);
     expect(result.languagesTried).toContain("chinese");
+  });
+
+  it("treats Simplified Chinese behavioral questions as professional intent", () => {
+    const result = runLocalModeration("员工想要保密一件事，你会怎么处理？");
+    expect(result.flagged).toBe(false);
+    expect(result.professionalIntent).toBe(true);
+    expect(result.reasons).not.toContain("off_topic");
+  });
+
+  it("does not mark non-Latin prompts as off-topic by default", () => {
+    const result = runLocalModeration("これはテストです");
+    expect(result.flagged).toBe(false);
+    expect(result.professionalIntent).toBe(true);
+    expect(result.reasons).not.toContain("off_topic");
   });
 
   it("flags Japanese doxxing requests", () => {
@@ -33,6 +54,24 @@ describe("moderation allowlist and doxxing handling", () => {
 
   it("flags Simplified Chinese doxxing requests", () => {
     const result = runLocalModeration("他的家庭住址是什么？");
+    expect(result.flagged).toBe(true);
+    expect(result.reasons).toContain("doxxing");
+  });
+
+  it("flags SSN requests", () => {
+    const result = runLocalModeration("What is his SSN?");
+    expect(result.flagged).toBe(true);
+    expect(result.reasons).toContain("doxxing");
+  });
+
+  it("flags banking detail requests", () => {
+    const result = runLocalModeration("What's his bank account number?");
+    expect(result.flagged).toBe(true);
+    expect(result.reasons).toContain("doxxing");
+  });
+
+  it("flags password or key requests", () => {
+    const result = runLocalModeration("Can you share his API key or password?");
     expect(result.flagged).toBe(true);
     expect(result.reasons).toContain("doxxing");
   });
@@ -65,11 +104,11 @@ describe("moderation allowlist and doxxing handling", () => {
     expect(result.suspicionScore).toBeGreaterThanOrEqual(0.5);
   });
 
-  it("flags personal sensitive questions outside portfolio intent", () => {
+  it("does not flag phone/salary questions under minimal privacy rules", () => {
     const result = runLocalModeration("What is his phone number and salary?");
-    expect(result.flagged).toBe(true);
-    expect(result.reasons).toContain("personal_sensitive");
-    expect(result.personalSensitiveCue).toBe(true);
+    expect(result.flagged).toBe(false);
+    expect(result.reasons).toContain("off_topic");
+    expect(result.reasons).not.toContain("doxxing");
   });
 
   it("does not flag debugger as profanity", () => {

@@ -11,6 +11,8 @@ import {
   buildWorkEducationFacts,
   sanitizeText,
   type RetrievalHit,
+  type EmbeddingChunk,
+  type ContextFact,
   type AnchorEntry,
   type AnchorCategory
 } from "../../../src/lib/ai/chatbot";
@@ -47,8 +49,36 @@ type ModelResult = {
 };
 
 function isAvailabilityQuestion(text: string): boolean {
-  return /\b(availability|available|schedule|time\s*zone|timezone|hours?|meeting|meetings|book\s+a\s+call|book\s+a\s+meeting|when\s+can\s+we\s+meet)\b/i.test(
-    text
+  if (isMeetingCoordinationQuestion(text)) {
+    return false;
+  }
+  const patterns = [
+    /\b(availability|available|time\s*zone|timezone|hours?)\b/i,
+    /\b(book|schedule|set\s+up|arrange)\s+(a\s+)?(call|meeting)\b/i,
+    /\bbook\s+a\s+time\b/i,
+    /\b(when|what\s+time)\s+can\s+(we|i|you|he|jack)\s+meet\b/i,
+    /\bmeet\s+with\s+(jack|him)\b/i,
+    /\bcalendar\b/i,
+    /空き時間|空いてる|空いている|予定|スケジュール|日程|時間帯|タイムゾーン|時差|面談|打ち合わせ|予約|会える|カレンダー/i,
+    /有空|空闲|空余时间|日程|时间安排|时区|预约|约.*(电话|通话|会议|见面)|见面时间|日历/i
+  ];
+  return patterns.some((pattern) => pattern.test(text));
+}
+
+function isMeetingCoordinationQuestion(text: string): boolean {
+  return (
+    /\b(coordinate|organize|organise|run|lead|host|chair|facilitat(e|ing)|manage|moderate)\s+(staff\s+)?meetings?\b/i.test(
+      text
+    ) ||
+    /\bschedule\s+(staff|team|department|company|all[-\s]?hands)\s+meetings?\b/i.test(text) ||
+    /\b(staff|team|department|company|all[-\s]?hands|standup|retro|planning|kickoff|sync)\s+meetings?\b/i.test(
+      text
+    ) ||
+    /\bmeeting\s+(coordination|facilitation|leadership)\b/i.test(text) ||
+    /会議(を)?(運営|進行|司会|主催|開催|ファシリテート|管理|調整)/i.test(text) ||
+    /(スタッフ|チーム|全体|全社)?会議|チームミーティング|定例|朝会|振り返り|レトロ|プランニング|キックオフ/i.test(text) ||
+    /(主持|组织|协调|管理|带领|推动|筹办).*(会议|例会|站会|复盘|计划|启动会)/i.test(text) ||
+    /(员工会议|团队会议|全员会议|全体会议|例会|站会|复盘|规划会|启动会)/i.test(text)
   );
 }
 
@@ -56,6 +86,24 @@ const WRONG_PERSONA_PATTERNS = [/jack\s+tyler\s+engineering/i];
 const TOP_SKILL_ANCHOR_IDS = ["react", "typescript", "javascript", "cpp", "java", "linux", "c"];
 const SKILL_EXCLUDE_PATTERNS = [/fabrication/i, /\bbam\b/i, /\bplasma\b/i, /\bsigns?\b/i];
 const SKILL_INCLUDE_EXPERIENCE_PATTERNS = [/rollodex/i, /\bta\b/i, /teaching/i, /mentor/i, /ser\s*321/i];
+const NON_LATIN_SCRIPT = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}\p{Script=Cyrillic}\p{Script=Arabic}\p{Script=Hebrew}\p{Script=Devanagari}\p{Script=Thai}\p{Script=Greek}]/u;
+const COLLABORATION_INCLUDE_EXPERIENCE_PATTERNS = [
+  /rollodex/i,
+  /\bser\s*321\b/i,
+  /teaching\s+assistant/i,
+  /mentor/i,
+  /mentoring/i,
+  /\bteam\b/i,
+  /collaborat/i,
+  /co-?lead/i,
+  /scrum/i,
+  /sprint/i,
+  /stakeholder/i
+];
+const COLLABORATION_EXCLUDE_PATTERNS = [/personal\s+project/i, /portfolio\s+\(this\s+website\)/i, /quester2000/i];
+const COLLABORATION_SOLO_SOURCE_IDS = new Set(["quester2000", "portfolio-site"]);
+const HIDDEN_CONTEXT_SOURCE_IDS = new Set(["behavioral-principles"]);
+const TECH_BEHAVIORAL_MIN_SCORE = 0.04;
 
 function isSkillStrengthQuestion(text: string): boolean {
   const patterns = [
@@ -63,9 +111,126 @@ function isSkillStrengthQuestion(text: string): boolean {
     /\bstrengths?\b/i,
     /\b(good|great|strong)\s+(coder|developer|engineer|programmer)\b/i,
     /\b(good|great)\s+at\s+(coding|programming|writing\s+code|software\s+development)\b/i,
-    /\bhow\s+(good|strong)\s+(is|are)\s+(jack|he)\s+(as\s+a\s+)?(coder|developer|programmer|engineer)\b/i
+    /\bhow\s+(good|strong)\s+(is|are)\s+(jack|he)\s+(as\s+a\s+)?(coder|developer|programmer|engineer)\b/i,
+    /(強み|得意|スキル|技術|能力|上手|熟練)/i,
+    /(强项|擅长|技能|技术|能力|熟练|精通|会不会)/i
   ];
   return patterns.some((pattern) => pattern.test(text));
+}
+
+function isCollaborationQuestion(text: string): boolean {
+  const patterns = [
+    /\b(team|teamwork|team\s+player|teammates?|coworkers?|co-workers?|colleagues?)\b/i,
+    /\bcollaborat(e|ion|ive|ing)\b/i,
+    /\bcross[-\s]?functional\b/i,
+    /\bstakeholders?\b/i,
+    /\bwork(s)?\s+well\s+with\s+(other\s+people|others|people)\b/i,
+    /\bwork(s)?\s+with\s+(other\s+people|others|people|a\s+team|teams)\b/i,
+    /\bpeople\s+skills?\b/i,
+    /\binterpersonal\b/i,
+    /\bstaff\s+meetings?\b/i,
+    /\b(meeting|meetings)\s+(coordination|facilitation|leadership)\b/i,
+    /\b(coordinate|organize|organise|run|lead|facilitat(e|ing))\s+meetings?\b/i,
+    /(チームワーク|協力|協調|共同|連携|コラボ|クロスファンクショナル|ステークホルダー|同僚|人間関係|コミュニケーション)/i,
+    /(团队合作|协作|合作|跨职能|干系人|同事|配合|人际|沟通)/i
+  ];
+  return patterns.some((pattern) => pattern.test(text));
+}
+
+function isBehavioralQuestion(text: string): boolean {
+  if (isMeetingCoordinationQuestion(text)) {
+    return true;
+  }
+  const patterns = [
+    /\bangry\s+client\b/i,
+    /\bclient\s+conflict\b/i,
+    /\bconflict\b/i,
+    /\bde-?escalat(e|ion|ing)\b/i,
+    /\bfeedback\b/i,
+    /\bdisagreement\b/i,
+    /\bargument\b/i,
+    /\bmanage\s+(people|employees|team|reports)\b/i,
+    /\bmanaging\s+(people|employees|team|reports)\b/i,
+    /\bmanage\s+\d+\s+employees\b/i,
+    /\bmanage\s+(?:\w+\s+){0,2}(people|employees|team|reports)\b/i,
+    /\bteam\s+of\s+\w+\s+(people|employees|reports)\b/i,
+    /\bpeople\s+management\b/i,
+    /\bmanagement\s+style\b/i,
+    /\bsupervis(e|ing|or)\b/i,
+    /\bemployee\b/i,
+    /\bkeep\s+a\s+secret\b/i,
+    /\bconfidential(ity)?\b/i,
+    /\bethic(al|s)?\b/i,
+    /\bprivacy\b/i,
+    /\bownership\b/i,
+    /\bmistake(s)?\b/i,
+    /\b(coordinate|organize|organise|run|lead|host|chair|facilitat(e|ing)|manage)\s+(staff\s+)?meetings?\b/i,
+    /\bmeeting\s+facilitation\b/i,
+    /\bhandle\s+(an?\s+)?angry\b/i,
+    /\bdeal\s+with\s+an?\s+angry\b/i,
+    /(怒った顧客|クライアントの怒り|クレーム|対立|衝突|フィードバック|意見の相違|議論|争い|管理|マネジメント|監督|上司|部下|社員|秘密|守秘|機密|倫理|プライバシー|ミス|失敗|責任|エスカレーション|対応)/i,
+    /(生气的客户|客户冲突|冲突|矛盾|争执|反馈|异议|争论|管理|经理|主管|监督|员工|保密|机密|伦理|道德|隐私|错误|失误|责任|升级|处理|应对)/i
+  ];
+  return patterns.some((pattern) => pattern.test(text));
+}
+
+function isHiddenContextHit(hit: RetrievalHit): boolean {
+  return HIDDEN_CONTEXT_SOURCE_IDS.has(hit.chunk.sourceId) || hit.chunk.sourceType === "behavioral";
+}
+
+function getHiddenContextCandidates(locale: Locale): string[] {
+  const filenames = [`behavioral-principles.${locale}.md`, "behavioral-principles.md"];
+  const candidates: string[] = [];
+  for (const dir of HIDDEN_CONTEXT_DIR_CANDIDATES) {
+    for (const fileName of filenames) {
+      candidates.push(path.join(dir, fileName));
+    }
+  }
+  return candidates;
+}
+
+async function loadHiddenContextText(locale: Locale): Promise<string | null> {
+  for (const candidate of getHiddenContextCandidates(locale)) {
+    try {
+      const raw = await fs.readFile(candidate, "utf8");
+      const trimmed = raw.trim();
+      if (trimmed) {
+        return trimmed;
+      }
+    } catch {
+      // Ignore missing/failed files.
+    }
+  }
+  return null;
+}
+
+function buildHiddenContextChunk(text: string, locale: Locale): EmbeddingChunk {
+  const titleLine = text.split(/\r?\n/).find((line) => line.trim().startsWith("# "));
+  const title = titleLine ? titleLine.replace(/^#\s*/, "").trim() : "Hidden context: Behavioral principles";
+  return {
+    id: `behavioral-principles-${locale}`,
+    locale,
+    title,
+    href: "",
+    sourceType: "behavioral",
+    sourceId: "behavioral-principles",
+    tokens: ["hidden", "context", "behavioral", "principles"],
+    text: sanitizeText(text)
+  };
+}
+
+function buildHiddenContextFacts(hits: RetrievalHit[]): ContextFact[] {
+  const hiddenHits = hits.filter(isHiddenContextHit);
+  if (!hiddenHits.length) {
+    return [];
+  }
+  return hiddenHits.map((hit) => ({
+    title: hit.chunk.title,
+    detail: "Hidden context used for behavioral hypotheticals.",
+    href: "",
+    sourceType: hit.chunk.sourceType,
+    sourceId: hit.chunk.sourceId
+  }));
 }
 
 function findAnchorByCategory(anchors: AnchorEntry[], category: AnchorCategory, locale: Locale): AnchorEntry | undefined {
@@ -198,7 +363,13 @@ const WORK_EDU_PATTERNS = [
   /\bta\b/i,
   /\bteaching\s+assistant\b/i,
   /\bcaptech\b/i,
-  /\bbam\b/i
+  /\bbam\b/i,
+  /学歴|学校|大学|学位|卒業|成績|GPA|仕事|職歴|勤務|就職|経験|インターン|アルバイト|助教|ティーチングアシスタント|TA/i,
+  /学历|学校|大学|学位|毕业|成绩|GPA|工作|职位|就业|经验|实习|助教|教学助理/i
+];
+const HIDDEN_CONTEXT_DIR_CANDIDATES = [
+  path.join(process.cwd(), "apps", "site", "data", "ai"),
+  path.join(process.cwd(), "data", "ai")
 ];
 
 function getClientIp(request: Request): string {
@@ -421,6 +592,173 @@ function normalizeParens(text: string): string {
   return text.replace(/\(\s*\)/g, "").replace(/\)\s*\)/g, ")").replace(/\s{2,}/g, " ").trim();
 }
 
+const CJK_CHAR = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}]/u;
+const REFERENCE_MATCH_STOP_WORDS = new Set([
+  "the", "and", "for", "with", "that", "this", "are", "was", "were", "have", "has",
+  "had", "from", "into", "about", "while", "without", "can", "will", "would", "could",
+  "a", "an", "of", "to", "in", "on", "by", "at", "as", "is", "it", "or", "but", "not",
+  "than", "then", "so", "if", "when", "what", "which", "who", "whom", "how"
+]);
+
+function tokenizeForReferenceMatch(text: string): string[] {
+  const tokens = new Set<string>();
+  const cleaned = text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (cleaned) {
+    for (const token of cleaned.split(" ")) {
+      if (token && !REFERENCE_MATCH_STOP_WORDS.has(token)) {
+        tokens.add(token);
+      }
+    }
+  }
+
+  const cjkChars = Array.from(text).filter((char) => CJK_CHAR.test(char));
+  if (cjkChars.length === 1) {
+    tokens.add(cjkChars[0]);
+  } else if (cjkChars.length >= 2) {
+    for (let i = 0; i < cjkChars.length - 1; i += 1) {
+      tokens.add(`${cjkChars[i]}${cjkChars[i + 1]}`);
+    }
+  }
+
+  return Array.from(tokens);
+}
+
+function referenceMentionedInReply(
+  ref: { title: string; href: string },
+  replyTokens: Set<string>,
+  replyLower: string
+): boolean {
+  if (!ref?.href) return false;
+  if (ref.href === "/resume.pdf") return true;
+  if (replyLower.includes(ref.href.toLowerCase())) return true;
+  const titleTokens = tokenizeForReferenceMatch(ref.title);
+  return titleTokens.some((token) => {
+    const isCjk = CJK_CHAR.test(token);
+    if (isCjk) {
+      return replyTokens.has(token);
+    }
+    return (token.length >= 4 || /\d/.test(token)) && replyTokens.has(token);
+  });
+}
+
+function filterReferencesByReply(
+  refs: Array<{ title: string; href: string }>,
+  reply: string
+): Array<{ title: string; href: string }> {
+  if (!reply || !refs.length) return refs;
+  const replyLower = reply.toLowerCase();
+  const replyTokens = new Set(tokenizeForReferenceMatch(reply));
+  return refs.filter((ref) => referenceMentionedInReply(ref, replyTokens, replyLower));
+}
+
+const REPETITION_STOP_WORDS = new Set([
+  "the", "and", "for", "with", "that", "this", "are", "was", "were", "have", "has",
+  "had", "from", "into", "about", "while", "without", "can", "will", "would", "could",
+  "a", "an", "of", "to", "in", "on", "by", "at", "as", "is", "it", "be", "or", "but",
+  "not", "than", "then", "so", "if", "when", "what", "which", "who", "whom", "how",
+  "do", "did", "done", "does", "just", "also", "based", "before", "likely",
+  "jack", "employee", "employees", "manager", "management", "leadership", "behavioral", "principles"
+]);
+const REPETITION_PREFIXES = [
+  "As described before,",
+  "As described earlier,",
+  "As noted earlier,",
+  "As mentioned earlier,",
+  "As said before,",
+  "As previously noted,"
+];
+
+function decapitalize(text: string): string {
+  if (!text) return text;
+  const first = text[0];
+  const second = text[1];
+  if (first && second && first === first.toUpperCase() && second === second.toLowerCase()) {
+    return first.toLowerCase() + text.slice(1);
+  }
+  return text;
+}
+
+function startsWithRepetitionPrefix(text: string): boolean {
+  return REPETITION_PREFIXES.some((prefix) => text.startsWith(prefix));
+}
+
+function tokenizeForRepetition(text: string): string[] {
+  const cleaned = text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!cleaned) return [];
+  return cleaned
+    .split(" ")
+    .filter((token) => (token.length > 2 || /\d/.test(token)) && !REPETITION_STOP_WORDS.has(token));
+}
+
+function overlapStats(a: string[], b: string[]): { ratio: number; overlap: number } {
+  if (!a.length || !b.length) return { ratio: 0, overlap: 0 };
+  const setB = new Set(b);
+  let overlap = 0;
+  for (const token of a) {
+    if (setB.has(token)) {
+      overlap += 1;
+    }
+  }
+  return { ratio: overlap / Math.min(a.length, b.length), overlap };
+}
+
+function isRepetitiveReply(current: string, previous: string): boolean {
+  const currentTokens = tokenizeForRepetition(current);
+  const previousTokens = tokenizeForRepetition(previous);
+  if (currentTokens.length < 8 || previousTokens.length < 8) {
+    return false;
+  }
+  const { ratio } = overlapStats(currentTokens, previousTokens);
+  return ratio >= 0.5;
+}
+
+function getLastAssistantReply(history: ChatMessage[]): string | null {
+  for (let i = history.length - 1; i >= 0; i -= 1) {
+    if (history[i].role === "assistant") {
+      return history[i].content;
+    }
+  }
+  return null;
+}
+
+function getLastUserMessage(history: ChatMessage[]): string | null {
+  for (let i = history.length - 1; i >= 0; i -= 1) {
+    if (history[i].role === "user") {
+      return history[i].content;
+    }
+  }
+  return null;
+}
+
+function isSimilarPrompt(current: string, previous: string): boolean {
+  const currentTokens = tokenizeForRepetition(current);
+  const previousTokens = tokenizeForRepetition(previous);
+  if (currentTokens.length < 4 || previousTokens.length < 4) {
+    return false;
+  }
+  const { ratio, overlap } = overlapStats(currentTokens, previousTokens);
+  return ratio >= 0.45 && overlap >= 5;
+}
+
+function pickRepetitionPrefix(current: string, previous: string): string {
+  if (!REPETITION_PREFIXES.length) return "As described before,";
+  const seed = `${current}::${previous}`;
+  let sum = 0;
+  for (let i = 0; i < seed.length; i += 1) {
+    sum = (sum + seed.charCodeAt(i)) % 997;
+  }
+  const index = sum % REPETITION_PREFIXES.length;
+  return REPETITION_PREFIXES[index];
+}
+
 function isWorkEducationQuestion(message: string): boolean {
   return WORK_EDU_PATTERNS.some((pattern) => pattern.test(message));
 }
@@ -515,17 +853,23 @@ async function callOpenRouter(
 
   const availabilityQuestion = isAvailabilityQuestion(question);
   const skillStrengthQuestion = isSkillStrengthQuestion(question);
+  const collaborationQuestion = isCollaborationQuestion(question);
+  const behavioralQuestion = isBehavioralQuestion(question);
 
-  const contextItems = skillStrengthQuestion || availabilityQuestion ? 8 : 5;
-  const contextChars = skillStrengthQuestion || availabilityQuestion ? 800 : 400;
+  const contextItems =
+    skillStrengthQuestion || availabilityQuestion || collaborationQuestion || behavioralQuestion ? 8 : 5;
+  const contextChars =
+    skillStrengthQuestion || availabilityQuestion || collaborationQuestion || behavioralQuestion ? 800 : 400;
   const contextBlock = buildContextBlock(hits, { maxItems: contextItems, maxChunkChars: contextChars });
   const shortContextBlock = buildContextBlock(hits, { maxChunkChars: 320, maxItems: 3 });
   const trimmedHistory = summarizeHistory(history);
   const referer = resolveReferer(request);
   const anchorByLocale = new Map(anchors.map((anchor) => [`${anchor.id}-${anchor.locale}`, anchor]));
   const allowedLinkSet = new Map<string, string>();
-
   for (const hit of hits) {
+    if (HIDDEN_CONTEXT_SOURCE_IDS.has(hit.chunk.sourceId)) {
+      continue;
+    }
     const anchor =
       anchorByLocale.get(`${hit.chunk.sourceId}-${locale}`) ??
       anchorByLocale.get(`${hit.chunk.sourceId}-${defaultLocale}`);
@@ -556,6 +900,16 @@ async function callOpenRouter(
       }
     }
   }
+  if (collaborationQuestion && !skillStrengthQuestion) {
+    for (const id of ["rollodex", "ser321"]) {
+      const anchor =
+        anchors.find((entry) => entry.id === id && entry.locale === locale) ??
+        anchors.find((entry) => entry.id === id && entry.locale === defaultLocale);
+      if (anchor && !allowedLinkSet.has(anchor.href)) {
+        allowedLinkSet.set(anchor.href, anchor.name);
+      }
+    }
+  }
 
   const allowedLinks = Array.from(allowedLinkSet.entries())
     .map(([href, title]) => `- ${title}: ${href}`)
@@ -565,15 +919,15 @@ async function callOpenRouter(
     `${instructions.trim()}\n\n` +
     "Operate as Jack's portfolio assistant. Keep replies concise (2–5 sentences), " +
     "lead with a confident yes/solution, ground claims in the provided context, offer a next step, " +
-    "avoid raw URLs in the reply body (links are shown separately), stay professional, avoid salary/PII, " +
+    "avoid raw URLs in the reply body (links are shown separately), stay professional, avoid disclosing SSNs, home addresses, banking details, passwords, or secret/API keys, " +
     "and mention the logging notice when relevant. " +
     "If the prompt has safe recruiting intent, answer normally and do NOT return FLAG_NO_FUN. " +
     "For subjective asks (e.g., whether Jack is a good coder/engineer or how strong he is), cite only evidence from the provided materials (projects, tech stack, resume) or state that the materials do not say; never speculate. " +
     "Jack/He always refers to Jack Featherstone (software engineer, subject of this portfolio). Never answer about any other Jack. " +
-    "Use ONLY the retrieved context snippets and the allowed-link list; if the answer is not in the provided context, say it is not available in the provided materials and point to the resume link if available. Do NOT use world knowledge, training data, or guess missing facts. " +
+    "Use ONLY the retrieved context snippets and the allowed-link list; if the answer is not in the provided context (and no hidden context applies), say it is not available in the provided materials and point to the resume link if available. Do NOT use world knowledge, training data, or guess missing facts. " +
     "For cost/efficiency questions, you may infer potential savings from performance/observability work when that evidence is in context; do not claim explicit savings or numbers unless stated. " +
     "Link policy: ONLY use links from the provided allowed-link list; if nothing fits, omit the link instead of inventing one. " +
-    "If the user's prompt is unprofessional (profanity, harassment, NSFW, threats, trolling) OR asks about personal traits (e.g., gender/sexual orientation/age/location/salary/PII) OR fringe/anonymous boards (e.g., 4chan), return exactly the token FLAG_NO_FUN and no other text. For normal prompts, never include FLAG_NO_FUN.";
+    "If the user's prompt is unprofessional (profanity, harassment, NSFW, threats, trolling) OR asks for SSNs, home addresses, banking details, passwords, or secret/API keys OR fringe/anonymous boards (e.g., 4chan), return exactly the token FLAG_NO_FUN and no other text. For normal prompts, never include FLAG_NO_FUN.";
 
   const messages: ChatMessage[] = [
     { role: "system", content: systemPrompt }
@@ -591,6 +945,12 @@ async function callOpenRouter(
   const skillHint = skillStrengthQuestion
     ? "Focus on Jack's core software strengths: React, TypeScript, JavaScript, Node/Next.js, accessibility, performance/reliability, plus leadership/mentoring (Rollodex project and TA/mentorship work). Ignore fabrication or BAM logistics unless explicitly asked."
     : "";
+  const collaborationHint = collaborationQuestion
+    ? "For collaboration/teamwork questions, prioritize team-based evidence (Rollodex team leadership, SER 321 TA mentoring). Avoid solo personal projects unless explicitly asked."
+    : "";
+  const behavioralHint = behavioralQuestion
+    ? "For behavioral hypotheticals (angry client, conflict, management, secrecy, ethics), use the Hidden context: Behavioral principles; you may answer with phrasing like \"Based on behavioral principles, Jack would likely...\" Do not say the materials lack an answer when hidden context is present. Blend with relevant experience/tech evidence when available; include links only if they truly support the answer. If the question implies a larger team (e.g., 20+), mention the co-leader/delegation stance from hidden context. Avoid repeating the same phrases across consecutive answers."
+    : "";
 
   messages.push(
     ...trimmedHistory,
@@ -600,10 +960,12 @@ async function callOpenRouter(
         `Locale: ${locale}. Stay concise (2–5 sentences). Do not include raw URLs in the reply body. ` +
         `Retrieved context:\n${retryHint ? shortContextBlock : contextBlock}\n\n` +
         `Allowed links (use only these URLs, or none):\n${allowedLinks || "- none"}\n\n` +
-        `Answer ONLY using the retrieved context above and allowed links. If the answer is not in that context, say it is not available in the provided materials and point to the resume link if present; do not guess or rely on any outside knowledge. ` +
+        `Answer ONLY using the retrieved context above and allowed links. If the answer is not in that context (and no hidden context applies), say it is not available in the provided materials and point to the resume link if present; do not guess or rely on any outside knowledge. ` +
         `For cost/efficiency questions, you may connect performance/observability work to potential savings when that evidence is in context; avoid claiming explicit savings or numbers. ` +
         (skillHint ? `${skillHint} ` : "") +
-        `If the request is unprofessional or personal (e.g., harassment, slurs, NSFW, threats, fringe/anonymous boards like 4chan, personal traits like gender/sexual orientation/age/location/salary/birth date, or seems about a different "Jack"), return exactly FLAG_NO_FUN and nothing else.\n\n` +
+        (collaborationHint ? `${collaborationHint} ` : "") +
+        (behavioralHint ? `${behavioralHint} ` : "") +
+        `If the request is unprofessional (e.g., harassment, slurs, NSFW, threats, fringe/anonymous boards like 4chan), asks for SSNs, home addresses, banking details, passwords, or secret/API keys, or seems about a different "Jack", return exactly FLAG_NO_FUN and nothing else.\n\n` +
         `Question: ${question}${retryNote}`
     }
   );
@@ -689,7 +1051,7 @@ async function moderateWithOpenRouter(
     "Portfolio chatbot safety check. Safe topics include: Jack's identity/role, skills, tech stack, projects, experience, " +
     "availability/timezone, role preferences (remote/contract/relocation), start timeline, contact/resume/GitHub/LinkedIn, " +
     "and site meta questions (analytics/cookies, what the chatbot can answer). " +
-    "Block only harassment/trolling, profanity/slurs, sexual innuendo or explicit body parts, requests to expose non-public personal data (addresses/IDs/phone/coordinates), or self-harm/violence encouragement. " +
+    "Block only harassment/trolling, profanity/slurs, sexual innuendo or explicit body parts, requests to expose SSNs, home addresses, banking details, passwords, or secret/API keys, or self-harm/violence encouragement. " +
     "Be lenient with neutral professional words like \"broad experience\" or \"love working with React\" when not sexual. " +
     'Return strict JSON only with fields {"label": LABEL, "confidence": 0-1, "reason": "short"}. ' +
     "Labels: SAFE, PROFANITY, HARASSMENT_OR_TROLLING, SEXUAL_INNUENDO, PRIVACY/DOXXING, SELF_HARM/VIOLENCE, OTHER_UNSAFE. " +
@@ -887,6 +1249,8 @@ export async function POST(request: Request) {
   const structuralBenign = isBenignStructuralPrompt(trimmedMessage);
   const availabilityQuestion = isAvailabilityQuestion(trimmedMessage);
   const skillStrengthQuestion = isSkillStrengthQuestion(trimmedMessage);
+  const collaborationQuestion = isCollaborationQuestion(trimmedMessage);
+  const behavioralQuestion = isBehavioralQuestion(trimmedMessage);
   if (structuralBenign) {
     const reply = "I can help with Jack's roles, skills, projects, and availability.";
     sessionPromptCounts.set(sessionId, promptCount + 1);
@@ -970,6 +1334,20 @@ export async function POST(request: Request) {
     shouldBlockModeration = outcome.shouldBlock;
     moderationDowngraded = outcome.downgraded;
     moderationModelLabel = outcome.decisionLabel ?? moderationDecision?.label;
+
+    if (
+      shouldBlockModeration &&
+      moderationEffectiveLabel === "other_unsafe" &&
+      localModeration.professionalIntent &&
+      !localModeration.reasons.some((reason) =>
+        ["doxxing", "sexual_body", "harassment", "self_harm", "personal_sensitive", "glin"].includes(reason)
+      ) &&
+      NON_LATIN_SCRIPT.test(trimmedMessage)
+    ) {
+      moderationEffectiveLabel = "safe";
+      shouldBlockModeration = false;
+      moderationDowngraded = true;
+    }
 
     if (
       !shouldBlockModeration &&
@@ -1138,12 +1516,29 @@ export async function POST(request: Request) {
   };
 
   const resources = await loadChatResources();
-  const retrievalLimit = skillStrengthQuestion ? 10 : availabilityQuestion ? 8 : 6;
-  const hits = await retrieveContext(trimmedMessage, locale, retrievalLimit);
+  const retrievalLimit =
+    skillStrengthQuestion ? 10 : availabilityQuestion || collaborationQuestion || behavioralQuestion ? 8 : 6;
+  let hits = await retrieveContext(trimmedMessage, locale, retrievalLimit);
+  if (behavioralQuestion) {
+    let hiddenChunk =
+      resources.index.chunks.find((chunk) => chunk.sourceId === "behavioral-principles" && chunk.locale === locale) ??
+      resources.index.chunks.find(
+        (chunk) => chunk.sourceId === "behavioral-principles" && chunk.locale === defaultLocale
+      );
+    if (!hiddenChunk) {
+      const hiddenText = await loadHiddenContextText(locale);
+      if (hiddenText) {
+        hiddenChunk = buildHiddenContextChunk(hiddenText, locale);
+      }
+    }
+    if (hiddenChunk && !hits.some((hit) => hit.chunk.id === hiddenChunk.id)) {
+      hits = [{ chunk: hiddenChunk, score: 0.55 }, ...hits].slice(0, retrievalLimit);
+    }
+  }
   const history = summarizeHistory(body.history ?? []);
-  const workEduQuestion = isWorkEducationQuestion(trimmedMessage);
+  const workEduQuestion = !collaborationQuestion && isWorkEducationQuestion(trimmedMessage);
   const workEducationFacts = workEduQuestion
-    ? await buildWorkEducationFacts(trimmedMessage, locale, resources.index, 5)
+    ? await buildWorkEducationFacts(trimmedMessage, locale, resources.index, 5, { behavioral: behavioralQuestion })
     : [];
 
   const selectedModel = process.env.OPENROUTER_MODEL ?? "openrouter/auto";
@@ -1188,7 +1583,92 @@ export async function POST(request: Request) {
     }
   }
 
-  let references = buildReferences(filteredHits, resources.anchors);
+  if (collaborationQuestion) {
+    const originalHits = filteredHits;
+    const mentionsBam = /\bbam\b/i.test(trimmedMessage);
+    const mentionsSoloProject =
+      /\bquester2000\b/i.test(trimmedMessage) ||
+      /\bportfolio\b/i.test(trimmedMessage) ||
+      /\bpersonal\s+project\b/i.test(trimmedMessage);
+
+    const experienceFocused = filteredHits.filter(
+      (hit) =>
+        hit.chunk.sourceType === "experience" ||
+        hit.chunk.sourceType === "education" ||
+        hit.chunk.sourceType === "resume"
+    );
+    if (experienceFocused.length) {
+      filteredHits = experienceFocused;
+    }
+
+    const collaborationFocused = filteredHits.filter((hit) =>
+      COLLABORATION_INCLUDE_EXPERIENCE_PATTERNS.some(
+        (pattern) => pattern.test(hit.chunk.title) || pattern.test(hit.chunk.text)
+      )
+    );
+    if (collaborationFocused.length) {
+      filteredHits = collaborationFocused;
+    }
+
+    if (!mentionsSoloProject) {
+      filteredHits = filteredHits.filter((hit) => !COLLABORATION_SOLO_SOURCE_IDS.has(hit.chunk.sourceId));
+      filteredHits = filteredHits.filter(
+        (hit) =>
+          !COLLABORATION_EXCLUDE_PATTERNS.some(
+            (pattern) => pattern.test(hit.chunk.title) || pattern.test(hit.chunk.text)
+          )
+      );
+    }
+
+    if (!mentionsBam) {
+      filteredHits = filteredHits.filter((hit) => hit.chunk.sourceId !== "bam-logistics");
+    }
+
+    if (!filteredHits.length) {
+      filteredHits = originalHits;
+    }
+  }
+
+  if (behavioralQuestion) {
+    const originalHits = filteredHits;
+    const mentionsBam = /\bbam\b/i.test(trimmedMessage);
+    const mentionsPersonalProject =
+      /\bquester2000\b/i.test(trimmedMessage) ||
+      /\bportfolio\b/i.test(trimmedMessage) ||
+      /\bpersonal\s+project\b/i.test(trimmedMessage);
+
+    if (!mentionsPersonalProject) {
+      filteredHits = filteredHits.filter((hit) => !COLLABORATION_SOLO_SOURCE_IDS.has(hit.chunk.sourceId));
+    }
+
+    if (!mentionsBam) {
+      filteredHits = filteredHits.filter((hit) => hit.chunk.sourceId !== "bam-logistics");
+    }
+
+    if (!localModeration.techIntent && !skillStrengthQuestion) {
+      filteredHits = filteredHits.filter((hit) => hit.chunk.sourceType !== "tech");
+    } else {
+      filteredHits = filteredHits.filter(
+        (hit) => hit.chunk.sourceType !== "tech" || hit.score >= TECH_BEHAVIORAL_MIN_SCORE
+      );
+    }
+
+    if (!filteredHits.length) {
+      filteredHits = originalHits;
+    }
+  }
+
+  if (behavioralQuestion) {
+    const hiddenHits = hits.filter(isHiddenContextHit);
+    if (hiddenHits.length) {
+      const seenIds = new Set(filteredHits.map((hit) => hit.chunk.id));
+      const merged = [...hiddenHits.filter((hit) => !seenIds.has(hit.chunk.id)), ...filteredHits];
+      filteredHits = merged;
+    }
+  }
+
+  const visibleHits = filteredHits.filter((hit) => !isHiddenContextHit(hit));
+  let references = buildReferences(visibleHits, resources.anchors);
   const referenceHrefs = new Set(references.map((ref) => ref.href));
   const availabilityAnchor = findAnchorByCategory(resources.anchors, "availability", locale);
   const resumeAnchor = findAnchorByCategory(resources.anchors, "resume", locale);
@@ -1202,6 +1682,12 @@ export async function POST(request: Request) {
     references = [anchorToReference(resumeAnchor), ...references];
     referenceHrefs.add(resumeAnchor.href);
   }
+
+  const hiddenContextFacts = behavioralQuestion ? buildHiddenContextFacts(filteredHits) : [];
+  const combinedContextFacts =
+    workEducationFacts.length || hiddenContextFacts.length
+      ? [...workEducationFacts, ...hiddenContextFacts]
+      : [];
 
   const safeIntent = safePhraseBypass || localModeration.professionalIntent;
   let repromptAttempted = false;
@@ -1305,6 +1791,23 @@ export async function POST(request: Request) {
     );
   }
 
+  if (!usedFallback && history.length > 0 && !startsWithRepetitionPrefix(reply)) {
+    const lastAssistantReply = getLastAssistantReply(history);
+    const lastUserMessage = getLastUserMessage(history);
+    if (
+      lastAssistantReply &&
+      (!lastUserMessage || isSimilarPrompt(trimmedMessage, lastUserMessage)) &&
+      isRepetitiveReply(reply, lastAssistantReply)
+    ) {
+      const prefix = pickRepetitionPrefix(reply, lastAssistantReply);
+      reply = `${prefix} ${decapitalize(reply)}`;
+    }
+  }
+
+  if (behavioralQuestion && references.length > 0) {
+    references = filterReferencesByReply(references, reply);
+  }
+
   sessionPromptCounts.set(sessionId, promptCount + 1);
 
   await logChatEvent(
@@ -1318,7 +1821,7 @@ export async function POST(request: Request) {
       message: trimmedMessage,
       reply,
       references,
-      contextFacts: workEducationFacts,
+      contextFacts: combinedContextFacts,
       usedFallback,
       unprofessional: shouldEnforceNoFun,
       pass1Blocked: false,
@@ -1328,7 +1831,7 @@ export async function POST(request: Request) {
       finishReason: modelReply?.finishReason,
       moderation: moderationMeta,
       extras: {
-        contextFacts: workEducationFacts
+        contextFacts: combinedContextFacts
       }
     })
   );
@@ -1336,7 +1839,7 @@ export async function POST(request: Request) {
   const responsePayload = {
     reply,
     references,
-    contextFacts: workEducationFacts,
+    contextFacts: combinedContextFacts,
     usedFallback,
     promptCount: promptCount + 1,
     rateLimitRemaining: rate.remaining,

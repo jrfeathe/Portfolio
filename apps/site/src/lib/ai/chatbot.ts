@@ -5,7 +5,7 @@ import { createRequire } from "node:module";
 
 import { defaultLocale, type Locale } from "../../utils/i18n";
 
-export type AnchorCategory = "tech" | "experience" | "education" | "availability" | "resume";
+export type AnchorCategory = "tech" | "experience" | "education" | "availability" | "resume" | "behavioral";
 
 export type AnchorEntry = {
   id: string;
@@ -67,6 +67,7 @@ const NAME_ALIAS_TOKENS = new Map<string, string[]>([
   ["ジャクさん", ["jack"]],
   ["夹克", ["jack"]]
 ]);
+const HIDDEN_CONTEXT_SOURCE_IDS = new Set(["behavioral-principles"]);
 
 type KuromojiToken = {
   surface_form?: string;
@@ -328,6 +329,15 @@ function expandTokens(tokens: string[]): string[] {
       case "leadership":
         addAll(["lead", "leader", "mentoring", "mentor", "team"]);
         break;
+      case "manage":
+      case "managing":
+      case "management":
+      case "manager":
+      case "supervise":
+      case "supervising":
+      case "supervisor":
+        addAll(["lead", "leader", "leadership", "team", "mentor", "mentoring"]);
+        break;
       case "mentor":
       case "mentoring":
         addAll(["mentor", "mentored", "mentoring", "ta", "assistant"]);
@@ -336,6 +346,19 @@ function expandTokens(tokens: string[]): string[] {
       case "assistant":
       case "ta":
         addAll(["ta", "teaching", "assistant", "mentor", "mentoring"]);
+        break;
+      case "people":
+      case "person":
+      case "others":
+      case "coworker":
+      case "coworkers":
+      case "colleague":
+      case "colleagues":
+      case "teamwork":
+      case "collaborate":
+      case "collaboration":
+      case "collaborative":
+        addAll(["team", "teammate", "collaboration", "collaborate", "mentor", "mentoring"]);
         break;
       case "cost":
       case "costs":
@@ -567,18 +590,17 @@ export async function buildWorkEducationFacts(
   question: string,
   locale: Locale,
   index: EmbeddingIndex,
-  limit = 4
+  limit = 4,
+  options?: { behavioral?: boolean }
 ): Promise<ContextFact[]> {
   const cleaned = sanitizeText(question);
   const queryTokens = await tokenize(cleaned, locale);
   const localeChunks = pickLocaleChunks(index, locale);
 
-  const WORK_SOURCE_IDS = new Set([
-    "captech-logistics",
-    "bam-logistics",
-    "ser321",
-    "arizona-state-university"
-  ]);
+  const behavioralOnly = options?.behavioral ?? false;
+  const WORK_SOURCE_IDS = behavioralOnly
+    ? new Set(["ser321", "arizona-state-university", "rollodex"])
+    : new Set(["captech-logistics", "bam-logistics", "ser321", "arizona-state-university"]);
 
   const workCandidates = localeChunks.filter(
     (chunk) => chunk.sourceType === "experience" && WORK_SOURCE_IDS.has(chunk.sourceId)
@@ -870,6 +892,9 @@ export function buildReferences(
 
   for (const hit of hits) {
     const { chunk } = hit;
+    if (HIDDEN_CONTEXT_SOURCE_IDS.has(chunk.sourceId) || chunk.sourceType === "behavioral") {
+      continue;
+    }
     const anchor = anchorByLocale.get(`${chunk.sourceId}-${chunk.locale}`);
     const href = anchor?.href ?? chunk.href;
     const title = anchor?.name ?? chunk.title;
@@ -912,7 +937,8 @@ export function buildContextBlock(
       hit.chunk.text.length > maxChunkChars
         ? `${hit.chunk.text.slice(0, maxChunkChars)}…`
         : hit.chunk.text;
-    return `${index + 1}. ${hit.chunk.title} — ${text} (link: ${hit.chunk.href})`;
+    const linkLabel = hit.chunk.href ? ` (link: ${hit.chunk.href})` : " (link: hidden context)";
+    return `${index + 1}. ${hit.chunk.title} — ${text}${linkLabel}`;
   });
 
   return trimmed.join("\n");

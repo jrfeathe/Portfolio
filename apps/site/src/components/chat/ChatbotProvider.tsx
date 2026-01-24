@@ -565,16 +565,20 @@ function ContextFactsPanel({ facts, labelTemplate }: { facts: ContextFact[]; lab
         {label}
       </summary>
       <div className="mt-2 space-y-2">
-        {facts.map((fact, index) => (
-          <a
-            key={`${fact.title}-${index}`}
-            href={fact.href}
-            className="flex items-start justify-between gap-3 rounded-md px-2 py-1 text-text transition hover:bg-surfaceMuted hover:no-underline dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
-          >
-            <span className="font-semibold">{fact.title}</span>
-            <span className="text-[11px] text-textMuted dark:text-dark-textMuted">{fact.detail}</span>
-          </a>
-        ))}
+        {facts.map((fact, index) => {
+          const hasHref = Boolean(fact.href && fact.href.trim().length > 0 && fact.href !== "#");
+          const Wrapper = hasHref ? "a" : "div";
+          return (
+            <Wrapper
+              key={`${fact.title}-${index}`}
+              {...(hasHref ? { href: fact.href } : {})}
+              className="flex items-start justify-between gap-3 rounded-md px-2 py-1 text-text transition hover:bg-surfaceMuted hover:no-underline dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+            >
+              <span className="font-semibold">{fact.title}</span>
+              <span className="text-[11px] text-textMuted dark:text-dark-textMuted">{fact.detail}</span>
+            </Wrapper>
+          );
+        })}
       </div>
     </details>
   );

@@ -4,6 +4,7 @@ This folder holds the chatbot instruction pack and retrieval artifacts.
 
 ## What’s here
 - `chatbot-instructions.md` — system prompt: persona, answer pattern, bridging rules, safety, and example Q&A (includes logging notice).
+- `behavioral-principles.md` — internal behavioral principles used for hypotheticals (no public link). Optional locale variants: `behavioral-principles.ja.md`, `behavioral-principles.zh.md`.
 - `tech-anchors.json` — stable anchors for tech stack + experience; each anchor groups all locales under a single id to reduce file size.
 - `chatbot-embeddings.json` — lightweight bag-of-words index built from tech-stack details and project experience entries.
 

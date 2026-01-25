@@ -14,7 +14,8 @@ function formatDate(input: string, locale: string) {
   return new Intl.DateTimeFormat(locale, {
     year: "numeric",
     month: "short",
-    day: "2-digit"
+    day: "2-digit",
+    timeZone: "UTC"
   }).format(date);
 }
 

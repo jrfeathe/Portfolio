@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, type ReadonlyURLSearchParams } from "next/navigation";
 
 import { isTruthySkimValue } from "../utils/skim";
@@ -20,14 +20,21 @@ function resolveSkimFromSearchParams(searchParams: ReadonlyURLSearchParams | nul
 
 export function SkimModeWrapper({ children }: SkimModeWrapperProps) {
   const searchParams = useSearchParams();
-  const skimActive = useMemo(
-    () => resolveSkimFromSearchParams(searchParams),
-    [searchParams]
-  );
+  const [hydrated, setHydrated] = useState(false);
+  const skimActive = useMemo(() => {
+    if (!hydrated) {
+      return false;
+    }
+    return resolveSkimFromSearchParams(searchParams);
+  }, [hydrated, searchParams]);
 
   useEffect(() => {
+    if (!hydrated) {
+      setHydrated(true);
+      return;
+    }
     document.documentElement.dataset.skimMode = skimActive ? "true" : "false";
-  }, [skimActive]);
+  }, [hydrated, skimActive]);
 
   return (
     <div data-skim-mode={skimActive ? "true" : "false"}>

@@ -660,20 +660,21 @@ function ChatFloatingWidget() {
   const { state, toggle, sendMessage, copy, solveCaptcha, locale } = useChatbot();
   const [input, setInput] = useState("");
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const [chatSize, setChatSize] = useState<{ width: number; height: number }>(() => {
-    const { base } = getChatSizing();
-    return { width: base.width, height: base.height };
-  });
-  const [minChatSize, setMinChatSize] = useState<{ width: number; height: number }>(() => {
-    const { min } = getChatSizing();
-    return { width: min.width, height: min.height };
-  });
-  const [widthMargin, setWidthMargin] = useState(() => getChatSizing().widthMargin);
-  const [heightOffset, setHeightOffset] = useState(() => getChatSizing().heightOffset);
+  // Use stable defaults for SSR/hydration; size is corrected after mount.
+  const [chatSize, setChatSize] = useState<{ width: number; height: number }>(() => ({
+    width: CHAT_DEFAULT_SIZE.width,
+    height: CHAT_DEFAULT_SIZE.height
+  }));
+  const [minChatSize, setMinChatSize] = useState<{ width: number; height: number }>(() => ({
+    width: CHAT_MIN_SIZE.width,
+    height: CHAT_MIN_SIZE.height
+  }));
+  const [widthMargin, setWidthMargin] = useState(CHAT_WIDTH_MARGIN);
+  const [heightOffset, setHeightOffset] = useState(CHAT_HEIGHT_OFFSET);
   const chatSizeRef = useRef(chatSize);
   const minChatSizeRef = useRef(minChatSize);
-  const heightOffsetRef = useRef(getChatSizing().heightOffset);
-  const widthMarginRef = useRef(getChatSizing().widthMargin);
+  const heightOffsetRef = useRef(CHAT_HEIGHT_OFFSET);
+  const widthMarginRef = useRef(CHAT_WIDTH_MARGIN);
   const dragRef = useRef<{
     startX: number;
     startY: number;

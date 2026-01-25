@@ -34,16 +34,20 @@ export function SkimToggleButton({ active, className, locale }: SkimToggleButton
   const skim = getDictionary(locale).skimToggle;
   const fallbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prefetchedUrlRef = useRef<string | null>(null);
+  const [hydrated, setHydrated] = useState(false);
   const resolvedActive = useMemo(() => {
     if (typeof active === "boolean") {
       return active;
+    }
+    if (!hydrated) {
+      return false;
     }
     const values = searchParams?.getAll("skim") ?? [];
     if (!values.length) {
       return false;
     }
     return values.some((value) => isTruthySkimValue(value));
-  }, [active, searchParams]);
+  }, [active, hydrated, searchParams]);
   const [optimisticActive, setOptimisticActive] = useState(resolvedActive);
 
   const label = useMemo(
@@ -52,8 +56,12 @@ export function SkimToggleButton({ active, className, locale }: SkimToggleButton
   );
 
   useEffect(() => {
+    if (!hydrated) {
+      setHydrated(true);
+      return;
+    }
     setOptimisticActive(resolvedActive);
-  }, [resolvedActive]);
+  }, [hydrated, resolvedActive]);
 
   useEffect(() => {
     return () => {

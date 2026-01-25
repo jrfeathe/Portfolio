@@ -1,7 +1,6 @@
 import type { NextRequest } from "next/server";
 
 export type SecurityHeadersOptions = {
-  nonce: string;
   request: NextRequest;
 };
 
@@ -46,8 +45,8 @@ export function generateNonce(byteLength = 16) {
   return arrayBufferToBase64(array.buffer);
 }
 
-function buildScriptSrcDirective(nonce: string, allowHCaptcha: boolean) {
-  const directives = [`'self'`, `'nonce-${nonce}'`];
+function buildScriptSrcDirective(allowHCaptcha: boolean) {
+  const directives = [`'self'`, `'unsafe-inline'`];
 
   if (allowHCaptcha) {
     directives.push("https://js.hcaptcha.com");
@@ -60,15 +59,11 @@ function buildScriptSrcDirective(nonce: string, allowHCaptcha: boolean) {
   return `script-src ${directives.join(" ")}`;
 }
 
-function buildStyleSrcDirective(nonce: string) {
-  if (process.env.NODE_ENV !== "production") {
-    return "style-src 'self' 'unsafe-inline'";
-  }
-
-  return `style-src 'self' 'nonce-${nonce}'`;
+function buildStyleSrcDirective() {
+  return "style-src 'self' 'unsafe-inline'";
 }
 
-export function buildContentSecurityPolicy(nonce: string) {
+export function buildContentSecurityPolicy() {
   const allowHCaptcha = Boolean(process.env.HCAPTCHA_SITE_KEY);
   const directives = [
     "default-src 'self'",
@@ -84,8 +79,9 @@ export function buildContentSecurityPolicy(nonce: string) {
     "font-src 'self' data:",
     "img-src 'self' data: blob: https:",
     "worker-src 'self' blob:",
-    buildScriptSrcDirective(nonce, allowHCaptcha),
-    buildStyleSrcDirective(nonce),
+    buildScriptSrcDirective(allowHCaptcha),
+    buildStyleSrcDirective(),
+    "style-src-attr 'unsafe-inline'",
     "connect-src 'self' https: wss:",
     "upgrade-insecure-requests"
   ];
@@ -95,9 +91,9 @@ export function buildContentSecurityPolicy(nonce: string) {
 
 export function applySecurityHeaders(
   headers: Headers,
-  { nonce, request }: SecurityHeadersOptions
+  { request }: SecurityHeadersOptions
 ) {
-  headers.set("Content-Security-Policy", buildContentSecurityPolicy(nonce));
+  headers.set("Content-Security-Policy", buildContentSecurityPolicy());
   headers.set("Permissions-Policy", PERMISSIONS_POLICY);
   headers.set("Referrer-Policy", REFERRER_POLICY);
 

@@ -126,7 +126,7 @@ type AnchorLocales = Partial<
   >
 >;
 
-type AnchorCategory = "tech" | "experience" | "education" | "availability" | "resume";
+type AnchorCategory = "tech" | "experience" | "education" | "availability" | "resume" | "behavioral";
 
 type AnchorEntry = {
   id: string;
@@ -255,6 +255,13 @@ function resolvePath(candidates: string[]): string {
 function readJson<T>(filePath: string): T {
   const raw = fs.readFileSync(filePath, "utf8");
   return JSON.parse(raw) as T;
+}
+
+function readOptionalText(filePath: string): string | null {
+  if (!fs.existsSync(filePath)) {
+    return null;
+  }
+  return fs.readFileSync(filePath, "utf8");
 }
 
 function localizeString(value: LocalizedString | undefined, locale: Locale): string {
@@ -835,6 +842,27 @@ function buildResumeProfileChunk(resume: ResumeJson, locale: Locale): EmbeddingC
   };
 }
 
+function buildBehavioralPrinciplesChunk(text: string | null, locale: Locale): EmbeddingChunk | null {
+  if (!text) return null;
+  const raw = text.trim();
+  if (!raw) return null;
+  const titleLine = raw.split(/\r?\n/).find((line) => line.trim().startsWith("# "));
+  const title = titleLine ? titleLine.replace(/^#\s*/, "").trim() : "Hidden context: Behavioral principles";
+  const trimmed = sanitizeText(raw).trim();
+  if (!trimmed) return null;
+
+  return {
+    id: `behavioral-principles-${locale}`,
+    locale,
+    title,
+    href: "",
+    sourceType: "behavioral",
+    sourceId: "behavioral-principles",
+    tokens: tokenize(trimmed, locale),
+    text: trimmed
+  };
+}
+
 function buildResumeExperienceChunks(
   experiences: ResumeExperience[] | undefined,
   locale: Locale,
@@ -959,11 +987,19 @@ async function main() {
   const resumePath = path.join(root, "content", "resume.json");
   const availabilityPath = path.join(dataDir, "availability", "weekly.json");
   const projectsDir = path.join(dataDir, "projects");
+  const behavioralPrinciplesPath = path.join(aiDir, "behavioral-principles.md");
 
   const techStackPath = path.join(dataDir, "tech-stack-details.json");
   const techEntries = readJson<TechStackEntry[]>(techStackPath);
   const availability = readJson<AvailabilityData>(availabilityPath);
   const resume = readJson<ResumeJson>(resumePath);
+  const behavioralPrinciplesDefaultText = readOptionalText(behavioralPrinciplesPath);
+  const behavioralPrinciplesByLocale = new Map<Locale, string | null>();
+  for (const locale of locales) {
+    const localizedPath = path.join(aiDir, `behavioral-principles.${locale}.md`);
+    const localizedText = readOptionalText(localizedPath) ?? behavioralPrinciplesDefaultText;
+    behavioralPrinciplesByLocale.set(locale, localizedText);
+  }
   const projectFiles = fs
     .readdirSync(projectsDir)
     .filter(
@@ -1026,6 +1062,14 @@ async function main() {
     const resumeProfileChunk = buildResumeProfileChunk(resume, locale);
     if (resumeProfileChunk) {
       addEmbedding(resumeProfileChunk);
+    }
+
+    const behavioralChunk = buildBehavioralPrinciplesChunk(
+      behavioralPrinciplesByLocale.get(locale) ?? behavioralPrinciplesDefaultText,
+      locale
+    );
+    if (behavioralChunk) {
+      addEmbedding(behavioralChunk);
     }
 
     for (const chunk of buildResumeExperienceChunks(resume.experience, locale, slugCounts)) {

@@ -9,15 +9,14 @@ test.describe("Recruiter skim mode", () => {
     const heroPortrait = page.locator("[data-hero-portrait=\"true\"]");
     await expect(heroPortrait).toBeVisible();
     await expect(heroPortrait.locator("img")).toBeVisible();
-    await expect(page.locator("[data-skim-mode=\"true\"]")).toHaveCount(0);
-    await expect(page.getByTestId("skim-toggle")).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("data-skim-mode", "false");
+    await expect(page.locator('[data-testid="skim-toggle"]:visible')).toHaveCount(1);
 
     await page.goto("/en?skim=1", { waitUntil: "domcontentloaded" });
     await expect(page).toHaveURL(/skim=1/);
 
-    const skimContainer = page.locator("[data-skim-mode=\"true\"]");
-    await expect(skimContainer).toHaveCount(1);
-    await expect(page.locator("[data-hero-portrait=\"true\"]")).toHaveCount(0);
+    await expect(page.locator("html")).toHaveAttribute("data-skim-mode", "true");
+    await expect(page.locator("[data-hero-portrait=\"true\"]:visible")).toHaveCount(0);
 
     const ctaContainer = page.locator(".shell-stacked-sidebar");
     await expect(ctaContainer).toBeVisible();

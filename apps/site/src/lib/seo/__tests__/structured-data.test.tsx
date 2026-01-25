@@ -45,7 +45,7 @@ describe("structured data generators", () => {
 });
 
 describe("<StructuredData />", () => {
-  test("renders a CSP-compliant script block", () => {
+  test("renders a JSON-LD script block", () => {
     const data: JsonLdPayload = {
       "@context": "https://schema.org",
       "@graph": [
@@ -56,16 +56,10 @@ describe("<StructuredData />", () => {
       ]
     };
 
-    const { container } = render(
-      <StructuredData
-        data={data}
-        nonce="test-nonce"
-      />
-    );
+    const { container } = render(<StructuredData data={data} />);
 
     const script = container.querySelector('script[type="application/ld+json"]');
     expect(script).not.toBeNull();
-    expect(script?.getAttribute("nonce")).toBe("test-nonce");
     expect(script?.innerHTML).toContain("\\u003Cscript");
   });
 });

@@ -132,5 +132,37 @@ for (const locale of locales) {
   lines.push(...localeAliases);
   lines.push("}", "");
 }
+
+const resolveBasePalette = (mode) => {
+  const exact = colors[`${mode}-en`];
+  if (exact) return exact;
+  const fallbackKey = Object.keys(colors).find(
+    (key) => key.startsWith(`${mode}-`) && !key.includes("hc")
+  );
+  return fallbackKey ? colors[fallbackKey] : null;
+};
+
+const addContrastOverrides = (mode, keys) => {
+  if (!keys.length) return;
+  const selector =
+    mode === "dark"
+      ? ":root.contrast-high.dark"
+      : ":root.contrast-high:not(.dark)";
+  lines.push(`${selector} {`);
+  for (const key of keys) {
+    lines.push(`  --${mode}-${key}: var(--${mode}-hc-${key});`);
+    lines.push(`  --${mode}-${key}-rgb: var(--${mode}-hc-${key}-rgb);`);
+  }
+  lines.push("}", "");
+};
+
+const lightBasePalette = resolveBasePalette("light");
+const darkBasePalette = resolveBasePalette("dark");
+const lightKeys = lightBasePalette ? Object.keys(lightBasePalette) : [];
+const darkKeys = darkBasePalette ? Object.keys(darkBasePalette) : [];
+
+// High-contrast swaps for the active palette tokens.
+addContrastOverrides("light", lightKeys);
+addContrastOverrides("dark", darkKeys);
 writeFileSync(outputPath, lines.join("\n"));
 console.log(`Wrote ${outputPath}`);

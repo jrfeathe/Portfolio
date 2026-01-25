@@ -27,6 +27,8 @@ export type ShellSection = {
   eyebrow?: ReactNode;
   description?: ReactNode;
   content: ReactNode;
+  className?: string;
+  hideFromNav?: boolean;
 };
 
 export type ShellLayoutProps = {
@@ -46,6 +48,8 @@ export type ShellLayoutProps = {
     preset?: ResponsiveImagePreset;
     caption?: ReactNode;
   };
+  mobileNavMaxHeightClassName?: string;
+  mobileScrollContainer?: boolean;
   skimModeEnabled?: boolean;
   showSkimToggle?: boolean;
   shellCopy: ShellCopy;
@@ -65,59 +69,66 @@ export function ShellLayout({
   className,
   socialLinks,
   heroMedia,
-  skimModeEnabled = false,
+  skimModeEnabled,
   showSkimToggle = true,
   shellCopy,
   locale
 }: ShellLayoutProps) {
+  const hasSkimMode = typeof skimModeEnabled === "boolean";
+  const skimActive = Boolean(skimModeEnabled);
+  const navSourceSections = sections.filter((section) => !section.hideFromNav);
   const navItems: AnchorNavItem[] =
     anchorItems ??
-    sections.map((section): AnchorNavItem => ({
+    navSourceSections.map((section): AnchorNavItem => ({
       label: typeof section.title === "string" ? section.title : section.id,
       href: `#${section.id}`
     }));
   const hasNestedAnchors = navItems.some((item) => item.children?.length);
   const containerWidth = navItems.length ? "max-w-6xl" : "max-w-none";
   const hasNavItems = navItems.length > 0;
-  const showHeaderSkimToggle = showSkimToggle && skimModeEnabled;
-  const showHeroSkimToggle = showSkimToggle && !skimModeEnabled;
+  const showHeaderSkimToggle = showSkimToggle && (hasSkimMode ? skimActive : true);
+  const showHeroSkimToggle = showSkimToggle && (hasSkimMode ? !skimActive : true);
+  const headerSkimToggleClassName = clsx(!hasSkimMode && "skim-only");
+  const heroSkimToggleClassName = clsx(!hasSkimMode && "skim-hide");
   const headerClassName = clsx(
     "border-b border-border bg-surface dark:border-dark-border dark:bg-dark-surface",
-    skimModeEnabled ? "pb-1 pt-4" : "pb-5 pt-10"
+    skimActive ? "pb-1 pt-4" : "pb-5 pt-10"
   );
   const headerInnerClassName = clsx(
     "mx-auto flex w-full max-w-6xl flex-col px-4",
-    skimModeEnabled ? "gap-3" : "gap-6"
+    skimActive ? "gap-3" : "gap-6"
   );
   const headerRowClassName = clsx(
     "flex flex-wrap",
-    skimModeEnabled ? "items-start gap-2" : "items-center gap-4"
+    skimActive ? "items-start gap-2" : "items-center gap-4"
   );
   const preferenceControlsClassName = clsx(
     "ml-auto flex flex-1 flex-wrap justify-end md:flex-none",
-    skimModeEnabled ? "items-start gap-2" : "items-center gap-3"
+    skimActive ? "items-start gap-2" : "items-center gap-3"
   );
-  const heroGridClassName = skimModeEnabled
+  const heroGridClassName = skimActive
     ? "grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start"
     : "grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start";
-  const titleStackClassName = skimModeEnabled ? "space-y-3" : "space-y-4";
-  const contentGridClassName = skimModeEnabled
+  const titleStackClassName = skimActive ? "space-y-3" : "space-y-4";
+  const contentGridClassName = skimActive
     ? clsx(
         "shell-layout-grid mx-auto grid w-full grid-cols-1 gap-6 px-4 pb-16 pt-0",
         navItems.length
           ? `lg:grid-cols-[220px_minmax(0,1fr)_260px] ${containerWidth}`
           : "lg:grid-cols-[minmax(0,1fr)_260px] max-w-none",
+        hasNavItems ? "shell-layout-with-nav" : "shell-layout-no-nav",
         className
       )
     : clsx(
         "shell-layout-grid mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 px-4 pb-24 pt-10 lg:grid-cols-[220px_minmax(0,1fr)_260px]",
+        hasNavItems ? "shell-layout-with-nav" : "shell-layout-no-nav",
         className
       );
   const ctaContainerClassName = clsx(
     "shell-sidebar space-y-6",
     hasNavItems ? "lg:col-start-3" : "lg:col-start-2",
     "lg:row-start-1",
-    skimModeEnabled ? "pt-6" : null
+    skimActive ? "pt-6" : null
   );
   const mainClassName = clsx(
     "flex flex-col gap-16",
@@ -130,12 +141,12 @@ export function ShellLayout({
       id="top"
       className="bg-background text-text dark:bg-dark-background dark:text-dark-text"
     >
-      <header className={headerClassName}>
-        <div className={headerInnerClassName}>
-          <div className={headerRowClassName}>
+      <header className={clsx("shell-header", headerClassName)}>
+        <div className={clsx("shell-header-inner", headerInnerClassName)}>
+          <div className={clsx("shell-header-row", headerRowClassName)}>
             <div className="flex flex-1 items-center gap-3">
               {showHeaderSkimToggle ? (
-                <div className="min-w-[150px] flex-1 md:flex-none">
+                <div className={clsx("min-w-[150px] flex-1 md:flex-none", headerSkimToggleClassName)}>
                   <div className="flex items-center gap-3">
                     <SkimToggleButton active={skimModeEnabled} locale={locale} />
                     {socialLinks ? (
@@ -150,35 +161,35 @@ export function ShellLayout({
                 <Breadcrumbs
                   items={breadcrumbs}
                   ariaLabel={shellCopy.breadcrumbsLabel}
-                  className="flex-1"
+                  className={clsx("flex-1", "skim-hide")}
                 />
               ) : null}
             </div>
-            <div className={preferenceControlsClassName}>
+            <div className={clsx("shell-preference-controls", preferenceControlsClassName)}>
               <ThemeToggle className="min-w-[180px] flex-1 md:flex-none" locale={locale} />
               <ContrastToggle className="min-w-[200px] flex-1 md:flex-none" locale={locale} />
               <LanguageSwitcher className="min-w-[250px] flex-1 md:flex-none" />
             </div>
           </div>
-          <div className={heroGridClassName}>
-            <div className={titleStackClassName}>
+          <div className={clsx("shell-hero-grid", heroGridClassName)}>
+            <div className={clsx("shell-title-stack", titleStackClassName)}>
               {title ? (
-                <h1 className="text-4xl font-semibold tracking-tight">{title}</h1>
+                <h1 className="text-4xl font-semibold tracking-tight skim-hide">{title}</h1>
               ) : null}
               {subtitle ? (
-                <p className="max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted">
+                <p className="max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted skim-hide">
                   {subtitle}
                 </p>
               ) : null}
-                {showHeroSkimToggle ? (
-                  <div className="inline-flex flex-col items-start gap-3">
-                    <SkimToggleButton active={skimModeEnabled} locale={locale} />
-                    {socialLinks ? (
-                      <div className="flex items-center pt-2 pl-4">
-                        {socialLinks}
-                      </div>
-                    ) : null}
-                  </div>
+              {showHeroSkimToggle ? (
+                <div className={clsx("inline-flex flex-col items-start gap-3", heroSkimToggleClassName)}>
+                  <SkimToggleButton active={skimModeEnabled} locale={locale} />
+                  {socialLinks ? (
+                    <div className="flex items-center pt-2 pl-4">
+                      {socialLinks}
+                    </div>
+                  ) : null}
+                </div>
               ) : null}
             </div>
             {heroMedia ? (
@@ -208,7 +219,7 @@ export function ShellLayout({
               items={navItems}
               ariaLabel={shellCopy.anchorNavLabel}
               orientation="horizontal"
-              className="flex lg:hidden"
+              className={clsx("flex lg:hidden", "skim-hide")}
             />
           ) : null}
         </div>
@@ -221,30 +232,39 @@ export function ShellLayout({
         </div>
 
         {navItems.length ? (
-          <div className="hidden lg:col-start-1 lg:row-start-1 lg:block">
-            <div className="sticky top-24 space-y-3">
-              <AnchorControlPanel
-                enabled={hasNestedAnchors}
-                expandLabel={shellCopy.expandAllLabel}
-                collapseLabel={shellCopy.collapseAllLabel}
-              />
-              <AnchorNav items={navItems} ariaLabel={shellCopy.anchorNavLabel} />
-              <a
-                href="#top"
-                className="inline-flex w-full items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
-              >
-                {shellCopy.returnToTopLabel}
-              </a>
+          <div className={clsx("hidden lg:col-start-1 lg:row-start-1 lg:block", "skim-hide", "shell-nav-column")}>
+            <div className="sticky top-24">
+              <div className="flex max-h-[calc(100vh-6rem)] flex-col gap-3 pb-3">
+                <AnchorControlPanel
+                  enabled={hasNestedAnchors}
+                  expandLabel={shellCopy.expandAllLabel}
+                  collapseLabel={shellCopy.collapseAllLabel}
+                />
+                <div className="min-h-0 flex-1 overflow-y-auto rounded-2xl border border-border bg-surface/80 pr-1 shadow-sm backdrop-blur dark:border-dark-border dark:bg-dark-surface/80">
+                  <AnchorNav
+                    items={navItems}
+                    ariaLabel={shellCopy.anchorNavLabel}
+                    scrollable={false}
+                    className="!border-0 !bg-transparent !shadow-none !backdrop-blur-0"
+                  />
+                </div>
+                <a
+                  href="#top"
+                  className="inline-flex w-full items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:bg-surfaceMuted dark:border-dark-border dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
+                >
+                  {shellCopy.returnToTopLabel}
+                </a>
+              </div>
             </div>
           </div>
         ) : null}
 
-        <main className={mainClassName}>
+        <main className={clsx("shell-main", mainClassName)}>
           {sections.map((section) => (
             <section
               id={section.id}
               key={section.id}
-              className="scroll-mt-28"
+              className={clsx("scroll-mt-28", section.className)}
             >
               <div className="space-y-3">
                 {section.eyebrow ? (

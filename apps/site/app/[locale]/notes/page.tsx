@@ -24,7 +24,8 @@ const ResponsiveAudioPlayer = dynamicImport(
 );
 
 export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+export const revalidate = false;
 
 type PageParams = {
   params: {
@@ -59,9 +60,9 @@ function buildSections(
         title: "",
         description: null,
         content: (
-          <article className={contentClassName}>
-            {note.content}
-          </article>
+        <article className={contentClassName} data-mdx-content="true">
+          {note.content}
+        </article>
         )
       }
     ];
@@ -79,7 +80,7 @@ function buildSections(
       title: "",
       description: null,
       content: (
-        <div className={contentClassName}>
+        <div className={contentClassName} data-mdx-content="true">
           <p>{englishOnlyNotice}</p>
         </div>
       )
@@ -202,6 +203,8 @@ export default async function NotesIndexPage({ params }: PageParams) {
       breadcrumbs={breadcrumbs}
       sections={sections}
       anchorItems={anchorItems}
+      mobileNavMaxHeightClassName="max-h-[45vh]"
+      mobileScrollContainer
       showSkimToggle={false}
       className={layoutClassName}
       floatingWidget={

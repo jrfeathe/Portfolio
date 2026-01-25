@@ -55,20 +55,16 @@ describe("security headers helpers", () => {
     expect(nonce).toMatch(/^[A-Za-z0-9+/=]+$/);
   });
 
-  it("builds a CSP containing the provided nonce", () => {
-    const nonce = "testnonce";
-    const csp = buildContentSecurityPolicy(nonce);
+  it("builds a CSP with inline allowances and required directives", () => {
+    const csp = buildContentSecurityPolicy();
     const frameSrc = process.env.HCAPTCHA_SITE_KEY
       ? "frame-src 'self' https://hcaptcha.com https://*.hcaptcha.com"
       : "frame-src 'none'";
 
-    expect(csp).toContain(`script-src 'self' 'nonce-${nonce}'`);
+    expect(csp).toContain("script-src 'self' 'unsafe-inline'");
     expect(csp).toContain(frameSrc);
-    if (process.env.NODE_ENV === "production") {
-      expect(csp).toContain(`style-src 'self' 'nonce-${nonce}'`);
-    } else {
-      expect(csp).toContain("style-src 'self' 'unsafe-inline'");
-    }
+    expect(csp).toContain("style-src 'self' 'unsafe-inline'");
+    expect(csp).toContain("style-src-attr 'unsafe-inline'");
     expect(csp).toContain("default-src 'self'");
     if (process.env.NODE_ENV !== "production") {
       expect(csp).toContain("'unsafe-eval'");
@@ -78,30 +74,29 @@ describe("security headers helpers", () => {
 
   it("omits unsafe-eval in production mode", () => {
     runWithNodeEnv("production", () => {
-      const csp = buildContentSecurityPolicy("prod");
+      const csp = buildContentSecurityPolicy();
       expect(csp).not.toContain("'unsafe-eval'");
-      expect(csp).not.toContain("'unsafe-inline'");
-      expect(csp).toContain("style-src 'self' 'nonce-prod'");
+      expect(csp).toContain("style-src 'self' 'unsafe-inline'");
+      expect(csp).toContain("style-src-attr 'unsafe-inline'");
     });
   });
 
   it("allows hCaptcha hosts when configured", () => {
     withEnv("HCAPTCHA_SITE_KEY", "test-key", () => {
-      const csp = buildContentSecurityPolicy("nonce");
+      const csp = buildContentSecurityPolicy();
       expect(csp).toContain("https://js.hcaptcha.com");
       expect(csp).toContain("frame-src 'self' https://hcaptcha.com https://*.hcaptcha.com");
     });
   });
 
   it("applies the full header set", () => {
-    const nonce = "abc123";
     const headers = new Headers();
     const request = createRequest("https://example.com");
 
-    applySecurityHeaders(headers, { nonce, request });
+    applySecurityHeaders(headers, { request });
 
     expect(headers.get("Content-Security-Policy")).toContain(
-      `'nonce-${nonce}'`
+      "script-src 'self' 'unsafe-inline'"
     );
     expect(headers.get("Permissions-Policy")).toBeTruthy();
     expect(headers.get("Strict-Transport-Security")).toBeTruthy();
@@ -112,7 +107,7 @@ describe("security headers helpers", () => {
     const headers = new Headers();
     const request = createRequest("http://localhost:3000");
 
-    applySecurityHeaders(headers, { nonce: "nonce", request });
+    applySecurityHeaders(headers, { request });
 
     expect(headers.get("Strict-Transport-Security")).toBeNull();
   });

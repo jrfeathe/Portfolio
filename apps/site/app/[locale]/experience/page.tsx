@@ -27,8 +27,8 @@ const ResponsiveAudioPlayer = dynamicImport(
   { ssr: false, loading: () => null }
 );
 
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+export const revalidate = false;
 
 type PageParams = {
   params: {
@@ -221,6 +221,7 @@ export default function ExperiencePage({ params }: PageParams) {
       breadcrumbs={breadcrumbs}
       sections={sections}
       anchorItems={anchorItems}
+      mobileBreakpoint={960}
       floatingWidget={
         <ResponsiveAudioPlayer
           sources={audioSources}

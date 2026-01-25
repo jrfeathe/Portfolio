@@ -1,7 +1,7 @@
 "use client";
 
 import { FOCUS_VISIBLE_RING } from "@portfolio/ui";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import clsx from "clsx";
 
 export type AnchorNavItem = {
@@ -16,6 +16,7 @@ export type AnchorNavProps = {
   className?: string;
   orientation?: "vertical" | "horizontal";
   scrollable?: boolean;
+  onItemClick?: (item: AnchorNavItem, event: MouseEvent<HTMLAnchorElement>) => void;
 };
 
 const DEFAULT_ROOT_MARGIN = "-45% 0px -45% 0px";
@@ -25,7 +26,8 @@ export function AnchorNav({
   ariaLabel,
   className,
   orientation = "vertical",
-  scrollable = true
+  scrollable = true,
+  onItemClick
 }: AnchorNavProps) {
   const enableNested = orientation === "vertical";
   const flattenedItems = useMemo(() => {
@@ -42,11 +44,22 @@ export function AnchorNav({
 
   const [activeHref, setActiveHref] = useState<string>(flattenedItems[0]?.href ?? "");
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
+  const [manualCollapsed, setManualCollapsed] = useState<Record<string, boolean>>({});
   const scrollRaf = useRef<number | null>(null);
   const nestedParents = useMemo(
     () => (enableNested ? items.filter((item) => item.children?.length) : []),
     [items, enableNested]
   );
+  const activeTopLevelHref = useMemo(() => {
+    if (!enableNested) {
+      return activeHref;
+    }
+    const parentMatch = items.find((item) =>
+      item.href === activeHref ||
+      item.children?.some((child) => child.href === activeHref)
+    );
+    return parentMatch?.href ?? activeHref;
+  }, [activeHref, items, enableNested]);
 
   useEffect(() => {
     if (!flattenedItems.length) return;
@@ -151,13 +164,17 @@ export function AnchorNav({
       entry.children?.some((child) => child.href === activeHref)
     );
 
-    if (parentWithActiveChild && !expandedSections[parentWithActiveChild.href]) {
+    if (
+      parentWithActiveChild &&
+      !expandedSections[parentWithActiveChild.href] &&
+      !manualCollapsed[parentWithActiveChild.href]
+    ) {
       setExpandedSections((prev) => ({
         ...prev,
         [parentWithActiveChild.href]: true
       }));
     }
-  }, [activeHref, items, enableNested, expandedSections]);
+  }, [activeHref, items, enableNested, expandedSections, manualCollapsed]);
 
   const handleExpandAll = useCallback(() => {
     if (!nestedParents.length) {
@@ -169,6 +186,7 @@ export function AnchorNav({
         return acc;
       }, {})
     );
+    setManualCollapsed({});
   }, [nestedParents]);
 
   const handleCollapseAll = useCallback(() => {
@@ -176,6 +194,12 @@ export function AnchorNav({
       return;
     }
     setExpandedSections({});
+    setManualCollapsed(
+      nestedParents.reduce<Record<string, boolean>>((acc, item) => {
+        acc[item.href] = true;
+        return acc;
+      }, {})
+    );
   }, [nestedParents]);
 
   useEffect(() => {
@@ -221,7 +245,7 @@ export function AnchorNav({
     >
       <ol className={clsx("flex", orientationClasses)}>
         {items.map((item) => {
-          const isActive = activeHref === item.href;
+          const isActive = activeTopLevelHref === item.href;
           const hasChildren = enableNested && item.children?.length;
           const childListId = hasChildren
             ? `${item.href.replace(/[^a-zA-Z0-9_-]/g, "")}-children`
@@ -240,18 +264,28 @@ export function AnchorNav({
                       : "text-textMuted hover:bg-surfaceMuted dark:text-dark-textMuted dark:hover:bg-dark-surfaceMuted"
                   )}
                   aria-current={isActive ? "location" : undefined}
+                  onClick={(event) => onItemClick?.(item, event)}
                 >
                   {item.label}
                 </a>
                 {hasChildren ? (
                   <button
                     type="button"
-                    onClick={() =>
+                    onClick={() => {
+                      const nextExpanded = !expandedSections[item.href];
                       setExpandedSections((prev) => ({
                         ...prev,
-                        [item.href]: !prev[item.href]
-                      }))
-                    }
+                        [item.href]: nextExpanded
+                      }));
+                      setManualCollapsed((prev) => {
+                        if (nextExpanded) {
+                          const next = { ...prev };
+                          delete next[item.href];
+                          return next;
+                        }
+                        return { ...prev, [item.href]: true };
+                      });
+                    }}
                     aria-expanded={isExpanded}
                     aria-controls={childListId}
                     className={clsx(
@@ -274,7 +308,7 @@ export function AnchorNav({
                   )}
                 >
                   {item.children?.map((child) => {
-                    const childActive = activeHref === child.href;
+                    const childActive = false;
                     return (
                       <li key={child.href}>
                         <a
@@ -286,7 +320,8 @@ export function AnchorNav({
                               ? "bg-accent text-accentOn dark:bg-dark-accent dark:text-dark-accentOn"
                               : "text-textMuted hover:bg-surfaceMuted dark:text-dark-textMuted dark:hover:bg-dark-surfaceMuted"
                           )}
-                          aria-current={childActive ? "location" : undefined}
+                          aria-current={undefined}
+                          onClick={(event) => onItemClick?.(child, event)}
                         >
                           {child.label}
                         </a>

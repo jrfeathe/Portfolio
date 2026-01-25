@@ -158,6 +158,7 @@ export type AppDictionary = {
       techStackTitle: string;
       leadershipLabel: string;
       leadership: string;
+      leadershipRollodexPrefix: string;
       leadershipRollodexLinkText: string;
       leadershipRollodexSuffix: string;
       leadershipTeachingAssistantLinkText: string;
@@ -564,7 +565,7 @@ const en: AppDictionary = {
   },
   chatbot: {
     launcherLabel: "Open recruiter AI chat",
-    panelTitle: "AI recruiter assistant",
+    panelTitle: "Portfolio Assistant",
     panelSubtitle: "Ask about Jack's skills, projects, or impact.",
     inputPlaceholder: "Ask about React, cost savings, leadership, or a project...",
     exampleQuestions: [
@@ -615,10 +616,11 @@ const en: AppDictionary = {
       columnTitle: "AI-assisted Fullstack Engineer",
       projectManagementLabel: "Project Management",
       projectManagement:
-        "Independent and AI-augmented, turning ambiguous goals into a Work Breakdown Structure with clear deliverables and documentation.",
+        "Independent, AI-augmented planning with clear documentation and task breakdown.",
       techStackTitle: "Primary languages & tools",
       leadershipLabel: "Leadership & mentorship",
       leadership: "Rollodex co-lead Fullstack Engineer, and Teaching Assistant for Upper-level Distributed Software Systems course.",
+      leadershipRollodexPrefix: "",
       leadershipRollodexLinkText: "Rollodex",
       leadershipRollodexSuffix: " co-lead Fullstack Engineer, and ",
       leadershipTeachingAssistantLinkText: "Teaching Assistant",
@@ -713,7 +715,7 @@ const en: AppDictionary = {
         description:
           "My current focus is on building some small scale projects that make a difference in my life.",
         overview:
-          "G.O.A.T.: Grind, Optimize, Automate, Thrive.",
+          "🐐 G.O.A.T.: Grind, Optimize, Automate, Thrive.",
         nextSteps: [
           ...getRoadmapSteps("en"),
           "Social Networking: Find events to meet people in industry. Considering indie games conventions in NYC."
@@ -861,7 +863,7 @@ const ja: AppDictionary = {
   },
   chatbot: {
     launcherLabel: "採用担当AIチャットを開く",
-    panelTitle: "AI 採用アシスタント",
+    panelTitle: "ポートフォリオ・アシスタント",
     panelSubtitle: "Jack のスキル、プロジェクト、成果について質問してください。",
     inputPlaceholder: "React、コスト削減、リーダーシップ、またはプロジェクトについて質問してください…",
     exampleQuestions: [
@@ -912,14 +914,15 @@ const ja: AppDictionary = {
       columnTitle: "AI支援フルスタックエンジニア",
       projectManagementLabel: "プロジェクト管理",
       projectManagement:
-        "独立かつAI支援で、曖昧な目標を明確な成果物とドキュメントを備えたWBSに落とし込みます。",
+        "独立して推進できる、AI活用の計画立案・明確なドキュメント作成・タスク分解。",
       techStackTitle: "主な言語とツール",
       leadershipLabel: "リーダーシップとメンタリング",
-      leadership: "Rollodex の共同リード・フルスタックエンジニアであり、上級分散ソフトウェアシステム講義のティーチングアシスタントも務めています。",
+      leadership: "Rollodexの共同リード・フルスタックエンジニアであり、上級分散ソフトウェアシステムの講義でティーチング・アシスタント（TA）も務めています。",
+      leadershipRollodexPrefix: "",
       leadershipRollodexLinkText: "Rollodex",
-      leadershipRollodexSuffix: "の共同リード・フルスタックエンジニアであり、",
-      leadershipTeachingAssistantLinkText: "ティーチングアシスタント",
-      leadershipTeachingAssistantSuffix: "でもあります（上級分散ソフトウェアシステム講義）。",
+      leadershipRollodexSuffix: "の共同リード・フルスタックエンジニアであり、上級分散ソフトウェアシステムの講義で",
+      leadershipTeachingAssistantLinkText: "ティーチング・アシスタント（TA）",
+      leadershipTeachingAssistantSuffix: "も務めています。",
       workAuthLabel: "就労資格",
       workAuthorization: "有効な SSN を持ち、米国での就労が許可されています。",
       timezoneLabel: "タイムゾーンと連携",
@@ -956,7 +959,7 @@ const ja: AppDictionary = {
           alt: "土を耕し「テックスタック」の作物を育てながら気を放つ Jack Featherstone のデジタルアート。",
         },
         preset: "hero",
-        caption: "始めた畝は必ず仕上げる。根と責任は深く、作物はしっかり立つ。"
+        caption: "「始めた畝は、必ず仕上げる。根と責任は深く、作物は揺るがない。」"
       },
       cta: {
         title: "すぐに実績が必要ですか？",
@@ -1010,7 +1013,7 @@ const ja: AppDictionary = {
         description:
           "現在は、生活に実質的な価値をもたらす小規模プロジェクトに注力しています。",
         overview:
-          "G.O.A.T.：努力し、最適化し、自動化し、成長します。",
+          "🐐 G.O.A.T.： Grind 努力し、 Optimize 最適化し、 Automate 自動化し、 Thrive 成長します。",
         nextSteps: [
           ...getRoadmapSteps("ja"),
           "ソーシャルネットワーキング：業界関係者と出会うイベントを探しています。NYCのインディーゲーム系イベントも検討しています。"
@@ -1160,7 +1163,7 @@ const zh: AppDictionary = {
   },
   chatbot: {
     launcherLabel: "打开招聘 AI 聊天",
-    panelTitle: "AI 招聘助手",
+    panelTitle: "作品集助手",
     panelSubtitle: "询问 Jack 的技能、项目或影响。",
     inputPlaceholder: "询问 React、成本节省、领导力或某个项目……",
     exampleQuestions: [
@@ -1211,14 +1214,15 @@ const zh: AppDictionary = {
       columnTitle: "AI 辅助全栈工程师",
       projectManagementLabel: "项目管理",
       projectManagement:
-        "独立并结合 AI，将模糊目标转化为具有清晰交付物和文档的工作分解结构。",
+        "可独立推进的 AI 辅助规划、清晰的文档整理与任务拆解。",
       techStackTitle: "主要语言与工具",
       leadershipLabel: "领导力与指导",
-      leadership: "担任 Rollodex 联合负责人（全栈工程师），并兼任高阶分布式软件系统课程助教。",
+      leadership: "担任 Rollodex 联合技术负责人（全栈工程师），并兼任高阶分布式软件系统课程助教。",
+      leadershipRollodexPrefix: "担任 ",
       leadershipRollodexLinkText: "Rollodex",
-      leadershipRollodexSuffix: "联合负责人（全栈工程师），并兼任",
+      leadershipRollodexSuffix: " 联合技术负责人（全栈工程师），并兼任高阶分布式软件系统课程",
       leadershipTeachingAssistantLinkText: "助教",
-      leadershipTeachingAssistantSuffix: "（高阶分布式软件系统课程）。",
+      leadershipTeachingAssistantSuffix: "。",
       workAuthLabel: "工作许可",
       workAuthorization: "持有有效 SSN，获准在美国工作。",
       timezoneLabel: "时区与协作",
@@ -1255,7 +1259,7 @@ const zh: AppDictionary = {
           alt: "Jack Featherstone 在耕作土壤、种植“技术栈”作物时释放气的数字艺术作品。",
         },
         preset: "hero",
-        caption: "我会完成开始的每一行；根基与责任深植，因此收成稳固。"
+        caption: "“起垄必成行，根深责重，收成自稳。”"
       },
       cta: {
         title: "需要快速证明吗？",
@@ -1309,7 +1313,7 @@ const zh: AppDictionary = {
         description:
           "目前我专注于构建对生活产生实际影响的小型项目。",
         overview:
-          "G.O.A.T.：打磨、优化、自动化、成长。",
+          "🐐 G.O.A.T.： Grind 打磨、 Optimize 优化、 Automate 自动化、 Thrive 成长。",
         nextSteps: [
           ...getRoadmapSteps("zh"),
           "社交拓展：寻找与行业人士交流的活动，考虑纽约的独立游戏大会。"

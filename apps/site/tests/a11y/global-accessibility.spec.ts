@@ -16,7 +16,7 @@ const journeys = [
     path: "/en?skim=1",
     async prepare(page: Page) {
       await page.waitForLoadState("networkidle");
-      await expect(page.locator('[data-skim-mode="true"]')).toHaveCount(1);
+      await expect(page.locator("html")).toHaveAttribute("data-skim-mode", "true");
     }
   },
   {

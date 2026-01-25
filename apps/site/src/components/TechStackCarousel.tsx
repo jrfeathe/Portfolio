@@ -12,7 +12,6 @@ type TechStackItem = TechStackItems[number];
 
 const ITEMS_PER_ROW = 4;
 const ROWS_PER_SLIDE = 2;
-const ITEMS_PER_SLIDE = ITEMS_PER_ROW * ROWS_PER_SLIDE;
 const SLIDE_LOCK_DURATION = 420;
 const INITIAL_VISIBLE_SLIDES = 1;
 const LAZY_SLIDE_DELAY = 600;
@@ -26,13 +25,15 @@ export function TechStackCarousel({
   iconsReady?: boolean;
   labels: AppDictionary["home"]["sections"]["techStack"]["carousel"];
 }) {
+  const itemsPerSlide = ITEMS_PER_ROW * ROWS_PER_SLIDE;
+
   const slides = useMemo(() => {
     const chunked: TechStackItem[][] = [];
-    for (let i = 0; i < items.length; i += ITEMS_PER_SLIDE) {
-      chunked.push(items.slice(i, i + ITEMS_PER_SLIDE));
+    for (let i = 0; i < items.length; i += itemsPerSlide) {
+      chunked.push(items.slice(i, i + itemsPerSlide));
     }
     return chunked;
-  }, [items]);
+  }, [items, itemsPerSlide]);
 
   const [activeSlide, setActiveSlide] = useState(0);
   const [visibleSlideCount, setVisibleSlideCount] = useState(() =>
@@ -183,7 +184,7 @@ export function TechStackCarousel({
     <div className="relative mt-3">
       <div
         ref={containerRef}
-        className="-mx-4 overflow-hidden overscroll-contain px-4 pb-4 pt-2 sm:mx-0 sm:px-0 sm:pt-2"
+        className="-mx-4 overflow-hidden overscroll-contain pb-4 pt-2 sm:mx-0 sm:pt-2"
         aria-label={labels.label}
       >
         <div
@@ -195,13 +196,20 @@ export function TechStackCarousel({
             return (
               <ul
                 key={`${slide[0]?.name ?? "slide"}-${slideIndex}`}
-                className="grid min-w-full grid-cols-4 grid-rows-2 gap-x-5 gap-y-5 text-center text-xs font-medium text-text dark:text-dark-text"
+                className="grid w-full flex-none box-border grid-cols-4 grid-rows-2 gap-x-3 gap-y-4 px-4 text-center text-xs font-medium text-text dark:text-dark-text sm:gap-x-5 sm:gap-y-5 sm:px-0"
               >
                 {slide.map((item) => {
                   const isInternalHref =
                     item.href.startsWith("/") || item.href.startsWith("#");
                   const itemClassName =
-                    "group flex h-full flex-col items-center gap-2 rounded-[1.75rem] border border-transparent bg-transparent px-0 py-0 transition hover:-translate-y-0.5";
+                    "group flex h-full w-full min-w-0 flex-col items-center gap-2 rounded-[1.75rem] border border-transparent bg-transparent px-0 py-0 transition hover:-translate-y-0.5";
+                  const wrapNameOnSmall =
+                    item.name === "Oracle Cloud" ||
+                    item.name === "Stellaris Mods" ||
+                    item.name === "Minecraft Mods";
+                  const nameParts = item.name.split(" ");
+                  const primaryName = nameParts[0];
+                  const secondaryName = nameParts.slice(1).join(" ");
                   const itemContent = (
                     <>
                       <span
@@ -225,7 +233,24 @@ export function TechStackCarousel({
                           />
                         )}
                       </span>
-                      <span className="truncate text-center font-semibold">{item.name}</span>
+                      <span
+                        className={
+                          wrapNameOnSmall
+                            ? "block w-full text-center font-semibold whitespace-nowrap max-[400px]:whitespace-normal max-[400px]:leading-tight"
+                            : "block w-full text-center font-semibold"
+                        }
+                      >
+                        {wrapNameOnSmall ? (
+                          <>
+                            <span>{primaryName}</span>
+                            {secondaryName ? (
+                              <span className="max-[400px]:block"> {secondaryName}</span>
+                            ) : null}
+                          </>
+                        ) : (
+                          item.name
+                        )}
+                      </span>
                     </>
                   );
 

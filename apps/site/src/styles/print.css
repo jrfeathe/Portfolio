@@ -3,6 +3,10 @@
   margin: 0.85in;
 }
 
+.print-skim-section {
+  display: none !important;
+}
+
 @media print {
   :root {
     color-scheme: light;
@@ -12,6 +16,8 @@
   body {
     background: var(--light-hc-background) !important;
     color: var(--light-hc-text) !important;
+    height: auto !important;
+    min-height: 0 !important;
   }
 
   body {
@@ -47,27 +53,44 @@
   }
 
   header {
-    border: none !important;
-    background: transparent !important;
-    padding: 0 0 1.25rem !important;
-    margin-bottom: 1.25rem !important;
+    display: none !important;
   }
 
-  header h1 {
-    font-size: 28pt !important;
-    line-height: 1.2 !important;
-    margin-bottom: 0.25rem !important;
-  }
-
-  header p {
-    max-width: none !important;
-    font-size: 12pt !important;
-    color: var(--light-hc-textMuted) !important;
+  [data-hero-portrait="true"] {
+    display: none !important;
   }
 
   main {
     width: 100% !important;
     padding: 0 !important;
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  .print-skim-section {
+    display: block !important;
+    order: -1;
+    border-bottom: none !important;
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  main section {
+    display: none !important;
+  }
+
+  main section.print-skim-section {
+    display: block !important;
+  }
+
+  .print-tech-list {
+    columns: 2;
+    column-gap: 1.5rem;
+  }
+
+  .print-tech-list li {
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   main section {

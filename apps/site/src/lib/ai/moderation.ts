@@ -1,6 +1,6 @@
 import { Filter, type CheckProfanityResult, type Language } from "glin-profanity";
 import { loadLdnoobwWords } from "./ldnoobw";
-import { loadSafePhrases } from "./safePhrases";
+import { loadSafePhrases, loadSafePhrasePatterns } from "./safePhrases";
 
 export type LocalModerationResult = {
   flagged: boolean;
@@ -18,6 +18,7 @@ export type LocalModerationResult = {
 
 const ZERO_WIDTH_CHARS = /[\u200B-\u200D\uFEFF]/g;
 const LEET_MAP: Record<string, string> = { "0": "o", "1": "l", "3": "e", "4": "a", "5": "s", "7": "t", "8": "b", "9": "g" };
+const NON_LATIN_SCRIPT = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}\p{Script=Cyrillic}\p{Script=Arabic}\p{Script=Hebrew}\p{Script=Devanagari}\p{Script=Thai}\p{Script=Greek}]/u;
 
 const PORTFOLIO_ALLOWLIST_WORDS = new Set(
   [
@@ -102,6 +103,34 @@ const PORTFOLIO_ALLOWLIST_WORDS = new Set(
     "勤務時間",
     "所在地",
     "拠点",
+    "部下",
+    "社員",
+    "従業員",
+    "チーム",
+    "リーダー",
+    "リーダーシップ",
+    "管理",
+    "マネジメント",
+    "会議",
+    "ミーティング",
+    "運営",
+    "司会",
+    "進行",
+    "ファシリテーション",
+    "対立",
+    "衝突",
+    "クレーム",
+    "苦情",
+    "顧客",
+    "クライアント",
+    "秘密",
+    "守秘",
+    "機密",
+    "倫理",
+    "道徳",
+    "プライバシー",
+    "フィードバック",
+    "エスカレーション",
     // Simplified Chinese (portfolio-safe terms)
     "简历",
     "履历",
@@ -128,7 +157,29 @@ const PORTFOLIO_ALLOWLIST_WORDS = new Set(
     "地点",
     "位置",
     "城市",
-    "办公地点"
+    "办公地点",
+    "员工",
+    "下属",
+    "团队",
+    "领导",
+    "管理",
+    "经理",
+    "主管",
+    "会议",
+    "组织",
+    "协调",
+    "主持",
+    "冲突",
+    "纠纷",
+    "投诉",
+    "客户",
+    "保密",
+    "机密",
+    "伦理",
+    "道德",
+    "隐私",
+    "反馈",
+    "升级"
   ].map((word) => word.toLowerCase())
 );
 
@@ -143,27 +194,31 @@ const PORTFOLIO_INTENT_PATTERNS = [
   /\bwork\s+(location|city|office)\b/i,
   /\b(strengths?|weaknesses?)\b/i,
   /\b(based\s+in|where\s+is\s+\w+\s+based|location|city)\b/i,
-  /\b(industry|industries|sector|sectors|domain|domains)\b/i
+  /\b(industry|industries|sector|sectors|domain|domains)\b/i,
+  /(部下|社員|従業員|チーム|リーダー|リーダーシップ|管理|マネジメント|会議|ミーティング|運営|司会|進行|ファシリテーション|対立|衝突|クレーム|苦情|顧客|クライアント|秘密|守秘|機密|倫理|道徳|プライバシー|フィードバック|エスカレーション)/i,
+  /(员工|下属|团队|领导|管理|经理|主管|会议|组织|协调|主持|冲突|纠纷|投诉|客户|保密|机密|伦理|道德|隐私|反馈|升级)/i
 ];
 
 const DOXXING_PATTERNS = [
-  // English
-  /\b(ssn|social\s+security|sin)\b/i,
-  /\bpassport\b/i,
-  /\bdriver'?s\s+license\b/i,
-  /\bid\s*(number)?\b/i,
-  /\b(home|street|mailing|physical)\s+address\b/i,
-  /\b(apartment|apt\.?|unit)\s+(number|no\.?)\b/i,
-  /\bcoordinates?\b/i,
-  /\blatitude\b|\blongitude\b/i,
-  /\bexact\s+(home|work|school)?\s*location\b/i,
-  /\bwhere\s+(does\s+he\s+)?live\b/i,
-  /\bdoxx?\b/i,
-  /\btrack(ing)?\s+(him|her|them|location|address|phone|device)\b/i,
+  // English (high-sensitivity only)
+  /\b(ssn|social\s+security(?:\s+number)?|social\s+insurance\s+number)\b/i,
+  /\b(home|residential|street|house)\s+address\b/i,
+  /\b(bank\s+account|bank\s+details?|bank\s+info|banking\s+details?|banking\s+info|routing\s+number|iban|swift|bic|credit\s+card\s+number|debit\s+card\s+number)\b/i,
+  /\b(password|passphrase|passcode)\b/i,
+  /\b(api\s+key|secret\s+key|private\s+key|ssh\s+key|access\s+token|api\s+token)\b/i,
+  /\b(?!000|666|9\d\d)\d{3}[- ]?(?!00)\d{2}[- ]?(?!0000)\d{4}\b/,
   // Japanese
-  /住所|自宅住所|自宅の住所|家の住所|郵便番号|連絡先|電話番号|携帯番号|マイナンバー|居場所|所在|追跡|どこに住んで/i,
+  /自宅住所|自宅の住所|家の住所/i,
+  /社会保障番号|マイナンバー/i,
+  /銀行口座|口座番号|銀行口座番号/i,
+  /パスワード|パスフレーズ|パスコード/i,
+  /秘密鍵|プライベートキー|APIキー|シークレットキー|アクセス\s*トークン/i,
   // Simplified Chinese
-  /住址|家庭住址|家庭地址|家里地址|邮编|联系电话|电话号码|手机号|身份证号?|护照号?|精准定位|坐标|追踪|追蹤|住在哪里/i
+  /家庭住址|家庭地址|家里地址/i,
+  /社会保障号|社会保障号码|身份证号/i,
+  /银行账户|银行账号|银行账户号|账户号码|信用卡号|借记卡号|路由号码|国际银行账号|iban|swift|bic/i,
+  /密码|口令/i,
+  /私钥|API密钥|访问令牌|访问密钥/i
 ];
 
 const TECH_INTENT_PATTERNS = [
@@ -214,20 +269,39 @@ const SELF_HARM_PATTERNS = [
   /\bself[-\s]?harm\b/i
 ];
 
-const PERSONAL_SENSITIVE_PATTERNS = [
-  /\b(age|how\s+old|birth\s*date|date\s+of\s+birth)\b/i,
-  /\b(phone|mobile|cell)\s*(number)?\b/i,
-  /\bcontact\s+(number|info)\b/i,
-  /\b(address|exact\s+location|exact\s+city)\b/i,
-  /\bsalary\b/i,
-  /\b(relationship|girlfriend|boyfriend|partner)\b/i
-];
+const PERSONAL_SENSITIVE_PATTERNS: RegExp[] = [];
 
 export function normalizeForModeration(text: string): string {
   const nfkc = text.normalize("NFKC");
   const withoutZeroWidth = nfkc.replace(ZERO_WIDTH_CHARS, "");
   const deLeeted = withoutZeroWidth.replace(/[01345789]/g, (char) => LEET_MAP[char] ?? char);
   return deLeeted.replace(/\s+/g, " ").trim().toLowerCase();
+}
+
+function buildSafePhraseVariants(normalized: string): string[] {
+  if (!normalized) return [];
+  const variants = new Set<string>([normalized]);
+  const expanded = normalized
+    .replace(/\byou'?re\b/g, "you are")
+    .replace(/\byou'?ve\b/g, "you have")
+    .replace(/\bwe'?ve\b/g, "we have")
+    .replace(/\bi'?ve\b/g, "i have")
+    .replace(/\bcan'?t\b/g, "cannot")
+    .replace(/\bwon'?t\b/g, "will not")
+    .replace(/\bwhat'?s\b/g, "what is")
+    .replace(/\bit'?s\b/g, "it is")
+    .replace(/\bdo you\b/g, "does jack")
+    .replace(/\bare you\b/g, "is jack")
+    .replace(/\bcan you\b/g, "can jack")
+    .replace(/\bcould you\b/g, "could jack")
+    .replace(/\bwould you\b/g, "would jack")
+    .replace(/\bshould you\b/g, "should jack")
+    .replace(/\byour\b/g, "jack's")
+    .replace(/\byou\b/g, "jack")
+    .replace(/\bhe\b/g, "jack")
+    .replace(/\bhis\b/g, "jack's");
+  variants.add(expanded);
+  return Array.from(variants);
 }
 
 export function selectProfanityLanguages(text: string): Language[] {
@@ -281,7 +355,11 @@ export function isBenignLocationQuestion(normalized: string): boolean {
 export function runLocalModeration(message: string): LocalModerationResult {
   const normalized = normalizeForModeration(message);
   const safePhrases = loadSafePhrases();
-  const safePhraseHit = safePhrases.some((phrase) => phrase && normalized.includes(phrase));
+  const safePhrasePatterns = loadSafePhrasePatterns();
+  const safePhraseVariants = buildSafePhraseVariants(normalized);
+  const safePhraseHit =
+    safePhrasePatterns.some((pattern) => safePhraseVariants.some((variant) => pattern.test(variant))) ||
+    safePhraseVariants.some((variant) => safePhrases.some((phrase) => phrase && variant.includes(phrase)));
   const glinText = normalized
     .replace(/[^\p{L}\p{N}\s]/gu, " ")
     .replace(/\bpenises\b/g, "penis")
@@ -334,12 +412,19 @@ export function runLocalModeration(message: string): LocalModerationResult {
 
   const portfolioIntent = hasAllowlistedPortfolioIntent(normalized);
   const techIntent = TECH_INTENT_PATTERNS.some((pattern) => pattern.test(normalized));
-  const professionalIntent = portfolioIntent || techIntent;
   const doxxing = !portfolioIntent && DOXXING_PATTERNS.some((pattern) => pattern.test(normalized));
   const sexualBody = SEXUAL_BODY_PATTERNS.some((pattern) => pattern.test(normalized));
   const harassmentCue = HARASSMENT_PATTERNS.some((pattern) => pattern.test(normalized));
   const selfHarmCue = SELF_HARM_PATTERNS.some((pattern) => pattern.test(normalized));
   const personalSensitiveCue = !portfolioIntent && PERSONAL_SENSITIVE_PATTERNS.some((pattern) => pattern.test(normalized));
+  const nonLatinSafe =
+    NON_LATIN_SCRIPT.test(normalized) &&
+    !doxxing &&
+    !sexualBody &&
+    !harassmentCue &&
+    !selfHarmCue &&
+    !personalSensitiveCue;
+  const professionalIntent = portfolioIntent || techIntent || nonLatinSafe;
   const unprofessionalCue = !professionalIntent;
 
   const reasons: string[] = [];

@@ -103,12 +103,14 @@ export function HCaptchaWidget({
   siteKey,
   onVerify,
   locale,
-  disabled
+  disabled,
+  onReady
 }: {
   siteKey: string;
   onVerify: (token: string) => void;
   locale: Locale;
   disabled?: boolean;
+  onReady?: () => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<number | null>(null);
@@ -177,6 +179,9 @@ export function HCaptchaWidget({
           }
         }
       });
+      if (onReady) {
+        requestAnimationFrame(() => onReady());
+      }
     }
 
     setup();
@@ -188,7 +193,7 @@ export function HCaptchaWidget({
       }
       widgetIdRef.current = null;
     };
-  }, [siteKey, onVerify, theme, locale]);
+  }, [siteKey, onVerify, theme, locale, onReady]);
 
   return (
     <div className="mt-2">

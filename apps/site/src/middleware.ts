@@ -11,10 +11,7 @@ import {
   registerEdgeInstrumentation,
   withEdgeSpan
 } from "./lib/otel/edge";
-import {
-  applySecurityHeaders,
-  generateNonce
-} from "./lib/security/headers";
+import { applySecurityHeaders } from "./lib/security/headers";
 
 const PUBLIC_FILE = /\.(.*)$/;
 
@@ -36,11 +33,7 @@ export async function middleware(request: NextRequest) {
       return NextResponse.next();
     }
 
-    const nonce = generateNonce();
     const requestHeaders = new Headers(request.headers);
-    requestHeaders.set("x-nonce", nonce);
-    requestHeaders.set("x-nextjs-csp-nonce", nonce);
-    requestHeaders.set("x-csp-nonce", nonce);
 
     if (pathname.startsWith("/api")) {
       const apiResponse = NextResponse.next({
@@ -48,10 +41,7 @@ export async function middleware(request: NextRequest) {
           headers: requestHeaders
         }
       });
-      applySecurityHeaders(apiResponse.headers, { nonce, request });
-      apiResponse.headers.set("x-nonce", nonce);
-      apiResponse.headers.set("x-nextjs-csp-nonce", nonce);
-      apiResponse.headers.set("x-csp-nonce", nonce);
+      applySecurityHeaders(apiResponse.headers, { request });
       return apiResponse;
     }
 
@@ -75,10 +65,7 @@ export async function middleware(request: NextRequest) {
           maxAge: 31536000
         });
       }
-      applySecurityHeaders(response.headers, { nonce, request });
-      response.headers.set("x-nonce", nonce);
-      response.headers.set("x-nextjs-csp-nonce", nonce);
-      response.headers.set("x-csp-nonce", nonce);
+      applySecurityHeaders(response.headers, { request });
       return response;
     }
 
@@ -113,10 +100,7 @@ export async function middleware(request: NextRequest) {
       });
     }
 
-    applySecurityHeaders(response.headers, { nonce, request });
-    response.headers.set("x-nonce", nonce);
-    response.headers.set("x-nextjs-csp-nonce", nonce);
-    response.headers.set("x-csp-nonce", nonce);
+    applySecurityHeaders(response.headers, { request });
     return response;
   });
 }

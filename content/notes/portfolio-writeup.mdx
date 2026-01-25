@@ -85,164 +85,176 @@ There was also the task of establishing our content for skim mode. This was done
 <span id="epic2"></span>
 ### EPIC 2: Design System. GOING THROUGH THE MOTIONS. (10月24-26日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   A lot of setup before actually building the initial baseline site. This felt backwards to me. Codex generated a bunch of components before we even had a working site setup. I’d do this much differently next time. Get a blank page to display first, then add a header, content body, footer, one example second page, and nav between them. Page setup for printing was done here too, and completely differently to how we need it done. It is being re-implemented now at launch.
-  </IndentedParagraph>
+</IndentedParagraph>
 
 <span id="epic3"></span>
 ### EPIC 3: Architecture. GETTING SOMEWHERE. (10月26-27日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   The site was now executable and immediately we configured routing to locales. (/en, /ja, /zh) This was excellent. We had a great extendable infrastructure where we setup pages with [locale]/page.tsx, and just had to inject relevant text. I don’t think I would have done it this way without AI, and probably would’ve done something weird with components accepting locale toggle parameters. I’m quite happy with the results here.
-  </IndentedParagraph>
-  <IndentedParagraph>
+</IndentedParagraph>
+<IndentedParagraph>
   It wasn’t all sunshine however, as we chased two mostly-fruitless tasks with 3.2 and 3.3. The setup of the notes page with MDX was misguided. This is the page you are reading now. It was originally defined as a series of “Engineering notes” like blog posts. From GPT Oct.22:
-  </IndentedParagraph>
-  - Engineering Notes (no NDAs needed)
-  - - Short, surgical write-ups: “How I choose an index,” “Debugging heisenbugs,” “Zero-downtime migrations.”
-  - - Each post ends with Trade-offs and What I’d do differently. This demonstrates judgment better than code dumps.
+</IndentedParagraph>
+
+<ul>
+  <li>
+    Engineering Notes (no NDAs needed)
+    <ul>
+      <li>
+        Short, surgical write-ups: “How I choose an index,” “Debugging heisenbugs,” “Zero-downtime migrations.”
+      </li>
+      <li>
+        Each post ends with Trade-offs and What I’d do differently. This demonstrates judgment better than code dumps.
+      </li>
+    </ul>
+  </li>
+</ul>
+
   I wasn’t a fan of this, as I figured nobody would read a bunch of disorderly junk. This isn’t LinkedIn. I wasn’t going to keep posting fluff once the site was up, I want to apply for jobs or do something new. When writing the current writeup (this one) I don’t expect anyone to actually read it. I just need to organize my thoughts and document what to do differently. (I could even run this through AI and condense where I had pitfalls.) Anyways, MDX was kept but the blog style posting is gone. We also set up PlantUML / Mermaid for showing diagrams, but I didn’t see the point as the site took shape so I got rid of it. (Purged in F1.2 @ 12月8日)
 
 <span id="epic4"></span>
 ### EPIC 4: Unit Testing & Continuous Integration. NECESSARY EVIL. (10月27-28日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   Set up testing and GitHub CI. Lighthouse and Playwright would lead to a lot of pain and suffering in the future, but they did their job effectively. When coding with AI it is absolutely necessary to have comprehensive testing as it can do some really strange things, quite often on cheaper models. The grief is worth it for app stability. It is good to tune your tests as well, as telling the AI to make tests will yield some very strange and niche things. This laptop has 4gb of RAM and Playwright tests were eating it all and crashing the PC when multiple workers were configured. Codex will often try to run tests for you which is a mistake; it eats computing power and AI resources for little gain. For tests involving an initial build-and-run like a11y, Codex could never run it and went in circles trying to fix something it couldn’t. Make an organized list of tests like my .github/pull_request_template.md  (or better) and run them yourself, or let GitHub do it automatically.
-  </IndentedParagraph>
+</IndentedParagraph>
 
 <span id="epic5"></span>
 ### EPIC 5: Observability. SPYING ON ME? (10月28日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   We set up telemetry so I can see when someone interacts with the site. I don’t want to disrespect privacy, (I even considered an onion with NoScript-minded coding as a tech demo) but I want to know if anyone is actually using my site. Hopefully the results won’t be depressing!
-  </IndentedParagraph>
+</IndentedParagraph>
 
 <span id="epic6"></span>
 ### EPIC 6: Security. GOOD INTENTIONS, SPOOKY EXECUTION. (10月30-31日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   Codex helped me attempt to improve the security of the site. I never did much with Cybersecurity while in school, except for a class about hacking on Linux. I didn’t really care for it, but I do need to learn still. I’d like to get some Cybersecurity certs in the future. The site is currently due for a security audit, which is a top priority. I’m hoping my friend in Cybersecurity will help me out if I pay him. I know enough about Cybersecurity to know that I don’t understand it well yet.
-  </IndentedParagraph>
+</IndentedParagraph>
 
-  <IndentedParagraph>
+<IndentedParagraph>
   This section felt like a drag, I was just going through the motions. I started getting the feeling that my site wouldn’t take shape without intervention. I had been trying to follow the plan without changing it, as I had always been instructed in school. I thought it was bad practice to change your WBS. (I think it should be done more carefully in teams, but for a solo dev it doesn’t matter as much.) However I amended the WBS here to add Epic 10a, with tasks planned for 10a.0 – 10a.3. Unfortunately the AI assistant really couldn’t capture my true intentions or feelings well, but for now it gave me a designated spot to make the site my own and I looked forward to it.
-  </IndentedParagraph>
+</IndentedParagraph>
 
   <span id="epic7"></span>
 ### EPIC 7: Accessibility. なるほど。(11月1日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   Set up accessibility testing and our High Contrast themes. Themes were still very rough here, but we were headed in the right direction. However the backend of theming could have been done much better if we immediately established something like our current theme pipeline. (tokens.json → tokens.css → globals.css) Accessibility was a rough draft here, and wasn’t audited until much later. (F3.1 @ 2026年1月5日)
-  </IndentedParagraph>
+</IndentedParagraph>
 
 <span id="epic8"></span>
 ### EPIC 8: Performance. MAKE THE COMMON CASE FAST. (11月3-5日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   While we were making the site run faster, development started to feel slower and more laborious. I still had yet to see the spark of something I really liked. Discomfort was building. I didn’t really understand the full reasons behind the focus on performance guardrails, critical CSS, and fonts. The site’s performance really wasn’t able to be audited properly here anyways, because the site wasn’t even usable yet. This was way too early. Regardless, I pressed on and ordered the implementation of the image pipeline and critical CSS. Real performance gains came later with F1.7 @ 12月16日。
-  </IndentedParagraph>
+</IndentedParagraph>
 
 <span id="epic9"></span>
 ### EPIC 9: Schema & Resume. WHAT THE HELL ARE YOU GUYS DOING? (11月6日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   I really wasn’t feeling this task either. There were some sound ideas, like storing my resume as a JSON and then exporting it into something printable. But execution of this pipeline was a mess. In hindsight it was the right move to quit early here, because I think I know a better way to do this now. (Considering leveraging our AI chatbot context and OpenRouter to make a backend tool for generating tailored resumes for myself.) The resume.json we implemented here was a disaster at the time, but was repurposed later for building our chatbot and exposing info for search engines. (10a.KING, F3.6)
-  </IndentedParagraph>
+</IndentedParagraph>
 
 <span id="epic10a_0-3"></span>
 ### EPIC 10a: Tasks 10a.0 – 10a.3. Personalization. E = MC<sup>2</sup> + AI. (11月7-13日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   The AI and I did not have the same vision. (It doesn’t have a vision, it just responds to stimulus. But don’t we all?) I had it draft Task_10a.0_Personalization_Brief.md to plan our 10a changes, but it really just felt like a lot of mechanical fluff and was hard to read. There were a lot of arbitrary requirements and limits to scope. There is a time and place to limit scope; it is necessary to cap your scope so your project actually finishes, but we were in a situation here where I needed to be let off the leash of the WBS. I felt really restricted. I continued to swallow my pride and went along with the plan for a bit longer.
-  </IndentedParagraph>
+</IndentedParagraph>
 
-  <IndentedParagraph>
+<IndentedParagraph>
   On 11月10日 I was finally designated my time to be critical of the site. I just opened a text file (brief_draft.md) and wrote down every immediate problem and change that I wanted to make. I then used Codex to format this better and export brief.md, but I still preferred my original because it was more to-the-point. With the new documents we still had a pretty tight scope but I was able to begin refreshing the site.
-  </IndentedParagraph>
+</IndentedParagraph>
 
-  <IndentedParagraph>
+<IndentedParagraph>
   10a.1, 11 月11日。The site began to become my own. Text had my soul. The mechanical vibe was still lingering and I didn’t quite feel a spark yet, but I saw smoke.
-  </IndentedParagraph>
+</IndentedParagraph>
 
-  <IndentedParagraph>
+<IndentedParagraph>
   During 10a.2 (11月12日) I started to feel powerful. I took a few steps out of scope to get the experience and meetings pages set up, which was something I was long awaiting and questioning the timeline of. This feeling was addictive. I was getting essentials knocked out in record time without being tied to arbitrary requirements. My mindset began to transform from that of a junior dev to a senior. I had a plan to flip the whole project management style upside-down, but it would be messy.
-  </IndentedParagraph>
+</IndentedParagraph>
 
-  <IndentedParagraph>
+<IndentedParagraph>
   11月13日。Thursday. A king was born. 10a.KING was born. 10a.3 wasn’t going to fix the problems I had. This was a mutiny to the carefully constructed WBS and AI overlord. I skipped 10a.3.
-  </IndentedParagraph>
+</IndentedParagraph>
 
 <span id="epic10a_KING"></span>
 ### EPIC 10a: Task 10a.KING / 10a.REVOLT. Personalization. BREAK STUFF. (11月13日ー12月7日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   I don’t even know where to begin here. I just kept adding things. Since I’m a solo dev on this project, I figured I would just keep coding and worry about documenting it later. I was focused on my goals. I was focused on moving on with my life. Scope was irrelevant, testing was irrelevant. Did the app run? Yes. Great, add more stuff. I wanted to build something cool. I knew that I would have a 10a.REVOLT task at the end to try and clean up and get back on track, but it was a distant vision.
-  </IndentedParagraph>
+</IndentedParagraph>
 
-  <IndentedParagraph>
+<IndentedParagraph>
   For example, the meetings page was originally a simple task that quickly grew like a goldfish in a swimming pool. I was originally just going to embed a screenshot of When2Meet to show my time availability. But I realized that for a wider audience I should have a timezone conversion for Tokyo time and Shanghai time. Suddenly I needed three screenshots of three When2Meets, and to update each When2Meet accordingly which was a gigantic pain. Since my scope was uncapped, I decided to just make my own When2Meet-style chart where I could set my time availabilities in a single-source-of-truth JSON, specified in NY time then auto-converted. Since I already had conversion set up, I figured to just allow converting to any timezone. But then the list was too long and needed a search function. I also wanted to localize the timezone names for Japanese and Chinese (completed much later, F4.1 @ 2026年1月2日) but I decided to call it good enough for now.
-  </IndentedParagraph>
+</IndentedParagraph>
 
-  <IndentedParagraph>
+<IndentedParagraph>
   Scope kept ballooning across everything. I would proudly show off my progress to someone, and they would suggest a new feature. Use a digital avatar as a picture, add some music, add a chatbot. I loved these suggestions but at a certain point I realized I had to pivot to launch. I stopped accepting suggestions and wrapped up loose ends.
-  </IndentedParagraph>
+</IndentedParagraph>
 
-  <IndentedParagraph>
+<IndentedParagraph>
   12月4日。It was time to cap scope again. The transmutation of the app had been messy, but we successfully added flesh and a soul to the skeleton. It now just needed to grow on what it currently had.
-  </IndentedParagraph>
+</IndentedParagraph>
 
-  <IndentedParagraph>
+<IndentedParagraph>
   For 10a.REVOLT I was quite happy to return to structure. I got the drive to make broad sweeping changes out of my system. I felt really accomplished and like my site was very close to where I wanted it to be. 10a.REVOLT also had an uncapped scope on paper, but in my mind I knew what needed to be done. I ordered an audit of the site. I knew that I did not want to return to Essential_WBS because it was stale and had the wrong vision. The document Task_10a.REVOLT_Project_Audit.md gives a great account of this period, the pivoting mindset I had, and the status of the project at this time. 12月7日。We drafted a new WBS with a focus on launch: FINAL_WBS.md. I took a lot of time to consider what was left, what to chop, and the direction I wanted to take.
-  </IndentedParagraph>
+</IndentedParagraph>
 
   <span id="launch-pivot"></span>
-## 3. It's meaningless to just live, it's meaningless to just fight, I WANT TO WIN. December 2025.
+## 3. *It's meaningless to just live, it's meaningless to just fight,* I WANT TO WIN. December 2025.
 
-  <IndentedParagraph>
+<IndentedParagraph>
   There is a bit of a grey area here where 10a.REVOLT and Epic F1 are basically the same thing. I guess I view them as a part 1 and part 2, planning then execution. Epic F1 was a refined and structured form of REVOLT, whereas 10a.REVOLT itself was basically just setup.
-  </IndentedParagraph>
+</IndentedParagraph>
 
 <span id="epicf1"></span>
 ### EPIC F1: REVOLT Return to Order. WHERE AM I… AGAIN? (12月8-16日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   I cleaned up most of the fallout from the broad changes. Is that the right way to phrase it? The app was completely different now than when we started Epic 10a, it was almost unrecognizable. My mindset was entirely different. Cleaning up fallout would imply that we returned to a state we recognized. This was simply an era of refinement and getting reoriented with stability.
-  </IndentedParagraph>
+</IndentedParagraph>
 
 <span id="epicf2"></span>
 ### EPIC F2: Skim Mode. YOU KNOW THAT FELLAS CAN’T READ. (12月17-22日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   This mode seemed pretty self explanatory to me, but the AI kept pushing a few things like data-gating checks and extracting data from resume.json. By this point I learned to just override it and implement my vision, however I allowed it to implement some data-gating checks in unit testing. I thought it would be best to write some quick summaries on the skim page rather than automating from existing data. I did make a short revision to add a Project Management section, along with pushing AI-assisted programming harder, due to reading some random post on 小红书 about the hiring landscape. I want to angle myself as a senior developer, regardless of my work experience history. I think I have what it takes. I’m definitely comfortable managing projects and leading teams.
-  </IndentedParagraph>
+</IndentedParagraph>
 
 <span id="taskf3_4"></span>
 ### TASK F3.4: Search Engine Optimization 1. DON’T BE ~~EVIL~~ A GRINCH. (12月23日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   I finally started going out of order. Rather than editing the WBS, I figured let’s just do things in a sensible order since there isn’t much left. It turned out that a lot of Epic F3 depended upon the localizations in Epic F4 being done, yet localizations needed Task F3.2 to be done. The content of Task F3.4 itself is pretty boring, but you can read Task_F3.4_SEO_Canonicals_Robots_Sitemap.md if you like.
-  </IndentedParagraph>
+</IndentedParagraph>
 
 <span id="taskf3_2"></span>
 ### TASK F3.2: Part 1. Add Codex to Tech Stack. I LOVE ELVES. (12月24日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   With the new angling as an AI-assisted programmer, I wanted to add Codex to my primary tech stack. Out of all of the things in my stack, it’s one of the most interesting. I think this was long overdue. This needed to be done before localization so I could translate the description, however the rest of Task F3.2 was going to take a lot longer. (Asset work with art and music) I came back to it when I had time off work.
-  </IndentedParagraph>
+</IndentedParagraph>
 
 <span id="epicf4"></span>
 ### EPIC F4: Localization. AN IDIOT ABROAD. (2025年12月27日 ー 2026年1月3日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   My Japanese and Chinese skills are not good. I have spent a while learning but it’s just going to take me years and years before I’m capable of writing anything actually impressive. (I’d like to rewrite this whole writeup myself someday. I don’t think AI would be able to capture the intricacies well enough.) To localize, I ended up writing a script to extract all strings from the app and store them in one document. This organized document was then split into payloads with another script, as batches of 100 lines. The payloads were then sent to ChatGPT 5.2 Thinking. I was able to give instructions on tone and style of writing. ChatGPT spit back the payloads with translations filled in, which were then audited for mistakes. (There were a few.) Another script was used to re-merge the payloads into one file. Then yet another script took the one file and put the strings back into the places they were found in the app. I was quite proud of this pipeline. It should be quite easy to change text now and re-localize just the changed sections, as I tried supporting deltas to future-proof the design.
-  </IndentedParagraph>
+</IndentedParagraph>
 
 <span id="epicf3"></span>
 ### EPIC F3: Frontend Refinement. FRONTEND SIMPLIFIED. (1月5-？？？日)
 
-  <IndentedParagraph>
+<IndentedParagraph>
   Asset work was quite fun here. I had some time off work, so I was able to get creative and do some custom artwork and music for the site. For the picture, I really didn’t know what to do at first. I don’t have many good pictures of myself, especially professional ones. It just isn’t me I guess. I had had an idea to take a funny picture of me gardening to pair well with the tagline we wrote way back in October for Epic 1.
-  </IndentedParagraph>
+</IndentedParagraph>
 
 <span id="writeup"></span>
 ## 4. The Writeup. YOU ARE HERE. (1月13-15日)

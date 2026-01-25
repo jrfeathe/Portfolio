@@ -19,9 +19,10 @@ import {
 
 import type { Locale } from "../utils/i18n";
 import { getDictionary } from "../utils/dictionaries";
+import { isTruthySkimValue } from "../utils/skim";
 
 type SkimToggleButtonProps = {
-  active: boolean;
+  active?: boolean;
   className?: string;
   locale: Locale;
 };
@@ -33,7 +34,17 @@ export function SkimToggleButton({ active, className, locale }: SkimToggleButton
   const skim = getDictionary(locale).skimToggle;
   const fallbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prefetchedUrlRef = useRef<string | null>(null);
-  const [optimisticActive, setOptimisticActive] = useState(active);
+  const resolvedActive = useMemo(() => {
+    if (typeof active === "boolean") {
+      return active;
+    }
+    const values = searchParams?.getAll("skim") ?? [];
+    if (!values.length) {
+      return false;
+    }
+    return values.some((value) => isTruthySkimValue(value));
+  }, [active, searchParams]);
+  const [optimisticActive, setOptimisticActive] = useState(resolvedActive);
 
   const label = useMemo(
     () => (optimisticActive ? skim.ariaDisable : skim.ariaEnable),
@@ -41,8 +52,8 @@ export function SkimToggleButton({ active, className, locale }: SkimToggleButton
   );
 
   useEffect(() => {
-    setOptimisticActive(active);
-  }, [active]);
+    setOptimisticActive(resolvedActive);
+  }, [resolvedActive]);
 
   useEffect(() => {
     return () => {
@@ -66,8 +77,8 @@ export function SkimToggleButton({ active, className, locale }: SkimToggleButton
   }, [pathname, searchParams]);
 
   const targetUrl = useMemo(
-    () => buildNextUrl(active),
-    [active, buildNextUrl]
+    () => buildNextUrl(resolvedActive),
+    [resolvedActive, buildNextUrl]
   );
 
   const prefetchNextUrl = useCallback(() => {
@@ -137,6 +148,7 @@ export function SkimToggleButton({ active, className, locale }: SkimToggleButton
       prefetch={false}
       className={clsx(
         "inline-flex items-center gap-3 rounded-full border border-border bg-surface/70 px-4 py-2 text-sm font-semibold text-text shadow-sm transition hover:bg-surface dark:border-dark-border dark:bg-dark-surface/80 dark:text-dark-text",
+        "flex-nowrap whitespace-nowrap",
         FOCUS_VISIBLE_RING,
         className
       )}
@@ -160,10 +172,12 @@ export function SkimToggleButton({ active, className, locale }: SkimToggleButton
       onFocus={prefetchNextUrl}
       data-testid="skim-toggle"
     >
-      <span aria-hidden>{optimisticActive ? skim.buttonLabelOn : skim.buttonLabelOff}</span>
+      <span aria-hidden className="whitespace-nowrap">
+        {optimisticActive ? skim.buttonLabelOn : skim.buttonLabelOff}
+      </span>
       <span
         aria-hidden
-        className="flex items-center gap-1 rounded-full border border-border bg-surface/80 px-2 py-1 text-xs font-semibold text-text dark:border-dark-border dark:bg-dark-surface/80 dark:text-dark-text"
+        className="flex items-center gap-1 rounded-full border border-border bg-surface/80 px-2 py-1 text-xs font-semibold text-text dark:border-dark-border dark:bg-dark-surface/80 dark:text-dark-text whitespace-nowrap shrink-0"
         data-skim-status-group="true"
       >
         <span

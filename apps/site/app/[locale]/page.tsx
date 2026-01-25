@@ -1,7 +1,6 @@
 import { Button } from "@portfolio/ui";
 import type { Metadata, Route } from "next";
 import Link from "next/link";
-import dynamicImport from "next/dynamic";
 import { notFound } from "next/navigation";
 import type { UrlObject } from "url";
 
@@ -12,26 +11,22 @@ import {
 import { isLocale, locales, type Locale } from "../../src/utils/i18n";
 import {
   ResponsiveShellLayout,
-  StickyCTA
+  StickyCTA,
+  type ShellSection
 } from "../../src/components/Shell";
-import { headers } from "next/headers";
 import { StructuredData } from "../../src/components/seo/StructuredData";
 import { getResumeProfile } from "../../src/lib/resume/profile";
 import { buildHomePageJsonLd } from "../../src/lib/seo/jsonld";
 import { resolveOpenGraphLocale } from "../../src/lib/seo/opengraph-locale";
-import { extractNonceFromHeaders } from "../../src/utils/csp";
 import { TechStackCarousel } from "../../src/components/TechStackCarousel";
 import { DesktopSkimLayout } from "../../src/components/DesktopSkimLayout";
 import { MobileSkimLayout } from "../../src/components/MobileSkimLayout";
 import { SocialLinks } from "../../src/components/SocialLinks";
+import { SkimModeWrapper } from "../../src/components/SkimModeWrapper";
+import { SkimAwareAudioPlayer } from "../../src/components/SkimAwareAudioPlayer";
 
-const ResponsiveAudioPlayer = dynamicImport(
-  () => import("../../src/components/AudioPlayer").then((mod) => mod.ResponsiveAudioPlayer),
-  { ssr: false, loading: () => null }
-);
-
-export const runtime = "edge";
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+export const revalidate = false;
 
 type PageParams = {
   params: {
@@ -39,43 +34,7 @@ type PageParams = {
   };
 };
 
-type PageProps = PageParams & {
-  searchParams?: Record<string, string | string[] | undefined>;
-};
-
-function isTruthySkimValue(value: string) {
-  const normalized = value.trim().toLowerCase();
-  return (
-    normalized === "" ||
-    normalized === "1" ||
-    normalized === "true" ||
-    normalized === "yes"
-  );
-}
-
-function resolveSkimMode(
-  searchParams?: Record<string, string | string[] | undefined>
-) {
-  if (!searchParams) {
-    return false;
-  }
-
-  if (!Object.prototype.hasOwnProperty.call(searchParams, "skim")) {
-    return false;
-  }
-
-  const raw = searchParams.skim;
-
-  if (Array.isArray(raw)) {
-    return raw.some((entry) => typeof entry === "string" && isTruthySkimValue(entry));
-  }
-
-  if (typeof raw === "string") {
-    return isTruthySkimValue(raw);
-  }
-
-  return true;
-}
+type PageProps = PageParams;
 
 function ensureLocale(value: string): Locale {
   if (!isLocale(value)) {
@@ -104,7 +63,7 @@ function isInternalHref(href: string): boolean {
   return href.startsWith("/") && !href.startsWith("//");
 }
 
-function buildSections(dictionary: AppDictionary, locale: Locale) {
+function buildSections(dictionary: AppDictionary, locale: Locale): ShellSection[] {
   const {
     home: { sections }
   } = dictionary;
@@ -181,7 +140,7 @@ function buildSkimSections(
   dictionary: AppDictionary,
   locale: Locale,
   layout: "desktop" | "mobile"
-) {
+): ShellSection[] {
   const {
     home: { sections, skim },
     experience
@@ -197,6 +156,9 @@ function buildSkimSections(
 
   const leadershipValue = (
     <>
+      {skim.leadershipRollodexPrefix ? (
+        <span>{skim.leadershipRollodexPrefix}</span>
+      ) : null}
       <Link
         href={`/${locale}/experience#rollodex`}
         className="inline-flex text-base font-semibold text-accent underline-offset-4 hover:underline dark:text-dark-accent"
@@ -271,17 +233,63 @@ function buildSkimSections(
   ];
 }
 
+function buildPrintSkimSection(dictionary: AppDictionary): ShellSection {
+  const {
+    home: { skim, sections }
+  } = dictionary;
+  const summaryItems = [
+    { label: skim.projectManagementLabel, value: skim.projectManagement },
+    { label: skim.leadershipLabel, value: skim.leadership },
+    { label: skim.timezoneLabel, value: skim.timezone },
+    { label: skim.availabilityLabel, value: skim.availability },
+    { label: skim.emailLabel, value: skim.emailValue }
+  ].filter((entry) => entry.label && entry.value);
+  const techStackNames = sections.techStack.items
+    .map((item) => item.name)
+    .filter((name): name is string => Boolean(name));
+
+  return {
+    id: "print-skim-summary",
+    title: skim.columnTitle,
+    className: "print-skim-section",
+    hideFromNav: true,
+    content: (
+      <div className="space-y-4">
+        <dl className="space-y-3">
+          {summaryItems.map((item) => (
+            <div key={item.label} className="space-y-1">
+              <dt className="text-xs font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
+                {item.label}
+              </dt>
+              <dd className="text-base leading-relaxed text-text dark:text-dark-text">
+                {item.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <div className="space-y-2">
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
+            {skim.techStackTitle}
+          </h3>
+          <ul className="print-tech-list list-disc pl-5 text-base leading-relaxed text-text dark:text-dark-text">
+            {techStackNames.map((name) => (
+              <li key={name}>{name}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    )
+  };
+}
+
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export function generateMetadata({ params, searchParams }: PageProps): Metadata {
+export function generateMetadata({ params }: PageProps): Metadata {
   const locale = ensureLocale(params.locale);
   const dictionary = getDictionary(locale);
-  const skimModeEnabled = resolveSkimMode(searchParams);
-  const openGraphImage = skimModeEnabled
-    ? `/${locale}/opengraph-skim`
-    : `/${locale}/opengraph-image`;
+  const openGraphImage = `/${locale}/opengraph-image`;
   const languages = Object.fromEntries(
     locales.map((entry) => [entry, `/${entry}`])
   );
@@ -303,17 +311,28 @@ export function generateMetadata({ params, searchParams }: PageProps): Metadata 
   };
 }
 
-export default function HomePage({ params, searchParams }: PageProps) {
+export default function HomePage({ params }: PageProps) {
   const locale = ensureLocale(params.locale);
   const dictionary = getDictionary(locale);
-  const skimModeEnabled = resolveSkimMode(searchParams);
-  const sections = skimModeEnabled
-    ? buildSkimSections(dictionary, locale, "desktop")
-    : buildSections(dictionary, locale);
-  const mobileSections = skimModeEnabled
-    ? buildSkimSections(dictionary, locale, "mobile")
-    : sections;
-  const breadcrumbs = skimModeEnabled ? [] : resolveBreadcrumbs(dictionary, locale);
+  const fullSections = buildSections(dictionary, locale);
+  const printSkimSection = buildPrintSkimSection(dictionary);
+  const skimDesktopSections = buildSkimSections(dictionary, locale, "desktop").map((section) => ({
+    ...section,
+    className: "skim-only",
+    hideFromNav: true
+  }));
+  const skimMobileSections = buildSkimSections(dictionary, locale, "mobile").map((section) => ({
+    ...section,
+    className: "skim-only",
+    hideFromNav: true
+  }));
+  const fullSectionsWithClasses = fullSections.map((section) => ({
+    ...section,
+    className: section.className ? `${section.className} skim-hide` : "skim-hide"
+  }));
+  const sections = [printSkimSection, ...skimDesktopSections, ...fullSectionsWithClasses];
+  const mobileSections = [printSkimSection, ...skimMobileSections, ...fullSectionsWithClasses];
+  const breadcrumbs = resolveBreadcrumbs(dictionary, locale);
   const {
     hero: { title, subtitle, cta, media }
   } = dictionary.home;
@@ -324,11 +343,19 @@ export default function HomePage({ params, searchParams }: PageProps) {
     dictionary,
     profile: resumeProfile
   });
-  const nonce = extractNonceFromHeaders(headers());
-  const pageTitle = skimModeEnabled ? undefined : title;
-  const pageSubtitle = skimModeEnabled ? undefined : subtitle;
-  const heroMedia = skimModeEnabled ? undefined : media;
-  const anchorItems = skimModeEnabled ? [] : undefined;
+  const pageTitle = title;
+  const pageSubtitle = subtitle;
+  const heroMedia =
+    !media
+      ? undefined
+      : {
+          ...media,
+          caption:
+            locale === "en" && media.caption
+              ? <em>{media.caption}</em>
+              : media.caption
+        };
+  const anchorItems = undefined;
   const emailValue = dictionary.home.skim.emailValue;
   const emailHref = dictionary.home.skim.emailHref;
   const audioSources = [
@@ -348,8 +375,8 @@ export default function HomePage({ params, searchParams }: PageProps) {
 
   return (
     <>
-      <StructuredData data={structuredData} nonce={nonce} />
-      <div data-skim-mode={skimModeEnabled ? "true" : "false"}>
+      <StructuredData data={structuredData} />
+      <SkimModeWrapper>
         <ResponsiveShellLayout
           title={pageTitle}
           subtitle={pageSubtitle}
@@ -358,20 +385,17 @@ export default function HomePage({ params, searchParams }: PageProps) {
           sections={sections}
           mobileSections={mobileSections}
           anchorItems={anchorItems}
-          skimModeEnabled={skimModeEnabled}
           socialLinks={<SocialLinks />}
           shellCopy={dictionary.shell}
           locale={locale}
           footerContent={dictionary.home.footer}
           floatingWidget={
-            <ResponsiveAudioPlayer
+            <SkimAwareAudioPlayer
               sources={audioSources}
               downloadSrc={
                 dictionary.home.audioPlayer.fallbackSrc ??
                 dictionary.home.audioPlayer.src
               }
-              forceVariant={skimModeEnabled ? "horizontal" : undefined}
-              isSkimMode={skimModeEnabled}
               title={dictionary.home.audioPlayer.title}
               description={dictionary.home.audioPlayer.description}
               playLabel={dictionary.home.audioPlayer.playLabel}
@@ -394,7 +418,7 @@ export default function HomePage({ params, searchParams }: PageProps) {
                 title={cta.title}
                 description={cta.description}
                 sticky={false}
-                className={skimModeEnabled ? "pl-6 pr-6 py-6" : undefined}
+                className="home-cta-card"
               >
                 {cta.actions.map((action) =>
                   action.href ? (
@@ -445,23 +469,21 @@ export default function HomePage({ params, searchParams }: PageProps) {
                   )
                 )}
               </StickyCTA>
-              {skimModeEnabled ? (
-                <div className="skim-card skim-email-card rounded-2xl border border-border bg-surface/95 px-4 py-3 text-sm leading-relaxed shadow-sm backdrop-blur dark:border-dark-border dark:bg-dark-surface/95">
-                  <p className="font-semibold text-text dark:text-dark-text">
-                    {dictionary.home.skim.emailLabel}
-                  </p>
-                  <a
-                    className="mt-1 inline-flex text-text underline underline-offset-2 transition hover:text-accent dark:text-dark-text dark:hover:text-dark-accent"
-                    href={emailHref}
-                  >
-                    {emailValue}
-                  </a>
-                </div>
-              ) : null}
+              <div className="skim-only skim-card skim-email-card rounded-2xl border border-border bg-surface/95 px-4 py-3 text-sm leading-relaxed shadow-sm backdrop-blur dark:border-dark-border dark:bg-dark-surface/95">
+                <p className="font-semibold text-text dark:text-dark-text">
+                  {dictionary.home.skim.emailLabel}
+                </p>
+                <a
+                  className="mt-1 inline-flex text-text underline underline-offset-2 transition hover:text-accent dark:text-dark-text dark:hover:text-dark-accent"
+                  href={emailHref}
+                >
+                  {emailValue}
+                </a>
+              </div>
             </div>
           }
         />
-      </div>
+      </SkimModeWrapper>
     </>
   );
 }

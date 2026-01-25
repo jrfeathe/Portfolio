@@ -73,7 +73,10 @@ export function ShellFooter({ className, content }: ShellFooterProps) {
             </a>
           </div>
         </div>
-        <div className="mt-6 text-xs text-textMuted dark:text-dark-textMuted">
+        <div
+          className="mt-6 text-xs text-textMuted dark:text-dark-textMuted"
+          suppressHydrationWarning
+        >
           {closingCopy}
         </div>
       </div>

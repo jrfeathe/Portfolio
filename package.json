@@ -16,7 +16,7 @@
     "@portfolio/config": "workspace:*",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
-    "baseline-browser-mapping": "^2.9.15",
+    "baseline-browser-mapping": "^2.9.18",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-jsx-a11y": "^6.10.1",

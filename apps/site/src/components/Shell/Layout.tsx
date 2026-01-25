@@ -27,6 +27,8 @@ export type ShellSection = {
   eyebrow?: ReactNode;
   description?: ReactNode;
   content: ReactNode;
+  className?: string;
+  hideFromNav?: boolean;
 };
 
 export type ShellLayoutProps = {
@@ -72,9 +74,10 @@ export function ShellLayout({
   shellCopy,
   locale
 }: ShellLayoutProps) {
+  const navSourceSections = sections.filter((section) => !section.hideFromNav);
   const navItems: AnchorNavItem[] =
     anchorItems ??
-    sections.map((section): AnchorNavItem => ({
+    navSourceSections.map((section): AnchorNavItem => ({
       label: typeof section.title === "string" ? section.title : section.id,
       href: `#${section.id}`
     }));
@@ -255,7 +258,7 @@ export function ShellLayout({
             <section
               id={section.id}
               key={section.id}
-              className="scroll-mt-28"
+              className={clsx("scroll-mt-28", section.className)}
             >
               <div className="space-y-3">
                 {section.eyebrow ? (

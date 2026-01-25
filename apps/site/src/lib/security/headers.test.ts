@@ -69,6 +69,7 @@ describe("security headers helpers", () => {
     } else {
       expect(csp).toContain("style-src 'self' 'unsafe-inline'");
     }
+    expect(csp).toContain("style-src-attr 'unsafe-inline'");
     expect(csp).toContain("default-src 'self'");
     if (process.env.NODE_ENV !== "production") {
       expect(csp).toContain("'unsafe-eval'");
@@ -80,8 +81,9 @@ describe("security headers helpers", () => {
     runWithNodeEnv("production", () => {
       const csp = buildContentSecurityPolicy("prod");
       expect(csp).not.toContain("'unsafe-eval'");
-      expect(csp).not.toContain("'unsafe-inline'");
       expect(csp).toContain("style-src 'self' 'nonce-prod'");
+      expect(csp).toContain("style-src-attr 'unsafe-inline'");
+      expect(csp).not.toMatch(/style-src\s[^;]*'unsafe-inline'/);
     });
   });
 

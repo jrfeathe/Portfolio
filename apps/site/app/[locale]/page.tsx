@@ -274,6 +274,55 @@ function buildSkimSections(
   ];
 }
 
+function buildPrintSkimSection(dictionary: AppDictionary) {
+  const {
+    home: { skim, sections }
+  } = dictionary;
+  const summaryItems = [
+    { label: skim.projectManagementLabel, value: skim.projectManagement },
+    { label: skim.leadershipLabel, value: skim.leadership },
+    { label: skim.timezoneLabel, value: skim.timezone },
+    { label: skim.availabilityLabel, value: skim.availability },
+    { label: skim.emailLabel, value: skim.emailValue }
+  ].filter((entry) => entry.label && entry.value);
+  const techStackNames = sections.techStack.items
+    .map((item) => item.name)
+    .filter((name): name is string => Boolean(name));
+
+  return {
+    id: "print-skim-summary",
+    title: skim.columnTitle,
+    className: "print-skim-section",
+    hideFromNav: true,
+    content: (
+      <div className="space-y-4">
+        <dl className="space-y-3">
+          {summaryItems.map((item) => (
+            <div key={item.label} className="space-y-1">
+              <dt className="text-xs font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
+                {item.label}
+              </dt>
+              <dd className="text-base leading-relaxed text-text dark:text-dark-text">
+                {item.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <div className="space-y-2">
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
+            {skim.techStackTitle}
+          </h3>
+          <ul className="print-tech-list list-disc pl-5 text-base leading-relaxed text-text dark:text-dark-text">
+            {techStackNames.map((name) => (
+              <li key={name}>{name}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    )
+  };
+}
+
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
@@ -310,12 +359,16 @@ export default function HomePage({ params, searchParams }: PageProps) {
   const locale = ensureLocale(params.locale);
   const dictionary = getDictionary(locale);
   const skimModeEnabled = resolveSkimMode(searchParams);
-  const sections = skimModeEnabled
+  const fullSections = buildSections(dictionary, locale);
+  const printSkimSection = buildPrintSkimSection(dictionary);
+  const baseSections = skimModeEnabled
     ? buildSkimSections(dictionary, locale, "desktop")
-    : buildSections(dictionary, locale);
-  const mobileSections = skimModeEnabled
+    : fullSections;
+  const baseMobileSections = skimModeEnabled
     ? buildSkimSections(dictionary, locale, "mobile")
-    : sections;
+    : fullSections;
+  const sections = [printSkimSection, ...baseSections];
+  const mobileSections = [printSkimSection, ...baseMobileSections];
   const breadcrumbs = skimModeEnabled ? [] : resolveBreadcrumbs(dictionary, locale);
   const {
     hero: { title, subtitle, cta, media }

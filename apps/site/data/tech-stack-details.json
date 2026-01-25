@@ -637,19 +637,22 @@
       "zh": "2 年经验"
     },
     "summary": {
-      "en": "WireGuard experiments with intermediate IP",
-      "ja": "中継IPを用いた WireGuard の実験。",
-      "zh": "使用中间 IP 进行的 WireGuard 实验。"
+      "en": "Deployed my portfolio on Oracle Cloud with a reserved IP + DNS routing, plus WireGuard relay experiments using an intermediate host.",
+      "ja": "Oracle Cloud でポートフォリオを公開し、固定IPとDNSを設定。中継ホストを用いた WireGuard の実験も実施。",
+      "zh": "在 Oracle Cloud 上部署作品集并配置固定 IP 与 DNS，同时用中继主机进行 WireGuard 实验。"
     },
     "highlights": {
       "en": [
-        "Set up a ping point to create a secure connection to my home server."
+        "Hosted the portfolio on OCI, pairing a reserved public IP with DNS records for stable routing.",
+        "Used the OCI host as a relay point for WireGuard tests to reach a home server securely."
       ],
       "ja": [
-        "自宅サーバーへの安全な接続を確立するための中継ポイントを構築しました。"
+        "OCI 上でポートフォリオをホストし、固定IPとDNSのルーティングで安定したアクセスを確保。",
+        "WireGuard の検証用に OCI を中継ポイントとして使い、自宅サーバーへ安全に接続。"
       ],
       "zh": [
-        "设置中继节点，以建立到家庭服务器的安全连接。"
+        "在 OCI 上托管作品集，并通过固定公网 IP + DNS 记录保持稳定路由。",
+        "将 OCI 作为 WireGuard 的中继节点，用于安全访问家庭服务器。"
       ]
     }
   }

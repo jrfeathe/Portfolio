@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import clsx from "clsx";
 
 import type { ShellLayoutProps } from "./Layout";
@@ -67,9 +67,10 @@ export function MobileShellLayout({
   shellCopy,
   locale
 }: MobileShellLayoutParams) {
-  const MENU_BUTTON_MIN_TOP = 16;
   const buildFallbackNavItems = () =>
-    sections.map((section) => ({
+    sections
+      .filter((section) => !section.hideFromNav)
+      .map((section) => ({
       label:
         typeof section.title === "string" && section.title.trim().length > 0
           ? section.title
@@ -191,7 +192,7 @@ export function MobileShellLayout({
             <section
               id={section.id}
               key={section.id}
-              className="scroll-mt-24"
+              className={clsx("scroll-mt-24", section.className)}
             >
               <div className="space-y-3">
                 {section.eyebrow ? (
@@ -243,13 +244,13 @@ export function MobileShellLayout({
     document.dispatchEvent(new Event("shell-anchor-collapse-all"));
   };
 
-  const handleNavLinkClick = (event: React.MouseEvent) => {
-    const target = event.target as HTMLElement | null;
-    const anchor = target?.closest?.("a[href^=\"#\"]");
-    if (!anchor) return;
+  const handleNavItemClick = (item: AnchorNavItem, event: MouseEvent<HTMLAnchorElement>) => {
+    if (!item.href.startsWith("#")) {
+      setMenuOpen(false);
+      return;
+    }
     event.preventDefault();
-    const hash = anchor.getAttribute("href");
-    pendingHashRef.current = hash && hash.startsWith("#") ? hash : null;
+    pendingHashRef.current = item.href;
     setMenuOpen(false);
   };
 
@@ -407,7 +408,6 @@ export function MobileShellLayout({
                 ) : null}
                 {navItems.length ? (
                   <div
-                    onClick={handleNavLinkClick}
                     className={clsx(
                       "min-h-0 flex-1 overflow-y-auto overscroll-contain",
                       mobileNavMaxHeightClassName
@@ -418,6 +418,7 @@ export function MobileShellLayout({
                       ariaLabel={shellCopy.anchorNavLabel}
                       orientation="vertical"
                       scrollable={false}
+                      onItemClick={handleNavItemClick}
                     />
                   </div>
                 ) : null}

@@ -603,7 +603,7 @@ export function AudioPlayerOverlay({
 
         {isHidden ? (
           <div
-            className="pointer-events-auto fixed bottom-4 left-4 z-50"
+            className="pointer-events-auto fixed bottom-4 left-4 z-40"
             data-audio-player-reopen="true"
           >
             <button
@@ -738,7 +738,7 @@ export function AudioPlayerOverlay({
 
         {isHidden ? (
           <div
-            className="pointer-events-auto fixed right-1.5 top-1/2 z-50 -translate-y-1/2"
+            className="pointer-events-auto fixed right-1.5 top-1/2 z-40 -translate-y-1/2"
             data-audio-player-reopen="true"
           >
             <Button

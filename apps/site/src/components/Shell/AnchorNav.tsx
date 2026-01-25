@@ -1,7 +1,7 @@
 "use client";
 
 import { FOCUS_VISIBLE_RING } from "@portfolio/ui";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import clsx from "clsx";
 
 export type AnchorNavItem = {
@@ -16,6 +16,7 @@ export type AnchorNavProps = {
   className?: string;
   orientation?: "vertical" | "horizontal";
   scrollable?: boolean;
+  onItemClick?: (item: AnchorNavItem, event: MouseEvent<HTMLAnchorElement>) => void;
 };
 
 const DEFAULT_ROOT_MARGIN = "-45% 0px -45% 0px";
@@ -25,7 +26,8 @@ export function AnchorNav({
   ariaLabel,
   className,
   orientation = "vertical",
-  scrollable = true
+  scrollable = true,
+  onItemClick
 }: AnchorNavProps) {
   const enableNested = orientation === "vertical";
   const flattenedItems = useMemo(() => {
@@ -262,6 +264,7 @@ export function AnchorNav({
                       : "text-textMuted hover:bg-surfaceMuted dark:text-dark-textMuted dark:hover:bg-dark-surfaceMuted"
                   )}
                   aria-current={isActive ? "location" : undefined}
+                  onClick={(event) => onItemClick?.(item, event)}
                 >
                   {item.label}
                 </a>
@@ -276,8 +279,9 @@ export function AnchorNav({
                       }));
                       setManualCollapsed((prev) => {
                         if (nextExpanded) {
-                          const { [item.href]: _removed, ...rest } = prev;
-                          return rest;
+                          const next = { ...prev };
+                          delete next[item.href];
+                          return next;
                         }
                         return { ...prev, [item.href]: true };
                       });
@@ -317,6 +321,7 @@ export function AnchorNav({
                               : "text-textMuted hover:bg-surfaceMuted dark:text-dark-textMuted dark:hover:bg-dark-surfaceMuted"
                           )}
                           aria-current={undefined}
+                          onClick={(event) => onItemClick?.(child, event)}
                         >
                           {child.label}
                         </a>

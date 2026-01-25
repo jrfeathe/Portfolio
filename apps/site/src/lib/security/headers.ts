@@ -86,6 +86,7 @@ export function buildContentSecurityPolicy(nonce: string) {
     "worker-src 'self' blob:",
     buildScriptSrcDirective(nonce, allowHCaptcha),
     buildStyleSrcDirective(nonce),
+    "style-src-attr 'unsafe-inline'",
     "connect-src 'self' https: wss:",
     "upgrade-insecure-requests"
   ];

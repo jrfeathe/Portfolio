@@ -1,105 +1,59 @@
-# Portfolio Web Application
+# Portfolio
 
-This repository now tracks the documentation-first reboot of the portfolio initiative.
-Task 0.1 scaffolds the pnpm-based monorepo that will power the live site and its
-supporting packages.
+Production-ready personal portfolio site built on Next.js with multilingual content (EN/JA/ZH), AI chatbot + audio player, meetings/availability, MDX notes, and accessibility/perf/observability guardrails.
+
+## Quick start
+
+1. `nvm use` (uses `.nvmrc`)
+2. `pnpm install`
+3. Create `apps/site/.env.local` with the keys you need:
+   - Chatbot: `OPENROUTER_API_KEY` (optional: `OPENROUTER_MODEL`, `OPENROUTER_MODERATION_MODEL`, `OPENROUTER_RESUME_MODEL`, `OPENROUTER_APP_URL`)
+   - Captcha: `HCAPTCHA_SITE_KEY`, `HCAPTCHA_SECRET_KEY`
+   - Observability (optional): `OTEL_EXPORTER_OTLP_ENDPOINT`, `OTEL_EXPORTER_OTLP_HEADERS`, `OTEL_SERVICE_NAME`, `NEXT_PUBLIC_ENABLE_OTEL_BROWSER=1`, `NEXT_PUBLIC_OTEL_TRACES_ENDPOINT` (or `NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT`), `NEXT_PUBLIC_OTEL_SERVICE_NAME`
+4. `pnpm run dev`
+
+## Essential commands
+
+- `pnpm run dev` - start the site
+- `pnpm build` - build all packages (site build generates critical CSS)
+- `pnpm lint`
+- `pnpm typecheck`
+- `pnpm test` - Jest coverage gate
+- `pnpm test:a11y` - UI + site a11y runs
+- `pnpm --filter @portfolio/site playwright:test` - e2e suite
+- `pnpm --filter @portfolio/site build:budgets` - performance budgets
+- `node scripts/generate-tokens-css.mjs` - regenerate tokens CSS
+
+## AI scripts (chatbot + resume)
+
+- `pnpm exec tsc -p scripts/ai/tsconfig.json` - build the AI helper scripts
+- `node .tmp/chatbot-build/build-chatbot-index.js` - refresh chatbot embeddings + anchors after tech stack/experience edits
+- Resume tailoring workflow:
+  - Follow the prompt + template in `docs/ai/job-description-compression.md` to compress the job description in ChatGPT.
+  - Save the compressed job description output to `content/job-description-compact.txt` (or another path).
+  - Run `node .tmp/chatbot-build/generate-tailored-resume.js --job <path> --out <path>` to produce the 1‑page markdown resume (optional: `--locale`, `--json-out`, `--model`, `--no-header`).
+
+## Pipelines (when to run)
+
+- Design tokens: update `packages/ui/tokens.json` then run `node scripts/generate-tokens-css.mjs`.
+- Performance: `pnpm build` generates critical CSS; run `pnpm --filter @portfolio/site build:budgets` and `pnpm --filter @portfolio/site lhci:collect` for budget/Lighthouse checks.
+- Testing: `pnpm test` (coverage), `pnpm test:a11y`, and `pnpm --filter @portfolio/site playwright:test`.
+- Chatbot: after tech stack or resume updates, rebuild embeddings/anchors with the AI scripts above.
+
+## WBS (work breakdown structure)
+
+The WBS is the authoritative scope tracker for launch. Each item has a deliverable/DoD and links to supporting notes.
+
+- `WBS/FINAL_WBS.md` - source of truth for launch scope, status buckets, and DoD per task.
+- `WBS/Task_*.md` - task-specific notes, QA logs, and decisions.
+- `COMPLETED_TASKS.md` - completed WBS items with dates and short notes.
+- `WBS/Old WBS/` - archived legacy planning artifacts.
 
 ## Workspace layout
 
-- `apps/site` – Next.js application that powers the portfolio web experience.
-- `packages/ui` – Shared component library published internally to the workspace.
-- `packages/config` – Centralized ESLint, Prettier, Tailwind, and TypeScript settings.
-- `packages/cli` – Command-line utilities for iterating on the project locally.
-- `infra/` – Placeholder entry point for future infrastructure as code.
-- `content/` – Source files for MDX notes, resume data, and other authored content.
-- `scripts/` – Automation helpers (currently placeholders).
-- `WBS/` – Authoritative work breakdown structure and schema references.
-
-## Usage
-
-1. Install dependencies with `pnpm install`.
-2. Build everything with `pnpm -w build`.
-3. Launch the site via `pnpm dev`.
-4. Run linting with `pnpm lint` and formatting with `pnpm format`.
-5. Validate bundle budgets with `pnpm --filter @portfolio/site run build:budgets` before pushing heavy UI changes.
-6. Regenerate CSS variables from `packages/ui/tokens.json` with `node scripts/generate-tokens-css.mjs` after changing design tokens.
-
-The default Node version is pinned in `.nvmrc`. Run `nvm use` (or your preferred
-version manager) before installing dependencies to stay aligned with the repo.
-
-## Observability
-
-Task 5.0 adds OpenTelemetry traces to the portfolio site across Node and browser
-runtimes. Edge middleware still creates spans for request flow, but Next.js
-currently blocks shipping the OTLP HTTP exporter in the Edge runtime, so those
-spans remain local-only. Configure an OTLP endpoint before running the app to
-emit spans from Node SSR and browser fetch instrumentation:
-
-- `OTEL_EXPORTER_OTLP_ENDPOINT` – HTTPS endpoint for your collector (server/edge).
-- `NEXT_PUBLIC_OTEL_EXPORTER_OTLP_ENDPOINT` – Public endpoint exposed to the browser.
-- `OTEL_EXPORTER_OTLP_HEADERS` / `NEXT_PUBLIC_OTEL_EXPORTER_OTLP_HEADERS` – Optional
-  `key=value` header pairs (comma-separated) for authentication.
-- `OTEL_SERVICE_NAME` – Optional override for the trace service name (defaults to `portfolio-site`).
-
-When the endpoint variables are unset, instrumentation remains dormant and no
-spans are generated.
-
-Real-user web vitals (LCP, CLS, FCP, TBT, INP) are captured via the App Router
-`reportWebVitals` hook. Metrics publish as browser spans labelled
-`web-vital <metric>` and piggyback on the existing OTLP trace exporter, so no
-additional vendor wiring is required. During local development the hook also
-logs metrics to the console to make regression triage faster.
-
-### Local environment template
-
-A `.env.example` file is provided at the repo root with the required variables.
-Copy it to `.env` or `.env.local`, fill in your Honeycomb API key and dataset,
-and load the env file before running local commands.
-
-## Security Headers
-
-Task 6 hardens runtime responses with a strict Content Security Policy (no
-`unsafe-inline` scripts) and a comprehensive security header suite. Every HTML
-and API response receives the policy via edge middleware, and a per-request
-nonce is exposed on the `x-nonce` request header so server or client components
-can opt into inline scripts if needed. The nonce is also mirrored to
-`data-csp-nonce` on `<body>` and applied to runtime style/script injection so
-Next.js internals and dynamic diagram styles continue to run without relaxing
-the policy. During local development Next.js still requires `unsafe-eval` and
-some inline styles for its overlay tooling; the policy adds those automatically
-outside production. The defaults allow self-hosted assets, OTLP `https`/`wss`
-calls, and block framing or cross-domain embedding.
-
-## SEO & Structured Data
-
-Task 9.0 wires JSON-LD for the home page, notes index, and individual notes. The
-workflow, testing commands, and Rich Results checklist live in
-`docs/seo/structured-data.md`. Update that doc whenever `content/resume.json`
-changes and follow `docs/resume/publishing.md` to regenerate `/resume.json`
-and `/resume.pdf`.
-or the canonical domains (currently `https://jrfeathe.com` and the placeholder
-`https://placeholder.onion`) change so future SEO scope can trace back to WBS 9.0.
-
-## Dependency Policy
-
-Renovate manages npm updates for the pnpm workspace on a weekly cadence. Review
-dependency PRs after the Monday 02:00 UTC run, ensure CI stays green, and follow
-the documented triage SLAs and rollback steps in `docs/dependency-policy.md`.
-
-## Branch protection & workflow expectations
-
-- All changes land via pull request; direct pushes to `master` are disabled.
-- Enable GitHub branch protection with:
-  - Required status checks: `CI / ci/build`, `CI / ci/lint` (backed by pnpm build and lint workflows; add more as CI grows).
-  - Require at least one approval and up-to-date branches before merge.
-  - Block force pushes and deletions; optional: require signed commits.
-- CI workflow runs on pushes and pull requests targeting `master` and `dev`.
-- GitHub automatically requests review based on `CODEOWNERS`, currently defaulting to @jrfeathe.
-- Use the PR template in `.github/pull_request_template.md` to link WBS tasks and document testing.
-
-## Issue templates & labels
-
-- GitHub issue forms cover feature requests, bug reports, and tech debt work in `.github/ISSUE_TEMPLATE/`.
-- Each template requires a WBS ID so new issues stay aligned to the Essential WBS.
-- Sync repository labels (workflow + `WBS:*`) by running `GITHUB_TOKEN=<token> pnpm exec node scripts/sync-wbs-labels.mjs owner/repo`.
-- The sync script can be re-run any time the WBS changes; it upserts labels without removing custom ones.
+- `apps/site` - Next.js app
+- `packages/ui` - shared UI system + tokens
+- `packages/config` - shared linting/formatting/TS config
+- `content` - MDX notes + authored content
+- `scripts` - automation (performance, tests, tokens)
+- `docs` - runbooks and quality gates

@@ -50,6 +50,7 @@ function getChatSizing(): ChatSizing {
     return {
       base: CHAT_DEFAULT_SIZE,
       min: CHAT_MIN_SIZE,
+      widthMargin: CHAT_WIDTH_MARGIN,
       heightOffset: CHAT_HEIGHT_OFFSET
     };
   }
@@ -589,21 +590,19 @@ function MessageBubble({
   referencesLabel,
   contextFactsLabel,
   forcedColors,
-  highContrast,
   isDark
 }: {
   message: ChatMessage;
   referencesLabel: string;
   contextFactsLabel: string;
   forcedColors?: boolean;
-  highContrast?: boolean;
   isDark?: boolean;
 }) {
   const isUser = message.role === "user";
   const hcBg = isDark ? CONTRAST_PRIMARY_DARK : CONTRAST_PRIMARY;
   const hcText = isDark ? CONTRAST_ON_PRIMARY_STRONG : CONTRAST_ON_PRIMARY;
   const userForcedStyle =
-    (forcedColors || highContrast) && isUser
+    forcedColors && isUser
       ? {
           backgroundColor: hcBg,
           color: hcText,
@@ -612,10 +611,9 @@ function MessageBubble({
           msHighContrastAdjust: "none" as const
         }
       : undefined;
-  const userForcedTextStyle =
-    (forcedColors || highContrast) && isUser
-      ? { color: hcText, forcedColorAdjust: "none" as const, msHighContrastAdjust: "none" as const }
-      : undefined;
+  const userForcedTextStyle = forcedColors && isUser
+    ? { color: hcText, forcedColorAdjust: "none" as const, msHighContrastAdjust: "none" as const }
+    : undefined;
   return (
     <div
         className={clsx(
@@ -686,7 +684,6 @@ function ChatFloatingWidget() {
   const [isDraggingResize, setIsDraggingResize] = useState(false);
   const [isCloseHover, setIsCloseHover] = useState(false);
   const [isForcedColors, setIsForcedColors] = useState(false);
-  const [isHighContrast, setIsHighContrast] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const closeButtonStyle = useMemo(() => {
     if (isForcedColors) {
@@ -738,20 +735,14 @@ function ChatFloatingWidget() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const forcedColors = window.matchMedia("(forced-colors: active)");
-    const prefersContrast = window.matchMedia("(prefers-contrast: more)");
     const root = document.documentElement;
-    const readClassContrast = () => root.classList.contains("contrast-high");
     const readDarkMode = () => root.classList.contains("dark");
     const handleForced = () => setIsForcedColors(forcedColors.matches);
-    const handleContrast = () => setIsHighContrast(prefersContrast.matches || readClassContrast());
     const handleDark = () => setIsDarkMode(readDarkMode());
     handleForced();
-    handleContrast();
     handleDark();
     forcedColors.addEventListener("change", handleForced);
-    prefersContrast.addEventListener("change", handleContrast);
     const observer = new MutationObserver(() => {
-      handleContrast();
       handleDark();
     });
     observer.observe(root, { attributes: true, attributeFilter: ["class", "data-contrast"] });
@@ -789,16 +780,10 @@ function ChatFloatingWidget() {
     window.addEventListener("resize", handleResize);
     return () => {
       forcedColors.removeEventListener("change", handleForced);
-      prefersContrast.removeEventListener("change", handleContrast);
       observer.disconnect();
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  const effectiveHighContrast =
-    isForcedColors ||
-    isHighContrast ||
-    (typeof document !== "undefined" && document.documentElement.classList.contains("contrast-high"));
 
   useEffect(() => {
     return () => {
@@ -924,30 +909,6 @@ function ChatFloatingWidget() {
       className="pointer-events-auto fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3"
       data-chat-shell="true"
     >
-      <style jsx global>{`
-        html.contrast-high [data-user-bubble="true"] {
-          background-color: var(--light-hc-accent) !important;
-          color: var(--light-hc-accentOn) !important;
-          border-color: var(--light-hc-accent) !important;
-          forced-color-adjust: none !important;
-          -ms-high-contrast-adjust: none !important;
-        }
-        html.contrast-high.dark [data-user-bubble="true"] {
-          background-color: var(--dark-hc-accent) !important;
-          color: var(--dark-hc-accentOn) !important;
-          border-color: var(--dark-hc-accent) !important;
-          forced-color-adjust: none !important;
-          -ms-high-contrast-adjust: none !important;
-        }
-        html.contrast-high [data-user-bubble="true"] p,
-        html.contrast-high [data-user-bubble="true"] li,
-        html.contrast-high [data-user-bubble="true"] ul,
-        html.contrast-high [data-user-bubble="true"] ol {
-          color: inherit !important;
-          forced-color-adjust: none !important;
-          -ms-high-contrast-adjust: none !important;
-        }
-      `}</style>
       {state.isOpen ? (
         <div
           className="relative flex max-h-[calc(100vh-4rem)] flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-2xl ring-1 ring-border/50 dark:border-dark-border dark:bg-dark-background dark:ring-dark-border/50 sm:max-h-[80vh]"
@@ -1019,7 +980,6 @@ function ChatFloatingWidget() {
                     referencesLabel={copy.referencesLabel}
                     contextFactsLabel={copy.contextFactsLabel}
                     forcedColors={isForcedColors}
-                    highContrast={effectiveHighContrast}
                     isDark={isDarkMode}
                   />
                 ))}
@@ -1098,7 +1058,10 @@ function ChatFloatingWidget() {
             </label>
             {state.pending ? (
               <div className="flex items-center gap-3 rounded-xl border border-border bg-background px-3 py-2 text-sm dark:border-dark-border dark:bg-dark-background">
-                <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-accent" aria-hidden="true" />
+                <span
+                  className="h-2.5 w-2.5 animate-pulse rounded-full bg-accent contrast-more:bg-[var(--light-hc-accent)] dark:bg-dark-accent dark:contrast-more:bg-[var(--dark-hc-accent)]"
+                  aria-hidden="true"
+                />
                 <span>{copy.thinkingLabel}</span>
               </div>
             ) : (

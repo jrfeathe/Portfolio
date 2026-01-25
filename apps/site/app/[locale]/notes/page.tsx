@@ -24,7 +24,8 @@ const ResponsiveAudioPlayer = dynamicImport(
 );
 
 export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+export const revalidate = false;
 
 type PageParams = {
   params: {

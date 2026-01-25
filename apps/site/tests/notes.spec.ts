@@ -6,17 +6,9 @@ test.describe.skip("Engineering notes flow (pending single-page writeup)", () =>
 
     await page.goto("/en/notes", { waitUntil: "domcontentloaded" });
 
-    const noteLink = page.getByRole("link", { name: /MDX pipeline game plan/i });
-    await expect(noteLink).toBeVisible();
-
-    await page.goto("/en/notes/mdx-pipeline", { waitUntil: "domcontentloaded" });
-
-    await expect(page.getByRole("link", { name: /Back to notes/i })).toBeVisible();
-    await expect(page.getByRole("heading", { level: 1, name: /MDX pipeline game plan/i })).toBeVisible();
-
-    const toc = page.locator('nav[aria-label="On this page"]');
+    const toc = page.locator('nav[aria-label="On-page navigation"]');
     await expect(toc).toBeVisible();
     await expect(toc.getByRole("link").first()).toBeVisible();
-
+    await expect(toc.getByRole("link", { name: /Preamble/i })).toBeVisible();
   });
 });

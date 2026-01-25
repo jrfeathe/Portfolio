@@ -62,11 +62,13 @@ export function MobileShellLayout({
   heroMedia,
   mobileNavMaxHeightClassName,
   mobileScrollContainer = false,
-  skimModeEnabled = false,
+  skimModeEnabled,
   showSkimToggle = true,
   shellCopy,
   locale
 }: MobileShellLayoutParams) {
+  const hasSkimMode = typeof skimModeEnabled === "boolean";
+  const skimActive = Boolean(skimModeEnabled);
   const buildFallbackNavItems = () =>
     sections
       .filter((section) => !section.hideFromNav)
@@ -80,7 +82,7 @@ export function MobileShellLayout({
   const rawNavItems: AnchorNavItem[] =
     anchorItems?.length
       ? anchorItems
-      : skimModeEnabled && Array.isArray(anchorItems)
+      : skimActive && Array.isArray(anchorItems)
         ? buildFallbackNavItems()
         : anchorItems ?? buildFallbackNavItems();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -100,7 +102,7 @@ export function MobileShellLayout({
   const scrollContainerOverflowRef = useRef<string | null>(null);
 
   const isSkimSummaryOnly =
-    skimModeEnabled &&
+    skimActive &&
     rawNavItems.length === 1 &&
     rawNavItems[0]?.href === "#skim-summary" &&
     !rawNavItems[0]?.children?.length;
@@ -108,11 +110,19 @@ export function MobileShellLayout({
   const hasNestedAnchors = navItems.some((item) => item.children?.length);
   const hasNavItems = navItems.length > 0;
   const menuEnabled = hasNavItems || isSkimSummaryOnly;
-  const shouldShowSkimToggle = showSkimToggle && (!skimModeEnabled || !menuEnabled);
-  const shouldShowNavSkimToggle = showSkimToggle && skimModeEnabled && menuEnabled;
-  const shouldRenderHeaderCta = !!cta && !skimModeEnabled;
-  const shouldRenderAfterContentCta = !!cta && skimModeEnabled;
-  const navSkimToggleClassName = "w-full justify-center";
+  const shouldShowSkimToggle = showSkimToggle && (hasSkimMode ? (!skimActive || !menuEnabled) : true);
+  const shouldShowNavSkimToggle = showSkimToggle && (hasSkimMode ? skimActive && menuEnabled : true);
+  const shouldRenderHeaderCta = !!cta && !skimActive;
+  const shouldRenderAfterContentCta = !!cta && skimActive;
+  const showHeaderCta = hasSkimMode ? shouldRenderHeaderCta : Boolean(cta);
+  const showAfterContentCta = hasSkimMode ? shouldRenderAfterContentCta : Boolean(cta);
+  const headerCtaClassName = clsx(!hasSkimMode && "skim-hide");
+  const afterContentCtaClassName = clsx(!hasSkimMode && "skim-only");
+  const headerSkimToggleClassName = clsx(!hasSkimMode && "skim-hide");
+  const navSkimToggleClassName = clsx(
+    "w-full justify-center",
+    !hasSkimMode && "skim-only"
+  );
 
   const content = (
     <>
@@ -125,7 +135,11 @@ export function MobileShellLayout({
               </div>
             </div>
             {breadcrumbs.length ? (
-              <Breadcrumbs items={breadcrumbs} ariaLabel={shellCopy.breadcrumbsLabel} />
+              <Breadcrumbs
+                items={breadcrumbs}
+                ariaLabel={shellCopy.breadcrumbsLabel}
+                className="skim-hide"
+              />
             ) : null}
           </div>
 
@@ -133,20 +147,20 @@ export function MobileShellLayout({
             <div className="space-y-2">
               <h1
                 className={clsx(
-                  "font-semibold tracking-tight",
-                  skimModeEnabled ? "text-base leading-snug" : "text-3xl"
+                  "font-semibold tracking-tight skim-hide",
+                  skimActive ? "text-base leading-snug" : "text-3xl"
                 )}
               >
                 {title}
               </h1>
               {subtitle ? (
-                <p className="max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted">
+                <p className="max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted skim-hide">
                   {subtitle}
                 </p>
               ) : null}
             </div>
             {shouldShowSkimToggle ? (
-              <div className="inline-flex flex-col items-start gap-3">
+              <div className={clsx("inline-flex flex-col items-start gap-3", headerSkimToggleClassName)}>
                 <SkimToggleButton active={skimModeEnabled} locale={locale} />
               </div>
             ) : null}
@@ -171,10 +185,10 @@ export function MobileShellLayout({
                 ) : null}
               </figure>
             ) : null}
-            {shouldRenderHeaderCta ? (
-              <>
+            {showHeaderCta ? (
+              <div className={headerCtaClassName}>
                 {cta}
-              </>
+              </div>
             ) : null}
           </div>
         </div>
@@ -183,7 +197,7 @@ export function MobileShellLayout({
       <div
         className={clsx(
           "mx-auto w-full max-w-6xl px-4",
-          skimModeEnabled ? "pt-4 pb-4" : "py-4",
+          skimActive ? "pt-4 pb-4" : "py-4",
           className
         )}
       >
@@ -192,7 +206,7 @@ export function MobileShellLayout({
             <section
               id={section.id}
               key={section.id}
-              className={clsx("scroll-mt-24", section.className)}
+              className={clsx("scroll-mt-16", section.className)}
             >
               <div className="space-y-3">
                 {section.eyebrow ? (
@@ -225,8 +239,8 @@ export function MobileShellLayout({
             </section>
           ))}
         </main>
-        {shouldRenderAfterContentCta ? (
-          <div className="mt-6 space-y-4">
+        {showAfterContentCta ? (
+          <div className={clsx("mt-6 space-y-4", afterContentCtaClassName)}>
             {cta}
           </div>
         ) : null}
@@ -317,6 +331,26 @@ export function MobileShellLayout({
       }
     }
   }, [menuOpen, mobileScrollContainer]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    const hash = window.location.hash;
+    if (!hash || hash.length <= 1) {
+      return;
+    }
+    const id = decodeURIComponent(hash.slice(1));
+    const target = document.getElementById(id);
+    if (!target) {
+      return;
+    }
+    const raf = window.requestAnimationFrame(() => {
+      target.scrollIntoView({ block: "start" });
+      window.scrollBy({ top: -18 });
+    });
+    return () => window.cancelAnimationFrame(raf);
+  }, []);
 
   return (
     <div
@@ -409,7 +443,7 @@ export function MobileShellLayout({
                 {navItems.length ? (
                   <div
                     className={clsx(
-                      "min-h-0 flex-1 overflow-y-auto overscroll-contain",
+                      "min-h-0 flex-1 overflow-y-auto overscroll-contain skim-hide",
                       mobileNavMaxHeightClassName
                     )}
                   >

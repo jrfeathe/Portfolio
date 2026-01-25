@@ -964,7 +964,7 @@ function ChatFloatingWidget() {
                       key={example}
                       type="button"
                       onClick={() => handleSend(example)}
-                      className="rounded-full border border-border px-3 py-1 text-xs font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
+                      className="rounded-full border border-border px-2 py-1 text-[11px] font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent sm:px-3 sm:text-xs"
                     >
                       {example}
                     </button>

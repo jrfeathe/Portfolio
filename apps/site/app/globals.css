@@ -441,4 +441,95 @@ body {
       outline-offset: 3px;
     }
   }
+
+  .skim-only {
+    display: none !important;
+  }
+
+  [data-skim-mode="true"] .skim-only {
+    display: block !important;
+  }
+
+  [data-skim-mode="true"] :is(a, button).skim-only {
+    display: inline-flex !important;
+  }
+
+  [data-skim-mode="true"] .skim-hide {
+    display: none !important;
+  }
+
+  [data-skim-mode="true"] [data-hero-portrait="true"] {
+    display: none !important;
+  }
+
+  [data-skim-mode="true"] .shell-anchor-nav {
+    display: none !important;
+  }
+
+  [data-skim-mode="true"] .home-cta-card {
+    padding: 1.5rem !important;
+  }
+
+  [data-skim-mode="true"] .shell-header {
+    padding-top: 1rem;
+    padding-bottom: 0.25rem;
+  }
+
+  [data-skim-mode="true"] .shell-header-inner {
+    row-gap: 0.75rem;
+  }
+
+  [data-skim-mode="true"] .shell-header-row {
+    align-items: flex-start;
+    row-gap: 0.5rem;
+    column-gap: 0.5rem;
+  }
+
+  [data-skim-mode="true"] .shell-preference-controls {
+    align-items: flex-start;
+    row-gap: 0.5rem;
+    column-gap: 0.5rem;
+  }
+
+  [data-skim-mode="true"] .shell-hero-grid {
+    row-gap: 1.5rem;
+    column-gap: 1.5rem;
+  }
+
+  [data-skim-mode="true"] .shell-title-stack > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.75rem;
+  }
+
+  [data-skim-mode="true"] .shell-layout-grid {
+    gap: 1.5rem;
+    padding-top: 0;
+    padding-bottom: 4rem;
+  }
+
+  [data-skim-mode="true"] .shell-sidebar {
+    padding-top: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    [data-theme-locale="ja"] .shell-layout-with-nav {
+      grid-template-columns: 240px minmax(0, 1fr) 280px;
+    }
+
+    [data-skim-mode="true"] .shell-hero-grid {
+      grid-template-columns: minmax(0, 1fr) 280px;
+    }
+
+    [data-skim-mode="true"] .shell-layout-grid {
+      grid-template-columns: minmax(0, 1fr) 260px;
+      max-width: none;
+    }
+
+    [data-skim-mode="true"] .shell-main {
+      grid-column-start: 1;
+    }
+
+    [data-skim-mode="true"] .shell-sidebar {
+      grid-column-start: 2;
+    }
+  }
 }

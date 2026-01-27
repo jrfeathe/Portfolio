@@ -11,6 +11,7 @@ import { LanguageSwitcher } from "../LanguageSwitcher";
 import { ContrastToggle } from "../ContrastToggle";
 import { ThemeToggle } from "../ThemeToggle";
 import { SkimToggleButton } from "../SkimToggleButton";
+import { HudPortal } from "./ViewportHUDLayer";
 import { ResponsiveImage } from "../ResponsiveImage";
 import type {
   ImageDescriptor,
@@ -228,7 +229,7 @@ export function ShellLayout({
       <div className={contentGridClassName}>
         <div className={ctaContainerClassName}>
           {cta}
-          {floatingWidget}
+          {floatingWidget ? <HudPortal>{floatingWidget}</HudPortal> : null}
         </div>
 
         {navItems.length ? (

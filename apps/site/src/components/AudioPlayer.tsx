@@ -5,6 +5,7 @@ import clsx from "clsx";
 import { Button } from "@portfolio/ui";
 
 import { DEFAULT_MOBILE_BREAKPOINT } from "./Shell/constants";
+import { useHUDViewport } from "./Shell/ViewportHUDLayer";
 
 type AudioSource = {
   src: string;
@@ -154,6 +155,21 @@ export function AudioPlayerOverlay({
   const prevSkimModeRef = useRef(Boolean(isSkimMode));
   const hiddenBeforeSkimRef = useRef<boolean | null>(null);
   const isHorizontalMode = variant === "horizontal";
+  const hudViewport = useHUDViewport();
+  const resolvedViewport = useMemo(() => {
+    const fallbackWidth = typeof window !== "undefined" ? window.innerWidth : 0;
+    const fallbackHeight = typeof window !== "undefined" ? window.innerHeight : 0;
+    return {
+      width: hudViewport.width || fallbackWidth,
+      height: hudViewport.height || fallbackHeight,
+      offsetTop: hudViewport.offsetTop || 0,
+      offsetLeft: hudViewport.offsetLeft || 0,
+      safeTop: hudViewport.safeTop || 0,
+      safeRight: hudViewport.safeRight || 0,
+      safeBottom: hudViewport.safeBottom || 0,
+      safeLeft: hudViewport.safeLeft || 0
+    };
+  }, [hudViewport]);
 
   const telemetryPayload = useMemo(
     () => ({ locale, trackId, src: primarySrc }),
@@ -399,17 +415,27 @@ export function AudioPlayerOverlay({
       const rect = container.getBoundingClientRect();
       const marginX = isHorizontalMode ? 16 : 6;
       const marginY = 16;
+      const {
+        width: viewportWidth,
+        height: viewportHeight,
+        offsetLeft,
+        offsetTop,
+        safeLeft,
+        safeRight,
+        safeTop,
+        safeBottom
+      } = resolvedViewport;
       const baseX = rect.left - playerOffset.x;
       const baseY = rect.top - playerOffset.y;
-      const minX = marginX - baseX;
+      const minX = offsetLeft + marginX + safeLeft - baseX;
       const maxX = Math.max(
         minX,
-        window.innerWidth - rect.width - marginX - baseX
+        offsetLeft + viewportWidth - rect.width - marginX - safeRight - baseX
       );
-      const minY = marginY - baseY;
+      const minY = offsetTop + marginY + safeTop - baseY;
       const maxY = Math.max(
         minY,
-        window.innerHeight - rect.height - marginY - baseY
+        offsetTop + viewportHeight - rect.height - marginY - safeBottom - baseY
       );
       const nextX = Math.min(
         Math.max(drag.originX + (event.clientX - drag.startX), minX),
@@ -421,7 +447,7 @@ export function AudioPlayerOverlay({
       );
       setPlayerOffset({ x: nextX, y: nextY });
     },
-    [isHorizontalMode, playerOffset]
+    [isHorizontalMode, playerOffset, resolvedViewport]
   );
 
   const handleDragEnd = useCallback(
@@ -449,9 +475,9 @@ export function AudioPlayerOverlay({
       return;
     }
     const rect = container.getBoundingClientRect();
-    const threshold = window.innerHeight * 0.3;
+    const threshold = resolvedViewport.offsetTop + resolvedViewport.height * 0.3;
     setIsVolumeTrayDown(rect.top <= threshold);
-  }, []);
+  }, [resolvedViewport]);
 
   const formattedCurrent = formatTime(currentTime);
   const formattedDuration = formatTime(duration);
@@ -488,7 +514,7 @@ export function AudioPlayerOverlay({
       <>
         <div
           className={clsx(
-            "pointer-events-auto fixed bottom-4 left-4 z-40 w-[calc(100%_-_6.5rem)] max-w-[420px] touch-none rounded-3xl border border-border/70 bg-gradient-to-br from-surface/95 via-surface/90 to-surfaceMuted/90 p-3 shadow-2xl backdrop-blur-md dark:border-dark-border/70 dark:from-dark-surface/95 dark:via-dark-surface/90 dark:to-dark-surfaceMuted/90",
+            "pointer-events-auto absolute bottom-4 left-4 z-40 w-[calc(100%_-_6.5rem)] max-w-[420px] touch-none rounded-3xl border border-border/70 bg-gradient-to-br from-surface/95 via-surface/90 to-surfaceMuted/90 p-3 shadow-2xl backdrop-blur-md dark:border-dark-border/70 dark:from-dark-surface/95 dark:via-dark-surface/90 dark:to-dark-surfaceMuted/90",
             isDragging
               ? "transition-none"
               : "transition-[transform,opacity] duration-200 ease-out motion-reduce:transition-none",
@@ -603,8 +629,9 @@ export function AudioPlayerOverlay({
 
         {isHidden ? (
           <div
-            className="pointer-events-auto fixed bottom-4 left-4 z-40"
+            className="pointer-events-auto absolute bottom-4 left-4 z-40"
             data-audio-player-reopen="true"
+            data-variant="horizontal"
           >
             <button
               type="button"
@@ -625,7 +652,7 @@ export function AudioPlayerOverlay({
     <>
       <div
         className={clsx(
-          "pointer-events-auto fixed right-1.5 top-1/2 z-40 w-[min(100px,calc(100%-1.5rem))] max-w-[100px] touch-none rounded-3xl border border-border/70 bg-gradient-to-br from-surface/95 via-surface/90 to-surfaceMuted/90 p-2 shadow-2xl backdrop-blur-md dark:border-dark-border/70 dark:from-dark-surface/95 dark:via-dark-surface/90 dark:to-dark-surfaceMuted/90",
+          "pointer-events-auto absolute right-1.5 top-1/2 z-40 w-[min(100px,calc(100%-1.5rem))] max-w-[100px] touch-none rounded-3xl border border-border/70 bg-gradient-to-br from-surface/95 via-surface/90 to-surfaceMuted/90 p-2 shadow-2xl backdrop-blur-md dark:border-dark-border/70 dark:from-dark-surface/95 dark:via-dark-surface/90 dark:to-dark-surfaceMuted/90",
           isDragging
             ? "transition-none"
             : "transition-[transform,opacity] duration-200 ease-out motion-reduce:transition-none",
@@ -738,8 +765,9 @@ export function AudioPlayerOverlay({
 
         {isHidden ? (
           <div
-            className="pointer-events-auto fixed right-1.5 top-1/2 z-40 -translate-y-1/2"
+            className="pointer-events-auto absolute right-1.5 top-1/2 z-40 -translate-y-1/2"
             data-audio-player-reopen="true"
+            data-variant="vertical"
           >
             <Button
               variant="secondary"

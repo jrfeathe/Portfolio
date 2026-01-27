@@ -19,6 +19,7 @@ import rehypeSanitize from "rehype-sanitize";
 import remarkGfm from "remark-gfm";
 
 import type { Locale } from "../../utils/i18n";
+import { useHUDViewport } from "../Shell/ViewportHUDLayer";
 const CONTRAST_PRIMARY = "var(--light-hc-accent)";
 const CONTRAST_PRIMARY_DARK = "var(--dark-hc-accent)";
 const CONTRAST_ON_PRIMARY = "var(--light-hc-accentOn)";
@@ -45,8 +46,8 @@ type ChatSizing = {
   heightOffset: number;
 };
 
-function getChatSizing(): ChatSizing {
-  if (typeof window === "undefined") {
+function getChatSizing(viewportWidth?: number): ChatSizing {
+  if (typeof window === "undefined" && typeof viewportWidth !== "number") {
     return {
       base: CHAT_DEFAULT_SIZE,
       min: CHAT_MIN_SIZE,
@@ -54,7 +55,13 @@ function getChatSizing(): ChatSizing {
       heightOffset: CHAT_HEIGHT_OFFSET
     };
   }
-  const isCompact = window.innerWidth <= COMPACT_VIEWPORT_MAX;
+  const resolvedWidth =
+    typeof viewportWidth === "number"
+      ? viewportWidth
+      : typeof window !== "undefined"
+        ? window.innerWidth
+        : CHAT_DEFAULT_SIZE.width;
+  const isCompact = resolvedWidth <= COMPACT_VIEWPORT_MAX;
   return {
     base: isCompact ? CHAT_COMPACT_SIZE : CHAT_DEFAULT_SIZE,
     min: isCompact ? CHAT_COMPACT_MIN_SIZE : CHAT_MIN_SIZE,
@@ -671,6 +678,9 @@ function ChatFloatingWidget() {
   }));
   const [widthMargin, setWidthMargin] = useState(CHAT_WIDTH_MARGIN);
   const [heightOffset, setHeightOffset] = useState(CHAT_HEIGHT_OFFSET);
+  const hudViewport = useHUDViewport();
+  const hudViewportRef = useRef(hudViewport);
+  const syncSizingRef = useRef<() => void>(() => {});
   const chatSizeRef = useRef(chatSize);
   const minChatSizeRef = useRef(minChatSize);
   const heightOffsetRef = useRef(CHAT_HEIGHT_OFFSET);
@@ -686,6 +696,21 @@ function ChatFloatingWidget() {
   const [isCloseHover, setIsCloseHover] = useState(false);
   const [isForcedColors, setIsForcedColors] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const getViewportMetrics = () => {
+    const hud = hudViewportRef.current;
+    const fallbackWidth =
+      typeof window !== "undefined" ? window.innerWidth : CHAT_DEFAULT_SIZE.width;
+    const fallbackHeight =
+      typeof window !== "undefined" ? window.innerHeight : CHAT_DEFAULT_SIZE.height;
+    return {
+      width: hud.width || fallbackWidth,
+      height: hud.height || fallbackHeight,
+      safeTop: hud.safeTop || 0,
+      safeRight: hud.safeRight || 0,
+      safeBottom: hud.safeBottom || 0,
+      safeLeft: hud.safeLeft || 0
+    };
+  };
   const closeButtonStyle = useMemo(() => {
     if (isForcedColors) {
       const hoverStyle = isCloseHover
@@ -734,6 +759,10 @@ function ChatFloatingWidget() {
   }, [minChatSize]);
 
   useEffect(() => {
+    hudViewportRef.current = hudViewport;
+  }, [hudViewport]);
+
+  useEffect(() => {
     if (typeof window === "undefined") return;
     const forcedColors = window.matchMedia("(forced-colors: active)");
     const root = document.documentElement;
@@ -750,10 +779,15 @@ function ChatFloatingWidget() {
 
     const clampSize = (width: number, height: number) => {
       const minSize = minChatSizeRef.current;
-      const maxWidth = Math.max(minSize.width, window.innerWidth - widthMarginRef.current); // leave margins around the widget
+      const { width: viewportWidth, height: viewportHeight, safeTop, safeRight, safeBottom, safeLeft } =
+        getViewportMetrics();
+      const maxWidth = Math.max(
+        minSize.width,
+        viewportWidth - widthMarginRef.current - safeLeft - safeRight
+      ); // leave margins around the widget
       const maxHeight = Math.max(
         minSize.height,
-        window.innerHeight - heightOffsetRef.current
+        viewportHeight - heightOffsetRef.current - safeTop - safeBottom
       ); // avoid covering the whole viewport
       return {
         width: Math.min(Math.max(width, minSize.width), maxWidth),
@@ -762,7 +796,8 @@ function ChatFloatingWidget() {
     };
 
     const syncSizing = () => {
-      const { min, heightOffset, widthMargin } = getChatSizing();
+      const { width: viewportWidth } = getViewportMetrics();
+      const { min, heightOffset, widthMargin } = getChatSizing(viewportWidth);
       minChatSizeRef.current = min;
       heightOffsetRef.current = heightOffset;
       widthMarginRef.current = widthMargin;
@@ -772,6 +807,7 @@ function ChatFloatingWidget() {
       setChatSize((prev) => clampSize(prev.width, prev.height));
     };
 
+    syncSizingRef.current = syncSizing;
     syncSizing();
 
     const handleResize = () => {
@@ -785,6 +821,13 @@ function ChatFloatingWidget() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (!hudViewport.width && !hudViewport.height) {
+      return;
+    }
+    syncSizingRef.current();
+  }, [hudViewport.width, hudViewport.height]);
 
   useEffect(() => {
     return () => {
@@ -843,8 +886,16 @@ function ChatFloatingWidget() {
 
       if (typeof window !== "undefined") {
         const minSize = minChatSizeRef.current;
-        const maxWidth = Math.max(minSize.width, window.innerWidth - widthMarginRef.current);
-        const maxHeight = Math.max(minSize.height, window.innerHeight - heightOffsetRef.current);
+        const { width: viewportWidth, height: viewportHeight, safeTop, safeRight, safeBottom, safeLeft } =
+          getViewportMetrics();
+        const maxWidth = Math.max(
+          minSize.width,
+          viewportWidth - widthMarginRef.current - safeLeft - safeRight
+        );
+        const maxHeight = Math.max(
+          minSize.height,
+          viewportHeight - heightOffsetRef.current - safeTop - safeBottom
+        );
         setChatSize({
           width: Math.min(Math.max(nextWidth, minSize.width), maxWidth),
           height: Math.min(Math.max(nextHeight, minSize.height), maxHeight)
@@ -907,20 +958,20 @@ function ChatFloatingWidget() {
 
   return (
     <div
-      className="pointer-events-auto fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3"
+      className="pointer-events-auto absolute bottom-6 right-6 z-50 flex flex-col items-end gap-3"
       data-chat-shell="true"
     >
       {state.isOpen ? (
         <div
-          className="relative flex max-h-[calc(100vh-4rem)] flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-2xl ring-1 ring-border/50 dark:border-dark-border dark:bg-dark-background dark:ring-dark-border/50 sm:max-h-[80vh]"
+          className="relative flex max-h-[calc(var(--hud-height)-4rem)] flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-2xl ring-1 ring-border/50 dark:border-dark-border dark:bg-dark-background dark:ring-dark-border/50 sm:max-h-[80vh]"
           data-chat-window="true"
           style={{
             width: chatSize.width,
             height: chatSize.height,
             minWidth: minChatSize.width,
             minHeight: minChatSize.height,
-            maxWidth: `calc(100vw - ${widthMargin}px)`,
-            maxHeight: `calc(100vh - ${heightOffset}px)`
+            maxWidth: `calc(var(--hud-width) - ${widthMargin}px - var(--hud-safe-left) - var(--hud-safe-right))`,
+            maxHeight: `calc(var(--hud-height) - ${heightOffset}px - var(--hud-safe-top) - var(--hud-safe-bottom))`
           }}
         >
           <div className="flex items-center gap-2.5 border-b border-border bg-surface px-4 py-2.5 dark:border-dark-border dark:bg-dark-surface">

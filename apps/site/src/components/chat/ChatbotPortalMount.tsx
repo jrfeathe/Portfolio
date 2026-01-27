@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 
 import type { ChatbotCopy, ChatbotProviderProps } from "./ChatbotProvider";
 import type { Locale } from "../../utils/i18n";
+import { HUD_LAYER_ID } from "../Shell/ViewportHUDLayer";
 
 const ChatbotProvider = dynamic<ChatbotProviderProps>(
   () => import("./ChatbotProvider").then((mod) => mod.ChatbotProvider),
@@ -29,7 +30,10 @@ export function ChatbotPortalMount({ enabled, copy, locale }: ChatbotPortalMount
     }
 
     const updateTarget = () => {
-      const nextTarget = document.getElementById(CHATBOT_SLOT_ID) ?? document.body;
+      const nextTarget =
+        document.getElementById(HUD_LAYER_ID) ??
+        document.getElementById(CHATBOT_SLOT_ID) ??
+        document.body;
       setTarget((current) => (current === nextTarget ? current : nextTarget));
     };
 
@@ -52,7 +56,7 @@ export function ChatbotPortalMount({ enabled, copy, locale }: ChatbotPortalMount
       <button
         type="button"
         aria-label={label}
-        className="chatbot-placeholder fixed bottom-6 right-6 z-40 flex h-12 items-center gap-2 rounded-full bg-accent px-4 text-sm font-semibold text-accentOn shadow-lg transition hover:bg-accentHover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-accent dark:bg-dark-accent dark:text-dark-accentOn dark:hover:bg-dark-accentHover"
+        className="chatbot-placeholder pointer-events-auto absolute bottom-6 right-6 z-40 flex h-12 items-center gap-2 rounded-full bg-accent px-4 text-sm font-semibold text-accentOn shadow-lg transition hover:bg-accentHover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:ring-accent dark:bg-dark-accent dark:text-dark-accentOn dark:hover:bg-dark-accentHover"
       >
         <span aria-hidden>&#128172;</span>
         <span className="hidden sm:inline">{label}</span>

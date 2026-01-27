@@ -1,11 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useMemo } from "react";
-import { useSearchParams, type ReadonlyURLSearchParams } from "next/navigation";
 
 import type { AudioPlayerOverlayProps } from "./AudioPlayer";
-import { isTruthySkimValue } from "../utils/skim";
+import { useSkimMode } from "../utils/skim-mode";
 
 const ResponsiveAudioPlayer = dynamic(
   () => import("./AudioPlayer").then((mod) => mod.ResponsiveAudioPlayer),
@@ -16,20 +14,8 @@ type SkimAwareAudioPlayerProps = Omit<AudioPlayerOverlayProps, "variant" | "isSk
   forceVariant?: "vertical" | "horizontal";
 };
 
-function resolveSkimFromSearchParams(searchParams: ReadonlyURLSearchParams | null) {
-  const values: string[] = searchParams?.getAll("skim") ?? [];
-  if (!values.length) {
-    return false;
-  }
-  return values.some((value) => isTruthySkimValue(value));
-}
-
 export function SkimAwareAudioPlayer({ forceVariant, ...props }: SkimAwareAudioPlayerProps) {
-  const searchParams = useSearchParams();
-  const skimActive = useMemo(
-    () => resolveSkimFromSearchParams(searchParams),
-    [searchParams]
-  );
+  const skimActive = useSkimMode();
   const resolvedVariant = skimActive ? "horizontal" : forceVariant;
 
   return (

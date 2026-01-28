@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Route } from "next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { PointerEvent as ReactPointerEvent } from "react";
 
 import type { AppDictionary } from "../utils/dictionaries";
 
@@ -15,6 +16,8 @@ const ROWS_PER_SLIDE = 2;
 const SLIDE_LOCK_DURATION = 420;
 const INITIAL_VISIBLE_SLIDES = 1;
 const LAZY_SLIDE_DELAY = 600;
+const SWIPE_INTENT_THRESHOLD = 8;
+const SWIPE_TRIGGER_THRESHOLD = 32;
 
 export function TechStackCarousel({
   items,
@@ -39,9 +42,16 @@ export function TechStackCarousel({
   const [visibleSlideCount, setVisibleSlideCount] = useState(() =>
     slides.length ? INITIAL_VISIBLE_SLIDES : 0,
   );
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
   const interactionLockRef = useRef<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const lazySlideTimeoutRef = useRef<number | null>(null);
+  const swipeStateRef = useRef<{
+    pointerId: number;
+    startX: number;
+    startY: number;
+    isHorizontal: boolean;
+  } | null>(null);
 
   useEffect(() => {
     setActiveSlide((prev) => Math.min(prev, Math.max(slides.length - 1, 0)));
@@ -78,6 +88,24 @@ export function TechStackCarousel({
         lazySlideTimeoutRef.current = null;
       }
     };
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const media = window.matchMedia("(pointer: coarse)");
+    const handleChange = () => setIsCoarsePointer(media.matches);
+    handleChange();
+
+    if (typeof media.addEventListener === "function") {
+      media.addEventListener("change", handleChange);
+      return () => media.removeEventListener("change", handleChange);
+    }
+
+    media.addListener?.(handleChange);
+    return () => media.removeListener?.(handleChange);
   }, []);
 
   useEffect(() => {
@@ -130,6 +158,9 @@ export function TechStackCarousel({
 
   const handleWheel = useCallback(
     (event: WheelEvent) => {
+      if (isCoarsePointer) {
+        return;
+      }
       if (slides.length <= 1) {
         return;
       }
@@ -154,7 +185,86 @@ export function TechStackCarousel({
 
       changeSlide(wantsNext ? 1 : -1);
     },
-    [changeSlide, slides.length, canScrollNext, canScrollPrev],
+    [changeSlide, slides.length, canScrollNext, canScrollPrev, isCoarsePointer],
+  );
+
+  const handlePointerDown = useCallback(
+    (event: ReactPointerEvent<HTMLDivElement>) => {
+      if (!isCoarsePointer || slides.length <= 1) {
+        return;
+      }
+      if (event.pointerType !== "touch") {
+        return;
+      }
+
+      swipeStateRef.current = {
+        pointerId: event.pointerId,
+        startX: event.clientX,
+        startY: event.clientY,
+        isHorizontal: false
+      };
+    },
+    [isCoarsePointer, slides.length],
+  );
+
+  const handlePointerMove = useCallback(
+    (event: ReactPointerEvent<HTMLDivElement>) => {
+      const swipeState = swipeStateRef.current;
+      if (!swipeState || swipeState.pointerId !== event.pointerId) {
+        return;
+      }
+
+      const deltaX = event.clientX - swipeState.startX;
+      const deltaY = event.clientY - swipeState.startY;
+
+      if (!swipeState.isHorizontal) {
+        const absX = Math.abs(deltaX);
+        const absY = Math.abs(deltaY);
+        if (Math.max(absX, absY) < SWIPE_INTENT_THRESHOLD) {
+          return;
+        }
+        if (absY >= absX) {
+          swipeStateRef.current = null;
+          return;
+        }
+
+        swipeState.isHorizontal = true;
+        event.currentTarget.setPointerCapture?.(event.pointerId);
+      }
+
+      if (event.cancelable) {
+        event.preventDefault();
+      }
+    },
+    [],
+  );
+
+  const handlePointerEnd = useCallback(
+    (event: ReactPointerEvent<HTMLDivElement>) => {
+      const swipeState = swipeStateRef.current;
+      if (!swipeState || swipeState.pointerId !== event.pointerId) {
+        return;
+      }
+
+      if (swipeState.isHorizontal) {
+        const deltaX = event.clientX - swipeState.startX;
+        if (Math.abs(deltaX) >= SWIPE_TRIGGER_THRESHOLD) {
+          const wantsNext = deltaX < 0;
+          if (
+            interactionLockRef.current === null &&
+            ((wantsNext && canScrollNext) || (!wantsNext && canScrollPrev))
+          ) {
+            changeSlide(wantsNext ? 1 : -1);
+          }
+        }
+      }
+
+      swipeStateRef.current = null;
+      if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      }
+    },
+    [changeSlide, canScrollNext, canScrollPrev],
   );
 
   const handleArrowClick = useCallback(
@@ -166,7 +276,7 @@ export function TechStackCarousel({
 
   useEffect(() => {
     const node = containerRef.current;
-    if (!node) {
+    if (!node || isCoarsePointer) {
       return;
     }
 
@@ -174,7 +284,7 @@ export function TechStackCarousel({
     return () => {
       node.removeEventListener("wheel", handleWheel);
     };
-  }, [handleWheel]);
+  }, [handleWheel, isCoarsePointer]);
 
   if (!slides.length) {
     return null;
@@ -184,8 +294,14 @@ export function TechStackCarousel({
     <div className="relative mt-3">
       <div
         ref={containerRef}
-        className="-mx-4 overflow-hidden overscroll-contain pb-4 pt-2 sm:mx-0 sm:pt-2"
+        className={`-mx-4 overflow-hidden pb-4 pt-2 sm:mx-0 sm:pt-2 ${
+          isCoarsePointer ? "touch-pan-y overscroll-auto" : "overscroll-contain"
+        }`}
         aria-label={labels.label}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerEnd}
+        onPointerCancel={handlePointerEnd}
       >
         <div
           className="flex transition-transform duration-500 ease-out"

@@ -514,7 +514,7 @@ export function AudioPlayerOverlay({
       <>
         <div
           className={clsx(
-            "pointer-events-auto absolute bottom-4 left-4 z-40 w-[calc(100%_-_6.5rem)] max-w-[420px] touch-none rounded-3xl border border-border/70 bg-gradient-to-br from-surface/95 via-surface/90 to-surfaceMuted/90 p-3 shadow-2xl backdrop-blur-md dark:border-dark-border/70 dark:from-dark-surface/95 dark:via-dark-surface/90 dark:to-dark-surfaceMuted/90",
+            "pointer-events-auto absolute bottom-4 left-4 z-40 w-[calc(100%_-_6.5rem)] max-w-[var(--audio-player-horizontal-max-width)] touch-none rounded-3xl border border-border/70 bg-gradient-to-br from-surface/95 via-surface/90 to-surfaceMuted/90 p-3 shadow-2xl backdrop-blur-md dark:border-dark-border/70 dark:from-dark-surface/95 dark:via-dark-surface/90 dark:to-dark-surfaceMuted/90",
             isDragging
               ? "transition-none"
               : "transition-[transform,opacity] duration-200 ease-out motion-reduce:transition-none",
@@ -559,7 +559,7 @@ export function AudioPlayerOverlay({
                 {isPlaying ? "❚❚" : "▶"}
               </Button>
               <div className="flex min-w-0 flex-1 flex-col gap-1">
-                <div className="flex items-center justify-between text-[11px] font-semibold tabular-nums text-textMuted dark:text-dark-textMuted">
+                <div className="flex items-center justify-between text-[11px] font-semibold tabular-nums text-textMuted dark:text-dark-textMuted whitespace-nowrap">
                   <span>{formattedCurrent}</span>
                   <span>{formattedDuration}</span>
                 </div>
@@ -652,7 +652,7 @@ export function AudioPlayerOverlay({
     <>
       <div
         className={clsx(
-          "pointer-events-auto absolute right-1.5 top-1/2 z-40 w-[min(100px,calc(100%-1.5rem))] max-w-[100px] touch-none rounded-3xl border border-border/70 bg-gradient-to-br from-surface/95 via-surface/90 to-surfaceMuted/90 p-2 shadow-2xl backdrop-blur-md dark:border-dark-border/70 dark:from-dark-surface/95 dark:via-dark-surface/90 dark:to-dark-surfaceMuted/90",
+          "pointer-events-auto absolute right-1.5 top-1/2 z-40 w-[min(var(--audio-player-vertical-width),calc(100%-1.5rem))] max-w-[var(--audio-player-vertical-width)] touch-none rounded-3xl border border-border/70 bg-gradient-to-br from-surface/95 via-surface/90 to-surfaceMuted/90 p-2 shadow-2xl backdrop-blur-md dark:border-dark-border/70 dark:from-dark-surface/95 dark:via-dark-surface/90 dark:to-dark-surfaceMuted/90",
           isDragging
             ? "transition-none"
             : "transition-[transform,opacity] duration-200 ease-out motion-reduce:transition-none",
@@ -701,7 +701,7 @@ export function AudioPlayerOverlay({
 
           <div className="flex w-full flex-col items-center gap-1 text-sm font-medium text-text dark:text-dark-text">
             <span
-              className="rounded-xl border-2 border-border px-1.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-textMuted shadow-sm dark:border-dark-border dark:text-dark-textMuted"
+              className="rounded-xl border-2 border-border px-1.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-textMuted shadow-sm dark:border-dark-border dark:text-dark-textMuted whitespace-nowrap"
               data-time-chip="true"
             >
               {formattedCurrent} / {formattedDuration}

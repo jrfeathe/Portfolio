@@ -337,6 +337,30 @@ export function MobileShellLayout({
     if (typeof window === "undefined") {
       return;
     }
+    const handleSkimToggle = () => {
+      if (!menuOpen) {
+        return;
+      }
+      const scrollContainer = scrollContainerRef.current;
+      if (mobileScrollContainer && scrollContainer) {
+        scrollContainer.scrollTop = 0;
+      }
+      const locked = scrollLockRef.current;
+      if (locked) {
+        locked.scrollY = 0;
+      }
+      document.body.style.top = "0px";
+    };
+    window.addEventListener("portfolio:skim-mode", handleSkimToggle);
+    return () => {
+      window.removeEventListener("portfolio:skim-mode", handleSkimToggle);
+    };
+  }, [menuOpen, mobileScrollContainer]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
     const hash = window.location.hash;
     if (!hash || hash.length <= 1) {
       return;

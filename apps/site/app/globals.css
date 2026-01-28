@@ -8,6 +8,12 @@
   color-scheme: light dark;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --ui-scale: 1;
+  font-size: calc(16px * var(--ui-scale));
+  --audio-player-horizontal-max-width: 26.25rem;
+  --audio-player-vertical-width: 6.25rem;
+  --shell-nav-width: 13.75rem;
+  --shell-cta-width: 16.25rem;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-right: env(safe-area-inset-right, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -30,6 +36,41 @@
 :root:lang(ja) {
   font-family: system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP",
     sans-serif;
+}
+
+:root[data-theme-locale="ja"] {
+  --shell-nav-width: 15rem;
+  --shell-cta-width: 17.5rem;
+}
+
+@media (min-width: 900px) and (max-width: 1279px) {
+  :root {
+    --ui-scale: 1.08;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1439px) {
+  :root {
+    --ui-scale: 1;
+  }
+}
+
+@media (min-width: 1440px) and (max-width: 1535px) {
+  :root {
+    --ui-scale: 1.1;
+  }
+}
+
+@media (min-width: 1536px) and (max-width: 1999px) {
+  :root {
+    --ui-scale: 1.2;
+  }
+}
+
+@media (min-width: 2000px) {
+  :root {
+    --ui-scale: 1.4;
+  }
 }
 
 /* Theme palette overrides for theme picker selections. */
@@ -554,8 +595,16 @@ body {
   }
 
   @media (min-width: 1024px) {
+    .shell-layout-with-nav {
+      grid-template-columns: var(--shell-nav-width) minmax(0, 1fr) var(--shell-cta-width) !important;
+    }
+
+    .shell-layout-no-nav {
+      grid-template-columns: minmax(0, 1fr) var(--shell-cta-width) !important;
+    }
+
     [data-theme-locale="ja"] .shell-layout-with-nav {
-      grid-template-columns: 240px minmax(0, 1fr) 280px;
+      grid-template-columns: var(--shell-nav-width) minmax(0, 1fr) var(--shell-cta-width) !important;
     }
 
     [data-skim-mode="true"] .shell-hero-grid {
@@ -563,7 +612,7 @@ body {
     }
 
     [data-skim-mode="true"] .shell-layout-grid {
-      grid-template-columns: minmax(0, 1fr) 260px;
+      grid-template-columns: minmax(0, 1fr) var(--shell-cta-width) !important;
       max-width: none;
     }
 
@@ -573,6 +622,18 @@ body {
 
     [data-skim-mode="true"] .shell-sidebar {
       grid-column-start: 2;
+    }
+  }
+
+  @media (max-width: 899px) {
+    [data-chat-window="true"] .text-sm {
+      font-size: 1rem;
+    }
+
+    [data-chat-window="true"] .text-xs,
+    [data-chat-window="true"] .text-\[11px\],
+    [data-chat-window="true"] .text-\[12px\] {
+      font-size: 0.875rem;
     }
   }
 }

@@ -115,13 +115,13 @@ export function ShellLayout({
     ? clsx(
         "shell-layout-grid mx-auto grid w-full grid-cols-1 gap-6 px-4 pb-16 pt-0",
         navItems.length
-          ? `lg:grid-cols-[220px_minmax(0,1fr)_260px] ${containerWidth}`
-          : "lg:grid-cols-[minmax(0,1fr)_260px] max-w-none",
+          ? containerWidth
+          : "max-w-none",
         hasNavItems ? "shell-layout-with-nav" : "shell-layout-no-nav",
         className
       )
     : clsx(
-        "shell-layout-grid mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 px-4 pb-24 pt-10 lg:grid-cols-[220px_minmax(0,1fr)_260px]",
+        "shell-layout-grid mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 px-4 pb-24 pt-10",
         hasNavItems ? "shell-layout-with-nav" : "shell-layout-no-nav",
         className
       );

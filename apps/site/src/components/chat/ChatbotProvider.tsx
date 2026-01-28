@@ -30,10 +30,22 @@ const CHAT_COMPACT_SIZE = { width: 320, height: 550 };
 const CHAT_MIN_SIZE = { width: 320, height: 360 };
 const CHAT_COMPACT_MIN_SIZE = { width: 280, height: 420 };
 const COMPACT_VIEWPORT_MAX = 360;
+const CHAT_MOBILE_MAX = 899;
 const CHAT_WIDTH_MARGIN = 48;
 const CHAT_COMPACT_WIDTH_MARGIN = 28;
 const CHAT_HEIGHT_OFFSET = 96;
 const CHAT_COMPACT_HEIGHT_OFFSET = 94;
+const CHAT_TABLET_MIN = 900;
+const CHAT_TABLET_MAX = 1279;
+const CHAT_DESKTOP_LARGE_MIN = 1440;
+const CHAT_DESKTOP_XL_MIN = 1536;
+const CHAT_DESKTOP_ULTRA_MIN = 2000;
+const CHAT_SCALE_MOBILE = 1.2;
+const CHAT_SCALE_MOBILE_COMPACT = 1.3;
+const CHAT_SCALE_TABLET = 1.08;
+const CHAT_SCALE_DESKTOP_LARGE = 1.1;
+const CHAT_SCALE_DESKTOP_XL = 1.2;
+const CHAT_SCALE_DESKTOP_ULTRA = 1.4;
 const LazyHCaptchaWidget = dynamic(
   () => import("./HCaptchaWidget").then((mod) => mod.HCaptchaWidget),
   { ssr: false, loading: () => null }
@@ -45,6 +57,35 @@ type ChatSizing = {
   widthMargin: number;
   heightOffset: number;
 };
+
+function resolveChatScale(viewportWidth: number): number {
+  if (viewportWidth <= COMPACT_VIEWPORT_MAX) {
+    return CHAT_SCALE_MOBILE_COMPACT;
+  }
+  if (viewportWidth <= CHAT_MOBILE_MAX) {
+    return CHAT_SCALE_MOBILE;
+  }
+  if (viewportWidth >= CHAT_DESKTOP_ULTRA_MIN) {
+    return CHAT_SCALE_DESKTOP_ULTRA;
+  }
+  if (viewportWidth >= CHAT_DESKTOP_XL_MIN) {
+    return CHAT_SCALE_DESKTOP_XL;
+  }
+  if (viewportWidth >= CHAT_DESKTOP_LARGE_MIN) {
+    return CHAT_SCALE_DESKTOP_LARGE;
+  }
+  if (viewportWidth >= CHAT_TABLET_MIN && viewportWidth <= CHAT_TABLET_MAX) {
+    return CHAT_SCALE_TABLET;
+  }
+  return 1;
+}
+
+function scaleChatSize(size: { width: number; height: number }, scale: number) {
+  return {
+    width: size.width * scale,
+    height: size.height * scale
+  };
+}
 
 function getChatSizing(viewportWidth?: number): ChatSizing {
   if (typeof window === "undefined" && typeof viewportWidth !== "number") {
@@ -62,11 +103,17 @@ function getChatSizing(viewportWidth?: number): ChatSizing {
         ? window.innerWidth
         : CHAT_DEFAULT_SIZE.width;
   const isCompact = resolvedWidth <= COMPACT_VIEWPORT_MAX;
+  const chatScale = resolveChatScale(resolvedWidth);
+  const layoutScale = resolvedWidth <= CHAT_MOBILE_MAX ? 1 : chatScale;
+  const baseSize = isCompact ? CHAT_COMPACT_SIZE : CHAT_DEFAULT_SIZE;
+  const minSize = isCompact ? CHAT_COMPACT_MIN_SIZE : CHAT_MIN_SIZE;
+  const widthMargin = isCompact ? CHAT_COMPACT_WIDTH_MARGIN : CHAT_WIDTH_MARGIN;
+  const heightOffset = isCompact ? CHAT_COMPACT_HEIGHT_OFFSET : CHAT_HEIGHT_OFFSET;
   return {
-    base: isCompact ? CHAT_COMPACT_SIZE : CHAT_DEFAULT_SIZE,
-    min: isCompact ? CHAT_COMPACT_MIN_SIZE : CHAT_MIN_SIZE,
-    widthMargin: isCompact ? CHAT_COMPACT_WIDTH_MARGIN : CHAT_WIDTH_MARGIN,
-    heightOffset: isCompact ? CHAT_COMPACT_HEIGHT_OFFSET : CHAT_HEIGHT_OFFSET
+    base: scaleChatSize(baseSize, chatScale),
+    min: scaleChatSize(minSize, chatScale),
+    widthMargin: widthMargin * layoutScale,
+    heightOffset: heightOffset * layoutScale
   };
 }
 
@@ -685,13 +732,14 @@ function ChatFloatingWidget() {
   const minChatSizeRef = useRef(minChatSize);
   const heightOffsetRef = useRef(CHAT_HEIGHT_OFFSET);
   const widthMarginRef = useRef(CHAT_WIDTH_MARGIN);
+  const hasUserResizedRef = useRef(false);
   const dragRef = useRef<{
     startX: number;
     startY: number;
     startWidth: number;
     startHeight: number;
   } | null>(null);
-  const dragHandlersRef = useRef<{ onMove: (event: MouseEvent) => void; onEnd: () => void } | null>(null);
+  const dragHandlersRef = useRef<{ onMove: (event: PointerEvent) => void; onEnd: () => void } | null>(null);
   const [isDraggingResize, setIsDraggingResize] = useState(false);
   const [isCloseHover, setIsCloseHover] = useState(false);
   const [isForcedColors, setIsForcedColors] = useState(false);
@@ -797,14 +845,18 @@ function ChatFloatingWidget() {
 
     const syncSizing = () => {
       const { width: viewportWidth } = getViewportMetrics();
-      const { min, heightOffset, widthMargin } = getChatSizing(viewportWidth);
+      const { base, min, heightOffset, widthMargin } = getChatSizing(viewportWidth);
       minChatSizeRef.current = min;
       heightOffsetRef.current = heightOffset;
       widthMarginRef.current = widthMargin;
       setMinChatSize({ width: min.width, height: min.height });
       setWidthMargin(widthMargin);
       setHeightOffset(heightOffset);
-      setChatSize((prev) => clampSize(prev.width, prev.height));
+      setChatSize((prev) =>
+        hasUserResizedRef.current
+          ? clampSize(prev.width, prev.height)
+          : clampSize(base.width, base.height)
+      );
     };
 
     syncSizingRef.current = syncSizing;
@@ -833,9 +885,9 @@ function ChatFloatingWidget() {
     return () => {
       const handlers = dragHandlersRef.current;
       if (handlers) {
-        window.removeEventListener("mousemove", handlers.onMove);
-        window.removeEventListener("mouseup", handlers.onEnd);
-        window.removeEventListener("mouseleave", handlers.onEnd);
+        window.removeEventListener("pointermove", handlers.onMove);
+        window.removeEventListener("pointerup", handlers.onEnd);
+        window.removeEventListener("pointercancel", handlers.onEnd);
       }
     };
   }, []);
@@ -865,10 +917,23 @@ function ChatFloatingWidget() {
     [solveCaptcha]
   );
 
-  const handleResizeStart = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleResizeStart = useCallback((event: React.PointerEvent<HTMLButtonElement>) => {
+    if (event.pointerType === "mouse" && event.button !== 0) {
+      return;
+    }
     event.preventDefault();
     event.stopPropagation();
     setIsDraggingResize(true);
+    hasUserResizedRef.current = true;
+    const pointerId = event.pointerId;
+    const target = event.currentTarget;
+    if (typeof target.setPointerCapture === "function") {
+      try {
+        target.setPointerCapture(pointerId);
+      } catch {
+        // Ignore capture errors.
+      }
+    }
     dragRef.current = {
       startX: event.clientX,
       startY: event.clientY,
@@ -876,7 +941,7 @@ function ChatFloatingWidget() {
       startHeight: chatSizeRef.current.height
     };
 
-    const onMove = (moveEvent: MouseEvent) => {
+    const onMove = (moveEvent: PointerEvent) => {
       const drag = dragRef.current;
       if (!drag) return;
       const deltaX = drag.startX - moveEvent.clientX;
@@ -911,17 +976,24 @@ function ChatFloatingWidget() {
 
     const onEnd = () => {
       dragRef.current = null;
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseup", onEnd);
-      window.removeEventListener("mouseleave", onEnd);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onEnd);
+      window.removeEventListener("pointercancel", onEnd);
+      if (typeof target.releasePointerCapture === "function") {
+        try {
+          target.releasePointerCapture(pointerId);
+        } catch {
+          // Ignore release errors.
+        }
+      }
       dragHandlersRef.current = null;
       setIsDraggingResize(false);
     };
 
     dragHandlersRef.current = { onMove, onEnd };
-    window.addEventListener("mousemove", onMove);
-    window.addEventListener("mouseup", onEnd);
-    window.addEventListener("mouseleave", onEnd);
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onEnd);
+    window.addEventListener("pointercancel", onEnd);
   }, []);
 
   const moderationRef = useRef<HTMLDivElement>(null);
@@ -1132,8 +1204,8 @@ function ChatFloatingWidget() {
               <div className="flex items-center gap-3">
                 <button
                   type="button"
-                  className="group relative flex h-5 w-5 cursor-sw-resize items-center justify-center rounded border border-accent bg-surface/80 text-accent shadow-sm transition hover:bg-surface hover:text-accent contrast-more:border-accent dark:border-dark-accent dark:bg-dark-surface/80 dark:text-dark-accent dark:hover:text-dark-accent"
-                  onMouseDown={handleResizeStart}
+                  className="group relative flex h-5 w-5 cursor-sw-resize items-center justify-center rounded border border-accent bg-surface/80 text-accent shadow-sm transition hover:bg-surface hover:text-accent contrast-more:border-accent dark:border-dark-accent dark:bg-dark-surface/80 dark:text-dark-accent dark:hover:text-dark-accent touch-none"
+                  onPointerDown={handleResizeStart}
                   aria-label={copy.resizeAriaLabel}
                 >
                   <span className="pointer-events-none text-[12px] leading-none">↙</span>

@@ -1,4 +1,9 @@
-import { hasSkimValue, hasSkimValues, resolveSkimMode } from "../skim";
+import {
+  hasSkimValue,
+  hasSkimValues,
+  isTruthySkimValue,
+  resolveSkimMode
+} from "../skim";
 
 describe("resolveSkimMode", () => {
   it("returns false when no search params provided", () => {
@@ -24,6 +29,18 @@ describe("resolveSkimMode", () => {
   it("handles array skim values", () => {
     expect(resolveSkimMode({ skim: ["0", "1"] })).toBe(true);
     expect(resolveSkimMode({ skim: ["no", "0"] })).toBe(false);
+  });
+
+  it("treats undefined skim values as enabled once present", () => {
+    expect(resolveSkimMode({ skim: undefined })).toBe(true);
+  });
+});
+
+describe("isTruthySkimValue", () => {
+  it("normalizes common truthy inputs", () => {
+    expect(isTruthySkimValue("  TRUE ")).toBe(true);
+    expect(isTruthySkimValue("yes")).toBe(true);
+    expect(isTruthySkimValue("0")).toBe(false);
   });
 });
 

@@ -1,4 +1,8 @@
-import { getNextContrast, isContrastPreference } from "../contrast";
+import {
+  contrastCookieName,
+  getNextContrast,
+  isContrastPreference
+} from "../contrast";
 
 describe("contrast utilities", () => {
   it("cycles through contrast preferences in order", () => {
@@ -12,6 +16,7 @@ describe("contrast utilities", () => {
   });
 
   it("validates contrast preferences", () => {
+    expect(contrastCookieName).toBe("portfolio-contrast");
     expect(isContrastPreference("system")).toBe(true);
     expect(isContrastPreference("high")).toBe(true);
     expect(isContrastPreference("standard")).toBe(true);

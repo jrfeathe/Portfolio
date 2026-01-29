@@ -844,18 +844,40 @@ function ChatFloatingWidget() {
     };
 
     const syncSizing = () => {
-      const { width: viewportWidth } = getViewportMetrics();
+      const {
+        width: viewportWidth,
+        height: viewportHeight,
+        safeTop,
+        safeRight,
+        safeBottom,
+        safeLeft
+      } = getViewportMetrics();
       const { base, min, heightOffset, widthMargin } = getChatSizing(viewportWidth);
-      minChatSizeRef.current = min;
+      const availableWidth = Math.max(
+        1,
+        viewportWidth - widthMargin - safeLeft - safeRight
+      );
+      const availableHeight = Math.max(
+        1,
+        viewportHeight - heightOffset - safeTop - safeBottom
+      );
+      const fitScale = Math.min(
+        availableWidth / min.width,
+        availableHeight / min.height,
+        1
+      );
+      const adjustedMin = fitScale < 1 ? scaleChatSize(min, fitScale) : min;
+      const adjustedBase = fitScale < 1 ? scaleChatSize(base, fitScale) : base;
+      minChatSizeRef.current = adjustedMin;
       heightOffsetRef.current = heightOffset;
       widthMarginRef.current = widthMargin;
-      setMinChatSize({ width: min.width, height: min.height });
+      setMinChatSize({ width: adjustedMin.width, height: adjustedMin.height });
       setWidthMargin(widthMargin);
       setHeightOffset(heightOffset);
       setChatSize((prev) =>
         hasUserResizedRef.current
           ? clampSize(prev.width, prev.height)
-          : clampSize(base.width, base.height)
+          : clampSize(adjustedBase.width, adjustedBase.height)
       );
     };
 

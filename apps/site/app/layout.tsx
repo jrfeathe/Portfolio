@@ -11,7 +11,6 @@ import { PORTFOLIO_BASE_URL } from "../src/lib/seo/jsonld";
 import { contrastCookieName } from "../src/utils/contrast";
 import { themeCookieName, themeLocaleCookieName } from "../src/utils/theme";
 import { CriticalCss } from "./CriticalCss";
-import { ViewportHUDLayer } from "../src/components/Shell/ViewportHUDLayer";
 const OtelBootstrap = dynamic(
   () =>
     import("../src/components/telemetry/OtelBootstrap").then(
@@ -89,7 +88,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           dangerouslySetInnerHTML={{ __html: themeInitScript }}
         />
         {browserOtelEnabled ? <OtelBootstrap /> : null}
-        <ViewportHUDLayer />
         {children}
       </body>
     </html>

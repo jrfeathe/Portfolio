@@ -14,7 +14,7 @@ import { ThemeToggle } from "../ThemeToggle";
 import { ContrastToggle } from "../ContrastToggle";
 import { LanguageSwitcher } from "../LanguageSwitcher";
 import { SkimToggleButton } from "../SkimToggleButton";
-import { HudPortal } from "./ViewportHUDLayer";
+import { HudPortal, ViewportHUDLayer } from "./ViewportHUDLayer";
 import type {
   ImageDescriptor,
   ResponsiveImagePreset
@@ -129,18 +129,21 @@ export function MobileShellLayout({
     <>
       <header className="border-b border-border bg-surface pb-2 pt-3 dark:border-dark-border dark:bg-dark-surface">
         <div className="mx-auto w-full max-w-6xl pb-1 px-4">
-          <div className="space-y-3 pb-0">
+          <div className="pb-0">
             <div className="flex items-start justify-end gap-3">
               <div className="mt-1 h-8.5 min-w-[180px]">
                 <LanguageSwitcher className="h-8.5 min-w-[180px]" />
               </div>
             </div>
+            <ViewportHUDLayer />
             {breadcrumbs.length ? (
-              <Breadcrumbs
-                items={breadcrumbs}
-                ariaLabel={shellCopy.breadcrumbsLabel}
-                className="skim-hide"
-              />
+              <div className="mt-3">
+                <Breadcrumbs
+                  items={breadcrumbs}
+                  ariaLabel={shellCopy.breadcrumbsLabel}
+                  className="skim-hide"
+                />
+              </div>
             ) : null}
           </div>
 
@@ -386,7 +389,7 @@ export function MobileShellLayout({
       )}
     >
       {menuOpen && menuEnabled ? (
-        <HudPortal>
+        <HudPortal slot="menu">
           <div
             data-menu-layer="true"
             className="absolute inset-0 z-50 flex overscroll-contain"
@@ -503,7 +506,7 @@ export function MobileShellLayout({
         className="pointer-events-none fixed left-0 top-0 z-40"
       >
         {!menuOpen && menuEnabled ? (
-          <HudPortal>
+        <HudPortal slot="menu">
             <button
               type="button"
               aria-label={shellCopy.menuOpenLabel}
@@ -517,7 +520,7 @@ export function MobileShellLayout({
             </button>
           </HudPortal>
         ) : null}
-        {floatingWidget ? <HudPortal>{floatingWidget}</HudPortal> : null}
+        {floatingWidget ? <HudPortal slot="widgets">{floatingWidget}</HudPortal> : null}
         <div id="chatbot-slot" data-chatbot-slot="true" />
       </div>
       {mobileScrollContainer ? (

@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 
 import type { ChatbotCopy, ChatbotProviderProps } from "./ChatbotProvider";
 import type { Locale } from "../../utils/i18n";
-import { HUD_LAYER_ID } from "../Shell/ViewportHUDLayer";
+import { HUD_LAYER_ID, HUD_SLOT_IDS } from "../Shell/ViewportHUDLayer";
 
 const ChatbotProvider = dynamic<ChatbotProviderProps>(
   () => import("./ChatbotProvider").then((mod) => mod.ChatbotProvider),
@@ -31,6 +31,7 @@ export function ChatbotPortalMount({ enabled, copy, locale }: ChatbotPortalMount
 
     const updateTarget = () => {
       const nextTarget =
+        document.getElementById(HUD_SLOT_IDS.chat) ??
         document.getElementById(HUD_LAYER_ID) ??
         document.getElementById(CHATBOT_SLOT_ID) ??
         document.body;

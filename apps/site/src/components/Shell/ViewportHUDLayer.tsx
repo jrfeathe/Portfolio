@@ -5,6 +5,13 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 
 export const HUD_LAYER_ID = "hud-layer";
+export const HUD_SLOT_IDS = {
+  menu: "hud-slot-menu",
+  widgets: "hud-slot-widgets",
+  chat: "hud-slot-chat"
+} as const;
+
+export type HudSlot = keyof typeof HUD_SLOT_IDS;
 
 type HUDViewport = {
   width: number;
@@ -166,14 +173,21 @@ export function ViewportHUDLayer() {
     };
   }, []);
 
-  return <div id={HUD_LAYER_ID} data-hud-layer="true" aria-hidden="true" className="hud-layer" />;
+  return (
+    <div id={HUD_LAYER_ID} data-hud-layer="true" className="hud-layer">
+      <div id={HUD_SLOT_IDS.menu} data-hud-slot="menu" />
+      <div id={HUD_SLOT_IDS.widgets} data-hud-slot="widgets" />
+      <div id={HUD_SLOT_IDS.chat} data-hud-slot="chat" />
+    </div>
+  );
 }
 
 type HudPortalProps = {
   children: ReactNode;
+  slot?: HudSlot;
 };
 
-export function HudPortal({ children }: HudPortalProps) {
+export function HudPortal({ children, slot = "widgets" }: HudPortalProps) {
   const [target, setTarget] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -181,7 +195,8 @@ export function HudPortal({ children }: HudPortalProps) {
       return;
     }
     const updateTarget = () => {
-      const nextTarget = document.getElementById(HUD_LAYER_ID);
+      const nextTarget =
+        document.getElementById(HUD_SLOT_IDS[slot]) ?? document.getElementById(HUD_LAYER_ID);
       setTarget((current) => (current === nextTarget ? current : nextTarget));
     };
 
@@ -191,7 +206,7 @@ export function HudPortal({ children }: HudPortalProps) {
     observer.observe(document.body, { childList: true, subtree: true });
 
     return () => observer.disconnect();
-  }, []);
+  }, [slot]);
 
   if (!target) {
     return null;

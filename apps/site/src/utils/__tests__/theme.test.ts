@@ -1,4 +1,10 @@
-import { getNextTheme, isThemePreference } from "../theme";
+import {
+  getNextTheme,
+  isThemeLocale,
+  isThemePreference,
+  themeCookieName,
+  themeLocaleCookieName
+} from "../theme";
 
 describe("theme utilities", () => {
   it("cycles through theme preferences in order", () => {
@@ -18,5 +24,14 @@ describe("theme utilities", () => {
     expect(isThemePreference("system")).toBe(true);
     expect(isThemePreference("other")).toBe(false);
     expect(isThemePreference(undefined)).toBe(false);
+  });
+
+  it("validates theme locale values", () => {
+    expect(themeCookieName).toBe("portfolio-theme");
+    expect(themeLocaleCookieName).toBe("portfolio-theme-locale");
+    expect(isThemeLocale("en")).toBe(true);
+    expect(isThemeLocale("dreamland")).toBe(true);
+    expect(isThemeLocale("unknown")).toBe(false);
+    expect(isThemeLocale(undefined)).toBe(false);
   });
 });

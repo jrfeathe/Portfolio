@@ -38,8 +38,8 @@ describe("i18n utilities", () => {
     expect(parseLocale("en")).toBe("en");
     expect(parseLocale(["ja"])).toBe("ja");
     expect(parseLocale(["fr", "en"])).toBeNull();
+    expect(parseLocale([])).toBeNull();
     expect(parseLocale(null)).toBeNull();
     expect(parseLocale(undefined)).toBeNull();
   });
-
 });

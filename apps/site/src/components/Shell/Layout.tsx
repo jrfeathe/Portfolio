@@ -11,6 +11,7 @@ import { LanguageSwitcher } from "../LanguageSwitcher";
 import { ContrastToggle } from "../ContrastToggle";
 import { ThemeToggle } from "../ThemeToggle";
 import { SkimToggleButton } from "../SkimToggleButton";
+import { HudPortal, ViewportHUDLayer } from "./ViewportHUDLayer";
 import { ResponsiveImage } from "../ResponsiveImage";
 import type {
   ImageDescriptor,
@@ -114,13 +115,13 @@ export function ShellLayout({
     ? clsx(
         "shell-layout-grid mx-auto grid w-full grid-cols-1 gap-6 px-4 pb-16 pt-0",
         navItems.length
-          ? `lg:grid-cols-[220px_minmax(0,1fr)_260px] ${containerWidth}`
-          : "lg:grid-cols-[minmax(0,1fr)_260px] max-w-none",
+          ? containerWidth
+          : "max-w-none",
         hasNavItems ? "shell-layout-with-nav" : "shell-layout-no-nav",
         className
       )
     : clsx(
-        "shell-layout-grid mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 px-4 pb-24 pt-10 lg:grid-cols-[220px_minmax(0,1fr)_260px]",
+        "shell-layout-grid mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 px-4 pb-24 pt-10",
         hasNavItems ? "shell-layout-with-nav" : "shell-layout-no-nav",
         className
       );
@@ -171,6 +172,7 @@ export function ShellLayout({
               <LanguageSwitcher className="min-w-[250px] flex-1 md:flex-none" />
             </div>
           </div>
+          <ViewportHUDLayer />
           <div className={clsx("shell-hero-grid", heroGridClassName)}>
             <div className={clsx("shell-title-stack", titleStackClassName)}>
               {title ? (
@@ -228,7 +230,7 @@ export function ShellLayout({
       <div className={contentGridClassName}>
         <div className={ctaContainerClassName}>
           {cta}
-          {floatingWidget}
+          {floatingWidget ? <HudPortal slot="widgets">{floatingWidget}</HudPortal> : null}
         </div>
 
         {navItems.length ? (

@@ -14,6 +14,7 @@ import { ThemeToggle } from "../ThemeToggle";
 import { ContrastToggle } from "../ContrastToggle";
 import { LanguageSwitcher } from "../LanguageSwitcher";
 import { SkimToggleButton } from "../SkimToggleButton";
+import { HudPortal, ViewportHUDLayer } from "./ViewportHUDLayer";
 import type {
   ImageDescriptor,
   ResponsiveImagePreset
@@ -128,18 +129,21 @@ export function MobileShellLayout({
     <>
       <header className="border-b border-border bg-surface pb-2 pt-3 dark:border-dark-border dark:bg-dark-surface">
         <div className="mx-auto w-full max-w-6xl pb-1 px-4">
-          <div className="space-y-3 pb-0">
+          <div className="pb-0">
             <div className="flex items-start justify-end gap-3">
               <div className="mt-1 h-8.5 min-w-[180px]">
                 <LanguageSwitcher className="h-8.5 min-w-[180px]" />
               </div>
             </div>
+            <ViewportHUDLayer />
             {breadcrumbs.length ? (
-              <Breadcrumbs
-                items={breadcrumbs}
-                ariaLabel={shellCopy.breadcrumbsLabel}
-                className="skim-hide"
-              />
+              <div className="mt-3">
+                <Breadcrumbs
+                  items={breadcrumbs}
+                  ariaLabel={shellCopy.breadcrumbsLabel}
+                  className="skim-hide"
+                />
+              </div>
             ) : null}
           </div>
 
@@ -336,6 +340,30 @@ export function MobileShellLayout({
     if (typeof window === "undefined") {
       return;
     }
+    const handleSkimToggle = () => {
+      if (!menuOpen) {
+        return;
+      }
+      const scrollContainer = scrollContainerRef.current;
+      if (mobileScrollContainer && scrollContainer) {
+        scrollContainer.scrollTop = 0;
+      }
+      const locked = scrollLockRef.current;
+      if (locked) {
+        locked.scrollY = 0;
+      }
+      document.body.style.top = "0px";
+    };
+    window.addEventListener("portfolio:skim-mode", handleSkimToggle);
+    return () => {
+      window.removeEventListener("portfolio:skim-mode", handleSkimToggle);
+    };
+  }, [menuOpen, mobileScrollContainer]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
     const hash = window.location.hash;
     if (!hash || hash.length <= 1) {
       return;
@@ -361,105 +389,116 @@ export function MobileShellLayout({
       )}
     >
       {menuOpen && menuEnabled ? (
-        <div
-          data-menu-layer="true"
-          className="fixed left-0 top-0 z-50 flex overscroll-contain relative"
-        >
-          <button
-            type="button"
-            className="absolute inset-0 bg-text/30 dark:bg-dark-background/30"
-            aria-label={shellCopy.menuCloseLabel}
-            onClick={() => setMenuOpen(false)}
-          />
-          <button
-            type="button"
-            aria-label={shellCopy.menuCloseLabel}
-            aria-expanded="true"
-            aria-controls="mobile-preferences"
-            className="absolute left-4 z-40 inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-text transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border dark:border-dark-border dark:text-dark-text"
-            style={{ top: MENU_BUTTON_TOP }}
-            onClick={() => setMenuOpen(false)}
+        <HudPortal slot="menu">
+          <div
+            data-menu-layer="true"
+            className="absolute inset-0 z-50 flex overscroll-contain"
           >
-            {shellCopy.menuCloseButtonLabel}
-          </button>
-          <aside
-            id="mobile-preferences"
-            className="relative z-10 mr-auto flex h-full w-72 max-w-[85vw] flex-col gap-6 overflow-hidden border-r border-border bg-surface px-5 pb-5 pt-14 shadow-2xl dark:border-dark-border dark:bg-dark-surface"
-            aria-label={shellCopy.menuPanelLabel}
-          >
-            {socialLinks ? (
-              <div
-                className="absolute right-5 z-10 flex items-center [&_[data-social-links]]:gap-6"
-                style={{ top: MENU_BUTTON_TOP + SOCIAL_LINKS_TOP_OFFSET }}
-              >
-                {socialLinks}
-              </div>
-            ) : null}
-            {menuEnabled ? (
-              <div className="flex min-h-0 flex-1 flex-col gap-3">
-                <div className="space-y-4">
-                  <ThemeToggle locale={locale} />
-                  <ContrastToggle locale={locale} />
-                  {shouldShowNavSkimToggle ? (
-                    <div className="flex flex-col gap-2">
-                      <SkimToggleButton
-                        active={skimModeEnabled}
-                        locale={locale}
-                        className={navSkimToggleClassName}
+            <button
+              type="button"
+              className="absolute inset-0 bg-text/30 dark:bg-dark-background/30"
+              aria-label={shellCopy.menuCloseLabel}
+              onClick={() => setMenuOpen(false)}
+            />
+            <button
+              type="button"
+              aria-label={shellCopy.menuCloseLabel}
+              aria-expanded="true"
+              aria-controls="mobile-preferences"
+              className="absolute z-40 inline-flex h-9 w-9 items-center justify-center rounded-full border border-border text-text transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-border dark:border-dark-border dark:text-dark-text"
+              style={{
+                top: `calc(${MENU_BUTTON_TOP}px + var(--hud-safe-top))`,
+                left: "calc(1rem + var(--hud-safe-left))"
+              }}
+              onClick={() => setMenuOpen(false)}
+            >
+              {shellCopy.menuCloseButtonLabel}
+            </button>
+            <aside
+              id="mobile-preferences"
+              className="relative z-10 mr-auto flex h-full w-72 max-w-[85vw] flex-col gap-6 overflow-hidden border-r border-border bg-surface px-5 shadow-2xl dark:border-dark-border dark:bg-dark-surface"
+              aria-label={shellCopy.menuPanelLabel}
+              style={{
+                paddingTop: "calc(3.5rem + var(--hud-safe-top))",
+                paddingBottom: "calc(1.25rem + var(--hud-safe-bottom))"
+              }}
+            >
+              {socialLinks ? (
+                <div
+                  className="absolute right-5 z-10 flex items-center [&_[data-social-links]]:gap-6"
+                  style={{
+                    top: `calc(${MENU_BUTTON_TOP + SOCIAL_LINKS_TOP_OFFSET}px + var(--hud-safe-top))`
+                  }}
+                >
+                  {socialLinks}
+                </div>
+              ) : null}
+              {menuEnabled ? (
+                <div className="flex min-h-0 flex-1 flex-col gap-3">
+                  <div className="space-y-4">
+                    <ThemeToggle locale={locale} />
+                    <ContrastToggle locale={locale} />
+                    {shouldShowNavSkimToggle ? (
+                      <div className="flex flex-col gap-2">
+                        <SkimToggleButton
+                          active={skimModeEnabled}
+                          locale={locale}
+                          className={navSkimToggleClassName}
+                        />
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <a
+                      href="#top"
+                      data-mobile-action="true"
+                      onClick={() => setMenuOpen(false)}
+                      className="inline-flex flex-1 items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
+                    >
+                      {shellCopy.returnToTopLabel}
+                    </a>
+                  </div>
+                  {hasNestedAnchors ? (
+                    <div className="flex flex-wrap gap-2">
+                      <button
+                        type="button"
+                        onClick={handleExpandAllNav}
+                        data-mobile-action="true"
+                        className="inline-flex flex-1 items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
+                      >
+                        {shellCopy.expandAllLabel}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleCollapseAllNav}
+                        data-mobile-action="true"
+                        className="inline-flex flex-1 items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
+                      >
+                        {shellCopy.collapseAllLabel}
+                      </button>
+                    </div>
+                  ) : null}
+                  {navItems.length ? (
+                    <div
+                      className={clsx(
+                        "min-h-0 flex-1 overflow-y-auto overscroll-contain skim-hide",
+                        mobileNavMaxHeightClassName
+                      )}
+                    >
+                      <AnchorNav
+                        items={navItems}
+                        ariaLabel={shellCopy.anchorNavLabel}
+                        orientation="vertical"
+                        scrollable={false}
+                        onItemClick={handleNavItemClick}
                       />
                     </div>
                   ) : null}
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  <a
-                    href="#top"
-                    data-mobile-action="true"
-                    onClick={() => setMenuOpen(false)}
-                    className="inline-flex flex-1 items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
-                  >
-                    {shellCopy.returnToTopLabel}
-                  </a>
-                </div>
-                {hasNestedAnchors ? (
-                  <div className="flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      onClick={handleExpandAllNav}
-                      data-mobile-action="true"
-                      className="inline-flex flex-1 items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
-                    >
-                      {shellCopy.expandAllLabel}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleCollapseAllNav}
-                      data-mobile-action="true"
-                      className="inline-flex flex-1 items-center justify-center rounded-full border border-border px-3 py-2 text-sm font-semibold text-text transition hover:border-accent hover:text-accent dark:border-dark-border dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
-                    >
-                      {shellCopy.collapseAllLabel}
-                    </button>
-                  </div>
-                ) : null}
-                {navItems.length ? (
-                  <div
-                    className={clsx(
-                      "min-h-0 flex-1 overflow-y-auto overscroll-contain skim-hide",
-                      mobileNavMaxHeightClassName
-                    )}
-                  >
-                    <AnchorNav
-                      items={navItems}
-                      ariaLabel={shellCopy.anchorNavLabel}
-                      orientation="vertical"
-                      scrollable={false}
-                      onItemClick={handleNavItemClick}
-                    />
-                  </div>
-                ) : null}
-              </div>
-            ) : null}
-          </aside>
-        </div>
+              ) : null}
+            </aside>
+          </div>
+        </HudPortal>
       ) : null}
 
       <div
@@ -467,19 +506,21 @@ export function MobileShellLayout({
         className="pointer-events-none fixed left-0 top-0 z-40"
       >
         {!menuOpen && menuEnabled ? (
-          <button
-            type="button"
-            aria-label={shellCopy.menuOpenLabel}
-            aria-expanded="false"
-            aria-controls="mobile-preferences"
-            data-menu-toggle="true"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-lg font-semibold text-text shadow-lg transition hover:border-accent hover:text-accent dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
-            onClick={() => setMenuOpen(true)}
-          >
-            ☰
-          </button>
+        <HudPortal slot="menu">
+            <button
+              type="button"
+              aria-label={shellCopy.menuOpenLabel}
+              aria-expanded="false"
+              aria-controls="mobile-preferences"
+              data-menu-toggle="true"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-lg font-semibold text-text shadow-lg transition hover:border-accent hover:text-accent dark:border-dark-border dark:bg-dark-surface dark:text-dark-text dark:hover:border-dark-accent dark:hover:text-dark-accent"
+              onClick={() => setMenuOpen(true)}
+            >
+              ☰
+            </button>
+          </HudPortal>
         ) : null}
-        <div className="pointer-events-auto">{floatingWidget}</div>
+        {floatingWidget ? <HudPortal slot="widgets">{floatingWidget}</HudPortal> : null}
         <div id="chatbot-slot" data-chatbot-slot="true" />
       </div>
       {mobileScrollContainer ? (

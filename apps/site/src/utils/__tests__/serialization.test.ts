@@ -14,4 +14,25 @@ describe("escapeJsonForHtml", () => {
     const safe = '{"name":"jack","status":"ok"}';
     expect(escapeJsonForHtml(safe)).toBe(safe);
   });
+
+  it("falls back to the original character when lookup misses", () => {
+    const originalReplace = String.prototype.replace;
+    const replaceSpy = jest.fn(function (
+      this: string,
+      pattern: RegExp,
+      replacer: (substring: string, ...args: unknown[]) => string
+    ) {
+      void pattern;
+      return replacer("?");
+    });
+
+    // @ts-expect-error - override built-in method for a focused branch test
+    String.prototype.replace = replaceSpy as typeof String.prototype.replace;
+
+    try {
+      expect(escapeJsonForHtml("noop")).toBe("?");
+    } finally {
+      String.prototype.replace = originalReplace;
+    }
+  });
 });

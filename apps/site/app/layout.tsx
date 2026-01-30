@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import dynamic from "next/dynamic";
 
@@ -48,6 +48,11 @@ export const metadata: Metadata = {
   icons: {
     icon: "/tech-stack/bash.svg"
   }
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1
 };
 
 const themeInitScript = `(function(){const cookieName=${escapeUnsafeChars(

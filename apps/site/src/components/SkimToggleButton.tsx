@@ -6,11 +6,9 @@ import type { Route } from "next";
 import Link from "next/link";
 import {
   usePathname,
-  useRouter,
   useSearchParams
 } from "next/navigation";
 import {
-  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -19,7 +17,9 @@ import {
 
 import type { Locale } from "../utils/i18n";
 import { getDictionary } from "../utils/dictionaries";
-import { isTruthySkimValue } from "../utils/skim";
+import { buildSkimToggleUrl, setSkimMode, useSkimMode } from "../utils/skim-mode";
+
+const TOGGLE_COOLDOWN_MS = 300;
 
 type SkimToggleButtonProps = {
   active?: boolean;
@@ -28,27 +28,16 @@ type SkimToggleButtonProps = {
 };
 
 export function SkimToggleButton({ active, className, locale }: SkimToggleButtonProps) {
-  const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const skim = getDictionary(locale).skimToggle;
-  const fallbackTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const prefetchedUrlRef = useRef<string | null>(null);
+  const skimActive = useSkimMode();
+  const cooldownTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [hydrated, setHydrated] = useState(false);
-  const resolvedActive = useMemo(() => {
-    if (typeof active === "boolean") {
-      return active;
-    }
-    if (!hydrated) {
-      return false;
-    }
-    const values = searchParams?.getAll("skim") ?? [];
-    if (!values.length) {
-      return false;
-    }
-    return values.some((value) => isTruthySkimValue(value));
-  }, [active, hydrated, searchParams]);
+  const resolvedActive =
+    typeof active === "boolean" ? active : (hydrated ? skimActive : false);
   const [optimisticActive, setOptimisticActive] = useState(resolvedActive);
+  const [isCoolingDown, setIsCoolingDown] = useState(false);
 
   const label = useMemo(
     () => (optimisticActive ? skim.ariaDisable : skim.ariaEnable),
@@ -65,88 +54,33 @@ export function SkimToggleButton({ active, className, locale }: SkimToggleButton
 
   useEffect(() => {
     return () => {
-      if (fallbackTimerRef.current !== null) {
-        clearTimeout(fallbackTimerRef.current);
-        fallbackTimerRef.current = null;
+      if (cooldownTimerRef.current !== null) {
+        clearTimeout(cooldownTimerRef.current);
+        cooldownTimerRef.current = null;
       }
     };
   }, []);
 
-  const buildNextUrl = useCallback((currentActive: boolean) => {
-    const params = new URLSearchParams(searchParams?.toString() ?? "");
-    if (currentActive) {
-      params.delete("skim");
-    } else {
-      params.set("skim", "1");
-    }
-    const nextSearch = params.toString();
-    const basePath = pathname || "/";
-    return nextSearch ? `${basePath}?${nextSearch}` : basePath;
-  }, [pathname, searchParams]);
-
   const targetUrl = useMemo(
-    () => buildNextUrl(resolvedActive),
-    [resolvedActive, buildNextUrl]
+    () => buildSkimToggleUrl(optimisticActive, pathname || "/", searchParams?.toString()),
+    [optimisticActive, pathname, searchParams]
   );
 
-  const prefetchNextUrl = useCallback(() => {
-    if (!targetUrl || prefetchedUrlRef.current === targetUrl) {
-      return;
-    }
-    prefetchedUrlRef.current = targetUrl;
-    router.prefetch(targetUrl as Route);
-  }, [router, targetUrl]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const connection = (navigator as Navigator & {
-      connection?: {
-        saveData?: boolean;
-        effectiveType?: string;
-      };
-    }).connection;
-    if (connection?.saveData) {
-      return;
-    }
-    if (connection?.effectiveType && /(^|-)2g$/.test(connection.effectiveType)) {
-      return;
-    }
-
-    if ("requestIdleCallback" in window) {
-      const id = window.requestIdleCallback(prefetchNextUrl, { timeout: 1500 });
-      return () => window.cancelIdleCallback(id);
-    }
-
-    const id = setTimeout(prefetchNextUrl, 250);
-    return () => clearTimeout(id);
-  }, [prefetchNextUrl, targetUrl]);
-
-  const scheduleFallbackNavigation = (nextUrl: string) => {
-    if (typeof window === "undefined") {
-      return;
-    }
-
-    const target = new URL(nextUrl, window.location.origin);
-    const targetKey = `${target.pathname}${target.search}${target.hash}`;
-
-    if (fallbackTimerRef.current !== null) {
-      clearTimeout(fallbackTimerRef.current);
-    }
-
-    fallbackTimerRef.current = setTimeout(() => {
-      const currentKey = `${window.location.pathname}${window.location.search}${window.location.hash}`;
-      if (currentKey !== targetKey) {
-        window.location.assign(target.toString());
-      }
-    }, 2500);
-  };
-
   const handleClick = () => {
-    setOptimisticActive((current) => !current);
-    scheduleFallbackNavigation(targetUrl);
+    if (isCoolingDown) {
+      return;
+    }
+    const nextActive = !optimisticActive;
+    setOptimisticActive(nextActive);
+    setSkimMode(nextActive);
+    setIsCoolingDown(true);
+    if (cooldownTimerRef.current !== null) {
+      clearTimeout(cooldownTimerRef.current);
+    }
+    cooldownTimerRef.current = setTimeout(() => {
+      setIsCoolingDown(false);
+      cooldownTimerRef.current = null;
+    }, TOGGLE_COOLDOWN_MS);
   };
 
   return (
@@ -163,6 +97,7 @@ export function SkimToggleButton({ active, className, locale }: SkimToggleButton
       role="button"
       aria-pressed={optimisticActive}
       aria-label={label}
+      aria-disabled={isCoolingDown}
       onClick={(event) => {
         if (
           event.defaultPrevented ||
@@ -174,10 +109,12 @@ export function SkimToggleButton({ active, className, locale }: SkimToggleButton
         ) {
           return;
         }
+        event.preventDefault();
+        if (isCoolingDown) {
+          return;
+        }
         handleClick();
       }}
-      onPointerEnter={prefetchNextUrl}
-      onFocus={prefetchNextUrl}
       data-testid="skim-toggle"
     >
       <span aria-hidden className="whitespace-nowrap">

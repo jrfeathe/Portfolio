@@ -131,6 +131,14 @@ function buildAnchorItems(locale: Locale, note: Note | null): AnchorNavItem[] {
     {
       label: "Writeup",
       href: "#writeup"
+    },
+    {
+      label: "Release 1.0.0 / 1.0.1",
+      href: "#release_1-0-0_1-0-1"
+    },
+    {
+      label: "Epilogue",
+      href: "#epilogue"
     }
   ];
 }

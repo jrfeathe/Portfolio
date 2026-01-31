@@ -16,7 +16,7 @@ import {
 } from "../../src/components/Shell";
 import { StructuredData } from "../../src/components/seo/StructuredData";
 import { getResumeProfile } from "../../src/lib/resume/profile";
-import { buildHomePageJsonLd } from "../../src/lib/seo/jsonld";
+import { buildHomePageJsonLd, PORTFOLIO_SITE_NAME } from "../../src/lib/seo/jsonld";
 import { resolveOpenGraphLocale } from "../../src/lib/seo/opengraph-locale";
 import { TechStackCarousel } from "../../src/components/TechStackCarousel";
 import { DesktopSkimLayout } from "../../src/components/DesktopSkimLayout";
@@ -302,6 +302,7 @@ export function generateMetadata({ params }: PageProps): Metadata {
       languages
     },
     openGraph: {
+      siteName: PORTFOLIO_SITE_NAME,
       title: dictionary.metadata.title,
       description: dictionary.metadata.description,
       type: "website",

@@ -17,6 +17,8 @@ import {
   type AnchorNavItem
 } from "../../../src/components/Shell";
 import { getNote, type Note } from "../../../src/lib/mdx";
+import { PORTFOLIO_SITE_NAME } from "../../../src/lib/seo/jsonld";
+import { resolveOpenGraphLocale } from "../../../src/lib/seo/opengraph-locale";
 
 const ResponsiveAudioPlayer = dynamicImport(
   () => import("../../../src/components/AudioPlayer").then((mod) => mod.ResponsiveAudioPlayer),
@@ -152,10 +154,18 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   const dictionary = getDictionary(locale);
 
   return {
-    title: dictionary.notes.index.title,
+    title: dictionary.notes.index.metadataTitle,
     description: dictionary.notes.index.subtitle,
     alternates: {
       canonical: `/${locale}/notes`
+    },
+    openGraph: {
+      siteName: PORTFOLIO_SITE_NAME,
+      title: dictionary.notes.index.metadataTitle,
+      description: dictionary.notes.index.subtitle,
+      type: "website",
+      locale: resolveOpenGraphLocale(locale),
+      images: [`/${locale}/notes/opengraph-image`]
     },
     robots: {
       index: false,

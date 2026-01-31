@@ -256,6 +256,7 @@ export type AppDictionary = {
   };
   notes: {
     index: {
+      metadataTitle: string;
       title: string;
       subtitle: string;
       body: string;
@@ -530,8 +531,8 @@ const getExperienceEntries = (locale: Locale): ExperienceEntry[] =>
 
 const en: AppDictionary = {
   metadata: {
-    title: "Jack F. Portfolio",
-    description: "Software engineering portfolio and project tracker."
+    title: "Jack Featherstone | Portfolio",
+    description: "Fullstack engineer building fast distributed services. AI-assisted project management, clear documentation, and shipped projects. Available for remote work; US work authorized."
   },
   themeToggle: {
     label: "Select color theme",
@@ -736,6 +737,7 @@ const en: AppDictionary = {
   },
   notes: {
     index: {
+      metadataTitle: "Jack Featherstone | Notes",
       title: "Engineering notes",
       subtitle:
         "A fantastic tale of how the portfolio was turned from concept to reality.",
@@ -749,7 +751,7 @@ const en: AppDictionary = {
     }
   },
   experience: {
-    metadataTitle: "Jack F. Experience",
+    metadataTitle: "Jack Featherstone | Experience",
     title: "Experience",
     subtitle: "",
     section1title: "Projects",
@@ -761,7 +763,7 @@ const en: AppDictionary = {
     techStack: getTechStackDetails("en")
   },
   meetings: {
-    metadataTitle: "Jack F. Contact",
+    metadataTitle: "Jack Featherstone | Contact",
     title: "Contact",
     subtitle: "Have questions? Let’s start a conversation.",
     section1title: "Availability",
@@ -828,8 +830,8 @@ const en: AppDictionary = {
 
 const ja: AppDictionary = {
   metadata: {
-    title: "Jack F. ポートフォリオ",
-    description: "ソフトウェアエンジニアリングのポートフォリオおよびプロジェクトトラッカーです。"
+    title: "Jack Featherstone | ポートフォリオ",
+    description: "高速な分散サービスを構築するフルスタックエンジニア。AI支援のプロジェクトマネジメント、明確なドキュメント、リリース実績。リモート勤務可／米国で就労可。"
   },
   themeToggle: {
     label: "カラーテーマを選択",
@@ -1033,6 +1035,7 @@ const ja: AppDictionary = {
   },
   notes: {
     index: {
+      metadataTitle: "Jack Featherstone | エンジニアリングノート",
       title: "エンジニアリングノート",
       subtitle:
         "ポートフォリオが構想から現実へと形になるまでの素晴らしい物語です。",
@@ -1046,7 +1049,7 @@ const ja: AppDictionary = {
     }
   },
   experience: {
-    metadataTitle: "Jack F. 経験",
+    metadataTitle: "Jack Featherstone | 経験",
     title: "経験",
     subtitle: "",
     section1title: "プロジェクト",
@@ -1058,7 +1061,7 @@ const ja: AppDictionary = {
     techStack: getTechStackDetails("ja")
   },
   meetings: {
-    metadataTitle: "Jack F. の連絡先",
+    metadataTitle: "Jack Featherstone | 連絡先",
     title: "連絡",
     subtitle:
       "ご質問がありますか？会話を始めましょう。",
@@ -1128,8 +1131,8 @@ const ja: AppDictionary = {
 
 const zh: AppDictionary = {
   metadata: {
-    title: "Jack F. 作品集",
-    description: "软件工程作品集与项目跟踪器。"
+    title: "Jack Featherstone | 作品集",
+    description: "全栈工程师，构建高速的分布式服务。AI 辅助项目管理、清晰文档与已交付项目。可远程工作；具备美国工作资格。"
   },
   themeToggle: {
     label: "选择配色主题",
@@ -1333,6 +1336,7 @@ const zh: AppDictionary = {
   },
   notes: {
     index: {
+      metadataTitle: "Jack Featherstone | 工程笔记",
       title: "工程笔记",
       subtitle:
         "一段精彩的故事，讲述作品集如何从概念变为现实。",
@@ -1346,7 +1350,7 @@ const zh: AppDictionary = {
     }
   },
   experience: {
-    metadataTitle: "Jack F. 经历",
+    metadataTitle: "Jack Featherstone | 经历",
     title: "经历",
     subtitle: "",
     section1title: "项目",
@@ -1358,7 +1362,7 @@ const zh: AppDictionary = {
     techStack: getTechStackDetails("zh")
   },
   meetings: {
-    metadataTitle: "Jack F. 的联系方式",
+    metadataTitle: "Jack Featherstone | 联系方式",
     title: "联系",
     subtitle:
       "有问题吗？让我们开始交流。",

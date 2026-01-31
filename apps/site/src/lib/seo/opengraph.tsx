@@ -43,7 +43,7 @@ export function buildOgImage({
           {kicker ? (
             <div
               style={{
-                fontSize: 20,
+                fontSize: 30,
                 fontWeight: 600,
                 color: accentColor
               }}
@@ -65,10 +65,10 @@ export function buildOgImage({
             <div
               style={{
                 marginTop: 24,
-                fontSize: 28,
+              fontSize: 36,
                 lineHeight: 1.4,
                 color: mutedColor,
-                maxWidth: "900px"
+                maxWidth: "1040px"
               }}
             >
               {description}
@@ -82,7 +82,7 @@ export function buildOgImage({
             justifyContent: "space-between"
           }}
         >
-          <div style={{ fontSize: 18, color: mutedColor }}>{domainLabel}</div>
+          <div style={{ fontSize: 42, color: mutedColor }}>{domainLabel}</div>
           <div
             style={{
               width: 160,

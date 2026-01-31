@@ -7,7 +7,7 @@ import "./globals.css";
 import "../src/styles/print.css";
 import { defaultLocale, getLocaleDirection } from "../src/utils/i18n";
 import { getDictionary } from "../src/utils/dictionaries";
-import { PORTFOLIO_BASE_URL } from "../src/lib/seo/jsonld";
+import { PORTFOLIO_BASE_URL, PORTFOLIO_SITE_NAME } from "../src/lib/seo/jsonld";
 import { contrastCookieName } from "../src/utils/contrast";
 import { themeCookieName, themeLocaleCookieName } from "../src/utils/theme";
 import { CriticalCss } from "./CriticalCss";
@@ -43,8 +43,14 @@ const DEFAULT_DIR = getLocaleDirection(defaultLocale);
 
 export const metadata: Metadata = {
   metadataBase: new URL(PORTFOLIO_BASE_URL),
-  title: defaultDictionary.metadata.title,
+  title: {
+    default: defaultDictionary.metadata.title,
+    template: "%s"
+  },
   description: defaultDictionary.metadata.description,
+  openGraph: {
+    siteName: PORTFOLIO_SITE_NAME
+  },
   icons: {
     icon: "/tech-stack/bash.svg"
   }

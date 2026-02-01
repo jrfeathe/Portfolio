@@ -14,6 +14,7 @@ import {
   type Locale
 } from "../../../src/utils/i18n";
 import { getResumeProfile } from "../../../src/lib/resume/profile";
+import { PORTFOLIO_SITE_NAME } from "../../../src/lib/seo/jsonld";
 import { resolveOpenGraphLocale } from "../../../src/lib/seo/opengraph-locale";
 import {
   ResponsiveShellLayout,
@@ -151,6 +152,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
       languages
     },
     openGraph: {
+      siteName: PORTFOLIO_SITE_NAME,
       title: dictionary.experience.metadataTitle,
       description: dictionary.experience.subtitle,
       type: "website",

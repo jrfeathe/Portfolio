@@ -3,7 +3,12 @@ import type { Locale } from "../../utils/i18n";
 import type { ResumeProfile } from "../resume/profile";
 
 const SCHEMA_CONTEXT = "https://schema.org";
-export const PORTFOLIO_BASE_URL = "https://jrfeathe.com";
+export const PORTFOLIO_BASE_URL = "https://www.jrfeathe.com";
+export const PORTFOLIO_SITE_NAME = "Jack Featherstone Software Engineering";
+export const PORTFOLIO_SITE_ALTERNATE_NAMES = [
+  "Jack Featherstone",
+  "Jack Featherstone Portfolio"
+];
 const PERSON_ID = `${PORTFOLIO_BASE_URL}/#person`;
 const WEBSITE_ID = `${PORTFOLIO_BASE_URL}/#website`;
 
@@ -83,8 +88,9 @@ function buildWebsiteNode(locale: Locale, dictionary: AppDictionary): JsonLdNode
   return {
     "@type": "WebSite",
     "@id": WEBSITE_ID,
-    url: PORTFOLIO_BASE_URL,
-    name: dictionary.metadata.title,
+    url: absoluteUrl("/"),
+    name: PORTFOLIO_SITE_NAME,
+    alternateName: PORTFOLIO_SITE_ALTERNATE_NAMES,
     description: dictionary.metadata.description,
     inLanguage: locale,
     publisher: {

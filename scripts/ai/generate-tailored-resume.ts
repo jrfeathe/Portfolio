@@ -84,7 +84,8 @@ type CliOptions = {
   noHeader: boolean;
 };
 
-const DEFAULT_OUT = "content/tailored-resume.md";
+const DEFAULT_JOB = "apps/job-studio/job-description-compact.txt";
+const DEFAULT_OUT = "apps/job-studio/tailored-resume.md";
 
 const SYSTEM_PROMPT = [
   "You are a resume assistant.",
@@ -108,9 +109,9 @@ function printUsage() {
       "Usage: pnpm exec tsc -p scripts/ai/tsconfig.json && node .tmp/chatbot-build/generate-tailored-resume.js [options]",
       "",
       "Options:",
-      "  --job <path>         Path to job description text file.",
+      "  --job <path>         Path to job description text file (default: apps/job-studio/job-description-compact.txt).",
       "  --job-text <text>    Inline job description text.",
-      "  --out <path>         Output markdown path (default: content/tailored-resume.md).",
+      "  --out <path>         Output markdown path (default: apps/job-studio/tailored-resume.md).",
       "  --json-out <path>    Optional JSON output path (raw model output after normalization).",
       "  --locale <en|ja|zh>  Locale for context fields (default: en).",
       "  --model <id>         OpenRouter model override.",
@@ -180,6 +181,10 @@ function localizeList(value: LocalizedStringList | undefined, locale: Locale): s
 
 function normalizeText(value: string): string {
   return value.replace(/\s+/g, " ").trim();
+}
+
+function normalizeBullet(value: string): string {
+  return normalizeText(value).replace(/^[-*\u2022]\s+/, "");
 }
 
 type ParsedEnvLine = {
@@ -427,7 +432,7 @@ function normalizeOutput(payload: unknown): ResumeOutput {
       const dates = typeof entry.dates === "string" ? normalizeText(entry.dates) : "";
       const bullets = Array.isArray(entry.bullets)
         ? entry.bullets
-            .map((bullet) => (typeof bullet === "string" ? normalizeText(bullet) : ""))
+            .map((bullet) => (typeof bullet === "string" ? normalizeBullet(bullet) : ""))
             .filter(Boolean)
             .slice(0, 3)
         : [];
@@ -446,6 +451,36 @@ function normalizeOutput(payload: unknown): ResumeOutput {
   };
 }
 
+function formatExperienceTitle(title: string): string {
+  let result = title;
+  if (/Undergraduate Teaching Assistant/i.test(result)) {
+    result = result.replace(/Undergraduate Teaching Assistant/i, "TA");
+    result = result.replace(/SER\s*321\s*\(([^)]+)\)/i, "$1");
+    result = result.replace(/^TA,\s*/i, "TA for ");
+    result = result.replace(/\s*\(SER\s*321\)\s*/i, "");
+  }
+  return result;
+}
+
+function formatExperienceHeader(entry: ResumeOutput["experience"][number]): string {
+  const title = entry.title.toLowerCase();
+  const company = entry.company.toLowerCase();
+  const taMatch = /teaching assistant|\bta\b/.test(title);
+  const contextMatch = /arizona state|distributed software systems|ser\s*321/.test(
+    `${title} ${company}`
+  );
+
+  if (taMatch && contextMatch) {
+    return "TA for Distributed Software Systems, Arizona State University — Remote | March – May 2024";
+  }
+
+  const formattedTitle = [formatExperienceTitle(entry.title), entry.company]
+    .filter(Boolean)
+    .join(", ");
+  const meta = [entry.location, entry.dates].filter(Boolean).join(" | ");
+  return [formattedTitle, meta].filter(Boolean).join(" — ");
+}
+
 function renderMarkdown(
   output: ResumeOutput,
   options: { includeHeader: boolean; basics?: { name?: string; headline?: string } }
@@ -457,24 +492,25 @@ function renderMarkdown(
     if (options.basics.headline) {
       lines.push(options.basics.headline);
     }
+    lines.push("");
   }
 
   lines.push("## Summary");
   lines.push(output.summary || "");
+  lines.push("");
 
   lines.push("## Tech");
   lines.push(output.skills.length ? output.skills.join(" · ") : "");
+  lines.push("");
 
   lines.push("## Experience");
   if (!output.experience.length) {
     lines.push("");
   } else {
     output.experience.forEach((entry) => {
-      const title = [entry.title, entry.company].filter(Boolean).join(", ");
-      const meta = [entry.location, entry.dates].filter(Boolean).join(" | ");
-      const header = [title, meta].filter(Boolean).join(" — ");
+      const header = formatExperienceHeader(entry);
       if (header) {
-        lines.push(`**${header}**`);
+        lines.push(header);
       }
       entry.bullets.forEach((bullet) => {
         lines.push(`- ${bullet}`);
@@ -483,7 +519,7 @@ function renderMarkdown(
     });
   }
 
-  return lines.join("\n\n").trimEnd() + "\n";
+  return lines.join("\n").trimEnd() + "\n";
 }
 
 function logWarnings(output: ResumeOutput) {
@@ -512,19 +548,27 @@ async function readJobDescription(options: CliOptions): Promise<string> {
     return fsPromises.readFile(resolved, "utf8");
   }
 
-  if (process.stdin.isTTY) {
-    throw new Error("No job description provided. Use --job, --job-text, or stdin.");
+  if (!process.stdin.isTTY) {
+    return new Promise((resolve, reject) => {
+      let data = "";
+      process.stdin.setEncoding("utf8");
+      process.stdin.on("data", (chunk) => {
+        data += chunk;
+      });
+      process.stdin.on("end", () => resolve(data));
+      process.stdin.on("error", reject);
+    });
   }
 
-  return new Promise((resolve, reject) => {
-    let data = "";
-    process.stdin.setEncoding("utf8");
-    process.stdin.on("data", (chunk) => {
-      data += chunk;
-    });
-    process.stdin.on("end", () => resolve(data));
-    process.stdin.on("error", reject);
-  });
+  const repoRoot = resolveRepoRoot();
+  const defaultPath = path.resolve(repoRoot, DEFAULT_JOB);
+  if (fs.existsSync(defaultPath)) {
+    return fsPromises.readFile(defaultPath, "utf8");
+  }
+
+  throw new Error(
+    "No job description provided. Use --job, --job-text, stdin, or add apps/job-studio/job-description-compact.txt."
+  );
 }
 
 async function callOpenRouter(params: {

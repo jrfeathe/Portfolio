@@ -29,9 +29,9 @@ Production-ready personal portfolio site built on Next.js with multilingual cont
 - `pnpm exec tsc -p scripts/ai/tsconfig.json` - build the AI helper scripts
 - `node .tmp/chatbot-build/build-chatbot-index.js` - refresh chatbot embeddings + anchors after tech stack/experience edits
 - Resume tailoring workflow:
-  - Follow the prompt + template in `docs/ai/job-description-compression.md` to compress the job description in ChatGPT.
-  - Save the compressed job description output to `content/job-description-compact.txt` (or another path).
-  - Run `node .tmp/chatbot-build/generate-tailored-resume.js --job <path> --out <path>` to produce the 1‑page markdown resume (optional: `--locale`, `--json-out`, `--model`, `--no-header`).
+  - Follow the prompt + template in `apps/job-studio/job-description-compression.md` to compress the job description in ChatGPT.
+  - Save the compressed job description output to `apps/job-studio/job-description-compact.txt` (or another path).
+  - Run `node .tmp/chatbot-build/generate-tailored-resume.js` to produce the 1‑page markdown resume (defaults to `apps/job-studio/job-description-compact.txt` + `apps/job-studio/tailored-resume.md`; optional: `--job`, `--out`, `--locale`, `--json-out`, `--model`, `--no-header`).
 
 ## Pipelines (when to run)
 
@@ -52,6 +52,7 @@ The WBS is the authoritative scope tracker for launch. Each item has a deliverab
 ## Workspace layout
 
 - `apps/site` - Next.js app
+- `apps/job-studio` - job description compression + resume generation inputs/outputs
 - `packages/ui` - shared UI system + tokens
 - `packages/config` - shared linting/formatting/TS config
 - `content` - MDX notes + authored content

@@ -87,6 +87,13 @@ const SYSTEM_PROMPT = [
   "If pass1 includes a company name and product/platform name, use them exactly.",
   "If both are provided, refer to the product as the company's product/platform (do not attribute the mission to the product).",
   "Preserve company and product capitalization as written in pass1.",
+  "Paragraph 1 must be a grounded application statement that includes role, company, source, and a years-of-experience phrase.",
+  "Start paragraph 1 with a direct application line similar to: \"I'm writing to apply for the [role] position at [company], as advertised on [source].\"",
+  "Follow with a neutral fit sentence using the years phrase (avoid flattery).",
+  "Paragraph 3 must be grounded, include a brief thank-you, and end with a neutral invitation to discuss.",
+  "Avoid overtly eager or flattering language (e.g., excited, thrilled, honored, dream, passionate, love).",
+  "If source is missing or marked [SOURCE], keep [SOURCE] as a placeholder.",
+  "If a years phrase is not specified, use \"multiple years of experience.\"",
   "No bullet lists, headings, or markdown formatting.",
   "No salutations or signatures; write only the letter body.",
   "Output plain text only."

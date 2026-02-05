@@ -40,6 +40,8 @@ Don't:
 
 Company name (exact):
 Product/platform name (if any, exact):
+Role title (exact):
+Job source (exact job board or URL; if not stated, write [SOURCE]):
 Industry/domain (plain language):
 
 Phrases to echo (exact quotes, 3-6):
@@ -59,11 +61,12 @@ Objections to address (if any):
 Title: PASS 2 — Cover Letter Plan
 Length target: 180-200 words (max 200)
 Voice: formal, calm, concise, slight warmth
+Years phrase to use (if unsure, write "multiple years of experience"):
 
 Paragraph plan:
 1) Hook (must include company name; include product if relevant):
 2) Fit (map experience to responsibilities and tech anchors):
-3) Close (values alignment + call to action):
+3) Close (brief thank you + neutral call to action):
 
 Must-include proof points (placeholders):
 - [PROJECT/ACHIEVEMENT]

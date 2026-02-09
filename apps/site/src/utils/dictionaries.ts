@@ -11,6 +11,7 @@ import type { ImageDescriptor, ResponsiveImagePreset } from "../lib/images";
 import type { Locale } from "./i18n";
 import type { ContrastPreference } from "./contrast";
 import type { ThemePreference } from "./theme";
+import type { ServiceKey } from "./servicesAvailability";
 
 export type CtaVariant = "primary" | "secondary" | "ghost";
 
@@ -60,6 +61,102 @@ export type LocalizedExperienceEntry = {
   timeframe: LocalizedStringMap;
   summary: LocalizedStringMap;
   highlights: Partial<Record<Locale, string[]>>;
+};
+
+type ContractLink = {
+  label: string;
+  variant: CtaVariant;
+  href: string;
+  serviceId?: ServiceKey;
+};
+
+type ContractsSection = {
+  id: string;
+  title: string;
+  bullets: string[];
+};
+
+type ContractFixesPackage = {
+  id: ServiceKey;
+  title: string;
+  tagline: string;
+  bullets: string[];
+  priceLine?: string;
+  cta: ContractLink;
+};
+
+type ContractFixesGroup = {
+  title: string;
+  bullets: string[];
+};
+
+type ContractFixesScopeBlock = {
+  serviceId: ServiceKey;
+  title: string;
+  includedTitle: string;
+  included: string[];
+  notIncludedTitle: string;
+  notIncluded: string[];
+  changePolicyTitle: string;
+  changePolicy: string;
+};
+
+type ContractFixesTier = {
+  title: string;
+  bullets: string[];
+};
+
+type ContractFixesFaq = {
+  question: string;
+  answer: string;
+};
+
+type ServiceTermsSections = {
+  applyTitle: string;
+  applyBullets: string[];
+  applyNote: string;
+  scopeTitle: string;
+  scopeBullets: string[];
+  scopeCallout: string;
+  changeOrdersTitle: string;
+  changeOrdersBullets: string[];
+  changeOrdersOutOfScopeIntro: string;
+  changeOrdersOutOfScopeOptions: string[];
+  changeOrdersPromise: string;
+  schedulingTitle: string;
+  schedulingBullets: string[];
+  accessTitle: string;
+  accessBullets: string[];
+  accessNote: string;
+  paymentTitle: string;
+  paymentBullets: string[];
+  timelinesTitle: string;
+  timelinesBullets: string[];
+  timelinesNote: string;
+  supportTitle: string;
+  supportBullets: string[];
+  responsibilitiesTitle: string;
+  responsibilitiesBullets: string[];
+  limitationsTitle: string;
+  limitationsBullets: string[];
+  finalCtaTitle: string;
+  finalCtaBody: string;
+  finalCtaButtonLabel: string;
+  finalCtaButtonHref: string;
+};
+
+type ServiceTermsContent = {
+  metadataTitle: string;
+  metadataDescription: string;
+  title: string;
+  subtitle: string;
+  helperLine: string;
+  questionCtaLabel: string;
+  questionCtaHref: string;
+  backLinkLabel: string;
+  travelNotice: string;
+  lastUpdatedLabel: string;
+  sections: ServiceTermsSections;
 };
 
 type ProjectContent = {
@@ -279,6 +376,45 @@ export type AppDictionary = {
     entries: ExperienceEntry[];
     techStack: TechExperienceEntry[];
   };
+  contracts: {
+    metadataTitle: string;
+    title: string;
+    subtitle: string;
+    sections: ContractsSection[];
+    cta: {
+      label: string;
+      href: string;
+      variant: CtaVariant;
+    };
+  };
+  contractsFixes: {
+    metadataTitle: string;
+    title: string;
+    subtitle: string;
+    helperLine: string;
+    termsLinkLabel: string;
+    waitlistTagLabel: string;
+    waitlistCtaSuffix: string;
+    primaryCtas: ContractLink[];
+    packagesTitle: string;
+    packagesEmptyMessage: string;
+    packages: ContractFixesPackage[];
+    howItWorksTitle: string;
+    howItWorksSteps: string[];
+    commonFixesTitle: string;
+    commonFixesGroups: ContractFixesGroup[];
+    deliverablesTitle: string;
+    deliverables: string[];
+    scopeTitle: string;
+    scopeSubtitle: string;
+    scopeBlocks: ContractFixesScopeBlock[];
+    maintenanceTitle: string;
+    maintenanceTiers: ContractFixesTier[];
+    maintenanceNote: string;
+    faqTitle: string;
+    faqItems: ContractFixesFaq[];
+  };
+  servicesTerms: ServiceTermsContent;
   meetings: {
     metadataTitle: string;
     title: string;
@@ -331,6 +467,19 @@ const ser321Project = ser321ProjectData as ProjectContent;
 const portfolioProject = portfolioProjectData as ProjectContent;
 const cppGameEngineProject = cppGameEngineProjectData as ProjectContent;
 const baseTechStackDetails = techStackDetailsData as LocalizedTechExperienceEntry[];
+
+const CONTRACTS_QUICK_FIX_MAILTO =
+  "mailto:jfstone2000@proton.me?subject=Quick%20Fix%20Request";
+const CONTRACTS_DEPLOYMENT_MAILTO =
+  "mailto:jfstone2000@proton.me?subject=Deployment%20%26%20Reliability%20Help";
+const CONTRACTS_MAINTENANCE_MAILTO =
+  "mailto:jfstone2000@proton.me?subject=Monthly%20Maintenance%20Request";
+const CONTRACTS_QUESTION_MAILTO =
+  "mailto:jfstone2000@proton.me?subject=Contracts%20Question";
+const SERVICE_TERMS_QUESTION_MAILTO =
+  "mailto:jfstone2000@proton.me?subject=Service%20Terms%20Question";
+const SERVICE_REQUEST_MAILTO =
+  "mailto:jfstone2000@proton.me?subject=Service%20Request";
 
 function ensureLocalizedString(map: LocalizedStringMap | string | undefined): LocalizedStringMap {
   return typeof map === "string" ? { en: map } : (map ?? {});
@@ -762,6 +911,429 @@ const en: AppDictionary = {
     entries: getExperienceEntries("en"),
     techStack: getTechStackDetails("en")
   },
+  contracts: {
+    metadataTitle: "Jack Featherstone | Service Terms",
+    title: "Service Terms (Fixes, Deployment, and Maintenance)",
+    subtitle:
+      "These terms exist to keep work predictable: clear scope, clear deliverables, and no surprise creep.",
+    sections: [
+      {
+        id: "engagement-types",
+        title: "Engagement types",
+        bullets: [
+          "One-off Quick Fix",
+          "Deployment & Reliability setup",
+          "Monthly Maintenance"
+        ]
+      },
+      {
+        id: "scope-deliverables",
+        title: "Scope & deliverables",
+        bullets: [
+          "Scope is defined in writing (email + accepted quote).",
+          "Deliverables are the items listed in the quote (screenshots/notes/runbook if applicable)."
+        ]
+      },
+      {
+        id: "change-orders",
+        title: "Change orders",
+        bullets: [
+          "Anything not listed in scope is out-of-scope.",
+          "Out-of-scope items require a new fixed quote (or hourly approval) before work begins.",
+          "No surprise expansions."
+        ]
+      },
+      {
+        id: "access-credentials",
+        title: "Access & credentials",
+        bullets: [
+          "Client provides required access (hosting/DNS/CMS/repo as needed).",
+          "Minimum access principle; temporary credentials preferred.",
+          "Client is responsible for maintaining backups unless backup setup is included in scope."
+        ]
+      },
+      {
+        id: "payment",
+        title: "Payment",
+        bullets: [
+          "Typical: 50% upfront / 50% on delivery for small fixed-scope jobs.",
+          "Maintenance billed monthly in advance (or per the agreed schedule).",
+          "Work begins after payment and access are in place."
+        ]
+      },
+      {
+        id: "timelines",
+        title: "Timelines",
+        bullets: [
+          "Timelines are estimates based on receiving access + needed info.",
+          "Quick Fix target: 2 business days after access/payment (unless otherwise stated)."
+        ]
+      },
+      {
+        id: "support-window",
+        title: "Support window",
+        bullets: [
+          "One-off jobs include a short support window (e.g., 7 days) for issues directly related to delivered changes.",
+          "Ongoing support is via Maintenance plan."
+        ]
+      },
+      {
+        id: "client-responsibilities",
+        title: "Client responsibilities",
+        bullets: [
+          "Provide accurate requirements and timely feedback.",
+          "Verify deliverables in a timely manner.",
+          "Own content/legal compliance for their site."
+        ]
+      },
+      {
+        id: "limitations",
+        title: "Limitations",
+        bullets: [
+          "No guarantee of specific SEO ranking outcomes.",
+          "Performance improvements depend on platform constraints and available access.",
+          "Third-party outages/services are outside control."
+        ]
+      }
+    ],
+    cta: {
+      label: "Questions? Email jfstone2000@proton.me",
+      href: CONTRACTS_QUESTION_MAILTO,
+      variant: "primary"
+    }
+  },
+  contractsFixes: {
+    metadataTitle: "Jack Featherstone | Services",
+    title:
+      "Services",
+    subtitle:
+      "I help small businesses, creators, and small teams keep their sites fast, secure, and working.",
+    helperLine:
+      "Email me your URL or project link to get started. We can discuss the details in a follow up.",
+    termsLinkLabel: "Terms & Conditions",
+    waitlistTagLabel: "Waitlist length:",
+    waitlistCtaSuffix: "Waitlist",
+    primaryCtas: [
+      {
+        label: "Request a Quick Fix",
+        variant: "primary",
+        href: CONTRACTS_QUICK_FIX_MAILTO,
+        serviceId: "quickFix"
+      },
+      {
+        label: "Request Deployment Help",
+        variant: "secondary",
+        href: CONTRACTS_DEPLOYMENT_MAILTO,
+        serviceId: "deployment"
+      },
+      {
+        label: "Request Maintenance",
+        variant: "ghost",
+        href: CONTRACTS_MAINTENANCE_MAILTO,
+        serviceId: "maintenance"
+      }
+    ],
+    packagesTitle: "Service packages",
+    packagesEmptyMessage: "None currently available",
+    packages: [
+      {
+        id: "quickFix",
+        title: "Quick Fix",
+        tagline: "Small, high-impact fixes done fast.",
+        bullets: [
+          "2 business days turnaround once scheduled (after access + payment)",
+          "Up to 3–5 fixes (mobile layout, broken UI, small bugs)",
+          "Before/after screenshots + short change summary",
+          "One revision pass included",
+          "Limited weekly slots (first-come, first-served)"
+        ],
+        priceLine: "Typical pricing: $99–$199",
+        cta: {
+          label: "Request a Quick Fix",
+          variant: "primary",
+          href: CONTRACTS_QUICK_FIX_MAILTO,
+          serviceId: "quickFix"
+        }
+      },
+      {
+        id: "deployment",
+        title: "Deployment & Reliability",
+        tagline: "Make your site stable, secure, and easy to operate.",
+        bullets: [
+          "Domains/DNS, SSL, redirects, headers",
+          "Reverse proxy (NGINX) and basic hardening",
+          "CDN + caching strategy (when applicable)",
+          "Health checks / uptime monitoring + a mini runbook"
+        ],
+        priceLine: "Typical pricing: $249–$499 (varies by stack)",
+        cta: {
+          label: "Request Deployment Help",
+          variant: "secondary",
+          href: CONTRACTS_DEPLOYMENT_MAILTO,
+          serviceId: "deployment"
+        }
+      },
+      {
+        id: "maintenance",
+        title: "Monthly Maintenance",
+        tagline: "A dependable “call me when it breaks” plan.",
+        bullets: [
+          "Small changes and fixes each month",
+          "Uptime checks + basic monitoring",
+          "Monthly health note (what changed, what to watch)",
+          "Priority scheduling compared to one-off work"
+        ],
+        priceLine: "Typical pricing: $49–$99/month",
+        cta: {
+          label: "Request Maintenance",
+          variant: "ghost",
+          href: CONTRACTS_MAINTENANCE_MAILTO,
+          serviceId: "maintenance"
+        }
+      }
+    ],
+    howItWorksTitle: "How it works",
+    howItWorksSteps: [
+      "Email me your URL or project link to get started",
+      "We clarify requirements, access, and success criteria",
+      "I reply with a fixed-scope plan and price (usually within 24 hours)",
+      "You approve + payment is handled (small jobs typically 50% upfront)",
+      "I deliver the work with proof (before/after + notes)",
+      "Optional: roll into monthly maintenance for ongoing stability"
+    ],
+    commonFixesTitle: "Common things I fix",
+    commonFixesGroups: [
+      {
+        title: "General Fixes",
+        bullets: [
+          "Mobile layout glitches (overflow, spacing, broken sections)",
+          "UI polish and responsive issues",
+          "Bug fixes in frontend logic",
+          "Broken forms, links, and redirects"
+        ]
+      },
+      {
+        title: "Performance & UX",
+        bullets: [
+          "Oversized images and heavy scripts",
+          "Practical Lighthouse improvements where feasible",
+          "Caching/compression quick wins (when hosting access allows)"
+        ]
+      },
+      {
+        title: "Deployment & Reliability",
+        bullets: [
+          "DNS/SSL setup and cleanup",
+          "NGINX reverse proxy configuration",
+          "CDN configuration and cache strategy",
+          "Monitoring, basic runbooks, and safer deployments"
+        ]
+      }
+    ],
+    deliverablesTitle: "What you’ll get",
+    deliverables: [
+      "Before/after screenshots (and metrics when relevant)",
+      "A short “what changed” summary",
+      "Any setup notes needed to operate the site safely",
+      "For deployments: a mini runbook (deploy/rollback, SSL notes, key settings)"
+    ],
+    scopeTitle: "Scope and change policy",
+    scopeSubtitle: "",
+    scopeBlocks: [
+      {
+        serviceId: "quickFix",
+        title: "Quick Fix scope",
+        includedTitle: "Included",
+        included: [
+          "Up to 5 fixes from the approved list",
+          "Up to 2 pages/components touched",
+          "1 revision pass",
+          "Delivery in 2 business days after access + payment"
+        ],
+        notIncludedTitle: "Not included",
+        notIncluded: [
+          "Full redesigns, new pages, or new features (This is beyond a Quick Fix. Let's discuss.)",
+          "Copywriting/content creation (unless explicitly quoted)",
+          "Ongoing support beyond 7 days (unless on maintenance)"
+        ],
+        changePolicyTitle: "Change policy",
+        changePolicy:
+          "Anything outside the scope becomes a separate fixed quote (or hourly work in 30-minute blocks, only with your approval)."
+      },
+      {
+        serviceId: "deployment",
+        title: "Deployment & Reliability scope",
+        includedTitle: "Included",
+        included: [
+          "Agreed deployment tasks listed in the quote (DNS/SSL/CDN/NGINX/monitoring as applicable)",
+          "Deployment-blocking fixes required to make the app start and serve traffic in the target environment (up to 2 hours), with anything beyond quoted separately",
+          "Timeline starts after access + kickoff; I'll confirm the start slot in writing.",
+          "Setup notes + a mini runbook",
+          "One verification pass after delivery"
+        ],
+        notIncludedTitle: "Not included",
+        notIncluded: [
+          "Large feature work or app rewrites",
+          "Non-deployment-related bug hunts or refactors",
+          "Ongoing on-call support (unless on maintenance)"
+        ],
+        changePolicyTitle: "Change policy",
+        changePolicy:
+          "Out-of-scope items are quoted separately before work starts."
+      }
+    ],
+    maintenanceTitle: "Maintenance options",
+    maintenanceTiers: [
+      {
+        title: "Starter",
+        bullets: [
+          "Small fixes/edits monthly (defined in contract or quote)",
+          "Uptime checks + basic monitoring",
+          "Response: typically 1–2 business days"
+        ]
+      },
+      {
+        title: "Plus",
+        bullets: [
+          "More monthly work capacity",
+          "Faster response when possible",
+          "Priority scheduling"
+        ]
+      }
+    ],
+    maintenanceNote:
+      "If something breaks urgently, I can usually jump in quickly. Quoted before work begins.",
+    faqTitle: "FAQ",
+    faqItems: [
+      {
+        question: "Do you need access to my source code?",
+        answer:
+          "Not always. Many fixes and reliability improvements can be done via hosting/DNS/CMS settings. Deeper performance refactors may require repo access."
+      },
+      {
+        question: "What platforms do you work with?",
+        answer:
+          "Common stacks are fine (custom React/Next.js, static sites, and many hosted platforms). If I’m not a fit, I’ll tell you quickly."
+      },
+      {
+        question: "How do payments work?",
+        answer:
+          "For small jobs, it’s typically 50% upfront and 50% on delivery (or paid upfront for very small fixed tasks)."
+      },
+      {
+        question: "How fast is turnaround?",
+        answer:
+          "Quick Fix is designed for 2 business days once access/payment is in place. Larger work depends on scope."
+      },
+      {
+        question: "How do you handle credentials?",
+        answer:
+          "I request the minimum access needed. Temporary credentials are preferred when possible. I don’t need more access than the job requires."
+      },
+      {
+        question: "What if we discover more issues?",
+        answer:
+          "I’ll list them clearly and quote them separately. Nothing expands silently."
+      }
+    ]
+  },
+  servicesTerms: {
+    metadataTitle: "Jack Featherstone | Service Terms",
+    metadataDescription:
+      "Simple terms to keep projects predictable: clear scope, clear deliverables, and no surprise creep.",
+    title: "Service Terms",
+    subtitle:
+      "Simple terms to keep projects predictable: clear scope, clear deliverables, and no surprise creep.",
+    helperLine: "Questions? Email jfstone2000@proton.me",
+    questionCtaLabel: "Email a question",
+    questionCtaHref: SERVICE_TERMS_QUESTION_MAILTO,
+    backLinkLabel: "← Back to Services",
+    travelNotice:
+      "Travel notice: March 18 – April 9, 2026. Responses may be delayed during this window.",
+    lastUpdatedLabel: "Last updated: February 9, 2026",
+    sections: {
+      applyTitle: "What these terms apply to",
+      applyBullets: [
+        "One-off Quick Fix work",
+        "Deployment & Reliability setup work",
+        "Monthly Maintenance (when available / when agreed)"
+      ],
+      applyNote:
+        "If a quote or agreement includes different terms, the quote wins for that specific job.",
+      scopeTitle: "Scope and deliverables",
+      scopeBullets: [
+        "Scope is defined in writing (email + accepted quote).",
+        "The deliverables are exactly what’s listed in the quote (e.g., fixes completed, screenshots/notes, runbook if applicable).",
+        "Anything not explicitly listed is not included."
+      ],
+      scopeCallout: "If you want additional work, I’m happy to quote it—nothing expands silently.",
+      changeOrdersTitle: "Change orders",
+      changeOrdersBullets: [
+        "Anything not listed in scope is out-of-scope.",
+        "Out-of-scope work requires approval before it begins."
+      ],
+      changeOrdersOutOfScopeIntro: "Out-of-scope is handled as either:",
+      changeOrdersOutOfScopeOptions: [
+        "a separate fixed quote, or",
+        "hourly work billed in 30-minute blocks (only with approval)"
+      ],
+      changeOrdersPromise: "No surprise expansions.",
+      schedulingTitle: "Scheduling and communication",
+      schedulingBullets: [
+        "I typically reply within 1–2 business days (Eastern Time).",
+        "Work begins when a start slot is confirmed and required access + payment are in place (“kickoff”).",
+        "Turnaround estimates are measured in business days after kickoff, not from the first email.",
+        "Weekend and evening responses may be limited."
+      ],
+      accessTitle: "Access and credentials",
+      accessBullets: [
+        "Client provides required access (hosting/DNS/CMS/repo as needed).",
+        "Minimum access principle: I only request what’s necessary.",
+        "Temporary credentials are preferred when possible.",
+        "Client is responsible for maintaining backups unless backup setup is included in scope."
+      ],
+      accessNote:
+        "If access cannot be provided, timelines may be delayed.",
+      paymentTitle: "Payment",
+      paymentBullets: [
+        "For small fixed-scope jobs, typical payment is 50% upfront and 50% on delivery (unless otherwise stated).",
+        "For very small tasks, payment may be requested upfront.",
+        "Maintenance (when agreed) is billed monthly in advance (or per the agreed schedule).",
+        "Work begins after payment and access are in place."
+      ],
+      timelinesTitle: "Timelines and estimates",
+      timelinesBullets: [
+        "Timelines are estimates based on receiving access + needed information.",
+        "Quick Fix work typically targets 2 business days after kickoff, unless otherwise stated.",
+        "Deployment work varies by stack and environment; the quote will state an estimate."
+      ],
+      timelinesNote:
+        "If unexpected deployment blockers appear, they’re handled under the scope/change-order rules.",
+      supportTitle: "Support window",
+      supportBullets: [
+        "One-off work includes a short support window (typically 7 days) for issues directly caused by delivered changes.",
+        "Ongoing support is available through Maintenance (when agreed).",
+        "Requests outside the support window are treated as a new quote."
+      ],
+      responsibilitiesTitle: "Client responsibilities",
+      responsibilitiesBullets: [
+        "Provide accurate requirements and timely feedback.",
+        "Verify deliverables in a timely manner once delivered.",
+        "Own content, legal compliance, and licensing for site materials."
+      ],
+      limitationsTitle: "Limitations",
+      limitationsBullets: [
+        "No guarantee of specific SEO rankings or business outcomes.",
+        "Performance improvements depend on platform constraints and available access.",
+        "Third-party outages, services, or integrations are outside my control."
+      ],
+      finalCtaTitle: "Ready to start?",
+      finalCtaBody:
+        "Email your website URL, what you want done, and any deadlines. I’ll reply with a fixed-scope plan and price.",
+      finalCtaButtonLabel: "Email about services",
+      finalCtaButtonHref: SERVICE_REQUEST_MAILTO
+    }
+  },
   meetings: {
     metadataTitle: "Jack Featherstone | Contact",
     title: "Contact",
@@ -1059,6 +1631,429 @@ const ja: AppDictionary = {
     section2empty: "技術スタックの詳細は近日公開予定です。",
     entries: getExperienceEntries("ja"),
     techStack: getTechStackDetails("ja")
+  },
+  contracts: {
+    metadataTitle: "Jack Featherstone | サービス利用条件",
+    title: "サービス利用条件（修正・デプロイ・メンテナンス）",
+    subtitle:
+      "これらの条件は作業を予測しやすくするためのものです。スコープと成果物を明確にし、想定外の拡大を防ぎます。",
+    sections: [
+      {
+        id: "engagement-types",
+        title: "対応範囲",
+        bullets: [
+          "単発のQuick Fixに対応します。",
+          "Deployment & Reliabilityのセットアップに対応します。",
+          "Monthly Maintenanceに対応します。"
+        ]
+      },
+      {
+        id: "scope-deliverables",
+        title: "スコープと成果物",
+        bullets: [
+          "スコープは書面（メール＋承認済み見積もり）で定義します。",
+          "成果物は見積もりに記載された項目です（必要に応じてスクリーンショット/メモ/運用手順書を含みます）。"
+        ]
+      },
+      {
+        id: "change-orders",
+        title: "変更対応",
+        bullets: [
+          "スコープに記載のない内容は対象外です。",
+          "対象外の作業は着手前に新しい固定見積もり（または時間課金の承認）が必要です。",
+          "想定外の追加はありません。"
+        ]
+      },
+      {
+        id: "access-credentials",
+        title: "アクセスと認証情報",
+        bullets: [
+          "必要なアクセス（ホスティング/DNS/CMS/リポジトリなど）はクライアント側でご提供ください。",
+          "最小権限の原則で、可能であれば一時的な認証情報をご用意ください。",
+          "バックアップの維持はクライアントの責任です（バックアップ設定がスコープに含まれる場合を除く）。"
+        ]
+      },
+      {
+        id: "payment",
+        title: "支払い",
+        bullets: [
+          "小規模な固定スコープの案件は、通常、着手50%・納品50%です。",
+          "Maintenanceは月額前払い（または合意したスケジュール）で請求します。",
+          "支払いとアクセスが揃ってから作業を開始します。"
+        ]
+      },
+      {
+        id: "timelines",
+        title: "スケジュール",
+        bullets: [
+          "スケジュールはアクセスと必要情報の受領を前提とした見積もりです。",
+          "Quick Fixは、アクセスと支払いの完了後2営業日を目安とします（別途記載がある場合を除く）。"
+        ]
+      },
+      {
+        id: "support-window",
+        title: "サポート期間",
+        bullets: [
+          "単発作業には、納品内容に直接関連する問題に対する短いサポート期間（例：7日）が含まれます。",
+          "継続的なサポートはMaintenanceプランで提供します。"
+        ]
+      },
+      {
+        id: "client-responsibilities",
+        title: "クライアントの責任",
+        bullets: [
+          "正確な要件と迅速なフィードバックをご提供ください。",
+          "納品後は速やかにご確認ください。",
+          "サイトのコンテンツと法令順守はクライアントの責任です。"
+        ]
+      },
+      {
+        id: "limitations",
+        title: "制限事項",
+        bullets: [
+          "特定のSEO順位は保証しません。",
+          "パフォーマンス改善はプラットフォームの制約とアクセス状況に左右されます。",
+          "第三者の障害やサービスは管理外です。"
+        ]
+      }
+    ],
+    cta: {
+      label: "ご質問は jfstone2000@proton.me までご連絡ください。",
+      href: CONTRACTS_QUESTION_MAILTO,
+      variant: "primary"
+    }
+  },
+  contractsFixes: {
+    metadataTitle: "Jack Featherstone | サービス",
+    title: "サービス",
+    subtitle:
+      "小さなビジネス、クリエイター、少人数チームのサイトを速く、安全に、そして安定稼働させるお手伝いをします。",
+    helperLine:
+      "開始するにはURLまたはプロジェクトリンクをメールでお送りください。詳細は追ってご相談できます。",
+    termsLinkLabel: "利用条件",
+    waitlistTagLabel: "ウェイトリスト人数:",
+    waitlistCtaSuffix: "ウェイトリスト",
+    primaryCtas: [
+      {
+        label: "Quick Fixを依頼する",
+        variant: "primary",
+        href: CONTRACTS_QUICK_FIX_MAILTO,
+        serviceId: "quickFix"
+      },
+      {
+        label: "デプロイ支援を依頼する",
+        variant: "secondary",
+        href: CONTRACTS_DEPLOYMENT_MAILTO,
+        serviceId: "deployment"
+      },
+      {
+        label: "メンテナンスを依頼する",
+        variant: "ghost",
+        href: CONTRACTS_MAINTENANCE_MAILTO,
+        serviceId: "maintenance"
+      }
+    ],
+    packagesTitle: "サービスパッケージ",
+    packagesEmptyMessage: "現在は利用可能なパッケージがありません。",
+    packages: [
+      {
+        id: "quickFix",
+        title: "Quick Fix",
+        tagline: "小さくても効果の高い修正を迅速に行います。",
+        bullets: [
+          "スケジュール確定後、2営業日で対応します（アクセスと支払い完了後）。",
+          "3〜5件までの修正に対応します（モバイルレイアウト、崩れたUI、小さなバグなど）。",
+          "修正前後のスクリーンショットと短い変更サマリーを提供します。",
+          "1回の修正対応を含みます。",
+          "週あたりの枠は限られており、先着順です。"
+        ],
+        priceLine: "目安料金は$99–$199です。",
+        cta: {
+          label: "Quick Fixを依頼する",
+          variant: "primary",
+          href: CONTRACTS_QUICK_FIX_MAILTO,
+          serviceId: "quickFix"
+        }
+      },
+      {
+        id: "deployment",
+        title: "Deployment & Reliability",
+        tagline: "サイトを安定・安全にし、運用しやすくします。",
+        bullets: [
+          "ドメイン/DNS、SSL、リダイレクト、ヘッダーを設定します。",
+          "リバースプロキシ（NGINX）と基本的なハードニングを行います。",
+          "必要に応じてCDNとキャッシュ戦略を設定します。",
+          "ヘルスチェック/稼働監視とミニ運用手順書を用意します。"
+        ],
+        priceLine: "目安料金は$249–$499です（スタックにより変動します）。",
+        cta: {
+          label: "デプロイ支援を依頼する",
+          variant: "secondary",
+          href: CONTRACTS_DEPLOYMENT_MAILTO,
+          serviceId: "deployment"
+        }
+      },
+      {
+        id: "maintenance",
+        title: "Monthly Maintenance",
+        tagline: "「壊れたら連絡する」ための安心プランです。",
+        bullets: [
+          "毎月の小さな変更と修正に対応します。",
+          "稼働チェックと基本的な監視を行います。",
+          "月次のヘルスノート（変更点と注意点）をお送りします。",
+          "単発作業より優先的にスケジュールします。"
+        ],
+        priceLine: "目安料金は$49–$99/月です。",
+        cta: {
+          label: "メンテナンスを依頼する",
+          variant: "ghost",
+          href: CONTRACTS_MAINTENANCE_MAILTO,
+          serviceId: "maintenance"
+        }
+      }
+    ],
+    howItWorksTitle: "ご利用の流れ",
+    howItWorksSteps: [
+      "開始するにはURLまたはプロジェクトリンクをメールで送ってください。",
+      "要件、アクセス、成功基準を確認します。",
+      "固定スコープの計画と価格をお送りします（通常24時間以内）。",
+      "内容をご承認いただき、支払いを行います（小規模案件は通常着手50%）。",
+      "修正前後の証跡とメモを添えて納品します。",
+      "必要に応じて、月次メンテナンスに移行できます。"
+    ],
+    commonFixesTitle: "よくある修正内容",
+    commonFixesGroups: [
+      {
+        title: "一般的な修正",
+        bullets: [
+          "モバイルレイアウトの不具合（はみ出し、余白、崩れたセクション）を修正します。",
+          "UIの調整とレスポンシブの問題を改善します。",
+          "フロントエンドロジックのバグを修正します。",
+          "壊れたフォーム、リンク、リダイレクトを修正します。"
+        ]
+      },
+      {
+        title: "パフォーマンスとUX",
+        bullets: [
+          "サイズが大きすぎる画像や重いスクリプトを最適化します。",
+          "可能な範囲で実用的なLighthouse改善を行います。",
+          "ホスティングのアクセスがある場合、キャッシュ/圧縮の即効改善を行います。"
+        ]
+      },
+      {
+        title: "デプロイと信頼性",
+        bullets: [
+          "DNS/SSLの設定と整理を行います。",
+          "NGINXのリバースプロキシ設定を行います。",
+          "CDNの設定とキャッシュ戦略を整えます。",
+          "監視、基本的な運用手順書、より安全なデプロイを整備します。"
+        ]
+      }
+    ],
+    deliverablesTitle: "納品物",
+    deliverables: [
+      "修正前後のスクリーンショット（該当する場合は指標も）を提供します。",
+      "「何が変わったか」の短いサマリーをお渡しします。",
+      "安全に運用するための設定ノートを提供します。",
+      "デプロイの場合は、ミニ運用手順書（デプロイ/ロールバック、SSLメモ、主要設定）を含みます。"
+    ],
+    scopeTitle: "スコープと変更方針",
+    scopeSubtitle: "",
+    scopeBlocks: [
+      {
+        serviceId: "quickFix",
+        title: "Quick Fixのスコープ",
+        includedTitle: "含まれる内容",
+        included: [
+          "承認済みリストから最大5件の修正に対応します。",
+          "対象は最大2ページ/コンポーネントまでです。",
+          "1回の修正対応を含みます。",
+          "アクセスと支払い完了後、2営業日で納品します。"
+        ],
+        notIncludedTitle: "含まれない内容",
+        notIncluded: [
+          "フルリデザイン、新規ページ、または新機能は含まれません（Quick Fixの範囲外のため、別途ご相談ください）。",
+          "コピーライティング/コンテンツ作成は含まれません（見積もりに明記された場合を除く）。",
+          "7日を超える継続サポートは含まれません（Maintenance契約がある場合を除く）。"
+        ],
+        changePolicyTitle: "変更方針",
+        changePolicy:
+          "スコープ外は別途固定見積もり、または30分単位の時間課金（承認時のみ）として対応します。"
+      },
+      {
+        serviceId: "deployment",
+        title: "Deployment & Reliabilityのスコープ",
+        includedTitle: "含まれる内容",
+        included: [
+          "見積もりに記載された合意済みのデプロイ作業（該当する場合はDNS/SSL/CDN/NGINX/監視）を実施します。",
+          "対象環境でアプリが起動し配信できるようにするためのデプロイブロッカー修正は最大2時間まで含み、超える分は別途見積もりします。",
+          "スケジュールはアクセスとキックオフ後に開始し、開始枠は書面で確認します。",
+          "セットアップノートとミニ運用手順書を提供します。",
+          "納品後に1回の確認を行います。"
+        ],
+        notIncludedTitle: "含まれない内容",
+        notIncluded: [
+          "大規模な機能開発やアプリの作り直しは含まれません。",
+          "デプロイと無関係なバグ調査やリファクタリングは含まれません。",
+          "オンコールの継続サポートは含まれません（Maintenance契約がある場合を除く）。"
+        ],
+        changePolicyTitle: "変更方針",
+        changePolicy:
+          "スコープ外の項目は着手前に別途見積もりします。"
+      }
+    ],
+    maintenanceTitle: "メンテナンスの選択肢",
+    maintenanceTiers: [
+      {
+        title: "スターター",
+        bullets: [
+          "月次の小さな修正/編集（契約または見積もりで定義）を行います。",
+          "稼働チェックと基本的な監視を行います。",
+          "返信は通常1〜2営業日です。"
+        ]
+      },
+      {
+        title: "プラス",
+        bullets: [
+          "月次の対応量が増えます。",
+          "可能な範囲で返信を早めます。",
+          "優先的にスケジュールします。"
+        ]
+      }
+    ],
+    maintenanceNote:
+      "緊急の問題が発生した場合は、通常すぐに対応できます。作業前に見積もりします。",
+    faqTitle: "よくある質問",
+    faqItems: [
+      {
+        question: "ソースコードへのアクセスは必要ですか？",
+        answer:
+          "必ずしも必要ではありません。多くの修正や信頼性改善はホスティング/DNS/CMSの設定で対応できます。より深いパフォーマンス改善にはリポジトリアクセスが必要な場合があります。"
+      },
+      {
+        question: "どのプラットフォームに対応していますか？",
+        answer:
+          "一般的なスタックであれば対応可能です（カスタムReact/Next.js、静的サイト、多くのホスティングサービス）。適合しない場合はすぐにお伝えします。"
+      },
+      {
+        question: "支払いはどのように行いますか？",
+        answer:
+          "小規模な案件は、通常、着手50%・納品50%です（非常に小さな固定作業は前払いの場合があります）。"
+      },
+      {
+        question: "対応スピードはどのくらいですか？",
+        answer:
+          "Quick Fixは、アクセスと支払いが揃ってから2営業日を目安にしています。規模が大きい作業はスコープにより異なります。"
+      },
+      {
+        question: "認証情報はどのように扱いますか？",
+        answer:
+          "必要最小限のアクセスのみを依頼します。可能であれば一時的な認証情報を希望します。仕事に不要な権限は求めません。"
+      },
+      {
+        question: "追加の問題が見つかった場合は？",
+        answer:
+          "内容を明確に整理し、別途見積もりします。想定外の拡大はありません。"
+      }
+    ]
+  },
+  servicesTerms: {
+    metadataTitle: "Jack Featherstone | サービス利用条件",
+    metadataDescription:
+      "プロジェクトを予測しやすくするためのシンプルな条件です。スコープと成果物を明確にし、想定外の拡大を防ぎます。",
+    title: "サービス利用条件",
+    subtitle:
+      "プロジェクトを予測しやすくするためのシンプルな条件です。スコープと成果物を明確にし、想定外の拡大を防ぎます。",
+    helperLine: "ご質問は jfstone2000@proton.me までご連絡ください。",
+    questionCtaLabel: "質問をメールする",
+    questionCtaHref: SERVICE_TERMS_QUESTION_MAILTO,
+    backLinkLabel: "← サービスに戻る",
+    travelNotice:
+      "出張予定：2026年3月18日〜4月9日。この期間は返信が遅れる場合があります。",
+    lastUpdatedLabel: "最終更新日: 2026年2月9日",
+    sections: {
+      applyTitle: "適用範囲",
+      applyBullets: [
+        "単発のQuick Fix対応に適用されます。",
+        "Deployment & Reliabilityのセットアップ作業に適用されます。",
+        "Monthly Maintenance（提供中・合意時）に適用されます。"
+      ],
+      applyNote:
+        "見積もりや合意書に別条件が含まれる場合は、その案件については見積もりが優先されます。",
+      scopeTitle: "スコープと成果物",
+      scopeBullets: [
+        "スコープは書面（メール＋承認済み見積もり）で定義します。",
+        "成果物は見積もりに記載された内容そのものです（例：修正完了、スクリーンショット/メモ、必要に応じて運用手順書）。",
+        "明記されていない内容は含まれません。"
+      ],
+      scopeCallout:
+        "追加の作業をご希望の場合はお見積もりします。内容が自動的に増えることはありません。",
+      changeOrdersTitle: "変更対応",
+      changeOrdersBullets: [
+        "スコープに記載のない内容は対象外です。",
+        "対象外の作業は開始前の承認が必要です。"
+      ],
+      changeOrdersOutOfScopeIntro: "対象外の対応は次のいずれかです：",
+      changeOrdersOutOfScopeOptions: [
+        "別の固定見積もりで対応します。",
+        "30分単位の時間課金で対応します（事前承認がある場合のみ）。"
+      ],
+      changeOrdersPromise: "想定外の追加はありません。",
+      schedulingTitle: "スケジュールと連絡",
+      schedulingBullets: [
+        "通常、1〜2営業日以内に返信します（米国東部時間）。",
+        "開始枠が確定し、必要なアクセスと支払いが揃った時点で作業を開始します（「キックオフ」）。",
+        "所要日数の見積もりは、キックオフ後の営業日で計算します。初回メールからではありません。",
+        "週末と夜間の返信は遅れる場合があります。"
+      ],
+      accessTitle: "アクセスと認証情報",
+      accessBullets: [
+        "必要なアクセス（ホスティング/DNS/CMS/リポジトリなど）はクライアント側でご提供ください。",
+        "最小権限の原則で、必要な範囲のみをお願いしています。",
+        "可能であれば一時的な認証情報をご用意ください。",
+        "バックアップの維持はクライアントの責任です（バックアップ設定がスコープに含まれる場合を除く）。"
+      ],
+      accessNote:
+        "アクセスを提供できない場合、スケジュールが遅れることがあります。",
+      paymentTitle: "支払い",
+      paymentBullets: [
+        "小規模な固定スコープの案件は、通常、着手50%・納品50%です（別途記載がある場合を除く）。",
+        "非常に小さな作業は全額前払いをお願いする場合があります。",
+        "Maintenance（合意時）は月額前払い（または合意したスケジュール）で請求します。",
+        "支払いとアクセスが揃ってから作業を開始します。"
+      ],
+      timelinesTitle: "スケジュールと見積もり",
+      timelinesBullets: [
+        "スケジュールはアクセスと必要情報の受領を前提とした見積もりです。",
+        "Quick Fixは、キックオフ後2営業日を目安とします（別途記載がある場合を除く）。",
+        "Deployment作業はスタックや環境により変動し、見積もりに記載します。"
+      ],
+      timelinesNote:
+        "想定外のデプロイ障害が発生した場合は、スコープ/変更対応のルールに従います。",
+      supportTitle: "サポート期間",
+      supportBullets: [
+        "単発作業には、納品内容に起因する問題に対する短いサポート期間（通常7日）が含まれます。",
+        "継続的なサポートはMaintenance（合意時）で提供します。",
+        "サポート期間外の依頼は新規見積もり扱いとなります。"
+      ],
+      responsibilitiesTitle: "クライアントの責任",
+      responsibilitiesBullets: [
+        "正確な要件と迅速なフィードバックをご提供ください。",
+        "納品後は速やかにご確認ください。",
+        "コンテンツ、法令順守、素材のライセンスはクライアントの責任です。"
+      ],
+      limitationsTitle: "制限事項",
+      limitationsBullets: [
+        "特定のSEO順位や事業成果を保証するものではありません。",
+        "パフォーマンス改善はプラットフォームの制約とアクセス状況に左右されます。",
+        "第三者の障害、サービス、連携は私の管理外です。"
+      ],
+      finalCtaTitle: "始めましょうか？",
+      finalCtaBody:
+        "ウェブサイトのURL、やりたいこと、期限があればお知らせください。固定スコープの計画と価格をご返信します。",
+      finalCtaButtonLabel: "サービスについてメールする",
+      finalCtaButtonHref: SERVICE_REQUEST_MAILTO
+    }
   },
   meetings: {
     metadataTitle: "Jack Featherstone | 連絡先",
@@ -1360,6 +2355,428 @@ const zh: AppDictionary = {
     section2empty: "技术栈详情即将推出。",
     entries: getExperienceEntries("zh"),
     techStack: getTechStackDetails("zh")
+  },
+  contracts: {
+    metadataTitle: "Jack Featherstone | 服务条款",
+    title: "服务条款（修复、部署与维护）",
+    subtitle:
+      "这些条款用于让工作可预测：范围清晰、交付清晰、避免范围悄然扩大。",
+    sections: [
+      {
+        id: "engagement-types",
+        title: "合作类型",
+        bullets: [
+          "一次性 Quick Fix",
+          "Deployment & Reliability 设置",
+          "按月 Maintenance"
+        ]
+      },
+      {
+        id: "scope-deliverables",
+        title: "范围与交付物",
+        bullets: [
+          "范围以书面（邮件 + 已接受报价）为准。",
+          "交付物仅限于报价中列出的项目（如截图/说明/运行手册等）。"
+        ]
+      },
+      {
+        id: "change-orders",
+        title: "变更需求",
+        bullets: [
+          "未列入范围的事项为范围外。",
+          "范围外事项需在开始前重新固定报价（或按小时计费审批）。",
+          "不会出现意外扩展。"
+        ]
+      },
+      {
+        id: "access-credentials",
+        title: "访问与凭据",
+        bullets: [
+          "客户提供所需访问权限（托管/DNS/CMS/代码仓库等）。",
+          "最小权限原则；优先使用临时凭据。",
+          "除非范围包含备份设置，备份维护由客户负责。"
+        ]
+      },
+      {
+        id: "payment",
+        title: "付款",
+        bullets: [
+          "小型固定范围工作通常 50% 预付 / 50% 交付。",
+          "Maintenance 按月预付（或按约定周期）。",
+          "在付款与访问到位后开始工作。"
+        ]
+      },
+      {
+        id: "timelines",
+        title: "时间安排",
+        bullets: [
+          "时间为估算，基于收到访问权限与所需信息。",
+          "Quick Fix 目标：访问/付款到位后 2 个工作日（除非另有说明）。"
+        ]
+      },
+      {
+        id: "support-window",
+        title: "支持期限",
+        bullets: [
+          "一次性工作包含短期支持（例如 7 天），仅覆盖交付变更直接导致的问题。",
+          "持续支持通过 Maintenance 计划提供。"
+        ]
+      },
+      {
+        id: "client-responsibilities",
+        title: "客户责任",
+        bullets: [
+          "提供准确需求与及时反馈。",
+          "及时验收交付成果。",
+          "网站内容与合规由客户负责。"
+        ]
+      },
+      {
+        id: "limitations",
+        title: "限制",
+        bullets: [
+          "不保证特定 SEO 排名结果。",
+          "性能改进取决于平台限制与可用访问权限。",
+          "第三方故障/服务不在控制范围内。"
+        ]
+      }
+    ],
+    cta: {
+      label: "有问题？请发邮件至 jfstone2000@proton.me",
+      href: CONTRACTS_QUESTION_MAILTO,
+      variant: "primary"
+    }
+  },
+  contractsFixes: {
+    metadataTitle: "Jack Featherstone | 服务",
+    title: "服务",
+    subtitle:
+      "我帮助小型企业、创作者和小团队让网站更快、更安全、更稳定。",
+    helperLine:
+      "请发送你的网址或项目链接即可开始，我们可以在后续沟通细节。",
+    termsLinkLabel: "服务条款",
+    waitlistTagLabel: "候补名单人数:",
+    waitlistCtaSuffix: "候补名单",
+    primaryCtas: [
+      {
+        label: "申请 Quick Fix",
+        variant: "primary",
+        href: CONTRACTS_QUICK_FIX_MAILTO,
+        serviceId: "quickFix"
+      },
+      {
+        label: "申请部署支持",
+        variant: "secondary",
+        href: CONTRACTS_DEPLOYMENT_MAILTO,
+        serviceId: "deployment"
+      },
+      {
+        label: "申请维护服务",
+        variant: "ghost",
+        href: CONTRACTS_MAINTENANCE_MAILTO,
+        serviceId: "maintenance"
+      }
+    ],
+    packagesTitle: "服务套餐",
+    packagesEmptyMessage: "目前暂无可用套餐",
+    packages: [
+      {
+        id: "quickFix",
+        title: "Quick Fix",
+        tagline: "小而高效的快速修复。",
+        bullets: [
+          "排期确认后 2 个工作日内完成（访问与付款到位后）。",
+          "最多 3–5 个修复（移动端布局、破损 UI、小 bug）。",
+          "修复前后截图 + 简短变更说明",
+          "包含 1 次修订",
+          "每周名额有限（先到先得）"
+        ],
+        priceLine: "常见价格：$99–$199",
+        cta: {
+          label: "申请 Quick Fix",
+          variant: "primary",
+          href: CONTRACTS_QUICK_FIX_MAILTO,
+          serviceId: "quickFix"
+        }
+      },
+      {
+        id: "deployment",
+        title: "Deployment & Reliability",
+        tagline: "让你的网站稳定、安全且易于运维。",
+        bullets: [
+          "域名/DNS、SSL、重定向、响应头",
+          "反向代理（NGINX）与基础加固",
+          "CDN + 缓存策略（如适用）",
+          "健康检查/可用性监控 + 迷你运行手册"
+        ],
+        priceLine: "常见价格：$249–$499（视技术栈而定）",
+        cta: {
+          label: "申请部署支持",
+          variant: "secondary",
+          href: CONTRACTS_DEPLOYMENT_MAILTO,
+          serviceId: "deployment"
+        }
+      },
+      {
+        id: "maintenance",
+        title: "Monthly Maintenance",
+        tagline: "可靠的“坏了就找我”方案。",
+        bullets: [
+          "每月的小修改与修复",
+          "可用性检查 + 基础监控",
+          "月度健康说明（变更内容与关注点）",
+          "相较一次性工作优先排期"
+        ],
+        priceLine: "常见价格：$49–$99/月",
+        cta: {
+          label: "申请维护服务",
+          variant: "ghost",
+          href: CONTRACTS_MAINTENANCE_MAILTO,
+          serviceId: "maintenance"
+        }
+      }
+    ],
+    howItWorksTitle: "如何合作",
+    howItWorksSteps: [
+      "发送你的网址或项目链接以开始",
+      "确认需求、访问权限与成功标准",
+      "我会回复固定范围方案和价格（通常 24 小时内）",
+      "你确认后完成付款（小型工作通常 50% 预付）",
+      "交付成果并提供证据（前后对比 + 说明）",
+      "可选：转为月度维护以持续稳定"
+    ],
+    commonFixesTitle: "常见修复内容",
+    commonFixesGroups: [
+      {
+        title: "通用修复",
+        bullets: [
+          "移动端布局问题（溢出、间距、破损区块）",
+          "UI 微调与响应式问题",
+          "前端逻辑中的 bug",
+          "损坏的表单、链接与重定向"
+        ]
+      },
+      {
+        title: "性能与体验",
+        bullets: [
+          "过大的图片与沉重脚本",
+          "在可行范围内进行实用的 Lighthouse 改进",
+          "缓存/压缩的快速优化（需托管访问权限）"
+        ]
+      },
+      {
+        title: "部署与可靠性",
+        bullets: [
+          "DNS/SSL 设置与清理",
+          "NGINX 反向代理配置",
+          "CDN 配置与缓存策略",
+          "监控、基础运行手册与更安全的部署"
+        ]
+      }
+    ],
+    deliverablesTitle: "交付物",
+    deliverables: [
+      "修复前后截图（必要时包含指标）",
+      "简短的“变更说明”",
+      "安全运维所需的配置说明",
+      "部署类：迷你运行手册（部署/回滚、SSL 说明、关键设置）"
+    ],
+    scopeTitle: "范围与变更政策",
+    scopeSubtitle: "",
+    scopeBlocks: [
+      {
+        serviceId: "quickFix",
+        title: "Quick Fix 范围",
+        includedTitle: "包含",
+        included: [
+          "最多 5 项来自已批准清单的修复",
+          "最多涉及 2 个页面/组件",
+          "包含 1 次修订",
+          "访问 + 付款到位后 2 个工作日交付"
+        ],
+        notIncludedTitle: "不包含",
+        notIncluded: [
+          "完整改版、新页面或新功能（超出 Quick Fix 范围，需另行沟通）",
+          "文案/内容创作（除非明确写入报价）",
+          "超过 7 天的持续支持（除非有维护计划）"
+        ],
+        changePolicyTitle: "变更政策",
+        changePolicy:
+          "超出范围的内容将单独固定报价（或按 30 分钟计费，需你批准）。"
+      },
+      {
+        serviceId: "deployment",
+        title: "Deployment & Reliability 范围",
+        includedTitle: "包含",
+        included: [
+          "报价中列明的部署任务（如适用：DNS/SSL/CDN/NGINX/监控）",
+          "为在目标环境启动并提供服务所需的阻断问题修复（最多 2 小时），超出部分单独报价",
+          "时间线从访问 + 启动（kickoff）后开始；开始时间将书面确认",
+          "设置说明 + 迷你运行手册",
+          "交付后 1 次验证"
+        ],
+        notIncludedTitle: "不包含",
+        notIncluded: [
+          "大型功能开发或应用重写",
+          "与部署无关的排错或重构",
+          "持续值守支持（除非有维护计划）"
+        ],
+        changePolicyTitle: "变更政策",
+        changePolicy:
+          "范围外事项在开始前单独报价。"
+      }
+    ],
+    maintenanceTitle: "维护选项",
+    maintenanceTiers: [
+      {
+        title: "入门",
+        bullets: [
+          "每月的小修复/编辑（在合同或报价中定义）",
+          "可用性检查 + 基础监控",
+          "响应时间：通常 1–2 个工作日"
+        ]
+      },
+      {
+        title: "进阶",
+        bullets: [
+          "更高的月度工作量",
+          "在可能的情况下更快响应",
+          "优先排期"
+        ]
+      }
+    ],
+    maintenanceNote:
+      "如出现紧急问题，我通常可以快速介入。开始前会先报价。",
+    faqTitle: "常见问题",
+    faqItems: [
+      {
+        question: "需要访问我的源代码吗？",
+        answer:
+          "不一定。许多修复与可靠性优化可以通过托管/DNS/CMS 设置完成。更深度的性能重构可能需要仓库访问。"
+      },
+      {
+        question: "你支持哪些平台？",
+        answer:
+          "常见技术栈都可以（自定义 React/Next.js、静态站点以及多种托管平台）。不合适会尽快告知。"
+      },
+      {
+        question: "如何付款？",
+        answer:
+          "小型工作通常 50% 预付、50% 交付（极小的固定任务可能需要全额预付）。"
+      },
+      {
+        question: "速度有多快？",
+        answer:
+          "Quick Fix 设计为在访问/付款到位后 2 个工作日内完成。更大的工作取决于范围。"
+      },
+      {
+        question: "凭据如何处理？",
+        answer:
+          "我只请求完成工作所需的最小权限。尽量使用临时凭据，不会要求超出任务需要的权限。"
+      },
+      {
+        question: "如果发现更多问题？",
+        answer:
+          "我会明确列出并单独报价，不会悄然扩展。"
+      }
+    ]
+  },
+  servicesTerms: {
+    metadataTitle: "Jack Featherstone | 服务条款",
+    metadataDescription:
+      "用于让项目可预测的简明条款：范围清晰、交付清晰、避免意外扩展。",
+    title: "服务条款",
+    subtitle:
+      "用于让项目可预测的简明条款：范围清晰、交付清晰、避免意外扩展。",
+    helperLine: "有问题？请发邮件至 jfstone2000@proton.me",
+    questionCtaLabel: "邮件咨询",
+    questionCtaHref: SERVICE_TERMS_QUESTION_MAILTO,
+    backLinkLabel: "← 返回服务",
+    travelNotice:
+      "出行提醒：2026年3月18日–4月9日。此期间回复可能延迟。",
+    lastUpdatedLabel: "最后更新：2026年2月9日",
+    sections: {
+      applyTitle: "这些条款适用于",
+      applyBullets: [
+        "一次性 Quick Fix 工作",
+        "Deployment & Reliability 设置工作",
+        "按月 Maintenance（如可用/经同意）"
+      ],
+      applyNote:
+        "如报价或协议包含不同条款，则该项目以报价为准。",
+      scopeTitle: "范围与交付物",
+      scopeBullets: [
+        "范围以书面（邮件 + 已接受报价）为准。",
+        "交付物仅限于报价中列出的内容（例如：已完成的修复、截图/说明、必要时的运行手册）。",
+        "未明确列出的内容不包含在内。"
+      ],
+      scopeCallout: "如需追加工作，我很乐意另行报价—不会悄然扩展。",
+      changeOrdersTitle: "变更需求",
+      changeOrdersBullets: [
+        "未列入范围的事项为范围外。",
+        "范围外工作须在开始前获得批准。"
+      ],
+      changeOrdersOutOfScopeIntro: "范围外工作将按以下方式处理：",
+      changeOrdersOutOfScopeOptions: [
+        "单独固定报价，或",
+        "按 30 分钟计费的小时制（仅在批准后）"
+      ],
+      changeOrdersPromise: "不会出现意外扩展。",
+      schedulingTitle: "排期与沟通",
+      schedulingBullets: [
+        "我通常在 1–2 个工作日内回复（美国东部时间）。",
+        "确认开始档期且访问与付款到位后即开始工作（“kickoff”）。",
+        "工期估算以 kickoff 后的工作日计算，而非首封邮件的时间。",
+        "周末与晚间回复可能较慢。"
+      ],
+      accessTitle: "访问与凭据",
+      accessBullets: [
+        "客户提供所需访问权限（托管/DNS/CMS/代码仓库等）。",
+        "最小权限原则：只请求必要权限。",
+        "如可行，优先使用临时凭据。",
+        "除非范围包含备份设置，备份维护由客户负责。"
+      ],
+      accessNote:
+        "若无法提供访问权限，时间可能延后。",
+      paymentTitle: "付款",
+      paymentBullets: [
+        "小型固定范围工作通常 50% 预付、50% 交付（除非另有说明）。",
+        "非常小的任务可能需要全额预付。",
+        "Maintenance（经同意）按月预付（或按约定周期）。",
+        "付款与访问到位后开始工作。"
+      ],
+      timelinesTitle: "时间与估算",
+      timelinesBullets: [
+        "时间为估算，基于收到访问权限与所需信息。",
+        "Quick Fix 通常在 kickoff 后 2 个工作日内完成，除非另有说明。",
+        "部署工作因技术栈与环境而异，报价中会给出估算。"
+      ],
+      timelinesNote:
+        "如出现意外部署阻碍，将按范围/变更规则处理。",
+      supportTitle: "支持期限",
+      supportBullets: [
+        "一次性工作包含短期支持（通常 7 天），仅覆盖由交付变更直接导致的问题。",
+        "持续支持可通过 Maintenance（经同意）提供。",
+        "支持期外的请求将视为新的报价。"
+      ],
+      responsibilitiesTitle: "客户责任",
+      responsibilitiesBullets: [
+        "提供准确需求与及时反馈。",
+        "交付后及时验收。",
+        "网站内容、合规与素材授权由客户负责。"
+      ],
+      limitationsTitle: "限制",
+      limitationsBullets: [
+        "不保证特定 SEO 排名或业务结果。",
+        "性能改进取决于平台限制与可用访问权限。",
+        "第三方故障、服务或集成不在我控制范围内。"
+      ],
+      finalCtaTitle: "准备开始？",
+      finalCtaBody:
+        "请在邮件中说明网站 URL、需要完成的事项以及任何截止时间。我会回复固定范围方案和价格。",
+      finalCtaButtonLabel: "邮件咨询服务",
+      finalCtaButtonHref: SERVICE_REQUEST_MAILTO
+    }
   },
   meetings: {
     metadataTitle: "Jack Featherstone | 联系方式",

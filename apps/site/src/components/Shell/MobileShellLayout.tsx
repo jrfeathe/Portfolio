@@ -26,6 +26,7 @@ export type MobileShellLayoutProps = ShellLayoutProps;
 type MobileShellLayoutParams = {
   title: MobileShellLayoutProps["title"];
   subtitle?: MobileShellLayoutProps["subtitle"];
+  subtitleClassName?: MobileShellLayoutProps["subtitleClassName"];
   breadcrumbs?: BreadcrumbItem[];
   sections: MobileShellLayoutProps["sections"];
   anchorItems?: AnchorNavItem[];
@@ -51,6 +52,7 @@ type MobileShellLayoutParams = {
 export function MobileShellLayout({
   title,
   subtitle,
+  subtitleClassName,
   breadcrumbs = [],
   sections,
   anchorItems,
@@ -158,7 +160,12 @@ export function MobileShellLayout({
                 {title}
               </h1>
               {subtitle ? (
-                <p className="max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted skim-hide">
+                <p
+                  className={clsx(
+                    "max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted skim-hide",
+                    subtitleClassName
+                  )}
+                >
                   {subtitle}
                 </p>
               ) : null}

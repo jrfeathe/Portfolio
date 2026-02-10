@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import dynamicImport from "next/dynamic";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@portfolio/ui";
 
@@ -50,6 +51,7 @@ function ensureLocale(value: string): Locale {
 
 function buildSections(terms: ServicesTermsCopy): ShellSection[] {
   const sections = terms.sections;
+  const mobileSectionSpacingClassName = "[&>div.mt-0]:mt-2";
 
   return [
     {
@@ -203,7 +205,10 @@ function buildSections(terms: ServicesTermsCopy): ShellSection[] {
         </div>
       )
     }
-  ];
+  ].map((section) => ({
+    ...section,
+    className: mobileSectionSpacingClassName
+  }));
 }
 
 export async function generateStaticParams() {
@@ -270,12 +275,12 @@ export default function ServicesTermsPage({ params }: PageParams) {
       title={terms.title}
       subtitle={
         <>
-          <a
+          <Link
             className="block text-sm font-semibold text-accent underline-offset-4 hover:underline dark:text-dark-accent"
             href={`/${locale}/services`}
           >
             {terms.backLinkLabel}
-          </a>
+          </Link>
           <span className="mt-2 block">{terms.subtitle}</span>
           <span className="mt-2 block text-sm text-textMuted dark:text-dark-textMuted">
             <a
@@ -287,6 +292,7 @@ export default function ServicesTermsPage({ params }: PageParams) {
           </span>
         </>
       }
+      subtitleClassName="max-w-6xl"
       breadcrumbs={breadcrumbs}
       sections={sections}
       floatingWidget={

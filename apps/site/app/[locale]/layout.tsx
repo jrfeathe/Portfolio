@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getDictionary } from "../../src/utils/dictionaries";
 import { isLocale } from "../../src/utils/i18n";
 import { ChatbotPortalMount } from "../../src/components/chat/ChatbotPortalMount";
+import { SkimModeRouteGuard } from "../../src/components/SkimModeRouteGuard";
 
 type LocaleLayoutProps = {
   children: ReactNode;
@@ -29,6 +30,7 @@ export default function LocaleLayout({ children, params }: LocaleLayoutProps) {
         copy={chatbotCopy}
         locale={locale}
       />
+      <SkimModeRouteGuard locale={locale} />
       {children}
     </>
   );

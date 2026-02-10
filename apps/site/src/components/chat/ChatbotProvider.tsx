@@ -2,8 +2,10 @@
 
 import { Button } from "@portfolio/ui";
 import clsx from "clsx";
+import type { Route } from "next";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import {
   createContext,
   useCallback,
@@ -50,6 +52,11 @@ const LazyHCaptchaWidget = dynamic(
   () => import("./HCaptchaWidget").then((mod) => mod.HCaptchaWidget),
   { ssr: false, loading: () => null }
 );
+
+const isInternalHref = (href?: string) =>
+  typeof href === "string" && href.startsWith("/") && !href.startsWith("//");
+const isPdfHref = (href?: string) =>
+  typeof href === "string" && href.toLowerCase().endsWith(".pdf");
 
 type ChatSizing = {
   base: { width: number; height: number };
@@ -622,16 +629,38 @@ function ContextFactsPanel({ facts, labelTemplate }: { facts: ContextFact[]; lab
       <div className="mt-2 space-y-2">
         {facts.map((fact, index) => {
           const hasHref = Boolean(fact.href && fact.href.trim().length > 0 && fact.href !== "#");
-          const Wrapper = hasHref ? "a" : "div";
-          return (
-            <Wrapper
-              key={`${fact.title}-${index}`}
-              {...(hasHref ? { href: fact.href } : {})}
-              className="flex items-start justify-between gap-3 rounded-md px-2 py-1 text-text transition hover:bg-surfaceMuted hover:no-underline dark:text-dark-text dark:hover:bg-dark-surfaceMuted"
-            >
+          const className =
+            "flex items-start justify-between gap-3 rounded-md px-2 py-1 text-text transition hover:bg-surfaceMuted hover:no-underline dark:text-dark-text dark:hover:bg-dark-surfaceMuted";
+          const content = (
+            <>
               <span className="font-semibold">{fact.title}</span>
-              <span className="text-[11px] text-textMuted dark:text-dark-textMuted">{fact.detail}</span>
-            </Wrapper>
+              <span className="text-[11px] text-textMuted dark:text-dark-textMuted">
+                {fact.detail}
+              </span>
+            </>
+          );
+          if (!hasHref) {
+            return (
+              <div key={`${fact.title}-${index}`} className={className}>
+                {content}
+              </div>
+            );
+          }
+          if (isInternalHref(fact.href)) {
+            return (
+              <Link
+                key={`${fact.title}-${index}`}
+                href={fact.href as Route}
+                className={className}
+              >
+                {content}
+              </Link>
+            );
+          }
+          return (
+            <a key={`${fact.title}-${index}`} href={fact.href} className={className}>
+              {content}
+            </a>
           );
         })}
       </div>
@@ -698,9 +727,24 @@ function MessageBubble({
           <ul className="ml-3 list-disc space-y-1">
             {message.references.map((ref) => (
               <li key={`${message.id}-${ref.href}`}>
-                <a href={ref.href} className="underline-offset-2 hover:underline">
-                  {ref.title}
-                </a>
+                {isPdfHref(ref.href) ? (
+                  <a
+                    href={ref.href}
+                    className="underline-offset-2 hover:underline"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    {ref.title}
+                  </a>
+                ) : isInternalHref(ref.href) ? (
+                  <Link href={ref.href as Route} className="underline-offset-2 hover:underline">
+                    {ref.title}
+                  </Link>
+                ) : (
+                  <a href={ref.href} className="underline-offset-2 hover:underline">
+                    {ref.title}
+                  </a>
+                )}
               </li>
             ))}
           </ul>

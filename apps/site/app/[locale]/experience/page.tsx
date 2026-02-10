@@ -215,6 +215,10 @@ export default function ExperiencePage({ params }: PageParams) {
         ]
       : [])
   ];
+  const servicesPricingCta = {
+    label: dictionary.shell.servicesPricingLabel,
+    href: `/${locale}/services`
+  };
 
   return (
     <ResponsiveShellLayout
@@ -251,6 +255,7 @@ export default function ExperiencePage({ params }: PageParams) {
             title={homeCta.title}
             description={homeCta.description}
             sticky={false}
+            topCta={servicesPricingCta}
           >
             {filteredActions.map((action) =>
               action.href ? (

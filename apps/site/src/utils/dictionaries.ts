@@ -242,6 +242,7 @@ export type AppDictionary = {
     menuCloseLabel: string;
     menuPanelLabel: string;
     menuCloseButtonLabel: string;
+    servicesPricingLabel: string;
   };
   home: {
     breadcrumbs: {
@@ -755,7 +756,8 @@ const en: AppDictionary = {
     menuOpenLabel: "Open menu",
     menuCloseLabel: "Close menu",
     menuPanelLabel: "Navigation and display options",
-    menuCloseButtonLabel: "✕"
+    menuCloseButtonLabel: "✕",
+    servicesPricingLabel: "Services & pricing"
   },
   home: {
     breadcrumbs: {
@@ -818,7 +820,7 @@ const en: AppDictionary = {
         actions: [
           {
             label: "Download resume",
-            variant: "primary",
+            variant: "secondary",
             href: "/resume.pdf",
             download: true
           },
@@ -1477,7 +1479,8 @@ const ja: AppDictionary = {
     menuOpenLabel: "メニューを開く",
     menuCloseLabel: "メニューを閉じる",
     menuPanelLabel: "ナビゲーションと表示オプション",
-    menuCloseButtonLabel: "✕"
+    menuCloseButtonLabel: "✕",
+    servicesPricingLabel: "サービスと料金"
   },
   home: {
     breadcrumbs: {
@@ -1540,7 +1543,7 @@ const ja: AppDictionary = {
         actions: [
           {
             label: "履歴書をダウンロード",
-            variant: "primary",
+            variant: "secondary",
             href: "/resume.pdf",
             download: true
           },
@@ -1634,7 +1637,7 @@ const ja: AppDictionary = {
   },
   contracts: {
     metadataTitle: "Jack Featherstone | サービス利用条件",
-    title: "サービス利用条件（修正・デプロイ・メンテナンス）",
+    title: "サービス利用条件（迅速修正・デプロイと安定運用・月次メンテナンス）",
     subtitle:
       "これらの条件は作業を予測しやすくするためのものです。スコープと成果物を明確にし、想定外の拡大を防ぎます。",
     sections: [
@@ -1642,9 +1645,9 @@ const ja: AppDictionary = {
         id: "engagement-types",
         title: "対応範囲",
         bullets: [
-          "単発のQuick Fixに対応します。",
-          "Deployment & Reliabilityのセットアップに対応します。",
-          "Monthly Maintenanceに対応します。"
+          "単発の迅速修正に対応します。",
+          "デプロイと安定運用のセットアップに対応します。",
+          "月次メンテナンスに対応します。"
         ]
       },
       {
@@ -1678,7 +1681,7 @@ const ja: AppDictionary = {
         title: "支払い",
         bullets: [
           "小規模な固定スコープの案件は、通常、着手50%・納品50%です。",
-          "Maintenanceは月額前払い（または合意したスケジュール）で請求します。",
+          "月次メンテナンスは月額前払い（または合意したスケジュール）で請求します。",
           "支払いとアクセスが揃ってから作業を開始します。"
         ]
       },
@@ -1687,7 +1690,7 @@ const ja: AppDictionary = {
         title: "スケジュール",
         bullets: [
           "スケジュールはアクセスと必要情報の受領を前提とした見積もりです。",
-          "Quick Fixは、アクセスと支払いの完了後2営業日を目安とします（別途記載がある場合を除く）。"
+          "迅速修正は、アクセスと支払いの完了後2営業日を目安とします（別途記載がある場合を除く）。"
         ]
       },
       {
@@ -1695,7 +1698,7 @@ const ja: AppDictionary = {
         title: "サポート期間",
         bullets: [
           "単発作業には、納品内容に直接関連する問題に対する短いサポート期間（例：7日）が含まれます。",
-          "継続的なサポートはMaintenanceプランで提供します。"
+          "継続的なサポートはメンテナンスプランで提供します。"
         ]
       },
       {
@@ -1724,30 +1727,30 @@ const ja: AppDictionary = {
     }
   },
   contractsFixes: {
-    metadataTitle: "Jack Featherstone | サービス",
-    title: "サービス",
+    metadataTitle: "Jack Featherstone | 提供サービス",
+    title: "提供サービス",
     subtitle:
       "小さなビジネス、クリエイター、少人数チームのサイトを速く、安全に、そして安定稼働させるお手伝いをします。",
     helperLine:
       "開始するにはURLまたはプロジェクトリンクをメールでお送りください。詳細は追ってご相談できます。",
-    termsLinkLabel: "利用条件",
+    termsLinkLabel: "利用規約",
     waitlistTagLabel: "ウェイトリスト人数:",
     waitlistCtaSuffix: "ウェイトリスト",
     primaryCtas: [
       {
-        label: "Quick Fixを依頼する",
+        label: "迅速修正を依頼する",
         variant: "primary",
         href: CONTRACTS_QUICK_FIX_MAILTO,
         serviceId: "quickFix"
       },
       {
-        label: "デプロイ支援を依頼する",
+        label: "デプロイと安定運用を依頼する",
         variant: "secondary",
         href: CONTRACTS_DEPLOYMENT_MAILTO,
         serviceId: "deployment"
       },
       {
-        label: "メンテナンスを依頼する",
+        label: "月次メンテナンスを依頼する",
         variant: "ghost",
         href: CONTRACTS_MAINTENANCE_MAILTO,
         serviceId: "maintenance"
@@ -1758,7 +1761,7 @@ const ja: AppDictionary = {
     packages: [
       {
         id: "quickFix",
-        title: "Quick Fix",
+        title: "迅速修正",
         tagline: "小さくても効果の高い修正を迅速に行います。",
         bullets: [
           "スケジュール確定後、2営業日で対応します（アクセスと支払い完了後）。",
@@ -1769,7 +1772,7 @@ const ja: AppDictionary = {
         ],
         priceLine: "目安料金は$99–$199です。",
         cta: {
-          label: "Quick Fixを依頼する",
+          label: "迅速修正を依頼する",
           variant: "primary",
           href: CONTRACTS_QUICK_FIX_MAILTO,
           serviceId: "quickFix"
@@ -1777,7 +1780,7 @@ const ja: AppDictionary = {
       },
       {
         id: "deployment",
-        title: "Deployment & Reliability",
+        title: "デプロイと安定運用",
         tagline: "サイトを安定・安全にし、運用しやすくします。",
         bullets: [
           "ドメイン/DNS、SSL、リダイレクト、ヘッダーを設定します。",
@@ -1787,7 +1790,7 @@ const ja: AppDictionary = {
         ],
         priceLine: "目安料金は$249–$499です（スタックにより変動します）。",
         cta: {
-          label: "デプロイ支援を依頼する",
+          label: "デプロイと安定運用を依頼する",
           variant: "secondary",
           href: CONTRACTS_DEPLOYMENT_MAILTO,
           serviceId: "deployment"
@@ -1795,7 +1798,7 @@ const ja: AppDictionary = {
       },
       {
         id: "maintenance",
-        title: "Monthly Maintenance",
+        title: "月次メンテナンス",
         tagline: "「壊れたら連絡する」ための安心プランです。",
         bullets: [
           "毎月の小さな変更と修正に対応します。",
@@ -1805,7 +1808,7 @@ const ja: AppDictionary = {
         ],
         priceLine: "目安料金は$49–$99/月です。",
         cta: {
-          label: "メンテナンスを依頼する",
+          label: "月次メンテナンスを依頼する",
           variant: "ghost",
           href: CONTRACTS_MAINTENANCE_MAILTO,
           serviceId: "maintenance"
@@ -1841,7 +1844,7 @@ const ja: AppDictionary = {
         ]
       },
       {
-        title: "デプロイと信頼性",
+        title: "デプロイと安定運用",
         bullets: [
           "DNS/SSLの設定と整理を行います。",
           "NGINXのリバースプロキシ設定を行います。",
@@ -1862,7 +1865,7 @@ const ja: AppDictionary = {
     scopeBlocks: [
       {
         serviceId: "quickFix",
-        title: "Quick Fixのスコープ",
+        title: "迅速修正のスコープ",
         includedTitle: "含まれる内容",
         included: [
           "承認済みリストから最大5件の修正に対応します。",
@@ -1872,9 +1875,9 @@ const ja: AppDictionary = {
         ],
         notIncludedTitle: "含まれない内容",
         notIncluded: [
-          "フルリデザイン、新規ページ、または新機能は含まれません（Quick Fixの範囲外のため、別途ご相談ください）。",
+          "フルリデザイン、新規ページ、または新機能は含まれません（迅速修正の範囲外のため、別途ご相談ください）。",
           "コピーライティング/コンテンツ作成は含まれません（見積もりに明記された場合を除く）。",
-          "7日を超える継続サポートは含まれません（Maintenance契約がある場合を除く）。"
+          "7日を超える継続サポートは含まれません（メンテナンスプランがある場合を除く）。"
         ],
         changePolicyTitle: "変更方針",
         changePolicy:
@@ -1882,7 +1885,7 @@ const ja: AppDictionary = {
       },
       {
         serviceId: "deployment",
-        title: "Deployment & Reliabilityのスコープ",
+        title: "デプロイと安定運用のスコープ",
         includedTitle: "含まれる内容",
         included: [
           "見積もりに記載された合意済みのデプロイ作業（該当する場合はDNS/SSL/CDN/NGINX/監視）を実施します。",
@@ -1895,7 +1898,7 @@ const ja: AppDictionary = {
         notIncluded: [
           "大規模な機能開発やアプリの作り直しは含まれません。",
           "デプロイと無関係なバグ調査やリファクタリングは含まれません。",
-          "オンコールの継続サポートは含まれません（Maintenance契約がある場合を除く）。"
+          "オンコールの継続サポートは含まれません（メンテナンスプランがある場合を除く）。"
         ],
         changePolicyTitle: "変更方針",
         changePolicy:
@@ -1943,7 +1946,7 @@ const ja: AppDictionary = {
       {
         question: "対応スピードはどのくらいですか？",
         answer:
-          "Quick Fixは、アクセスと支払いが揃ってから2営業日を目安にしています。規模が大きい作業はスコープにより異なります。"
+          "迅速修正は、アクセスと支払いが揃ってから2営業日を目安にしています。規模が大きい作業はスコープにより異なります。"
       },
       {
         question: "認証情報はどのように扱いますか？",
@@ -1967,16 +1970,16 @@ const ja: AppDictionary = {
     helperLine: "ご質問は jfstone2000@proton.me までご連絡ください。",
     questionCtaLabel: "質問をメールする",
     questionCtaHref: SERVICE_TERMS_QUESTION_MAILTO,
-    backLinkLabel: "← サービスに戻る",
+    backLinkLabel: "← 提供サービスに戻る",
     travelNotice:
       "出張予定：2026年3月18日〜4月9日。この期間は返信が遅れる場合があります。",
     lastUpdatedLabel: "最終更新日: 2026年2月9日",
     sections: {
       applyTitle: "適用範囲",
       applyBullets: [
-        "単発のQuick Fix対応に適用されます。",
-        "Deployment & Reliabilityのセットアップ作業に適用されます。",
-        "Monthly Maintenance（提供中・合意時）に適用されます。"
+        "単発の迅速修正対応に適用されます。",
+        "デプロイと安定運用のセットアップ作業に適用されます。",
+        "月次メンテナンス（提供中・合意時）に適用されます。"
       ],
       applyNote:
         "見積もりや合意書に別条件が含まれる場合は、その案件については見積もりが優先されます。",
@@ -2019,21 +2022,21 @@ const ja: AppDictionary = {
       paymentBullets: [
         "小規模な固定スコープの案件は、通常、着手50%・納品50%です（別途記載がある場合を除く）。",
         "非常に小さな作業は全額前払いをお願いする場合があります。",
-        "Maintenance（合意時）は月額前払い（または合意したスケジュール）で請求します。",
+        "月次メンテナンス（合意時）は月額前払い（または合意したスケジュール）で請求します。",
         "支払いとアクセスが揃ってから作業を開始します。"
       ],
       timelinesTitle: "スケジュールと見積もり",
       timelinesBullets: [
         "スケジュールはアクセスと必要情報の受領を前提とした見積もりです。",
-        "Quick Fixは、キックオフ後2営業日を目安とします（別途記載がある場合を除く）。",
-        "Deployment作業はスタックや環境により変動し、見積もりに記載します。"
+        "迅速修正は、キックオフ後2営業日を目安とします（別途記載がある場合を除く）。",
+        "デプロイと安定運用の作業はスタックや環境により変動し、見積もりに記載します。"
       ],
       timelinesNote:
         "想定外のデプロイ障害が発生した場合は、スコープ/変更対応のルールに従います。",
       supportTitle: "サポート期間",
       supportBullets: [
         "単発作業には、納品内容に起因する問題に対する短いサポート期間（通常7日）が含まれます。",
-        "継続的なサポートはMaintenance（合意時）で提供します。",
+        "継続的なサポートはメンテナンスプラン（合意時）で提供します。",
         "サポート期間外の依頼は新規見積もり扱いとなります。"
       ],
       responsibilitiesTitle: "クライアントの責任",
@@ -2051,7 +2054,7 @@ const ja: AppDictionary = {
       finalCtaTitle: "始めましょうか？",
       finalCtaBody:
         "ウェブサイトのURL、やりたいこと、期限があればお知らせください。固定スコープの計画と価格をご返信します。",
-      finalCtaButtonLabel: "サービスについてメールする",
+      finalCtaButtonLabel: "提供サービスについてメールする",
       finalCtaButtonHref: SERVICE_REQUEST_MAILTO
     }
   },
@@ -2201,7 +2204,8 @@ const zh: AppDictionary = {
     menuOpenLabel: "打开菜单",
     menuCloseLabel: "关闭菜单",
     menuPanelLabel: "导航和显示选项",
-    menuCloseButtonLabel: "✕"
+    menuCloseButtonLabel: "✕",
+    servicesPricingLabel: "服务与定价"
   },
   home: {
     breadcrumbs: {
@@ -2264,7 +2268,7 @@ const zh: AppDictionary = {
         actions: [
           {
             label: "下载简历",
-            variant: "primary",
+            variant: "secondary",
             href: "/resume.pdf",
             download: true
           },
@@ -2357,8 +2361,8 @@ const zh: AppDictionary = {
     techStack: getTechStackDetails("zh")
   },
   contracts: {
-    metadataTitle: "Jack Featherstone | 服务条款",
-    title: "服务条款（修复、部署与维护）",
+    metadataTitle: "Jack Featherstone | 服务使用条件",
+    title: "服务使用条件（快速修复、部署与稳定运维、月度维护）",
     subtitle:
       "这些条款用于让工作可预测：范围清晰、交付清晰、避免范围悄然扩大。",
     sections: [
@@ -2366,9 +2370,9 @@ const zh: AppDictionary = {
         id: "engagement-types",
         title: "合作类型",
         bullets: [
-          "一次性 Quick Fix",
-          "Deployment & Reliability 设置",
-          "按月 Maintenance"
+          "一次性快速修复",
+          "部署与稳定运维设置",
+          "月度维护"
         ]
       },
       {
@@ -2402,7 +2406,7 @@ const zh: AppDictionary = {
         title: "付款",
         bullets: [
           "小型固定范围工作通常 50% 预付 / 50% 交付。",
-          "Maintenance 按月预付（或按约定周期）。",
+          "月度维护按月预付（或按约定周期）。",
           "在付款与访问到位后开始工作。"
         ]
       },
@@ -2411,7 +2415,7 @@ const zh: AppDictionary = {
         title: "时间安排",
         bullets: [
           "时间为估算，基于收到访问权限与所需信息。",
-          "Quick Fix 目标：访问/付款到位后 2 个工作日（除非另有说明）。"
+          "快速修复目标：访问/付款到位后 2 个工作日（除非另有说明）。"
         ]
       },
       {
@@ -2419,7 +2423,7 @@ const zh: AppDictionary = {
         title: "支持期限",
         bullets: [
           "一次性工作包含短期支持（例如 7 天），仅覆盖交付变更直接导致的问题。",
-          "持续支持通过 Maintenance 计划提供。"
+          "持续支持通过维护方案提供。"
         ]
       },
       {
@@ -2448,30 +2452,30 @@ const zh: AppDictionary = {
     }
   },
   contractsFixes: {
-    metadataTitle: "Jack Featherstone | 服务",
-    title: "服务",
+    metadataTitle: "Jack Featherstone | 提供服务",
+    title: "提供服务",
     subtitle:
       "我帮助小型企业、创作者和小团队让网站更快、更安全、更稳定。",
     helperLine:
       "请发送你的网址或项目链接即可开始，我们可以在后续沟通细节。",
-    termsLinkLabel: "服务条款",
+    termsLinkLabel: "使用条款",
     waitlistTagLabel: "候补名单人数:",
     waitlistCtaSuffix: "候补名单",
     primaryCtas: [
       {
-        label: "申请 Quick Fix",
+        label: "申请快速修复",
         variant: "primary",
         href: CONTRACTS_QUICK_FIX_MAILTO,
         serviceId: "quickFix"
       },
       {
-        label: "申请部署支持",
+        label: "申请部署与稳定运维",
         variant: "secondary",
         href: CONTRACTS_DEPLOYMENT_MAILTO,
         serviceId: "deployment"
       },
       {
-        label: "申请维护服务",
+        label: "申请月度维护",
         variant: "ghost",
         href: CONTRACTS_MAINTENANCE_MAILTO,
         serviceId: "maintenance"
@@ -2482,7 +2486,7 @@ const zh: AppDictionary = {
     packages: [
       {
         id: "quickFix",
-        title: "Quick Fix",
+        title: "快速修复",
         tagline: "小而高效的快速修复。",
         bullets: [
           "排期确认后 2 个工作日内完成（访问与付款到位后）。",
@@ -2493,7 +2497,7 @@ const zh: AppDictionary = {
         ],
         priceLine: "常见价格：$99–$199",
         cta: {
-          label: "申请 Quick Fix",
+          label: "申请快速修复",
           variant: "primary",
           href: CONTRACTS_QUICK_FIX_MAILTO,
           serviceId: "quickFix"
@@ -2501,7 +2505,7 @@ const zh: AppDictionary = {
       },
       {
         id: "deployment",
-        title: "Deployment & Reliability",
+        title: "部署与稳定运维",
         tagline: "让你的网站稳定、安全且易于运维。",
         bullets: [
           "域名/DNS、SSL、重定向、响应头",
@@ -2511,7 +2515,7 @@ const zh: AppDictionary = {
         ],
         priceLine: "常见价格：$249–$499（视技术栈而定）",
         cta: {
-          label: "申请部署支持",
+          label: "申请部署与稳定运维",
           variant: "secondary",
           href: CONTRACTS_DEPLOYMENT_MAILTO,
           serviceId: "deployment"
@@ -2519,8 +2523,8 @@ const zh: AppDictionary = {
       },
       {
         id: "maintenance",
-        title: "Monthly Maintenance",
-        tagline: "可靠的“坏了就找我”方案。",
+        title: "月度维护",
+        tagline: "可靠的“出问题时可联系”的维护方案。",
         bullets: [
           "每月的小修改与修复",
           "可用性检查 + 基础监控",
@@ -2529,7 +2533,7 @@ const zh: AppDictionary = {
         ],
         priceLine: "常见价格：$49–$99/月",
         cta: {
-          label: "申请维护服务",
+          label: "申请月度维护",
           variant: "ghost",
           href: CONTRACTS_MAINTENANCE_MAILTO,
           serviceId: "maintenance"
@@ -2565,7 +2569,7 @@ const zh: AppDictionary = {
         ]
       },
       {
-        title: "部署与可靠性",
+        title: "部署与稳定运维",
         bullets: [
           "DNS/SSL 设置与清理",
           "NGINX 反向代理配置",
@@ -2586,7 +2590,7 @@ const zh: AppDictionary = {
     scopeBlocks: [
       {
         serviceId: "quickFix",
-        title: "Quick Fix 范围",
+        title: "快速修复范围",
         includedTitle: "包含",
         included: [
           "最多 5 项来自已批准清单的修复",
@@ -2596,9 +2600,9 @@ const zh: AppDictionary = {
         ],
         notIncludedTitle: "不包含",
         notIncluded: [
-          "完整改版、新页面或新功能（超出 Quick Fix 范围，需另行沟通）",
+          "完整改版、新页面或新功能（超出快速修复范围，需另行沟通）",
           "文案/内容创作（除非明确写入报价）",
-          "超过 7 天的持续支持（除非有维护计划）"
+          "超过 7 天的持续支持（除非有维护方案）"
         ],
         changePolicyTitle: "变更政策",
         changePolicy:
@@ -2606,7 +2610,7 @@ const zh: AppDictionary = {
       },
       {
         serviceId: "deployment",
-        title: "Deployment & Reliability 范围",
+        title: "部署与稳定运维范围",
         includedTitle: "包含",
         included: [
           "报价中列明的部署任务（如适用：DNS/SSL/CDN/NGINX/监控）",
@@ -2619,14 +2623,14 @@ const zh: AppDictionary = {
         notIncluded: [
           "大型功能开发或应用重写",
           "与部署无关的排错或重构",
-          "持续值守支持（除非有维护计划）"
+          "持续值守支持（除非有维护方案）"
         ],
         changePolicyTitle: "变更政策",
         changePolicy:
           "范围外事项在开始前单独报价。"
       }
     ],
-    maintenanceTitle: "维护选项",
+    maintenanceTitle: "维护方案",
     maintenanceTiers: [
       {
         title: "入门",
@@ -2667,7 +2671,7 @@ const zh: AppDictionary = {
       {
         question: "速度有多快？",
         answer:
-          "Quick Fix 设计为在访问/付款到位后 2 个工作日内完成。更大的工作取决于范围。"
+          "快速修复设计为在访问/付款到位后 2 个工作日内完成。更大的工作取决于范围。"
       },
       {
         question: "凭据如何处理？",
@@ -2682,25 +2686,25 @@ const zh: AppDictionary = {
     ]
   },
   servicesTerms: {
-    metadataTitle: "Jack Featherstone | 服务条款",
+    metadataTitle: "Jack Featherstone | 服务使用条件",
     metadataDescription:
       "用于让项目可预测的简明条款：范围清晰、交付清晰、避免意外扩展。",
-    title: "服务条款",
+    title: "服务使用条件",
     subtitle:
       "用于让项目可预测的简明条款：范围清晰、交付清晰、避免意外扩展。",
     helperLine: "有问题？请发邮件至 jfstone2000@proton.me",
     questionCtaLabel: "邮件咨询",
     questionCtaHref: SERVICE_TERMS_QUESTION_MAILTO,
-    backLinkLabel: "← 返回服务",
+    backLinkLabel: "← 返回提供服务",
     travelNotice:
       "出行提醒：2026年3月18日–4月9日。此期间回复可能延迟。",
     lastUpdatedLabel: "最后更新：2026年2月9日",
     sections: {
       applyTitle: "这些条款适用于",
       applyBullets: [
-        "一次性 Quick Fix 工作",
-        "Deployment & Reliability 设置工作",
-        "按月 Maintenance（如可用/经同意）"
+        "一次性快速修复工作",
+        "部署与稳定运维设置工作",
+        "月度维护（如可用/经同意）"
       ],
       applyNote:
         "如报价或协议包含不同条款，则该项目以报价为准。",
@@ -2742,21 +2746,21 @@ const zh: AppDictionary = {
       paymentBullets: [
         "小型固定范围工作通常 50% 预付、50% 交付（除非另有说明）。",
         "非常小的任务可能需要全额预付。",
-        "Maintenance（经同意）按月预付（或按约定周期）。",
+        "月度维护（经同意）按月预付（或按约定周期）。",
         "付款与访问到位后开始工作。"
       ],
       timelinesTitle: "时间与估算",
       timelinesBullets: [
         "时间为估算，基于收到访问权限与所需信息。",
-        "Quick Fix 通常在 kickoff 后 2 个工作日内完成，除非另有说明。",
-        "部署工作因技术栈与环境而异，报价中会给出估算。"
+        "快速修复通常在 kickoff 后 2 个工作日内完成，除非另有说明。",
+        "部署与稳定运维工作因技术栈与环境而异，报价中会给出估算。"
       ],
       timelinesNote:
         "如出现意外部署阻碍，将按范围/变更规则处理。",
       supportTitle: "支持期限",
       supportBullets: [
         "一次性工作包含短期支持（通常 7 天），仅覆盖由交付变更直接导致的问题。",
-        "持续支持可通过 Maintenance（经同意）提供。",
+        "持续支持可通过维护方案（经同意）提供。",
         "支持期外的请求将视为新的报价。"
       ],
       responsibilitiesTitle: "客户责任",

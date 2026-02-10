@@ -47,6 +47,8 @@ Required elements:
 
 Audio continuity is preserved by `ResponsiveAudioPlayer` which uses a shared
 audio element in `apps/site/src/components/AudioPlayer.tsx`.
+Use `next/link` for internal navigation (avoid raw `<a>` tags for in-app routes),
+otherwise the browser may do a full reload and reset the audio player.
 
 ## 4) Add The Open Graph Image Route
 

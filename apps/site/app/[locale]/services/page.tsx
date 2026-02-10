@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import dynamicImport from "next/dynamic";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@portfolio/ui";
 
@@ -51,6 +52,7 @@ function buildSections(
   availability: ResolvedServicesAvailability
 ): ShellSection[] {
   const { contractsFixes } = dictionary;
+  const mobileSectionSpacingClassName = "[&>div.mt-0]:mt-2";
   const cardClassName =
     "rounded-2xl border border-border bg-surface p-6 shadow-sm transition hover:border-accent dark:border-dark-border dark:bg-dark-surface dark:hover:border-dark-accent";
   const cardTitleClassName = "text-lg font-semibold text-text dark:text-dark-text";
@@ -116,11 +118,11 @@ function buildSections(
                           ))}
                         </ul>
                         {scopeBlock ? (
-                          <details className="mt-4 rounded-2xl border border-border bg-surface/80 px-4 py-3 text-sm text-text shadow-sm transition dark:border-dark-border dark:bg-dark-surface/80 dark:text-dark-text">
-                            <summary className="cursor-pointer select-none font-semibold text-text dark:text-dark-text">
+                          <details className="mt-4 rounded-2xl border border-border bg-surface/80 text-sm text-text shadow-sm transition dark:border-dark-border dark:bg-dark-surface/80 dark:text-dark-text">
+                            <summary className="list-item w-full cursor-pointer select-none px-4 py-3 font-semibold text-text dark:text-dark-text">
                               {scopeSummaryLabel}
                             </summary>
-                            <div className="mt-3 space-y-4">
+                            <div className="mt-3 space-y-4 px-4 pb-3">
                               <div>
                                 <h3 className="text-xs font-semibold uppercase tracking-wide text-textMuted dark:text-dark-textMuted">
                                   {scopeBlock.includedTitle}
@@ -153,11 +155,11 @@ function buildSections(
                           </details>
                         ) : null}
                         {isMaintenance ? (
-                          <details className="mt-4 rounded-2xl border border-border bg-surface/80 px-4 py-3 text-sm text-text shadow-sm transition dark:border-dark-border dark:bg-dark-surface/80 dark:text-dark-text">
-                            <summary className="cursor-pointer select-none font-semibold text-text dark:text-dark-text">
+                          <details className="mt-4 rounded-2xl border border-border bg-surface/80 text-sm text-text shadow-sm transition dark:border-dark-border dark:bg-dark-surface/80 dark:text-dark-text">
+                            <summary className="list-item w-full cursor-pointer select-none px-4 py-3 font-semibold text-text dark:text-dark-text">
                               {maintenanceSummaryLabel}
                             </summary>
-                            <div className="mt-3 space-y-4">
+                            <div className="mt-3 space-y-4 px-4 pb-3">
                               <div className="grid gap-4 md:grid-cols-2 md:gap-0 md:divide-x md:divide-border dark:md:divide-dark-border">
                                 {contractsFixes.maintenanceTiers.map(
                                   (tier, tierIndex) => (
@@ -278,7 +280,10 @@ function buildSections(
         </div>
       )
     },
-  ];
+  ].map((section) => ({
+    ...section,
+    className: mobileSectionSpacingClassName
+  }));
 }
 
 export async function generateStaticParams() {
@@ -351,19 +356,20 @@ export default function ServicesPage({ params }: PageParams) {
       subtitle={
         <>
           <span>{dictionary.contractsFixes.subtitle}</span>
-          <span className="mt-2 block text-sm text-textMuted dark:text-dark-textMuted">
+          <span className="mt-2 block text-base text-textMuted dark:text-dark-textMuted">
             {dictionary.contractsFixes.helperLine}
           </span>
           <span className="mt-2 block text-sm text-textMuted dark:text-dark-textMuted">
-            <a
+            <Link
               className="font-semibold text-accent underline-offset-4 hover:underline dark:text-dark-accent"
               href={`/${locale}/services/terms`}
             >
               {dictionary.contractsFixes.termsLinkLabel}
-            </a>
+            </Link>
           </span>
         </>
       }
+      subtitleClassName="max-w-5xl"
       breadcrumbs={breadcrumbs}
       sections={sections}
       floatingWidget={

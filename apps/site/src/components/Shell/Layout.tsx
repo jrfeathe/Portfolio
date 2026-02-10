@@ -35,6 +35,7 @@ export type ShellSection = {
 export type ShellLayoutProps = {
   title: ReactNode;
   subtitle?: ReactNode;
+  subtitleClassName?: string;
   breadcrumbs?: BreadcrumbItem[];
   sections: ShellSection[];
   anchorItems?: AnchorNavItem[];
@@ -60,6 +61,7 @@ export type ShellLayoutProps = {
 export function ShellLayout({
   title,
   subtitle,
+  subtitleClassName,
   breadcrumbs = [],
   sections,
   anchorItems,
@@ -110,7 +112,10 @@ export function ShellLayout({
   const heroGridClassName = skimActive
     ? "grid gap-6 lg:grid-cols-[minmax(0,1fr)_280px] lg:items-start"
     : "grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-start";
-  const titleStackClassName = skimActive ? "space-y-3" : "space-y-4";
+  const titleStackClassName = clsx(
+    skimActive ? "space-y-3" : "space-y-4",
+    !heroMedia && "lg:col-span-2"
+  );
   const contentGridClassName = skimActive
     ? clsx(
         "shell-layout-grid mx-auto grid w-full grid-cols-1 gap-6 px-4 pb-16 pt-0",
@@ -179,7 +184,12 @@ export function ShellLayout({
                 <h1 className="text-4xl font-semibold tracking-tight skim-hide">{title}</h1>
               ) : null}
               {subtitle ? (
-                <p className="max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted skim-hide">
+                <p
+                  className={clsx(
+                    "max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted skim-hide",
+                    subtitleClassName
+                  )}
+                >
                   {subtitle}
                 </p>
               ) : null}

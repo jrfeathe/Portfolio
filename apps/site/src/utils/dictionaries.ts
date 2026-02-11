@@ -394,6 +394,7 @@ export type AppDictionary = {
     subtitle: string;
     helperLine: string;
     termsLinkLabel: string;
+    proofLinkLabel: string;
     waitlistTagLabel: string;
     waitlistCtaSuffix: string;
     primaryCtas: ContractLink[];
@@ -414,6 +415,85 @@ export type AppDictionary = {
     maintenanceNote: string;
     faqTitle: string;
     faqItems: ContractFixesFaq[];
+  };
+  serviceProof: {
+    metadataTitle: string;
+    title: string;
+    subtitle: string;
+    backToServicesLabel: string;
+    termsLinkLabel: string;
+    mailtoSubjectTemplate: string;
+    filters: {
+      title: string;
+      searchLabel: string;
+      searchPlaceholder: string;
+      caseSensitiveLabel: string;
+      exactMatchLabel: string;
+      scopeLabel: string;
+      scopeOptions: {
+        titleOutcome: string;
+        problemSolution: string;
+        stackTools: string;
+        client: string;
+        date: string;
+      };
+      contentTypeLabel: string;
+      contentTypeOptions: {
+        beforeAfter: string;
+        testimonials: string;
+      };
+      categoryLabel: string;
+      categoryOptions: {
+        quickFix: string;
+        deployment: string;
+        maintenance: string;
+      };
+      sortLabel: string;
+      sortOptions: {
+        newest: string;
+        oldest: string;
+      };
+      clearFiltersLabel: string;
+      emptyStateTitle: string;
+      emptyStateBody: string;
+    };
+    sections: {
+      proofTitle: string;
+      proofDescription: string;
+      testimonialsTitle: string;
+      testimonialsDescription: string;
+      trustTitle: string;
+      trustNotes: string[];
+      trustLinkLabel: string;
+    };
+    item: {
+      idLabel: string;
+      categoryLabel: string;
+      dateLabel: string;
+      stackLabel: string;
+      clientLabel: string;
+      outcomeLabel: string;
+      problemLabel: string;
+      solutionLabel: string;
+      beforeLabel: string;
+      afterLabel: string;
+      artifactsLabel: string;
+      artifactsLinksLabel: string;
+      repoLabel: string;
+      notesLabel: string;
+      timelineLabel: string;
+      kickoffLabel: string;
+      deliveryLabel: string;
+      durationLabel: string;
+      businessDaysLabel: string;
+      scopeLabel: string;
+      metricsLabel: string;
+      noteLabel: string;
+      testimonialLabel: string;
+      requestCtaLabel: string;
+      anonymousLabel: string;
+      unknownClientLabel: string;
+    };
   };
   servicesTerms: ServiceTermsContent;
   meetings: {
@@ -1013,12 +1093,13 @@ const en: AppDictionary = {
     helperLine:
       "Email me your URL or project link to get started. We can discuss the details in a follow up.",
     termsLinkLabel: "Terms & Conditions",
+    proofLinkLabel: "Proof & testimonials",
     waitlistTagLabel: "Waitlist length:",
     waitlistCtaSuffix: "Waitlist until May 2026",
     primaryCtas: [
       {
         label: "Request a Quick Fix",
-        variant: "primary",
+        variant: "secondary",
         href: CONTRACTS_QUICK_FIX_MAILTO,
         serviceId: "quickFix"
       },
@@ -1052,7 +1133,7 @@ const en: AppDictionary = {
         priceLine: "Typical pricing: $99–$199",
         cta: {
           label: "Request a Quick Fix",
-          variant: "primary",
+          variant: "secondary",
           href: CONTRACTS_QUICK_FIX_MAILTO,
           serviceId: "quickFix"
         }
@@ -1238,6 +1319,90 @@ const en: AppDictionary = {
           "I’ll list them clearly and quote them separately. Nothing expands silently."
       }
     ]
+  },
+  serviceProof: {
+    metadataTitle: "Jack Featherstone | Service Proof",
+    title: "Service Proof & Testimonials",
+    subtitle:
+      "Short case summaries showing outcomes, process, and artifacts. Details are anonymized when needed.",
+    backToServicesLabel: "← Back to Services",
+    termsLinkLabel: "Terms & Conditions",
+    mailtoSubjectTemplate: "Work Request, Similar to {id}",
+    filters: {
+      title: "Filter Options",
+      searchLabel: "Search",
+      searchPlaceholder: "Search outcomes, problems, stacks, clients, dates",
+      caseSensitiveLabel: "Case sensitive",
+      exactMatchLabel: "Exact match",
+      scopeLabel: "Filter upon:",
+      scopeOptions: {
+        titleOutcome: "Title / Outcome",
+        problemSolution: "Problem / Solution",
+        stackTools: "Stack / Tools",
+        client: "Client",
+        date: "Date"
+      },
+      contentTypeLabel: "Content type",
+      contentTypeOptions: {
+        beforeAfter: "Before/After",
+        testimonials: "Testimonials"
+      },
+      categoryLabel: "Category",
+      categoryOptions: {
+        quickFix: "Quick Fix",
+        deployment: "Deployment",
+        maintenance: "Maintenance"
+      },
+      sortLabel: "Sort",
+      sortOptions: {
+        newest: "Newest first",
+        oldest: "Oldest first"
+      },
+      clearFiltersLabel: "Clear filters",
+      emptyStateTitle: "No matching items",
+      emptyStateBody: "Try clearing or adjusting filters."
+    },
+    sections: {
+      proofTitle: "Before / After",
+      proofDescription: "Expandable case summaries with context, artifacts, and timelines.",
+      testimonialsTitle: "Testimonials",
+      testimonialsDescription: "Short notes shared with permission or anonymized.",
+      trustTitle: "Trust Notes",
+      trustNotes: [
+        "Results vary by platform and constraints.",
+        "No guarantee of SEO ranking outcomes.",
+        "View Terms & Conditions"
+      ],
+      trustLinkLabel: "View Terms & Conditions"
+    },
+    item: {
+      idLabel: "Entry ID",
+      categoryLabel: "Category",
+      dateLabel: "Date",
+      stackLabel: "Stack",
+      clientLabel: "Client",
+      outcomeLabel: "Outcome",
+      problemLabel: "Problem",
+      solutionLabel: "Solution",
+      beforeLabel: "Before",
+      afterLabel: "After",
+      artifactsLabel: "Proof artifacts",
+      artifactsLinksLabel: "Public links",
+      repoLabel: "Repo/PR link",
+      notesLabel: "Notes",
+      timelineLabel: "Timeline + scope",
+      kickoffLabel: "Kickoff",
+      deliveryLabel: "Delivery",
+      durationLabel: "Kickoff → delivery",
+      businessDaysLabel: "business days",
+      scopeLabel: "Scope",
+      metricsLabel: "Metrics",
+      noteLabel: "Note",
+      testimonialLabel: "Testimonial",
+      requestCtaLabel: "Request something like this",
+      anonymousLabel: "Anonymous, small business",
+      unknownClientLabel: "Client details on request"
+    }
   },
   servicesTerms: {
     metadataTitle: "Jack Featherstone | Service Terms",
@@ -1734,12 +1899,13 @@ const ja: AppDictionary = {
     helperLine:
       "開始するにはURLまたはプロジェクトリンクをメールでお送りください。詳細は追ってご相談できます。",
     termsLinkLabel: "利用規約",
+    proofLinkLabel: "実績と推薦",
     waitlistTagLabel: "ウェイトリスト人数:",
     waitlistCtaSuffix: "2026年5月までウェイトリスト",
     primaryCtas: [
       {
         label: "迅速修正を依頼する",
-        variant: "primary",
+        variant: "secondary",
         href: CONTRACTS_QUICK_FIX_MAILTO,
         serviceId: "quickFix"
       },
@@ -1773,7 +1939,7 @@ const ja: AppDictionary = {
         priceLine: "目安料金は$99–$199です。",
         cta: {
           label: "迅速修正を依頼する",
-          variant: "primary",
+          variant: "secondary",
           href: CONTRACTS_QUICK_FIX_MAILTO,
           serviceId: "quickFix"
         }
@@ -1959,6 +2125,90 @@ const ja: AppDictionary = {
           "内容を明確に整理し、別途見積もりします。想定外の拡大はありません。"
       }
     ]
+  },
+  serviceProof: {
+    metadataTitle: "Jack Featherstone | 実績と推薦",
+    title: "実績と推薦",
+    subtitle:
+      "成果・プロセス・証跡を短くまとめた事例です。必要に応じて匿名化しています。",
+    backToServicesLabel: "← 提供サービスに戻る",
+    termsLinkLabel: "利用規約",
+    mailtoSubjectTemplate: "類似案件の相談：{id}",
+    filters: {
+      title: "フィルター",
+      searchLabel: "検索",
+      searchPlaceholder: "成果、課題、スタック、クライアント、日付で検索",
+      caseSensitiveLabel: "大文字小文字を区別",
+      exactMatchLabel: "完全一致",
+      scopeLabel: "対象フィールド:",
+      scopeOptions: {
+        titleOutcome: "タイトル / 成果",
+        problemSolution: "課題 / 解決策",
+        stackTools: "スタック / ツール",
+        client: "クライアント",
+        date: "日付"
+      },
+      contentTypeLabel: "コンテンツ種別",
+      contentTypeOptions: {
+        beforeAfter: "修正前後",
+        testimonials: "推薦文"
+      },
+      categoryLabel: "カテゴリ",
+      categoryOptions: {
+        quickFix: "迅速修正",
+        deployment: "デプロイ",
+        maintenance: "メンテナンス"
+      },
+      sortLabel: "並び順",
+      sortOptions: {
+        newest: "新しい順",
+        oldest: "古い順"
+      },
+      clearFiltersLabel: "フィルターをクリア",
+      emptyStateTitle: "一致する項目がありません",
+      emptyStateBody: "フィルターを調整するか、クリアしてください。"
+    },
+    sections: {
+      proofTitle: "修正前後",
+      proofDescription: "詳細を展開できる事例サマリーです。",
+      testimonialsTitle: "推薦",
+      testimonialsDescription: "許可を得た短いコメント（必要に応じて匿名）。",
+      trustTitle: "注意事項",
+      trustNotes: [
+        "結果はプラットフォームや制約により変わります。",
+        "SEO順位の保証はありません。",
+        "利用規約を見る"
+      ],
+      trustLinkLabel: "利用規約を見る"
+    },
+    item: {
+      idLabel: "ID",
+      categoryLabel: "カテゴリ",
+      dateLabel: "日付",
+      stackLabel: "スタック",
+      clientLabel: "クライアント",
+      outcomeLabel: "成果",
+      problemLabel: "課題",
+      solutionLabel: "解決策",
+      beforeLabel: "修正前",
+      afterLabel: "修正後",
+      artifactsLabel: "証跡",
+      artifactsLinksLabel: "公開リンク",
+      repoLabel: "リポジトリ/PR",
+      notesLabel: "メモ",
+      timelineLabel: "スケジュールとスコープ",
+      kickoffLabel: "キックオフ",
+      deliveryLabel: "納品",
+      durationLabel: "キックオフ → 納品",
+      businessDaysLabel: "営業日",
+      scopeLabel: "スコープ",
+      metricsLabel: "指標",
+      noteLabel: "注記",
+      testimonialLabel: "推薦文",
+      requestCtaLabel: "同様の依頼を相談する",
+      anonymousLabel: "匿名（小規模ビジネス）",
+      unknownClientLabel: "詳細はお問い合わせください"
+    }
   },
   servicesTerms: {
     metadataTitle: "Jack Featherstone | サービス利用条件",
@@ -2459,12 +2709,13 @@ const zh: AppDictionary = {
     helperLine:
       "请发送你的网址或项目链接即可开始，我们可以在后续沟通细节。",
     termsLinkLabel: "使用条款",
+    proofLinkLabel: "案例与推荐",
     waitlistTagLabel: "候补名单人数:",
     waitlistCtaSuffix: "候补名单至2026年5月",
     primaryCtas: [
       {
         label: "申请快速修复",
-        variant: "primary",
+        variant: "secondary",
         href: CONTRACTS_QUICK_FIX_MAILTO,
         serviceId: "quickFix"
       },
@@ -2498,7 +2749,7 @@ const zh: AppDictionary = {
         priceLine: "常见价格：$99–$199",
         cta: {
           label: "申请快速修复",
-          variant: "primary",
+          variant: "secondary",
           href: CONTRACTS_QUICK_FIX_MAILTO,
           serviceId: "quickFix"
         }
@@ -2684,6 +2935,90 @@ const zh: AppDictionary = {
           "我会明确列出并单独报价，不会悄然扩展。"
       }
     ]
+  },
+  serviceProof: {
+    metadataTitle: "Jack Featherstone | 服务证明",
+    title: "服务证明与推荐",
+    subtitle:
+      "展示成果、过程与证据的简短案例摘要。需要时会匿名处理。",
+    backToServicesLabel: "← 返回提供服务",
+    termsLinkLabel: "使用条款",
+    mailtoSubjectTemplate: "类似案例的服务请求：{id}",
+    filters: {
+      title: "筛选选项",
+      searchLabel: "搜索",
+      searchPlaceholder: "搜索成果、问题、技术栈、客户、日期",
+      caseSensitiveLabel: "区分大小写",
+      exactMatchLabel: "完全匹配",
+      scopeLabel: "筛选字段:",
+      scopeOptions: {
+        titleOutcome: "标题 / 成果",
+        problemSolution: "问题 / 解决方案",
+        stackTools: "技术栈 / 工具",
+        client: "客户",
+        date: "日期"
+      },
+      contentTypeLabel: "内容类型",
+      contentTypeOptions: {
+        beforeAfter: "前后对比",
+        testimonials: "推荐"
+      },
+      categoryLabel: "类别",
+      categoryOptions: {
+        quickFix: "快速修复",
+        deployment: "部署",
+        maintenance: "维护"
+      },
+      sortLabel: "排序",
+      sortOptions: {
+        newest: "最新优先",
+        oldest: "最早优先"
+      },
+      clearFiltersLabel: "清除筛选",
+      emptyStateTitle: "没有匹配项",
+      emptyStateBody: "请调整或清除筛选条件。"
+    },
+    sections: {
+      proofTitle: "前后对比",
+      proofDescription: "可展开的案例摘要，包含过程、证据与时间线。",
+      testimonialsTitle: "推荐",
+      testimonialsDescription: "经许可或匿名分享的简短评价。",
+      trustTitle: "说明",
+      trustNotes: [
+        "结果因平台与限制而异。",
+        "不保证 SEO 排名结果。",
+        "查看使用条款"
+      ],
+      trustLinkLabel: "查看使用条款"
+    },
+    item: {
+      idLabel: "编号",
+      categoryLabel: "类别",
+      dateLabel: "日期",
+      stackLabel: "技术栈",
+      clientLabel: "客户",
+      outcomeLabel: "结果",
+      problemLabel: "问题",
+      solutionLabel: "解决方案",
+      beforeLabel: "之前",
+      afterLabel: "之后",
+      artifactsLabel: "证明材料",
+      artifactsLinksLabel: "公开链接",
+      repoLabel: "仓库/PR",
+      notesLabel: "备注",
+      timelineLabel: "时间线与范围",
+      kickoffLabel: "启动",
+      deliveryLabel: "交付",
+      durationLabel: "启动 → 交付",
+      businessDaysLabel: "个工作日",
+      scopeLabel: "范围",
+      metricsLabel: "指标",
+      noteLabel: "备注",
+      testimonialLabel: "推荐",
+      requestCtaLabel: "请求类似工作",
+      anonymousLabel: "匿名（小型企业）",
+      unknownClientLabel: "详细信息可咨询"
+    }
   },
   servicesTerms: {
     metadataTitle: "Jack Featherstone | 服务使用条件",

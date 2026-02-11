@@ -50,6 +50,7 @@ export type ShellLayoutProps = {
     preset?: ResponsiveImagePreset;
     caption?: ReactNode;
   };
+  heroAddon?: ReactNode;
   mobileNavMaxHeightClassName?: string;
   mobileScrollContainer?: boolean;
   skimModeEnabled?: boolean;
@@ -72,6 +73,7 @@ export function ShellLayout({
   className,
   socialLinks,
   heroMedia,
+  heroAddon,
   skimModeEnabled,
   showSkimToggle = true,
   shellCopy,
@@ -236,6 +238,11 @@ export function ShellLayout({
           ) : null}
         </div>
       </header>
+      {heroAddon ? (
+        <div className="mx-auto w-full max-w-6xl px-4">
+          {heroAddon}
+        </div>
+      ) : null}
       <div id="chatbot-slot" data-chatbot-slot="true" />
       <div className={contentGridClassName}>
         <div className={ctaContainerClassName}>

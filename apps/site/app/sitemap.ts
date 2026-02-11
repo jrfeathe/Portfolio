@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const experienceAlternates = buildLanguageAlternates("/experience");
   const meetingsAlternates = buildLanguageAlternates("/meetings");
   const servicesAlternates = buildLanguageAlternates("/services");
+  const servicesProofAlternates = buildLanguageAlternates("/services/proof");
   const servicesTermsAlternates = buildLanguageAlternates("/services/terms");
 
   return locales.flatMap((locale) => [
@@ -57,6 +58,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
       alternates: {
         languages: servicesAlternates
+      }
+    },
+    {
+      url: new URL(`/${locale}/services/proof`, baseUrl).toString(),
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.6,
+      alternates: {
+        languages: servicesProofAlternates
       }
     },
     {

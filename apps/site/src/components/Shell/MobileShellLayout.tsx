@@ -41,6 +41,7 @@ type MobileShellLayoutParams = {
     preset?: ResponsiveImagePreset;
     caption?: MobileShellLayoutProps["subtitle"];
   };
+  heroAddon?: MobileShellLayoutProps["heroAddon"];
   mobileNavMaxHeightClassName?: string;
   mobileScrollContainer?: boolean;
   skimModeEnabled?: boolean;
@@ -63,6 +64,7 @@ export function MobileShellLayout({
   className,
   socialLinks,
   heroMedia,
+  heroAddon,
   mobileNavMaxHeightClassName,
   mobileScrollContainer = false,
   skimModeEnabled,
@@ -204,6 +206,11 @@ export function MobileShellLayout({
           </div>
         </div>
       </header>
+      {heroAddon ? (
+        <div className="mx-auto w-full max-w-6xl px-4">
+          {heroAddon}
+        </div>
+      ) : null}
 
       <div
         className={clsx(

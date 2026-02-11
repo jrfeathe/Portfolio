@@ -320,10 +320,10 @@ export default function ServicesTermsPage({ params }: PageParams) {
         <div className="shell-stacked-sidebar space-y-4 lg:sticky lg:top-24">
           <StickyCTA sticky={false}>
             <Button
-              variant="primary"
+              variant="secondary"
               href={terms.questionCtaHref}
               className="w-full"
-              data-variant="primary"
+              data-variant="secondary"
             >
               {terms.questionCtaLabel}
             </Button>

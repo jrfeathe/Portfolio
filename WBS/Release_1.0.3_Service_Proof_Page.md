@@ -12,6 +12,32 @@ Requirements:
 - Linked from `/{locale}/services` above CTA, similar to our Home → Services button (e.g., “Proof & testimonials”)
 - Include a “Back to Services” link and a Terms & Conditions link to `/{locale}/services/terms`
 
+Implementation note (currently disabled on `/services`):
+- Re-add the top CTA button above the sidebar CTAs by restoring this snippet in
+  `apps/site/app/[locale]/services/page.tsx`:
+```tsx
+<StickyCTA
+  sticky={false}
+  topCta={{
+    label: dictionary.contractsFixes.proofLinkLabel,
+    href: `/${locale}/services/proof`,
+    variant: "primary"
+  }}
+>
+  {heroCtas.map((action) => (
+    <Button
+      key={action.label}
+      variant={action.variant}
+      href={action.href}
+      className="w-full"
+      data-variant={action.variant}
+    >
+      {action.label}
+    </Button>
+  ))}
+</StickyCTA>
+```
+
 ---
 
 ## 1) Goals (what success looks like)

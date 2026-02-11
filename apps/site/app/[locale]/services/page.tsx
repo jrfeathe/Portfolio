@@ -95,6 +95,7 @@ function buildSections(
                 const isMaintenance = pkg.id === "maintenance";
                 const isWaitlist = service.status === "waitlist";
                 const waitlistCount = service.waitlistCount ?? 0;
+                const showWaitlistBadge = isWaitlist && waitlistCount > 0;
                 return (
                   <article
                     key={pkg.title}
@@ -105,7 +106,7 @@ function buildSections(
                       <div>
                         <div className="flex flex-wrap items-center justify-between gap-2">
                           <h2 className={cardTitleClassName}>{pkg.title}</h2>
-                          {isWaitlist ? (
+                          {showWaitlistBadge ? (
                             <span className="rounded-full border border-accent/30 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-accent dark:border-dark-accent/30 dark:text-dark-accent">
                               {waitlistTagLabel} {waitlistCount}
                             </span>

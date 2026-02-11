@@ -1014,7 +1014,7 @@ const en: AppDictionary = {
       "Email me your URL or project link to get started. We can discuss the details in a follow up.",
     termsLinkLabel: "Terms & Conditions",
     waitlistTagLabel: "Waitlist length:",
-    waitlistCtaSuffix: "Waitlist",
+    waitlistCtaSuffix: "Waitlist until May 2026",
     primaryCtas: [
       {
         label: "Request a Quick Fix",
@@ -1735,7 +1735,7 @@ const ja: AppDictionary = {
       "開始するにはURLまたはプロジェクトリンクをメールでお送りください。詳細は追ってご相談できます。",
     termsLinkLabel: "利用規約",
     waitlistTagLabel: "ウェイトリスト人数:",
-    waitlistCtaSuffix: "ウェイトリスト",
+    waitlistCtaSuffix: "2026年5月までウェイトリスト",
     primaryCtas: [
       {
         label: "迅速修正を依頼する",
@@ -2460,7 +2460,7 @@ const zh: AppDictionary = {
       "请发送你的网址或项目链接即可开始，我们可以在后续沟通细节。",
     termsLinkLabel: "使用条款",
     waitlistTagLabel: "候补名单人数:",
-    waitlistCtaSuffix: "候补名单",
+    waitlistCtaSuffix: "候补名单至2026年5月",
     primaryCtas: [
       {
         label: "申请快速修复",

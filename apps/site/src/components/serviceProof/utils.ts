@@ -1,6 +1,19 @@
 import type { Localized } from "../../../../../content/serviceProofItems";
 import type { Locale } from "../../utils/i18n";
 
+const YEAR_MONTH_FORMAT: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "short",
+  timeZone: "UTC"
+};
+
+const FULL_DATE_FORMAT: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+  timeZone: "UTC"
+};
+
 export function localize<T>(value: Localized<T>, locale: Locale): T {
   return value[locale] ?? value.en;
 }
@@ -10,22 +23,17 @@ export function formatYearMonth(value: string, locale: Locale): string {
   if (Number.isNaN(date.getTime())) {
     return value;
   }
-  return new Intl.DateTimeFormat(locale, {
-    year: "numeric",
-    month: "short"
-  }).format(date);
+  return new Intl.DateTimeFormat(locale, YEAR_MONTH_FORMAT).format(date);
 }
 
 export function formatFullDate(value: string, locale: Locale): string {
-  const date = new Date(value);
+  const date = value.includes("T")
+    ? new Date(value)
+    : new Date(`${value}T00:00:00Z`);
   if (Number.isNaN(date.getTime())) {
     return value;
   }
-  return new Intl.DateTimeFormat(locale, {
-    year: "numeric",
-    month: "short",
-    day: "numeric"
-  }).format(date);
+  return new Intl.DateTimeFormat(locale, FULL_DATE_FORMAT).format(date);
 }
 
 export function parseYearMonth(value: string): number {

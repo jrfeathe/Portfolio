@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import clsx from "clsx";
 
 import type { AppDictionary } from "../../utils/dictionaries";
@@ -326,11 +327,14 @@ export function MailtoFallbackTray({ copy }: MailtoFallbackTrayProps) {
                 aria-label={copy.copyEmailLabel}
                 className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border/70 bg-surface p-0 text-text shadow-sm transition hover:bg-surfaceMuted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 dark:border-dark-border/70 dark:bg-dark-surface dark:hover:bg-dark-surfaceMuted dark:focus-visible:ring-dark-accent/40"
               >
-                <img
+                <Image
                   src="/copy.svg"
                   alt=""
                   aria-hidden="true"
+                  width={14}
+                  height={14}
                   className="h-3.5 w-3.5 dark:invert"
+                  unoptimized
                 />
               </button>
               <span className="pointer-events-none absolute -top-8 right-0 hidden whitespace-nowrap rounded-md border border-border/70 bg-surface px-2 py-1 text-[11px] font-semibold text-text shadow-sm group-hover:block group-focus-within:block dark:border-dark-border/70 dark:bg-dark-surface dark:text-dark-text">
@@ -358,11 +362,14 @@ export function MailtoFallbackTray({ copy }: MailtoFallbackTrayProps) {
             title={copy.gmailLabel}
             className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border/70 bg-surface p-0 text-text shadow-sm transition hover:bg-surfaceMuted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 dark:border-dark-border/70 dark:bg-dark-surface dark:hover:bg-dark-surfaceMuted dark:focus-visible:ring-dark-accent/40"
           >
-            <img
+            <Image
               src="/gmail.svg"
               alt=""
               aria-hidden="true"
+              width={20}
+              height={20}
               className="h-5 w-5"
+              unoptimized
             />
           </a>
           <a
@@ -373,11 +380,14 @@ export function MailtoFallbackTray({ copy }: MailtoFallbackTrayProps) {
             title={copy.outlookLabel}
             className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border/70 bg-surface p-0 text-text shadow-sm transition hover:bg-surfaceMuted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 dark:border-dark-border/70 dark:bg-dark-surface dark:hover:bg-dark-surfaceMuted dark:focus-visible:ring-dark-accent/40"
           >
-            <img
+            <Image
               src="/outlook.svg"
               alt=""
               aria-hidden="true"
+              width={20}
+              height={20}
               className="h-5 w-5"
+              unoptimized
             />
           </a>
           <a
@@ -386,13 +396,16 @@ export function MailtoFallbackTray({ copy }: MailtoFallbackTrayProps) {
             rel="noreferrer noopener"
             aria-label={copy.yahooLabel}
             title={copy.yahooLabel}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border/70 bg-white p-0 text-text shadow-sm transition hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 dark:border-dark-border/70 dark:bg-white dark:hover:bg-white/90 dark:focus-visible:ring-dark-accent/40"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border/70 bg-white p-0 text-text shadow-sm transition hover:bg-surfaceMuted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 dark:border-dark-border/70 dark:bg-white dark:hover:bg-dark-surfaceMuted dark:focus-visible:ring-dark-accent/40"
           >
-            <img
+            <Image
               src="/yahoo.svg"
               alt=""
               aria-hidden="true"
+              width={16}
+              height={16}
               className="h-4 w-4"
+              unoptimized
             />
           </a>
           <a
@@ -401,13 +414,16 @@ export function MailtoFallbackTray({ copy }: MailtoFallbackTrayProps) {
             rel="noreferrer noopener"
             aria-label={copy.aolLabel}
             title={copy.aolLabel}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border/70 bg-[#ffd327] p-0 text-text shadow-sm transition hover:bg-[#e6be24] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 dark:border-dark-border/70 dark:bg-[#ffd327] dark:hover:bg-[#e6be24] dark:focus-visible:ring-dark-accent/40"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-border/70 bg-[#ffd327] p-0 text-text shadow-sm transition hover:bg-surfaceMuted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30 dark:border-dark-border/70 dark:bg-[#ffd327] dark:hover:bg-dark-surfaceMuted dark:focus-visible:ring-dark-accent/40"
           >
-            <img
+            <Image
               src="/aol.svg"
               alt=""
               aria-hidden="true"
+              width={24}
+              height={24}
               className="h-6 w-6"
+              unoptimized
             />
           </a>
         </div>

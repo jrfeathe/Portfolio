@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
+import type { Route } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Button, Chip } from "@portfolio/ui";
 
@@ -288,11 +290,15 @@ export function ServiceProofItemsSection({
                           <div className="mt-3 grid gap-3">
                             {item.before.images.map((image) => (
                               <figure key={image.src}>
-                                <img
+                                <Image
                                   src={image.src}
                                   alt={localize(image.alt, locale)}
-                                  className="w-full rounded-xl border border-border dark:border-dark-border"
+                                  width={1600}
+                                  height={900}
+                                  sizes="(min-width: 1024px) 50vw, 100vw"
+                                  className="h-auto w-full rounded-xl border border-border dark:border-dark-border"
                                   loading="lazy"
+                                  unoptimized
                                 />
                                 {image.caption ? (
                                   <figcaption className="mt-2 text-xs text-textMuted dark:text-dark-textMuted">
@@ -321,11 +327,15 @@ export function ServiceProofItemsSection({
                           <div className="mt-3 grid gap-3">
                             {item.after.images.map((image) => (
                               <figure key={image.src}>
-                                <img
+                                <Image
                                   src={image.src}
                                   alt={localize(image.alt, locale)}
-                                  className="w-full rounded-xl border border-border dark:border-dark-border"
+                                  width={1600}
+                                  height={900}
+                                  sizes="(min-width: 1024px) 50vw, 100vw"
+                                  className="h-auto w-full rounded-xl border border-border dark:border-dark-border"
                                   loading="lazy"
+                                  unoptimized
                                 />
                                 {image.caption ? (
                                   <figcaption className="mt-2 text-xs text-textMuted dark:text-dark-textMuted">
@@ -368,7 +378,7 @@ export function ServiceProofItemsSection({
                                   </a>
                                 ) : (
                                   <Link
-                                    href={link.href}
+                                    href={link.href as Route}
                                     className="font-semibold text-accent underline-offset-4 hover:underline dark:text-dark-accent"
                                   >
                                     {label}
@@ -396,7 +406,7 @@ export function ServiceProofItemsSection({
                           </a>
                         ) : (
                           <Link
-                            href={item.artifacts.repo_or_pr.href}
+                            href={item.artifacts.repo_or_pr.href as Route}
                             className="font-semibold text-accent underline-offset-4 hover:underline dark:text-dark-accent"
                           >
                             {localize(item.artifacts.repo_or_pr.label, locale)}

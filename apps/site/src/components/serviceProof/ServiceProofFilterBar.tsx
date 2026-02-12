@@ -144,7 +144,7 @@ export function ServiceProofFilterBar({ copy, locale }: ServiceProofFilterBarPro
 
   useEffect(() => {
     resetServiceProofFilters();
-  }, [locale, resetServiceProofFilters]);
+  }, [locale]);
 
   useEffect(() => {
     const handle = setTimeout(() => {
@@ -154,7 +154,7 @@ export function ServiceProofFilterBar({ copy, locale }: ServiceProofFilterBarPro
     }, SEARCH_DEBOUNCE_MS);
 
     return () => clearTimeout(handle);
-  }, [filters.searchInput, updateServiceProofFilters]);
+  }, [filters.searchInput]);
 
   const scopeOptions: Array<ToggleOption<FilterScopeKey>> = [
     { value: "title-outcome", label: copy.scopeOptions.titleOutcome },

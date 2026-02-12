@@ -203,6 +203,21 @@ export type AppDictionary = {
     ariaEnable: string;
     ariaDisable: string;
   };
+  mailtoTray: {
+    title: string;
+    description: string;
+    emailLabel: string;
+    openInLabel: string;
+    copyLabel: string;
+    copyEmailLabel: string;
+    gmailLabel: string;
+    outlookLabel: string;
+    yahooLabel: string;
+    aolLabel: string;
+    copySuccess: string;
+    copyFailure: string;
+    closeLabel: string;
+  };
   chatbot: {
     launcherLabel: string;
     panelTitle: string;
@@ -793,6 +808,21 @@ const en: AppDictionary = {
     statusOff: "OFF",
     ariaEnable: "Enable recruiter skim mode",
     ariaDisable: "Disable recruiter skim mode"
+  },
+  mailtoTray: {
+    title: "Email options",
+    description: "If your mail app did not open, use one of these options.",
+    emailLabel: "Email address",
+    openInLabel: "Open in:",
+    copyLabel: "Copy",
+    copyEmailLabel: "Copy email",
+    gmailLabel: "Open Gmail",
+    outlookLabel: "Open Outlook",
+    yahooLabel: "Open Yahoo Mail",
+    aolLabel: "Open AOL Mail",
+    copySuccess: "Email copied to clipboard.",
+    copyFailure: "Copy failed. Select the email address and copy manually.",
+    closeLabel: "Close"
   },
   chatbot: {
     launcherLabel: "Open recruiter AI chat",
@@ -1601,6 +1631,21 @@ const ja: AppDictionary = {
     statusOff: "オフ",
     ariaEnable: "採用担当者向けスキムモードを有効化",
     ariaDisable: "採用担当者向けスキムモードを無効化"
+  },
+  mailtoTray: {
+    title: "メール送信オプション",
+    description: "メールアプリが開かない場合は、以下の方法をお試しください。",
+    emailLabel: "メールアドレス",
+    openInLabel: "開く:",
+    copyLabel: "コピー",
+    copyEmailLabel: "メールをコピー",
+    gmailLabel: "Gmail を開く",
+    outlookLabel: "Outlook を開く",
+    yahooLabel: "Yahooメールを開く",
+    aolLabel: "AOLメールを開く",
+    copySuccess: "メールアドレスをコピーしました。",
+    copyFailure: "コピーに失敗しました。メールアドレスを選択して手動でコピーしてください。",
+    closeLabel: "閉じる"
   },
   chatbot: {
     launcherLabel: "採用担当AIチャットを開く",
@@ -2411,6 +2456,21 @@ const zh: AppDictionary = {
     statusOff: "关",
     ariaEnable: "启用招聘方略读模式",
     ariaDisable: "禁用招聘方略读模式"
+  },
+  mailtoTray: {
+    title: "邮件发送选项",
+    description: "如果邮件应用未打开，请使用以下方式继续。",
+    emailLabel: "邮箱地址",
+    openInLabel: "打开方式：",
+    copyLabel: "复制",
+    copyEmailLabel: "复制邮箱",
+    gmailLabel: "打开 Gmail",
+    outlookLabel: "打开 Outlook",
+    yahooLabel: "打开 Yahoo 邮箱",
+    aolLabel: "打开 AOL 邮箱",
+    copySuccess: "邮箱地址已复制。",
+    copyFailure: "复制失败。请选中邮箱地址后手动复制。",
+    closeLabel: "关闭"
   },
   chatbot: {
     launcherLabel: "打开招聘 AI 聊天",

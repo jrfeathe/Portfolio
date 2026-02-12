@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getDictionary } from "../../src/utils/dictionaries";
 import { isLocale } from "../../src/utils/i18n";
 import { ChatbotPortalMount } from "../../src/components/chat/ChatbotPortalMount";
+import { MailtoFallbackTray } from "../../src/components/contact/MailtoFallbackTray";
 import { SkimModeRouteGuard } from "../../src/components/SkimModeRouteGuard";
 
 type LocaleLayoutProps = {
@@ -21,6 +22,7 @@ export default function LocaleLayout({ children, params }: LocaleLayoutProps) {
   const locale = params.locale;
   const dictionary = getDictionary(locale);
   const chatbotCopy = dictionary.chatbot;
+  const mailtoTrayCopy = dictionary.mailtoTray;
   const chatbotEnabled = process.env.NEXT_PUBLIC_ENABLE_CHATBOT !== "0";
 
   return (
@@ -30,6 +32,7 @@ export default function LocaleLayout({ children, params }: LocaleLayoutProps) {
         copy={chatbotCopy}
         locale={locale}
       />
+      <MailtoFallbackTray copy={mailtoTrayCopy} />
       <SkimModeRouteGuard locale={locale} />
       {children}
     </>

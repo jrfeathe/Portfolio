@@ -9,5 +9,9 @@
     "noEmitOnError": false,
     "skipLibCheck": true
   },
-  "include": ["./build-chatbot-index.ts", "./generate-tailored-resume.ts"]
+  "include": [
+    "./build-chatbot-index.ts",
+    "./generate-tailored-resume.ts",
+    "./generate-cover-letter.ts"
+  ]
 }

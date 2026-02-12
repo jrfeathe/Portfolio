@@ -29,6 +29,12 @@ Run from the repo root:
 - Linting: ESLint shared config in `packages/config/eslint`; Next.js rules apply in `apps/site`.
 - Tests: unit tests use `__tests__/*.test.ts(x)`; Playwright specs live in `apps/site/tests/**/*.spec.ts`; a11y tests live under `tests/a11y` or `__tests__/a11y`.
 
+## Theme & Contrast
+High contrast is controlled by the app (not just OS `prefers-contrast`):
+- The root element gets a `contrast-high` class and `data-contrast` in `apps/site/app/layout.tsx`.
+- Use the normal token-driven classes (`bg-*`, `text-*`, `border-*`) so `contrast-high` can swap CSS variables automatically (see `packages/ui/tokens.css`).
+- Avoid Tailwind `contrast-more:` unless you explicitly want to respond to OS `prefers-contrast: more` instead of the app’s toggle.
+
 ## Testing Guidelines
 Jest is used for unit/integration tests; Playwright covers e2e flows; a11y tests use axe.
 - Do not run tests yourself, unless we are fixing a lint or typecheck issue.

@@ -373,6 +373,10 @@ export default function HomePage({ params }: PageProps) {
         ]
       : [])
   ];
+  const servicesPricingCta = {
+    label: dictionary.shell.servicesPricingLabel,
+    href: `/${locale}/services`
+  };
 
   return (
     <>
@@ -419,6 +423,7 @@ export default function HomePage({ params }: PageProps) {
                 title={cta.title}
                 description={cta.description}
                 sticky={false}
+                topCta={servicesPricingCta}
                 className="home-cta-card"
               >
                 {cta.actions.map((action) =>

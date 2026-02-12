@@ -160,6 +160,10 @@ export default function MeetingsPage({ params }: PageParams) {
         ]
       : [])
   ];
+  const servicesPricingCta = {
+    label: dictionary.shell.servicesPricingLabel,
+    href: `/${locale}/services`
+  };
 
   return (
     <ResponsiveShellLayout
@@ -194,6 +198,7 @@ export default function MeetingsPage({ params }: PageParams) {
             title={homeCta.title}
             description={homeCta.description}
             sticky={false}
+            topCta={servicesPricingCta}
           >
             {filteredActions.map((action) =>
               action.href ? (

@@ -26,6 +26,7 @@ export type MobileShellLayoutProps = ShellLayoutProps;
 type MobileShellLayoutParams = {
   title: MobileShellLayoutProps["title"];
   subtitle?: MobileShellLayoutProps["subtitle"];
+  subtitleClassName?: MobileShellLayoutProps["subtitleClassName"];
   breadcrumbs?: BreadcrumbItem[];
   sections: MobileShellLayoutProps["sections"];
   anchorItems?: AnchorNavItem[];
@@ -40,6 +41,7 @@ type MobileShellLayoutParams = {
     preset?: ResponsiveImagePreset;
     caption?: MobileShellLayoutProps["subtitle"];
   };
+  heroAddon?: MobileShellLayoutProps["heroAddon"];
   mobileNavMaxHeightClassName?: string;
   mobileScrollContainer?: boolean;
   skimModeEnabled?: boolean;
@@ -51,6 +53,7 @@ type MobileShellLayoutParams = {
 export function MobileShellLayout({
   title,
   subtitle,
+  subtitleClassName,
   breadcrumbs = [],
   sections,
   anchorItems,
@@ -61,6 +64,7 @@ export function MobileShellLayout({
   className,
   socialLinks,
   heroMedia,
+  heroAddon,
   mobileNavMaxHeightClassName,
   mobileScrollContainer = false,
   skimModeEnabled,
@@ -158,7 +162,12 @@ export function MobileShellLayout({
                 {title}
               </h1>
               {subtitle ? (
-                <p className="max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted skim-hide">
+                <p
+                  className={clsx(
+                    "max-w-3xl text-base leading-relaxed text-textMuted dark:text-dark-textMuted skim-hide",
+                    subtitleClassName
+                  )}
+                >
                   {subtitle}
                 </p>
               ) : null}
@@ -197,6 +206,11 @@ export function MobileShellLayout({
           </div>
         </div>
       </header>
+      {heroAddon ? (
+        <div className="mx-auto w-full max-w-6xl px-4">
+          {heroAddon}
+        </div>
+      ) : null}
 
       <div
         className={clsx(

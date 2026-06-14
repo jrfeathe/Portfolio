@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@node-rs/jieba':
+        specifier: ^2.0.1
+        version: 2.0.1
       '@portfolio/config':
         specifier: workspace:*
         version: link:packages/config
@@ -17,6 +20,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^6.19.0
         version: 6.21.0(eslint@8.57.1)(typescript@5.9.3)
+      '@types/node':
+        specifier: ^20.11.17
+        version: 20.19.23
       baseline-browser-mapping:
         specifier: ^2.9.18
         version: 2.9.18
@@ -32,6 +38,9 @@ importers:
       eslint-plugin-react-hooks:
         specifier: ^4.6.0
         version: 4.6.2(eslint@8.57.1)
+      kuromoji:
+        specifier: ^0.1.2
+        version: 0.1.2
       prettier:
         specifier: ^3.1.1
         version: 3.6.2
@@ -86,6 +95,9 @@ importers:
       '@portfolio/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      clsx:
+        specifier: ^1.2.1
+        version: 1.2.1
       critters:
         specifier: ^0.0.25
         version: 0.0.25
@@ -165,6 +177,9 @@ importers:
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
+      '@types/mdx':
+        specifier: ^2.0.13
+        version: 2.0.13
       '@types/node':
         specifier: ^20.11.17
         version: 20.19.23
@@ -217,6 +232,9 @@ importers:
         specifier: ^11.1.0
         version: 11.1.0
     devDependencies:
+      '@types/node':
+        specifier: ^20.11.17
+        version: 20.19.23
       typescript:
         specifier: ^5.3.3
         version: 5.9.3

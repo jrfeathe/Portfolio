@@ -2,10 +2,8 @@
 
 const { execFileSync } = require("node:child_process");
 const { existsSync, readFileSync, rmSync } = require("node:fs");
+const { createRequire } = require("node:module");
 const { join, resolve } = require("node:path");
-
-const { getRouteRegex } = require("next/dist/shared/lib/router/utils/route-regex");
-const { getRouteMatcher } = require("next/dist/shared/lib/router/utils/route-matcher");
 
 const REPO_ROOT = resolve(__dirname, "..", "..");
 const SITE_DIR = resolve(REPO_ROOT, "apps/site");
@@ -16,6 +14,13 @@ const CRITICAL_MANIFEST_PATH = resolve(
   SITE_DIR,
   "app",
   "critical-css.manifest.json"
+);
+const requireFromSite = createRequire(resolve(SITE_DIR, "package.json"));
+const { getRouteRegex } = requireFromSite(
+  "next/dist/shared/lib/router/utils/route-regex"
+);
+const { getRouteMatcher } = requireFromSite(
+  "next/dist/shared/lib/router/utils/route-matcher"
 );
 
 function readJson(path) {

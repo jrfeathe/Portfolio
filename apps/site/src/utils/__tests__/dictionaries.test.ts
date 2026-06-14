@@ -41,7 +41,8 @@ describe("dictionaries", () => {
       rollodex: path.join(__dirname, "../../../data/projects/rollodex.json"),
       "ser321-ta": path.join(__dirname, "../../../data/projects/ser321-ta.json"),
       "portfolio-site": path.join(__dirname, "../../../data/projects/portfolio.json"),
-      "cpp-game-engine": path.join(__dirname, "../../../data/projects/cpp-game-engine.json")
+      "cpp-game-engine": path.join(__dirname, "../../../data/projects/cpp-game-engine.json"),
+      "bam-logistics": path.join(__dirname, "../../../data/projects/bam-logistics.json")
     };
 
     const baseProject = {
@@ -176,12 +177,15 @@ describe("dictionaries", () => {
       });
 
       const dictionary = getDictionary("ja");
-      const proofChip = dictionary.home.sections.proof.proofChips[0];
-      expect(proofChip.title).toBe("Rollodex");
-      expect(proofChip.details).toBe("Proof lives in English");
+      const proofChip = dictionary.home.sections.proof.proofChips.find(
+        (chip) => chip.title === "Rollodex"
+      );
+      expect(proofChip?.title).toBe("Rollodex");
+      expect(proofChip?.details).toBe("Proof lives in English");
 
-      const firstRoadmapStep = dictionary.home.sections.roadmap.nextSteps[0];
-      expect(firstRoadmapStep).toBe("Publish case study");
+      expect(dictionary.home.sections.roadmap.nextSteps).not.toContain(
+        "Publish case study"
+      );
 
       const firstExperience = dictionary.experience.entries[0];
       expect(firstExperience.highlights).toEqual([

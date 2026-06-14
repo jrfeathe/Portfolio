@@ -1,0 +1,62 @@
+{
+  "id": "bam-logistics",
+  "names": {
+    "proofTitle": {
+      "en": "BAM Logistics",
+      "ja": "BAM Logistics",
+      "zh": "BAM Logistics"
+    },
+    "techStackTitle": {
+      "en": "",
+      "ja": "",
+      "zh": ""
+    }
+  },
+  "home": {
+    "proofDetails": {
+      "en": "Converted rough client drafts into CAD-ready models for automated fabrication.",
+      "ja": "クライアントのラフな下書きを、自動加工に対応したCADモデルへ変換しました。",
+      "zh": "将客户的粗略草稿转化为可用于自动化制造的 CAD 模型。"
+    }
+  },
+  "experienceEntry": {
+    "id": "bam-logistics",
+    "company": {
+      "en": "BAM Logistics",
+      "ja": "BAM Logistics",
+      "zh": "BAM Logistics"
+    },
+    "role": {
+      "en": "CNC Plasma Cutter Technician & CAD Model Designer",
+      "ja": "CNCプラズマカッター技術者・CADモデルデザイナー",
+      "zh": "CNC 等离子切割机技术员与 CAD 模型设计师"
+    },
+    "timeframe": {
+      "en": "June – August 2022",
+      "ja": "2022年6月～8月",
+      "zh": "2022 年 6 月至 8 月"
+    },
+    "summary": {
+      "en": "Short fabrication role in Cobleskill, NY focused on CAD cleanup, prototype design, and CNC plasma cutter operation.",
+      "ja": "ニューヨーク州コーブルスキルでの短期製造職。CADデータの整理、試作設計、CNCプラズマカッターの操作を担当しました。",
+      "zh": "在纽约州科布尔斯基尔的一段短期制造岗位，重点包括 CAD 清理、原型设计和 CNC 等离子切割机操作。"
+    },
+    "highlights": {
+      "en": [
+        "Used CAD software tools to transform rough client drafts into clean digital models for automated fabrication.",
+        "Prototyped solutions to client design requirements, and collaborated with shop staff to assess the quality of solutions.",
+        "Operated CNC plasma cutter equipment, overseeing operation and changing consumables."
+      ],
+      "ja": [
+        "CADソフトウェアを使い、クライアントのラフな下書きを自動加工用のきれいなデジタルモデルへ変換しました。",
+        "クライアントの設計要件に対する解決策を試作し、工場スタッフと協力して品質を評価しました。",
+        "CNCプラズマカッター設備を操作し、稼働状況の監視と消耗品の交換を行いました。"
+      ],
+      "zh": [
+        "使用 CAD 软件工具，将客户的粗略草稿转化为可用于自动化制造的清晰数字模型。",
+        "针对客户设计需求制作解决方案原型，并与车间人员协作评估方案质量。",
+        "操作 CNC 等离子切割设备，监督运行并更换耗材。"
+      ]
+    }
+  }
+}

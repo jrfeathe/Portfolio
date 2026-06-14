@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-01-25T03:24:26.008Z",
+  "generatedAt": "2026-06-14T21:49:48.497Z",
   "anchors": [
     {
       "id": "react",
@@ -444,15 +444,15 @@
       "source": "portfolio-site",
       "locales": {
         "en": {
-          "name": "Portfolio (this website) - Personal project",
+          "name": "Portfolio Website",
           "href": "/en/experience#portfolio-site"
         },
         "ja": {
-          "name": "ポートフォリオ（本サイト） - 個人プロジェクト",
+          "name": "ポートフォリオウェブサイト",
           "href": "/ja/experience#portfolio-site"
         },
         "zh": {
-          "name": "作品集（本网站）- 个人项目",
+          "name": "作品集网站",
           "href": "/zh/experience#portfolio-site"
         }
       }

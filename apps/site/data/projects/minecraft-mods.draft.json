@@ -1,12 +1,6 @@
 {
   "id": "minecraft-mods",
-  "home": {
-    "roadmapNextStep": {
-      "en": "Pixelmon Problem: Continue work to backport an update to Pixelmon to fix a periodic client-side crash on my private server.",
-      "ja": "",
-      "zh": ""
-    }
-  },
+  "home": {},
   "techStack": {
     "item": {
       "name": {

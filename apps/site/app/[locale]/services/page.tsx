@@ -64,7 +64,6 @@ function buildSections(
   const maintenanceSummaryLabel = contractsFixes.maintenanceTitle;
   const scopeBlocks = contractsFixes.scopeBlocks;
   const waitlistTagLabel = contractsFixes.waitlistTagLabel;
-  const waitlistCtaSuffix = contractsFixes.waitlistCtaSuffix;
   const { services, bannerMessage } = availability;
   const visiblePackages = contractsFixes.packages.filter(
     (pkg) => services[pkg.id]?.status !== "closed"
@@ -201,9 +200,7 @@ function buildSections(
                           className="w-full"
                           data-variant="primary"
                         >
-                          {isWaitlist
-                            ? `${pkg.cta.label} (${waitlistCtaSuffix})`
-                            : pkg.cta.label}
+                          {pkg.cta.label}
                         </Button>
                       </div>
                     </div>

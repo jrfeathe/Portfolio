@@ -17,11 +17,6 @@
       "en": "Upgraded the memory management library for Stellaris to boost performance.",
       "ja": "パフォーマンス向上のため、Stellarisのメモリ管理ライブラリをアップグレードしました。",
       "zh": "升级 Stellaris 的内存管理库以提升性能。"
-    },
-    "roadmapNextStep": {
-      "en": "The Four Horsemen: Develop a new mod for Stellaris to spawn an end-game crisis, compatible with Gigastructural Engineering.",
-      "ja": "The Four Horsemen：Gigastructural Engineering と互換性のある、終盤危機を発生させるStellaris向け新modを開発します。",
-      "zh": "四骑士：为 Stellaris 开发一个可生成终局危机的新模组，并与 Gigastructural Engineering 兼容。"
     }
   },
   "techStack": {

@@ -17,11 +17,6 @@
       "en": "",
       "ja": "",
       "zh": ""
-    },
-    "roadmapNextStep": {
-      "en": "Pixelmon Problem: Continue work to backport an update to Minecraft Pixelmon to fix a periodic client-side crash on my private server.",
-      "ja": "Pixelmon Problem：Minecraft Pixelmon の更新をバックポートして、プライベートサーバーで定期的に発生するクライアント側クラッシュを修正する作業を継続します。",
-      "zh": "Pixelmon Problem：继续回溯移植 Minecraft Pixelmon 的更新，以修复我私人服务器上周期性出现的客户端崩溃。"
     }
   },
   "techStack": {

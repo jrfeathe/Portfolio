@@ -164,6 +164,8 @@ type AggregatedEmbedding = {
 };
 
 const locales: Locale[] = ["en", "ja", "zh"];
+const EXCLUDED_EXPERIENCE_CONTEXT_IDS = new Set(["bam-logistics"]);
+const EXCLUDED_RESUME_EXPERIENCE_COMPANIES = new Set(["bam logistics"]);
 const WEEKDAYS: Weekday[] = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 const QUARTER_STRINGS: QuarterHourKey[] = ["0", "15", "30", "45"];
 const STOP_WORDS = new Set([
@@ -688,6 +690,7 @@ function buildAnchorEntries(
     for (const project of projects) {
       if (!project.experienceEntry) continue;
       const { id } = project.experienceEntry;
+      if (EXCLUDED_EXPERIENCE_CONTEXT_IDS.has(id)) continue;
       const name = localizeString(project.experienceEntry.company, locale) || id;
       addAnchor(id, "experience", project.id, locale, name, `/${locale}/experience#${id}`);
     }
@@ -742,6 +745,10 @@ function buildProjectChunks(project: ProjectRecord, locale: Locale): EmbeddingCh
   }
 
   const { id } = project.experienceEntry;
+  if (EXCLUDED_EXPERIENCE_CONTEXT_IDS.has(id)) {
+    return null;
+  }
+
   const title = localizeString(project.experienceEntry.company, locale) || id;
   const role = localizeString(project.experienceEntry.role, locale);
   const summary = localizeString(project.experienceEntry.summary, locale);
@@ -871,6 +878,11 @@ function buildResumeExperienceChunks(
   const chunks: EmbeddingChunk[] = [];
 
   for (const entry of experiences ?? []) {
+    const companyName = localizeString(entry.company, "en").toLowerCase();
+    if (EXCLUDED_RESUME_EXPERIENCE_COMPANIES.has(companyName)) {
+      continue;
+    }
+
     const base = slugify(
       localizeString(entry.company, "en") || localizeString(entry.role, "en") || "experience"
     );

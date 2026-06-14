@@ -5,6 +5,7 @@ import rollodexProjectData from "../../data/projects/rollodex.json";
 import ser321ProjectData from "../../data/projects/ser321-ta.json";
 import portfolioProjectData from "../../data/projects/portfolio.json";
 import cppGameEngineProjectData from "../../data/projects/cpp-game-engine.json";
+import bamLogisticsProjectData from "../../data/projects/bam-logistics.json";
 import techStackDetailsData from "../../data/tech-stack-details.json";
 import type { Weekday } from "../lib/availability";
 import type { ImageDescriptor, ResponsiveImagePreset } from "../lib/images";
@@ -411,7 +412,6 @@ export type AppDictionary = {
     termsLinkLabel: string;
     proofLinkLabel: string;
     waitlistTagLabel: string;
-    waitlistCtaSuffix: string;
     primaryCtas: ContractLink[];
     packagesTitle: string;
     packagesEmptyMessage: string;
@@ -562,6 +562,7 @@ const rollodexProject = rollodexProjectData as ProjectContent;
 const ser321Project = ser321ProjectData as ProjectContent;
 const portfolioProject = portfolioProjectData as ProjectContent;
 const cppGameEngineProject = cppGameEngineProjectData as ProjectContent;
+const bamLogisticsProject = bamLogisticsProjectData as ProjectContent;
 const baseTechStackDetails = techStackDetailsData as LocalizedTechExperienceEntry[];
 
 const CONTRACTS_QUICK_FIX_MAILTO =
@@ -645,6 +646,7 @@ const { item: MINECRAFT_TECH_STACK_ITEM, experience: MINECRAFT_TECH_STACK_EXPERI
 
 const PROJECT_EXPERIENCE_ENTRIES: LocalizedExperienceEntry[] = [
   requireExperience(rollodexProject, "rollodex"),
+  requireExperience(bamLogisticsProject, "bam-logistics"),
   requireExperience(quester2000Project, "quester2000"),
   requireExperience(ser321Project, "ser321-ta"),
   requireExperience(cppGameEngineProject, "cpp-game-engine"),
@@ -652,31 +654,33 @@ const PROJECT_EXPERIENCE_ENTRIES: LocalizedExperienceEntry[] = [
   requireExperience(portfolioProject, "portfolio-site")
 ];
 
-const buildStellarisProofChip = (locale: Locale) => buildProofChip(stellarisModsProject, locale, "Stellaris Modding");
-const buildQuesterProofChip = (locale: Locale) => buildProofChip(quester2000Project, locale, "Quester2000");
 const buildSer321ProofChip = (locale: Locale) => buildProofChip(ser321Project, locale, "SER321 TA");
 const buildRollodexProofChip = (locale: Locale) => buildProofChip(rollodexProject, locale, "Rollodex");
+const buildBamLogisticsProofChip = (locale: Locale) => buildProofChip(bamLogisticsProject, locale, "BAM Logistics");
+const buildPortfolioProofChip = (locale: Locale) => buildProofChip(portfolioProject, locale, "Personal Website");
 
 // Structure for "Evidence" section of Home page. CONTROLS FEATURED PROJECTS
 const buildProofChips = (locale: Locale) => [
-  buildRollodexProofChip(locale),
-  buildQuesterProofChip(locale),
   buildSer321ProofChip(locale),
-  buildStellarisProofChip(locale),
-  //buildCppGameEngineProofChip(locale),
-  //buildPortfolioProofChip(locale)
+  buildRollodexProofChip(locale),
+  buildBamLogisticsProofChip(locale),
+  buildPortfolioProofChip(locale),
+  //buildCppGameEngineProofChip(locale)
 ];
 
-const getStellarisRoadmapStep = (locale: Locale) => getRoadmapStep(stellarisModsProject, locale);
-const getMinecraftRoadmapStep = (locale: Locale) => getRoadmapStep(minecraftModsProject, locale);
-const getQuesterRoadmapStep = (locale: Locale) => getRoadmapStep(quester2000Project, locale);
-const getCppGameEngineRoadmapStep = (locale: Locale) => getRoadmapStep(cppGameEngineProject, locale);
-const getRoadmapSteps = (locale: Locale) => [
-  getQuesterRoadmapStep(locale),
-  getStellarisRoadmapStep(locale),
-  getMinecraftRoadmapStep(locale),
-  getCppGameEngineRoadmapStep(locale)
-];
+const roadmapSteps: Record<Locale, string[]> = {
+  en: [
+    "Solo-Launching My First App: Continue work on a semi-secretive creative storytelling web app. This app implements multiple workflows that are packed with AI tools to augment a user's storytelling capabilities. A simple creativity suite on the surface, but also designed to welcome power users."
+  ],
+  ja: [
+    "初めてのアプリを個人でローンチ：半ば秘密にしている、創作ストーリーテリング用Webアプリの開発を継続しています。このアプリは、ユーザーの物語づくりの力を高めるためにAIツールを組み込んだ複数のワークフローを実装しています。表面上はシンプルな創作スイートですが、パワーユーザーも歓迎するよう設計しています。"
+  ],
+  zh: [
+    "独立发布我的第一个应用：继续开发一款半保密的创意叙事 Web 应用。该应用实现了多个集成 AI 工具的工作流，用于增强用户的叙事创作能力。表面上是一个简单的创意套件，同时也设计为欢迎高级用户。"
+  ]
+};
+
+const getRoadmapSteps = (locale: Locale): string[] => roadmapSteps[locale];
 
 function normalizeTechExperience(
   experience: TechExperienceEntry | LocalizedTechExperienceEntry
@@ -878,7 +882,7 @@ const en: AppDictionary = {
       columnTitle: "AI-assisted Fullstack Engineer",
       projectManagementLabel: "Project Management",
       projectManagement:
-        "Independent, AI-augmented planning with clear documentation and task breakdown.",
+        "2+ years of experience in AI-augmented planning, breaking complex tasks into small steps that can be used to guide AI coding tools.",
       techStackTitle: "Primary languages & tools",
       leadershipLabel: "Leadership & mentorship",
       leadership: "Rollodex co-lead Fullstack Engineer, and Teaching Assistant for Upper-level Distributed Software Systems course.",
@@ -916,7 +920,7 @@ const en: AppDictionary = {
     hero: {
       title: "Jack Featherstone",
       subtitle:
-        "Hi, I’m Jack—this is my software engineering portfolio. This site documents my skills and projects, and serves as a hub for professional connections. I’m seeking long-term fullstack roles involving AI that combine development and project management, and I’m also open to smaller contracts and collaborative work.",
+        "Hi, I’m Jack. Welcome to my website. This site is my digital software portfolio; it serves as a hub for professional connections. I’m seeking full time employment in software development with a focus on AI-assisted workflows. I want to continue to learn and explore new computing technologies, and implement reliable solutions by using them creatively.",
       media: {
         image: {
           ...HERO_IMAGE_BASE,
@@ -975,7 +979,7 @@ const en: AppDictionary = {
         eyebrow: "Roadmap",
         title: "Current projects & plans",
         description:
-          "My current focus is on building some small scale projects that make a difference in my life.",
+          "My current focus is on solving complex problems and continually learning. I like to be challenged, it keeps me sharp.",
         overview:
           "🐐 G.O.A.T.: Grind, Optimize, Automate, Thrive.",
         nextSteps: [
@@ -1125,7 +1129,6 @@ const en: AppDictionary = {
     termsLinkLabel: "Terms & Conditions",
     proofLinkLabel: "Proof & testimonials",
     waitlistTagLabel: "Waitlist length:",
-    waitlistCtaSuffix: "Waitlist until May 2026",
     primaryCtas: [
       {
         label: "Request a Quick Fix",
@@ -1701,7 +1704,7 @@ const ja: AppDictionary = {
       columnTitle: "AI支援フルスタックエンジニア",
       projectManagementLabel: "プロジェクト管理",
       projectManagement:
-        "独立して推進できる、AI活用の計画立案・明確なドキュメント作成・タスク分解。",
+        "AI支援の計画立案に2年以上携わり、複雑なタスクをAIコーディングツールのガイドとして使える小さな手順へ分解してきました。",
       techStackTitle: "主な言語とツール",
       leadershipLabel: "リーダーシップとメンタリング",
       leadership: "Rollodexの共同リード・フルスタックエンジニアであり、上級分散ソフトウェアシステムの講義でティーチング・アシスタント（TA）も務めています。",
@@ -1739,7 +1742,7 @@ const ja: AppDictionary = {
     hero: {
       title: "Jack Featherstone",
       subtitle:
-        "はじめまして、Jackです。こちらは私のソフトウェアエンジニアリング・ポートフォリオです。本サイトではスキルやプロジェクトを紹介し、プロフェッショナルなつながりの拠点として機能します。開発とプロジェクト管理を組み合わせたAI関連の長期的なフルスタック職を探しており、小規模な契約や協業にも前向きです。",
+        "はじめまして、Jackです。私のウェブサイトへようこそ。このサイトは私のデジタルなソフトウェア・ポートフォリオであり、プロフェッショナルなつながりの拠点として機能します。私は、AI支援ワークフローに重点を置いたソフトウェア開発のフルタイム職を探しています。新しいコンピューティング技術を学び、探究し続け、それらを創造的に活用して信頼性の高いソリューションを実装していきたいと考えています。",
       media: {
         image: {
           ...HERO_IMAGE_BASE,
@@ -1798,7 +1801,7 @@ const ja: AppDictionary = {
         eyebrow: "ロードマップ",
         title: "現在のプロジェクトと計画",
         description:
-          "現在は、生活に実質的な価値をもたらす小規模プロジェクトに注力しています。",
+          "現在は、複雑な問題を解決し、学び続けることに注力しています。挑戦されることが好きで、それが自分の鋭さを保ってくれます。",
         overview:
           "🐐 G.O.A.T.： Grind 努力し、 Optimize 最適化し、 Automate 自動化し、 Thrive 成長します。",
         nextSteps: [
@@ -1946,7 +1949,6 @@ const ja: AppDictionary = {
     termsLinkLabel: "利用規約",
     proofLinkLabel: "実績と推薦",
     waitlistTagLabel: "ウェイトリスト人数:",
-    waitlistCtaSuffix: "2026年5月までウェイトリスト",
     primaryCtas: [
       {
         label: "迅速修正を依頼する",
@@ -2526,7 +2528,7 @@ const zh: AppDictionary = {
       columnTitle: "AI 辅助全栈工程师",
       projectManagementLabel: "项目管理",
       projectManagement:
-        "可独立推进的 AI 辅助规划、清晰的文档整理与任务拆解。",
+        "拥有 2 年以上 AI 辅助规划经验，能够将复杂任务拆解为小步骤，用于指导 AI 编码工具。",
       techStackTitle: "主要语言与工具",
       leadershipLabel: "领导力与指导",
       leadership: "担任 Rollodex 联合技术负责人（全栈工程师），并兼任高阶分布式软件系统课程助教。",
@@ -2564,7 +2566,7 @@ const zh: AppDictionary = {
     hero: {
       title: "Jack Featherstone",
       subtitle:
-        "你好，我是 Jack—这是我的软件工程作品集。本网站记录了我的技能和项目，并作为职业交流的中心。我正在寻找结合开发与项目管理的、涉及 AI 的长期全栈岗位，同时也欢迎较小规模的合同和合作。",
+        "你好，我是 Jack。欢迎来到我的网站。这个网站是我的数字软件作品集，也是职业交流的中心。我正在寻找专注于 AI 辅助工作流的软件开发全职工作。我希望继续学习和探索新的计算技术，并通过创造性地运用这些技术来实现可靠的解决方案。",
       media: {
         image: {
           ...HERO_IMAGE_BASE,
@@ -2623,7 +2625,7 @@ const zh: AppDictionary = {
         eyebrow: "路线图",
         title: "当前项目与计划",
         description:
-          "目前我专注于构建对生活产生实际影响的小型项目。",
+          "我目前专注于解决复杂问题并持续学习。我喜欢接受挑战，这让我保持敏锐。",
         overview:
           "🐐 G.O.A.T.： Grind 打磨、 Optimize 优化、 Automate 自动化、 Thrive 成长。",
         nextSteps: [
@@ -2771,7 +2773,6 @@ const zh: AppDictionary = {
     termsLinkLabel: "使用条款",
     proofLinkLabel: "案例与推荐",
     waitlistTagLabel: "候补名单人数:",
-    waitlistCtaSuffix: "候补名单至2026年5月",
     primaryCtas: [
       {
         label: "申请快速修复",

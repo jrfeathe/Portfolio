@@ -1,36 +1,36 @@
 {
   "id": "portfolio-site",
   "names": {
-    "proofTitle": "Portfolio"
+    "proofTitle": "Personal Website"
   },
   "home": {
     "proofDetails": {
-      "en": "Built this portfolio with Next.js, localization, and custom UI components.",
+      "en": "Built a trilingual portfolio with an AI chatbot, custom UI, and dependable cloud hosting.",
       "ja": "",
       "zh": ""
     }
   },
   "experienceEntry": {
     "id": "portfolio-site",
-    "company": "Portfolio (this website)",
-    "role": "Solo Fullstack Engineer",
-    "timeframe": "October - December 2025",
-    "summary": "Designed and built a personalized engineering portfolio with localization, accessibility, telemetry-ready structure, and custom UI components.",
+    "company": "Portfolio Website",
+    "role": "Solo AI-Assisted Full-stack Engineer",
+    "timeframe": "October 2025 – January 2026",
+    "summary": "Built a personalized portfolio with trilingual support, an AI chatbot, and custom UI components.",
     "highlights": [
-      "Shipped en/ja/zh localization with shared content definitions to keep information consistent.",
-      "Built a custom component set with theme/contrast controls and accessibility guardrails.",
-      "Centered performance and observability with critical CSS, edge rendering, and structured data."
+      "Built a personalized portfolio with trilingual support, an AI chatbot, and custom UI components.",
+      "Instructed Codex to complete complex tasks from a self-designed task list.",
+      "Used an Oracle Cloud virtual Linux instance with Fastly CDN for quick and dependable hosting."
     ],
     "localized": {
       "en": {
-        "company": "Portfolio (this website)",
-        "role": "Solo Fullstack Engineer",
-        "timeframe": "October - December 2025",
-        "summary": "Designed and built a personalized engineering portfolio with localization, accessibility, telemetry-ready structure, and custom UI components.",
+        "company": "Portfolio Website",
+        "role": "Solo AI-Assisted Full-stack Engineer",
+        "timeframe": "October 2025 – January 2026",
+        "summary": "Built a personalized portfolio with trilingual support, an AI chatbot, and custom UI components.",
         "highlights": [
-          "Shipped en/ja/zh localization with shared content definitions to keep information consistent.",
-          "Built a custom component set with theme/contrast controls and accessibility guardrails.",
-          "Centered performance and observability with critical CSS, edge rendering, and structured data."
+          "Built a personalized portfolio with trilingual support, an AI chatbot, and custom UI components.",
+          "Instructed Codex to complete complex tasks from a self-designed task list.",
+          "Used an Oracle Cloud virtual Linux instance with Fastly CDN for quick and dependable hosting."
         ]
       },
       "ja": {

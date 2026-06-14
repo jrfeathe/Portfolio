@@ -134,9 +134,53 @@
     },
     {
       "role": {
-        "en": "Digital Fabrication Intern",
-        "ja": "デジタルファブリケーション・インターン",
-        "zh": "数字制造实习生"
+        "en": "Solo AI-Assisted Full-stack Engineer",
+        "ja": "個人AI支援フルスタックエンジニア",
+        "zh": "独立 AI 辅助全栈工程师"
+      },
+      "company": {
+        "en": "Portfolio Website",
+        "ja": "ポートフォリオウェブサイト",
+        "zh": "作品集网站"
+      },
+      "start": {
+        "en": "2025-10",
+        "ja": "2025-10",
+        "zh": "2025-10"
+      },
+      "end": {
+        "en": "2026-01",
+        "ja": "2026-01",
+        "zh": "2026-01"
+      },
+      "summary": {
+        "en": "Built a personalized portfolio with trilingual support, an AI chatbot, and custom UI components.",
+        "ja": "三言語対応、AIチャットボット、カスタムUIコンポーネントを備えた個人向けポートフォリオを構築しました。",
+        "zh": "构建了一个个性化作品集，支持三种语言，并包含 AI 聊天机器人和自定义 UI 组件。"
+      },
+      "highlights": [
+        {
+          "en": "Built a personalized portfolio with trilingual support, an AI chatbot, and custom UI components.",
+          "ja": "三言語対応、AIチャットボット、カスタムUIコンポーネントを備えた個人向けポートフォリオを構築しました。",
+          "zh": "构建了一个个性化作品集，支持三种语言，并包含 AI 聊天机器人和自定义 UI 组件。"
+        },
+        {
+          "en": "Instructed Codex to complete complex tasks from a self-designed task list.",
+          "ja": "自分で設計したタスクリストに基づき、Codexに複雑なタスクを完了させました。",
+          "zh": "根据自己设计的任务列表，指导 Codex 完成复杂任务。"
+        },
+        {
+          "en": "Used an Oracle Cloud virtual Linux instance with Fastly CDN for quick and dependable hosting.",
+          "ja": "Oracle Cloudの仮想LinuxインスタンスとFastly CDNを使い、高速で信頼性の高いホスティングを実現しました。",
+          "zh": "使用 Oracle Cloud 虚拟 Linux 实例和 Fastly CDN，实现快速且可靠的托管。"
+        }
+      ]
+    },
+    {
+      "role": {
+        "en": "CNC Plasma Cutter Technician & CAD Model Designer",
+        "ja": "CNCプラズマカッター技術者・CADモデルデザイナー",
+        "zh": "CNC 等离子切割机技术员与 CAD 模型设计师"
       },
       "company": {
         "en": "BAM Logistics",
@@ -159,30 +203,25 @@
         "zh": "2022-08"
       },
       "summary": {
-        "en": "Prototyped and documented fabrication requests, pairing CAD work with light automation to deliver high quality designs.",
-        "ja": "CAD作業と軽量な自動化を組み合わせ、試作と製作依頼の文書化を行い、高品質な設計を提供しました。",
-        "zh": "将 CAD 工作与轻量自动化结合，对制造需求进行原型设计与文档化，交付高质量设计。"
+        "en": "Used CAD and CNC plasma cutter tooling to turn client drafts into fabrication-ready digital models and physical outputs.",
+        "ja": "CADとCNCプラズマカッターのツールを使い、クライアントの下書きを製作用のデジタルモデルと実物の成果物へ変換しました。",
+        "zh": "使用 CAD 和 CNC 等离子切割工具，将客户草稿转化为可制造的数字模型和实体成品。"
       },
       "highlights": [
         {
-          "en": "Delivered small-batch signs on a two-week cadence by coordinating requirements with shop staff.",
-          "ja": "工場スタッフと要件を調整し、2週間サイクルで少量生産の看板を納品しました。",
-          "zh": "通过与车间人员协调需求，以两周节奏交付小批量标识。"
+          "en": "Used CAD software tools to transform rough client drafts into clean digital models for automated fabrication.",
+          "ja": "CADソフトウェアを使い、クライアントのラフな下書きを自動加工用のきれいなデジタルモデルへ変換しました。",
+          "zh": "使用 CAD 软件工具，将客户的粗略草稿转化为可用于自动化制造的清晰数字模型。"
         },
         {
-          "en": "Used technical skills to reverse-image-search blurry drafts, find original copies, and deliver clean SVGs.",
-          "ja": "技術的手法で不鮮明な下書きを画像検索し、元データを特定してクリーンなSVGを作成しました。",
-          "zh": "运用技术手段对模糊草稿进行反向图片搜索，找到原稿并交付干净的 SVG。"
+          "en": "Prototyped solutions to client design requirements, and collaborated with shop staff to assess the quality of solutions.",
+          "ja": "クライアントの設計要件に対する解決策を試作し、工場スタッフと協力して品質を評価しました。",
+          "zh": "针对客户设计需求制作解决方案原型，并与车间人员协作评估方案质量。"
         },
         {
-          "en": "Operated CNC plasma cutter and replaced consumable components.",
-          "ja": "CNCプラズマカッターを操作し、消耗部品を交換しました。",
-          "zh": "操作 CNC 等离子切割机并更换耗材部件。"
-        },
-        {
-          "en": "Experimented with new technologies to automate the creation of designs.",
-          "ja": "新技術を試し、設計作成の自動化を検討しました。",
-          "zh": "试验新技术以实现设计生成的自动化。"
+          "en": "Operated CNC plasma cutter equipment, overseeing operation and changing consumables.",
+          "ja": "CNCプラズマカッター設備を操作し、稼働状況の監視と消耗品の交換を行いました。",
+          "zh": "操作 CNC 等离子切割设备，监督运行并更换耗材。"
         }
       ]
     },

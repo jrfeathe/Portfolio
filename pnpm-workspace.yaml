@@ -2,6 +2,12 @@ packages:
   - apps/*
   - packages/*
 
+allowBuilds:
+  '@swc/core': true
+  protobufjs: true
+  sharp: true
+  unrs-resolver: true
+
 ignoredBuiltDependencies:
   - sharp
 
